@@ -2,13 +2,13 @@
     <div>
         <Card style="width:600px">
             <i-form ref="formInline" class="formPage" :model="formInline" :rules="ruleInline" inline>
-                <FormItem prop="user" class="formItem">
+                <FormItem prop="username" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
                             <span style="lable">师傅账号:</span>
                         </i-col>
                         <i-col span='18'>
-                            <i-input placeholder="输入账号" class="formInput" v-model="formInline.user">
+                            <i-input placeholder="输入账号" class="formInput" v-model="formInline.username">
                                 <!-- <Icon type="ios-contact" slot="prepend" /> -->
                             </i-input>
                         </i-col>
@@ -103,7 +103,10 @@
                             <span style="lable">徒弟数量限制:</span>
                         </i-col>
                         <i-col span='18'>
-                            <InputNumber placeholder="输入徒弟数量限制" :min='0' style="width:100%;" v-model="formInline.apprentice_limit"></InputNumber>
+                            <i-input placeholder="输入徒弟数量限制" class="formInput" type='number' v-model="formInline.apprentice_limit">
+                                <!-- <Icon type="ios-contact" slot="prepend" /> -->
+                            </i-input>
+                            <!-- <InputNumber placeholder="输入徒弟数量限制" :min='0' style="width:100%;" v-model="formInline.apprentice_limit"></InputNumber> -->
                         </i-col>
                     </row>
                 </FormItem>
@@ -135,7 +138,7 @@ export default {
     data() {
         return {
             formInline: {
-                user: "",
+                username: "",
                 password: "",
                 sex: "1",
                 name: "",
@@ -147,7 +150,7 @@ export default {
                 remark: ""
             },
             ruleInline: {
-                user: [
+                username: [
                     {
                         required: true,
                         message: "请输入账号",
@@ -201,11 +204,20 @@ export default {
                     }
                 ],
                 apprentice_limit: [
-                    // {
-                    //     required: true,
-                    //     message: "请输入徒弟数量限制",
-                    //     trigger: "blur"
-                    // },
+                    {
+                        required: true,
+                        message: "请输入徒弟数量限制",
+                        trigger: "blur"
+                    },
+                    {
+                        validator(rule, value, callback, source, options) {
+                            var errors = [];
+                            if (!/^[a-z0-9]+$/.test(value)) {
+                                callback("数量限制必须为数字");
+                            }
+                            callback(errors);
+                        }
+                    }
                 ]
             }
         };
@@ -219,7 +231,7 @@ export default {
                             url: "masters",
                             method: "post",
                             data: {
-                                user: this.formInline.user,
+                                username: this.formInline.username,
                                 password: this.formInline.password,
                                 sex: this.formInline.sex,
                                 name: this.formInline.name,
@@ -227,13 +239,14 @@ export default {
                                 wx: this.formInline.wx,
                                 email: this.formInline.email,
                                 referral_id: this.formInline.referral_id, //推荐人ID
-                                apprentice_limit: this.formInline.apprentice_limit, //徒弟数量限制
+                                apprentice_limit: this.formInline
+                                    .apprentice_limit, //徒弟数量限制
                                 remark: this.formInline.remark
                             }
                         })
                         .then(res => {
                             this.$Message.success("新建成功");
-                            this.resetData('formInline')
+                            this.resetData("formInline");
                         })
                         .catch(err => {
                             this.$Message.success("出现错误！");
