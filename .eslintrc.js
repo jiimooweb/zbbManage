@@ -1,9 +1,9 @@
 module.exports = {
-  root: true,
-  'extends': [
-    'plugin:vue/recommended',
-    '@vue/standard'
-  ],
+//   root: true,
+//   'extends': [
+//     'plugin:vue/recommended',
+//     '@vue/standard'
+//   ],
 //   rules: {
 //     // 'no-debugger': 'off',
 //     // 'indent': 'off',
