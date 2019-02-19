@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Table :columns="masterColumn" border :data="masterList"></Table>
+        <Table stripe :columns="masterColumn" border :data="masterList"></Table>
     </div>
 </template>
 
@@ -14,7 +14,9 @@ import axios from "@/libs/api.request";
                         title:"序号",
                         align: 'center',
                         width:'100',
-                        key:'x'
+                        render:(h,params)=> {
+                            return h('p',((params.index+1)+(this.currentPage-1)*this.per_page))
+                        },
                     },
                     {
                         title:"师傅ID",
@@ -31,17 +33,26 @@ import axios from "@/libs/api.request";
                         title:'拉黑',
                         align: 'center',
                         width:'70',
-                        key:'blacklist'
+                        // key:'blacklist'
+                        render:(h,params)=> {
+                            return h('p',(params.row.blacklist === 0?'否':'是'))
+                        },
                     },{
                         title:'禁用',
                         align: 'center',
                         width:'70',
-                        key:'disable'
+                        // key:'disable'
+                        render:(h,params)=> {
+                            return h('p',(params.row.disable === 0?'否':'是'))
+                        },
                     },{
                         title:'审核状态',
                         align: 'center',
                         width:'100',
-                        key:'status'
+                        // key:'status'
+                        render:(h,params)=> {
+                            return h('p',(params.row.status === 0?'待审核':'已审核'))
+                        },
                     },{
                         title:'真实姓名',
                         align: 'center',
@@ -119,7 +130,10 @@ import axios from "@/libs/api.request";
                         key:'b'
                     }
                 ],
-                masterList:[]
+                masterList:[],
+                total:1,
+                currentPage:1,
+                per_page:1,
             }
         },
         methods:{
@@ -130,7 +144,11 @@ import axios from "@/libs/api.request";
                     method: "get"
                 })
                 .then(res => {
-                    this.masterList = res.data.data;
+                    this.masterList = res.data.data.data;
+                    this.total = res.data.data.total
+                    
+                    this.currentPage = res.data.data.current_page
+                    this.per_page = res.data.data.per_page
                 });
             }
         },

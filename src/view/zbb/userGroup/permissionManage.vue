@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Table :columns="permissColumn" :data="permissList"></Table>
+        <Table stripe border :columns="permissColumn" :data="permissList"></Table>
         <!-- <Button type="success" style="margin:0 auto;display:block;" @click="log()">123</Button> -->
     </div>
 </template>
