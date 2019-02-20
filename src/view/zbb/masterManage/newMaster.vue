@@ -8,9 +8,7 @@
                             <span style="lable">师傅账号:</span>
                         </i-col>
                         <i-col span='18'>
-                            <i-input placeholder="输入账号" class="formInput" v-model="formInline.username">
-                                <!-- <Icon type="ios-contact" slot="prepend" /> -->
-                            </i-input>
+                            <i-input placeholder="输入账号" class="formInput" v-model="formInline.username"></i-input>
                         </i-col>
                     </row>
                 </FormItem>
@@ -31,8 +29,8 @@
                         </i-col>
                         <i-col span='18'>
                             <RadioGroup v-model="formInline.sex">
-                                <Radio label="1" style="width:50px;">男</Radio>
-                                <Radio label="0">女</Radio>
+                                <Radio :label="1" style="width:50px;">男</Radio>
+                                <Radio :label="0">女</Radio>
                             </RadioGroup>
                         </i-col>
                     </row>
@@ -43,9 +41,7 @@
                             <span style="lable">真实姓名:</span>
                         </i-col>
                         <i-col span='18'>
-                            <i-input placeholder="输入姓名" class="formInput" v-model="formInline.name">
-                                <!-- <Icon type="ios-contact" slot="prepend" /> -->
-                            </i-input>
+                            <i-input placeholder="输入姓名" class="formInput" v-model="formInline.name"></i-input>
                         </i-col>
                     </row>
                 </FormItem>
@@ -55,9 +51,7 @@
                             <span style="lable">手机号码:</span>
                         </i-col>
                         <i-col span='18'>
-                            <i-input placeholder="输入手机号码" class="formInput" v-model="formInline.phone">
-                                <!-- <Icon type="ios-contact" slot="prepend" /> -->
-                            </i-input>
+                            <i-input placeholder="输入手机号码" class="formInput" v-model="formInline.phone"></i-input>
                         </i-col>
                     </row>
                 </FormItem>
@@ -67,9 +61,7 @@
                             <span style="lable">微信号:</span>
                         </i-col>
                         <i-col span='18'>
-                            <i-input placeholder="输入微信号" class="formInput" v-model="formInline.wx">
-                                <!-- <Icon type="ios-contact" slot="prepend" /> -->
-                            </i-input>
+                            <i-input placeholder="输入微信号" class="formInput" v-model="formInline.wx"></i-input>
                         </i-col>
                     </row>
                 </FormItem>
@@ -79,9 +71,7 @@
                             <span style="lable">邮箱:</span>
                         </i-col>
                         <i-col span='18'>
-                            <i-input placeholder="输入邮箱" class="formInput" v-model="formInline.email">
-                                <!-- <Icon type="ios-contact" slot="prepend" /> -->
-                            </i-input>
+                            <i-input placeholder="输入邮箱" class="formInput" v-model="formInline.email"></i-input>
                         </i-col>
                     </row>
                 </FormItem>
@@ -91,9 +81,7 @@
                             <span style="lable">推荐人ID:</span>
                         </i-col>
                         <i-col span='18'>
-                            <i-input placeholder="输入推荐人ID" class="formInput" v-model="formInline.referral_id">
-                                <!-- <Icon type="ios-contact" slot="prepend" /> -->
-                            </i-input>
+                            <i-input placeholder="输入推荐人ID" class="formInput" v-model="formInline.referral_id"></i-input>
                         </i-col>
                     </row>
                 </FormItem>
@@ -103,9 +91,7 @@
                             <span style="lable">徒弟数量限制:</span>
                         </i-col>
                         <i-col span='18'>
-                            <i-input placeholder="输入徒弟数量限制" class="formInput" type='number' v-model="formInline.apprentice_limit">
-                                <!-- <Icon type="ios-contact" slot="prepend" /> -->
-                            </i-input>
+                            <i-input placeholder="输入徒弟数量限制" class="formInput" type='number' v-model="formInline.apprentice_limit"></i-input>
                             <!-- <InputNumber placeholder="输入徒弟数量限制" :min='0' style="width:100%;" v-model="formInline.apprentice_limit"></InputNumber> -->
                         </i-col>
                     </row>
@@ -116,15 +102,13 @@
                             <span style="lable">备注:</span>
                         </i-col>
                         <i-col span='18'>
-                            <i-input placeholder="备注" class="formInput" v-model="formInline.remark">
-                                <!-- <Icon type="ios-contact" slot="prepend" /> -->
-                            </i-input>
+                            <i-input placeholder="备注" class="formInput" v-model="formInline.remark"></i-input>
                         </i-col>
                     </row>
                 </FormItem>
                 <FormItem style="margin:20px auto">
                     <Button type="primary" @click="handleSubmit('formInline')">新增</Button>
-                    <Button type="defail" style="margin-left:10px;" @click="resetData('formInline')">重置</Button>
+                    <Button style="margin-left:10px;" @click="resetData('formInline')">重置</Button>
                 </FormItem>
             </i-form>
         </Card>
@@ -140,7 +124,7 @@ export default {
             formInline: {
                 username: "",
                 password: "",
-                sex: "1",
+                sex: 1,
                 name: "",
                 phone: "",
                 wx: "",
@@ -192,11 +176,11 @@ export default {
                     }
                 ],
                 email: [
-                    {
-                        required: true,
-                        message: "请输入邮箱",
-                        trigger: "blur"
-                    },
+                    // {
+                    //     required: true,
+                    //     message: "请输入邮箱",
+                    //     trigger: "blur"
+                    // },
                     {
                         type: "email",
                         message: "邮箱格式不正确",
@@ -205,15 +189,10 @@ export default {
                 ],
                 apprentice_limit: [
                     {
-                        required: true,
-                        message: "请输入徒弟数量限制",
-                        trigger: "blur"
-                    },
-                    {
                         validator(rule, value, callback, source, options) {
                             var errors = [];
-                            if (!/^[a-z0-9]+$/.test(value)) {
-                                callback("数量限制必须为数字");
+                            if (!value) {
+                                callback("请输入徒弟数量限制");
                             }
                             callback(errors);
                         }
