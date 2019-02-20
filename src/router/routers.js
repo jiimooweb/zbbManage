@@ -356,14 +356,38 @@ export default [{
   },
   children: [
     {
-      path: '/blackManage',
-      name: '黑户列表',
+      path: '/masterDisable',
+      name: '师傅禁用列表',
       meta: {
-        title: '黑户列表',
+        title: '师傅禁用列表',
         icon: 'ios-man'
       },
-      component: () => import('@/view/zbb/blackManage/blackManage')
-    }]
+      component: () => import('@/view/zbb/blackManage/masterDisable')
+    },{
+        path: '/masterBlack',
+        name: '师傅拉黑列表',
+        meta: {
+          title: '师傅拉黑列表',
+          icon: 'ios-man'
+        },
+        component: () => import('@/view/zbb/blackManage/masterBlack')
+      },{
+        path: '/apprenticeDisable',
+        name: '徒弟禁用列表',
+        meta: {
+          title: '徒弟禁用列表',
+          icon: 'ios-man'
+        },
+        component: () => import('@/view/zbb/blackManage/apprenticeDisable')
+      },{
+          path: '/apprenticeBlack',
+          name: '徒弟拉黑列表',
+          meta: {
+            title: '徒弟拉黑列表',
+            icon: 'ios-man'
+          },
+          component: () => import('@/view/zbb/blackManage/apprenticeBlack')
+        }]
 },{
   path: '/loginManage',
   name: '登录管理',

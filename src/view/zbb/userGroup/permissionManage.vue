@@ -160,6 +160,12 @@ export default {
                         },{
                             name: "批量拒绝",
                             value: true
+                        },{
+                            name: "禁用权限",
+                            value: true
+                        },{
+                            name: "拉黑权限",
+                            value: true
                         }
                     ]
                 },{
@@ -182,6 +188,12 @@ export default {
                             value: true
                         },{
                             name: "批量拒绝",
+                            value: true
+                        },{
+                            name: "禁用权限",
+                            value: true
+                        },{
+                            name: "拉黑权限",
                             value: true
                         }
                     ]

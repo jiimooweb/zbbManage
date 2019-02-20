@@ -878,8 +878,9 @@ export default {
                             this.getMasterList();
                         })
                         .catch(err => {
-                            this.$Message.success("出现错误！");
-                            console.log(err);
+                            for(let i in err.response.data.errors){
+                                this.$Message.error(err.response.data.errors[i][0]);
+                            }
                         });
                 } else {
                     this.$Message.error("填写的资料有误!");
