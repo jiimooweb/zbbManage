@@ -890,13 +890,14 @@ export default {
                 });
         },
         getMasterList(index) {
+            this.currentPage = index
             axios
                 .request({
                     url:
                         "apprentices/search?pagesize=" +
                         this.per_page +
                         "&page=" +
-                        index +
+                        this.currentPage +
                         "&" +
                         this.searchData.type1 +
                         "=" +

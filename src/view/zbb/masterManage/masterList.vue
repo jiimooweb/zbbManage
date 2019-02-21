@@ -807,13 +807,14 @@ export default {
                 });
         },
         getMasterList(index) {
+            this.currentPage = index
             axios
                 .request({
                     url:
                         "masters/search?pagesize=" +
                         this.per_page +
                         "&page=" +
-                        index +
+                        this.currentPage +
                         "&" +
                         this.searchData.type1 +
                         "=" +

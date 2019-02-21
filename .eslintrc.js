@@ -13,7 +13,7 @@ module.exports = {
   //     // 'no-debugger': 'off',
   //     // 'indent': 'off',
   //   },
-  parserOptions: {
-    parser: 'babel-eslint'
-  }
+  // parserOptions: {
+  //   parser: 'babel-eslint'
+  // }
 }
