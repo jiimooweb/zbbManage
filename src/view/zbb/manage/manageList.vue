@@ -1,7 +1,7 @@
 <template>
     <div>
         <Table stripe :columns="manageColumn" border :data="manageList"></Table>
-        <Modal v-model="EditModal" title='删除'>
+        <Modal v-model="EditModal" title='编辑'>
             <Card style="width:400px">
                 <i-form ref="formInline" class="formPage" :model="formInline" :rules="ruleInline" inline>
                     <FormItem prop="powers" class="formItem">
@@ -203,4 +203,25 @@ export default {
 </script>
 
 <style lang='less'>
+.formPage {
+    .formItem {
+        display: block;
+        margin: 25px auto;
+        .ivu-form-item-error-tip {
+            padding-left: 141.5px;
+        }
+        .formRow {
+            display: block;
+            height: 33px;
+            .lable {
+                display: block;
+                line-height: 33px;
+            }
+            .formInput {
+                // margin-left: 20px;
+                // width: 300px;
+            }
+        }
+    }
+}
 </style>
