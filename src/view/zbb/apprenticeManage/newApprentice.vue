@@ -115,7 +115,7 @@
                         </i-col>
                     </row>
                 </FormItem>
-                <FormItem style="margin:20px auto">
+                <FormItem style="margin:20px 0px 20px 400px">
                     <Button type="primary" @click="handleSubmit('formInline')">新增</Button>
                     <Button style="margin-left:10px;" @click="resetData('formInline')">重置</Button>
                 </FormItem>

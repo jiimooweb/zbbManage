@@ -399,7 +399,7 @@ export default {
             }
         },
         changeDate(t) {
-            this.searchData.type3Text = t;
+            this.searchData.type5Text = t;
         },
         showEdit(i) {
             this.editModal = i;
@@ -452,8 +452,8 @@ export default {
                         bank_number:(this.searchData.type4==='bank_number'?this.searchData.type4Text:''),//卡号
 
                         //type5
-                        created_at:(this.searchData.type5==='created_at'?this.searchData.type5Text:''),
-                        updated_at:(this.searchData.type5==='updated_at'?this.searchData.type5Text:''),
+                        created_at:(this.searchData.type5==='created_at'?(this.searchData.type5Text[0]===''?'':this.searchData.type5Text):''),
+                        updated_at:(this.searchData.type5==='updated_at'?(this.searchData.type5Text[0]===''?'':this.searchData.type5Text):''),
 
                         // bank_deposit:'',
                         state:(this.searchData.state===2?'':this.searchData.state)//审核状态
@@ -490,8 +490,8 @@ export default {
                         bank_number:(this.searchData.type4==='bank_number'?this.searchData.type4Text:''),//卡号
 
                         //type5
-                        created_at:(this.searchData.type5==='created_at'?this.searchData.type5Text:''),
-                        updated_at:(this.searchData.type5==='updated_at'?this.searchData.type5Text:''),
+                        created_at:(this.searchData.type5==='created_at'?(this.searchData.type5Text[0]===''?'':this.searchData.type5Text):''),
+                        updated_at:(this.searchData.type5==='updated_at'?(this.searchData.type5Text[0]===''?'':this.searchData.type5Text):''),
 
                         // bank_deposit:'',
                         state:(this.searchData.state===2?'':this.searchData.state)//审核状态
@@ -528,8 +528,8 @@ export default {
                         bank_number:(this.searchData.type4==='bank_number'?this.searchData.type4Text:''),//卡号
 
                         //type5
-                        created_at:(this.searchData.type5==='created_at'?this.searchData.type5Text:''),
-                        updated_at:(this.searchData.type5==='updated_at'?this.searchData.type5Text:''),
+                        created_at:(this.searchData.type5==='created_at'?(this.searchData.type5Text[0]===''?'':this.searchData.type5Text):''),
+                        updated_at:(this.searchData.type5==='updated_at'?(this.searchData.type5Text[0]===''?'':this.searchData.type5Text):''),
 
                         // bank_deposit:'',
                         state:(this.searchData.state===2?'':this.searchData.state)//审核状态

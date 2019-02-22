@@ -252,7 +252,7 @@
                         </i-col>
                     </row>
                 </FormItem> -->
-                <FormItem style="width:100%;">
+                <FormItem style="width:100%;" class="formItem">
                     <Button type="primary" style='margin:0 auto;display:block;' @click="handleSubmit('formInline')">提交</Button>
                     <!-- <Button style="margin-left:10px;" @click="resetData('formInline')">重置</Button> -->
                 </FormItem>
@@ -825,7 +825,7 @@ export default {
                         "=" +
                         (this.searchData.type3Text === ""
                             ? ""
-                            : JSON.stringify(this.searchData.type3Text)) +
+                            : JSON.stringify(this.searchData.type3Text[0]===''?'':this.searchData.type3Text)) +
                         "&disable=" +
                         (this.searchData.disable === 2
                             ? ""
@@ -868,7 +868,7 @@ export default {
                         "=" +
                         (this.searchData.type3Text === ""
                             ? ""
-                            : JSON.stringify(this.searchData.type3Text)) +
+                            : JSON.stringify(this.searchData.type3Text[0]===''?'':this.searchData.type3Text)) +
                         "&disable=" +
                         (this.searchData.disable === 2
                             ? ""
@@ -911,7 +911,7 @@ export default {
                         "=" +
                         (this.searchData.type3Text === ""
                             ? ""
-                            : JSON.stringify(this.searchData.type3Text)) +
+                            : JSON.stringify(this.searchData.type3Text[0]===''?'':this.searchData.type3Text)) +
                         "&disable=" +
                         (this.searchData.disable === 2
                             ? ""
@@ -988,5 +988,8 @@ export default {
     .ivu-select-dropdown {
         // width: 100px;
     }
+}
+.formItem{
+    width: 100%;
 }
 </style>

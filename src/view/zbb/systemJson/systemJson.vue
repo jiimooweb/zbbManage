@@ -10,17 +10,27 @@
                             <span style="lable">配置标识</span>
                         </i-col>
                         <i-col span='18'>
-                            <i-input placeholder="请输入配置标识" class="formInput" v-model="formInline.flag"></i-input>
+                            <i-input placeholder="请输入配置标识" class="formInput" v-model="formInline.flag" disabled></i-input>
+                        </i-col>
+                    </row>
+                </FormItem>
+                <FormItem prop="text" class="formItem">
+                    <row class="formRow">
+                        <i-col span='6'>
+                            <span style="lable">配置信息</span>
+                        </i-col>
+                        <i-col span='18'>
+                            <i-input placeholder="请输入配置信息" class="formInput" v-model="formInline.text"></i-input>
                         </i-col>
                     </row>
                 </FormItem>
                 <FormItem prop="param" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">配置信息</span>
+                            <span style="lable">配置值</span>
                         </i-col>
                         <i-col span='18'>
-                            <i-input placeholder="请输入配置信息" class="formInput" v-model="formInline.param"></i-input>
+                            <i-input placeholder="请输入配置值" class="formInput" v-model="formInline.param"></i-input>
                         </i-col>
                     </row>
                 </FormItem>
@@ -34,18 +44,19 @@
                         </i-col>
                     </row>
                 </FormItem>
+                
                 <FormItem prop="remark" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">备份</span>
+                            <span style="lable">备注</span>
                         </i-col>
                         <i-col span='18'>
-                            <i-input placeholder="请输入备份" class="formInput" v-model="formInline.remark"></i-input>
+                            <i-input placeholder="请输入备注" class="formInput" v-model="formInline.remark"></i-input>
                         </i-col>
                     </row>
                 </FormItem>
-                <FormItem style="margin:20px auto">
-                    <Button type="primary" @click="handleSubmit('formInline')">新增</Button>
+                <FormItem style="width:100%;">
+                    <Button type="primary" style="margin:20px auto;display:block;" @click="handleSubmit('formInline')">修改</Button>
                 </FormItem>
             </i-form>
         </Modal>
@@ -70,9 +81,9 @@ export default {
                     key: "flag"
                 },
                 {
-                    title: "配置信息",
+                    title: "配置值",
                     align: "center",
-                    key: "param"
+                    key: "text"
                 },
                 {
                     title: "配置组",
@@ -103,6 +114,7 @@ export default {
                                         this.currentId = params.row.id;
                                         this.formInline.flag = params.row.flag;
                                         this.formInline.param = params.row.param;
+                                        this.formInline.text = params.row.text;
                                         this.formInline.group = params.row.group;
                                         this.formInline.remark = params.row.remark;
                                         this.EditModal = true;
@@ -122,13 +134,13 @@ export default {
                         trigger: "blur"
                     }
                 ],
-                param: [
-                    {
-                        required: true,
-                        message: "请输入配置信息",
-                        trigger: "blur"
-                    }
-                ],
+                // param: [
+                //     {
+                //         required: true,
+                //         message: "请输入配置信息",
+                //         trigger: "blur"
+                //     }
+                // ],
                 group: [
                     {
                         required: true,
@@ -148,6 +160,7 @@ export default {
             formInline: {
                 flag: "",
                 param: "",
+                text:'',
                 group: "",
                 remark: ""
             },

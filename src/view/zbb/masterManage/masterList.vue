@@ -741,7 +741,7 @@ export default {
                         "=" +
                         (this.searchData.type3Text === ""
                             ? ""
-                            : JSON.stringify(this.searchData.type3Text)) +
+                            : JSON.stringify(this.searchData.type3Text[0]===''?'':this.searchData.type3Text)) +
                         "&disable=" +
                         (this.searchData.disable === 2
                             ? ""
@@ -785,7 +785,7 @@ export default {
                         "=" +
                         (this.searchData.type3Text === ""
                             ? ""
-                            : JSON.stringify(this.searchData.type3Text)) +
+                            : JSON.stringify(this.searchData.type3Text[0]===''?'':this.searchData.type3Text)) +
                         "&disable=" +
                         (this.searchData.disable === 2
                             ? ""
@@ -828,7 +828,7 @@ export default {
                         "=" +
                         (this.searchData.type3Text === ""
                             ? ""
-                            : JSON.stringify(this.searchData.type3Text)) +
+                            : JSON.stringify(this.searchData.type3Text[0]===''?'':this.searchData.type3Text)) +
                         "&disable=" +
                         (this.searchData.disable === 2
                             ? ""
