@@ -565,13 +565,18 @@ export default {
                     title: "最后登录IP",
                     align: "center",
                     width: "200",
-                    key: "ip"
+                    // key: "ip"
+                    render:(h,params)=> {
+                        return h('p',params.row.login_records[0].ip)
+                    },
                 },
                 {
                     title: "最后登录时间",
                     align: "center",
                     width: "200",
-                    key: "login_time"
+                    render:(h,params)=> {
+                        return h('p',params.row.login_records[0].time)
+                    },
                 },
                 {
                     title: "创建日期",

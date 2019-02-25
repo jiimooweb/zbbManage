@@ -8,7 +8,7 @@
                             <span style="lable">用户组</span>
                         </i-col>
                         <i-col span='18'>
-                            <Select v-model="formInline.powers">
+                            <Select v-model="formInline.page">
                                 <Option v-for="(item,index) in groupsList" :value="item.id" :key="index">{{ item.name }}</Option>
                             </Select>
                         </i-col>
