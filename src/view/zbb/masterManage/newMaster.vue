@@ -228,8 +228,10 @@ export default {
                             this.resetData("formInline");
                         })
                         .catch(err => {
-                            for(let i in err.response.data.errors){
-                                this.$Message.error(err.response.data.errors[i][0]);
+                            for (let i in err.response.data.errors) {
+                                this.$Message.error(
+                                    err.response.data.errors[i][0]
+                                );
                             }
                         });
                 } else {
@@ -253,9 +255,12 @@ export default {
         .ivu-form-item-error-tip {
             padding-left: 141.5px;
         }
+        // .formRow.textarea{
+        //     height: 94px;
+        // }
         .formRow {
             display: block;
-            height: 33px;
+            // height: 33px;
             .lable {
                 display: block;
                 line-height: 33px;
