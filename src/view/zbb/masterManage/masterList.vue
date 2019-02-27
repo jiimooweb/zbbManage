@@ -555,12 +555,12 @@ export default {
                     width: "100",
                     key: "a"
                 },
-                {
-                    title: "推荐人",
-                    align: "center",
-                    width: "100",
-                    key: "referral_id"
-                },
+                // {
+                //     title: "推荐人",
+                //     align: "center",
+                //     width: "100",
+                //     key: "referral_id"
+                // },
                 {
                     title: "最后登录IP",
                     align: "center",

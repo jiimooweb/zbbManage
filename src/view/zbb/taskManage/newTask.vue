@@ -1,7 +1,20 @@
 <template>
     <div>
         <Card style="width:900px">
+            
             <i-form ref="formInline" class="formPage" :model="formInline" :rules="ruleInline" inline>
+                <FormItem prop="merchant_id" class="formItem">
+                    <row class="formRow">
+                        <i-col span='4'>
+                            <span style="lable">客户:</span>
+                        </i-col>
+                        <i-col span='18'>
+                            <Select v-model="formInline.merchant_id" @on-change='getSelectData'>
+                                <Option :value='index' v-for="(item, index) in meerchatList" :key="index">{{item.name}}</Option>
+                            </Select>
+                        </i-col>
+                    </row>
+                </FormItem>
                 <FormItem prop="title" class="formItem">
                     <row class="formRow">
                         <i-col span='4'>
@@ -33,8 +46,9 @@
                             <span style="lable">悬赏金额:</span>
                         </i-col>
                         <i-col span='18'>
-                            <InputNumber :min="0" :active-change='false' :value="formInline.share_price" style="width: 200px"
-                                :precision='2' placeholder='输入金额'></InputNumber>
+                            <!-- <InputNumber :min="0" :active-change='false' :value="formInline.share_price" style="width: 200px"
+                                :precision='2' placeholder='输入金额'></InputNumber> -->
+                                <i-input placeholder="输入金额" class="formInput" v-model.number="formInline.share_price" type="number"></i-input>
                         </i-col>
                     </row>
                 </FormItem>
@@ -44,8 +58,9 @@
                             <span style="lable">领取名额:</span>
                         </i-col>
                         <i-col span='18'>
-                            <InputNumber :min="1" :value="formInline.num" style="width: 200px" :precision='0'
-                                placeholder='输入名额'></InputNumber>
+                            <i-input placeholder="输入名额" class="formInput" v-model.number="formInline.num" type="number"></i-input>
+                            <!-- <InputNumber :min="1" :value="formInline.num" style="width: 200px" :precision='0'
+                                placeholder='输入名额'></InputNumber> -->
                         </i-col>
                     </row>
                 </FormItem>
@@ -60,7 +75,17 @@
                         </i-col>
                     </row>
                 </FormItem>
-                <FormItem prop="start_time" class="formItem textarea" v-if="formInline.type===0">
+                <FormItem prop="time_limit" class="formItem">
+                    <row class="formRow">
+                        <i-col span='4'>
+                            <span style="lable">时间限制（分钟）:</span>
+                        </i-col>
+                        <i-col span='18'>
+                            <i-input placeholder="输入时间限制" class="formInput" v-model.number="formInline.time_limit" type="number"></i-input>
+                        </i-col>
+                    </row>
+                </FormItem>
+                <FormItem prop="wx_content" class="formItem textarea" v-if="formInline.type===0">
                     <row class="formRow">
                         <i-col span='4'>
                             <span style="lable">文案:</span>
@@ -70,7 +95,7 @@
                         </i-col>
                     </row>
                 </FormItem>
-                <FormItem prop="wx_qrcode" class="formItem" v-if="formInline.type===0">
+                <FormItem prop="qrcode_url" class="formItem" v-if="formInline.type===0">
                     <row class="formRow">
                         <i-col span='4'>
                             <span style="lable">二维码图片：</span>
@@ -80,14 +105,15 @@
                                 <Icon type="ios-loading" size=18 class="demo-spin-icon-load"></Icon>
                                 <div>上传中~~~</div>
                             </Spin>
-                            <Upload style="margin-bottom:10px;" action="http://120.79.203.214/zbb/public/upload"
+                            <Upload style="margin-bottom:10px;" action="http://120.79.203.214/zbb/public/qrcode-reader"
                                 :on-success='successUpload3' :before-upload='beforeUpload3' :show-upload-list='false'
                                 :headers="headers">
                                 <Button icon="md-add" class="btnUp">
                                     上传图片
                                 </Button>
                             </Upload>
-                            <img :src="formInline.wx_qrcode" width="150px" style="float:left;margin-right:10px;margin-bottom:10px;">
+                            <!-- <img :src="formInline.qrcode_url" width="150px" style="float:left;margin-right:10px;margin-bottom:10px;"> -->
+                            <p>{{formInline.qrcode_url}}</p>
                         </i-col>
                     </row>
                 </FormItem>
@@ -107,7 +133,7 @@
                                 :headers="headers" multiple>
                                 <Button icon="ios-cloud-upload-outline">上传图片(最多9张)</Button>
                             </Upload>
-                            <img v-for="(item,index) in formInline.images" :key="index" :src="formInline.images[index]"
+                            <img v-for="(item,index) in formInline.images" :key="index" :src="picHead+formInline.images[index]"
                                 width="150px" style="float:left;margin-right:10px;margin-bottom:10px;">
                         </i-col>
                     </row>
@@ -123,7 +149,7 @@
                             <Checkbox label="香蕉" :value='true' disabled v-if="formInline.type===1">必须观看(播放)完1次以上</Checkbox>
                             <Checkbox label="香蕉" :value='true' disabled v-if="formInline.type===2">浏览5分钟以上，并浏览到底部</Checkbox>
                             <CheckboxGroup v-model="disabledGroup" @on-change='changeCheck'>
-                                <Checkbox label="SUBSCRBE">关注</Checkbox>
+                                <Checkbox label="SUBSCRIBE">关注</Checkbox>
                                 <Checkbox label="LIKE">点赞</Checkbox>
                                 <Checkbox label="SHARE" v-if="formInline.type===1">转发到抖音</Checkbox>
                                 <Checkbox label="SHARE" v-if="formInline.type===2">转发到头条</Checkbox>
@@ -152,7 +178,7 @@
                                     <span v-else>上传今日头条作品截图</span>
                                 </Button>
                             </Upload>
-                            <img v-for="(item,index) in formInline.images" :key="index" :src="formInline.images[index]"
+                            <img v-for="(item,index) in formInline.images" :key="index" :src="picHead+formInline.images[index]"
                                 width="150px" style="float:left;margin-right:10px;margin-bottom:10px;">
                         </i-col>
                     </row>
@@ -186,7 +212,7 @@
                                     上传图片
                                 </Button>
                             </Upload>
-                            <img :src="formInline.share_thumb" width="150px" style="float:left;margin-right:10px;margin-bottom:10px;">
+                            <img :src="picHead+formInline.share_thumb" width="150px" style="float:left;margin-right:10px;margin-bottom:10px;">
                         </i-col>
                     </row>
                 </FormItem>
@@ -207,10 +233,11 @@
                             <span style="lable">预计金额:</span>
                         </i-col>
                         <i-col span='18'>
-                            <p>{{total_price}}元</p>
+                            <p>{{price}}元</p>
                         </i-col>
                     </row>
                 </FormItem>
+                <div id="qrcode" ref="qrcode"></div>
                 <FormItem style="margin:20px 0px 20px 400px">
                     <Button type="primary" @click="handleSubmit('formInline')">新增</Button>
                     <!-- <Button type="primary" @click="clicka()">新增</Button> -->
@@ -224,8 +251,10 @@
 
 <script>
 import axios from "@/libs/api.request";
+// import tools from "@/libs/tools";
 import Cookies from "js-cookie";
 import VueUeditorWrap from "vue-ueditor-wrap";
+import QRCode from "qrcodejs2";
 export default {
     computed: {
         headers() {
@@ -233,11 +262,45 @@ export default {
                 token: Cookies.get("token")
                 // token: localStorage.getItem('')
             };
+        },
+        price(){
+            // let a = 0
+            if(this.formInline.type === 0){
+                //朋友圈
+                this.total_price = this.WECHAT_MERCHANT_COST * this.formInline.num
+            }else if(this.formInline.type === 1){
+                //抖音
+                this.total_price =  (parseFloat(this.formInline.dy_request.indexOf('SUBSCRIBE')>-1?this.DY_MERCHANT_SUBSCRIBE:0) +
+                parseFloat(this.formInline.dy_request.indexOf('LIKE')>-1?this.DY_MERCHANT_LIKE:0) +
+                parseFloat(this.formInline.dy_request.indexOf('SHARE')>-1?this.DY_MERCHANT_SHARE:0) +
+                parseFloat(this.formInline.dy_request.indexOf('COMMENT')>-1?this.DY_MERCHANT_COMMENT:0)) * 10
+
+                this.total_price = this.total_price  * this.formInline.num
+                this.total_price = this.total_price  / 10            
+            }else if(this.formInline.type === 2){
+                //头条
+                this.total_price = 
+                (parseFloat(this.formInline.tt_request.indexOf('SUBSCRIBE')>-1?this.TT_MERCHANT_SUBSCRIBE:0) +
+                parseFloat(this.formInline.tt_request.indexOf('LIKE')>-1?this.TT_MERCHANT_LIKE:0) +
+                parseFloat(this.formInline.tt_request.indexOf('SHARE')>-1?this.TT_MERCHANT_SHARE:0) +
+                parseFloat(this.formInline.tt_request.indexOf('COMMENT')>-1?this.TT_MERCHANT_COMMENT:0)) * 10
+
+                this.total_price = this.total_price  * this.formInline.num
+                this.total_price = this.total_price  / 10
+            }else if(this.formInline.type === 3){
+                this.total_price =  this.formInline.share_price * 10
+                this.total_price =  this.total_price * this.formInline.num
+                this.total_price =  this.total_price / 10
+            }
+            console.log(this.formInline.share_price * this.formInline.num);
+            
+            return this.total_price
         }
     },
-    components: { VueUeditorWrap },
+    components: { VueUeditorWrap,QRCode },
     data() {
         return {
+            meerchatList:[],
             msg: '<h2><img src="http://img.baidu.com/hi/jx2/j_0003.gif"/></h2>',
             myConfig: {
                 // 编辑器不自动被内容撑高
@@ -258,6 +321,8 @@ export default {
             spinShow2: false,
             disabledGroup: [],
             total_price: 0,
+            meerchatList:'',
+            picHead:'',
             formInline: {
                 merchant_id:'',
                 //通用
@@ -265,11 +330,12 @@ export default {
                 type: 0,
                 num: 10, //领取名额
                 start_time: "", //任务时间
+                time_limit:'',
                 images: [
                     // "http://img2.imgtn.bdimg.com/it/u=3496345838,732839400&fm=26&gp=0.jpg"
                 ], //图片信息
                 //朋友圈
-                wx_qrcode: "", //二维码
+                qrcode_url: "", //二维码
                 wx_content: "", //微信文案
 
                 //抖音
@@ -283,16 +349,41 @@ export default {
 
                 //软文推广
                 share_price: 0.0, //赏金
-                share_thumb: "", //分享封面
+                share_thumb: "http://img.baidu.com/hi/jx2/j_0003.gif", //分享封面
                 share_content:
                     '<h2><img src="http://img.baidu.com/hi/jx2/j_0003.gif"/></h2>' //分享文章内容
             },
             ruleInline: {
+                merchant_id: [
+                    {
+                        // required: true,
+                        // message: "请选择发布客户",
+                        // trigger: "blur"
+                        validator(rule, value, callback, source, options) {
+                            var errors = [];
+                            if (!value && value !== 0) {
+                                callback("请选择发布客户");
+                            }
+                            callback(errors);
+                        }
+                    }
+                ],
                 title: [
                     {
                         required: true,
                         message: "请输入标题",
                         trigger: "blur"
+                    }
+                ],
+                share_price: [
+                    {
+                        validator(rule, value, callback, source, options) {
+                            var errors = [];
+                            if (!value && value !== 0) {
+                                callback("请输入金额");
+                            }
+                            callback(errors);
+                        }
                     }
                 ],
                 num: [
@@ -313,6 +404,17 @@ export default {
                         trigger: "blur"
                     }
                 ],
+                time_limit:[
+                    {
+                        validator(rule, value, callback, source, options) {
+                            var errors = [];
+                            if (!value) {
+                                callback("请输入时间限制");
+                            }
+                            callback(errors);
+                        }
+                    }
+                ],
                 // images: [
                 //     {
                 //         required: true,
@@ -328,21 +430,67 @@ export default {
                     }
                 ],
                 share_thumb: [
+                    
                     {
-                        required: true,
-                        message: "请选择标题图片",
-                        trigger: "blur"
+                        // required: true,
+                        // message: "请选择标题图片",
+                        // trigger: "blur"
+                        validator(rule, value, callback, source, options) {
+                            var errors = [];
+                            if (!value) {
+                                callback("请选择标题图片");
+                            }
+                            callback(errors);
+                        }
                     }
                 ]
             },
-            editorInstance: ""
+            editorInstance: "",//ueditor实例对象
+            JsonFilterArr:[
+                'SHARE_MERCHANT_COST',//分享赚
+                'WECHAT_MERCHANT_COST',//发圈赚
+                'DY_MERCHANT_SUBSCRIBE',//抖音赚 关注
+                'DY_MERCHANT_LIKE',//抖音赚 点赞
+                'DY_MERCHANT_SHARE',//抖音赚 转发
+                'DY_MERCHANT_COMMENT',//抖音赚 评论
+                
+                'TT_MERCHANT_SUBSCRIBE',//头条赚 关注
+                'TT_MERCHANT_LIKE',//头条赚 点赞
+                'TT_MERCHANT_SHARE',//头条赚 转发
+                'TT_MERCHANT_COMMENT',//头条赚 评论
+            ],
+            SHARE_MERCHANT_COST:'',//分享赚
+            WECHAT_MERCHANT_COST:'',//发圈赚
+
+            DY_MERCHANT_SUBSCRIBE:'',//抖音赚 关注
+            DY_MERCHANT_LIKE:'',//抖音赚 点赞
+            DY_MERCHANT_SHARE:'',//抖音赚 转发
+            DY_MERCHANT_COMMENT:'',//抖音赚 评论
+            
+            TT_MERCHANT_SUBSCRIBE:'',//头条赚 关注
+            TT_MERCHANT_LIKE:'',//头条赚 点赞
+            TT_MERCHANT_SHARE:'',//头条赚 转发
+            TT_MERCHANT_COMMENT:'',//头条赚 评论
         };
     },
-    mounted() {},
+    mounted() {
+        // this.qrcode()
+        this.getJson()
+        this.getMerchatList()
+    },
     methods: {
+        qrcode() {
+            this.$nextTick (() => {
+                let qrcode = new QRCode("qrcode", {
+                    width: 232, // 设置宽度
+                    height: 232, // 设置高度
+                    text: "https://zhlsqj.com/#/destroyTicket?id="
+                });
+            })
+        },
         ready(editorInstance) {
             this.editorInstance = editorInstance;
-            console.log(`实例${editorInstance.key}已经初始化:`, editorInstance);
+            // console.log(`实例${editorInstance.key}已经初始化:`, editorInstance);
             // editorInstance.setContent('ueditor', { zIndex: 100});
             // UE.getEditor('ueditor');
         },
@@ -350,6 +498,22 @@ export default {
         //     let a = this.editorInstance.getContentTxt()
         //     console.log(this.msg);
         // },
+        getSelectData(index){
+            //获取单一客户资料
+            console.log(this.formInline.merchant_id);
+            this.SHARE_MERCHANT_COST = this.meerchatList[index].share_commission//分享赚
+            this.WECHAT_MERCHANT_COST = this.meerchatList[index].wx_commission//发圈赚
+
+            this.DY_MERCHANT_SUBSCRIBE = this.meerchatList[index].dy_subscribe//抖音赚 关注
+            this.DY_MERCHANT_LIKE = this.meerchatList[index].dy_like//抖音赚 点赞
+            this.DY_MERCHANT_SHARE = this.meerchatList[index].dy_share//抖音赚 转发
+            this.DY_MERCHANT_COMMENT = this.meerchatList[index].dy_comment//抖音赚 评论
+            
+            this.TT_MERCHANT_SUBSCRIBE = this.meerchatList[index]//头条赚 关注
+            this.TT_MERCHANT_LIKE = this.meerchatList[index]//头条赚 点赞
+            this.TT_MERCHANT_SHARE = this.meerchatList[index]//头条赚 转发
+            this.TT_MERCHANT_COMMENT = this.meerchatList[index]//头条赚 评论
+        },
         changeType(type) {
             // console.log(type);
             // this.resetData("formInline");
@@ -364,7 +528,7 @@ export default {
                 this.formInline.tt_request = arr;
             }
             console.log(this.formInline.dy_request);
-            console.log(this.formInline.tt_request);
+            // console.log(this.formInline.tt_request);
         },
         changeDate(date1, date2) {
             this.formInline.start_time = date1;
@@ -372,10 +536,11 @@ export default {
         //upload
         successUpload(file) {
             this.spinShow = false;
+            this.picHead = file.baseUrl + '/'
             this.formInline.images.push(file.url);
         },
         beforeUpload(file) {
-            if (this.formInline.images.length >= 9) {
+            if ((this.formInline.images.length + (this.formInline.qrcode_url===''?0:1)) >= 9) {
                 this.$Message.error("上传数量不能大于9张");
                 return false;
             }
@@ -394,6 +559,7 @@ export default {
             }
             this.spinShow = false;
             this.formInline.images = [];
+            this.picHead = file.baseUrl + '/'
             this.formInline.images.push(file.url);
         },
         beforeUpload1(file) {
@@ -411,6 +577,7 @@ export default {
                     }
                 });
             }
+            this.picHead = file.baseUrl + '/'
             this.spinShow = false;
             this.formInline.share_thumb = file.url;
         },
@@ -419,39 +586,68 @@ export default {
         },
         //3
         successUpload3(file) {
-            console.log(file.baseUrl + "/" + file.url);
-
-            if (this.formInline.wx_qrcode !== "") {
-                axios.request({
-                    url: "http://120.79.203.214/zbb/public/delete",
-                    method: "post",
-                    data: {
-                        url: this.formInline.wx_qrcode
-                    }
-                });
-            }
+            // console.log(file);  
             this.spinShow = false;
-            this.formInline.wx_qrcode = file.baseUrl + "/" + file.url;
+            // this.picHead = file.baseUrl
+            if(file.msg){
+                this.$Message.error(file.msg)
+                return
+            }
+            this.formInline.qrcode_url = file
         },
         beforeUpload3(file) {
             this.spinShow = true;
         },
+
+        getMerchatList(){
+            //获取所有客户
+            axios.request({
+                url:'merchants/all',
+                method:'get'
+            }).then(res=>{
+                // console.log(res);
+                
+                this.meerchatList = res.data.data
+            })
+        },
+        getJson(){
+            //获取系统配置
+            axios.request({
+                url:'system/configs',
+                method:'get'
+            }).then(res=>{
+                this.sysJson = res.data.data
+                for(let i=0;i<this.JsonFilterArr.length;i++){
+                    for(let j=0;j<this.sysJson.length;j++){
+                        if(this.JsonFilterArr[i] === this.sysJson[j].flag){
+                            this.$data[this.JsonFilterArr[i]] = this.sysJson[j].param
+                        }
+                    }
+                }
+                // console.log(this.sysJson);
+            })
+        },
+        
         handleSubmit(name) {
             this.$refs[name].validate(valid => {
                 if (valid) {
                     axios
                         .request({
+                            // url: "http://120.79.203.214/zbb/public/total",
                             url: "task/tasks",
                             method: "post",
                             data: {
                                 //通用
+                                total_price:this.total_price,
+                                merchant_id: this.meerchatList[this.formInline.merchant_id].id,
                                 title: this.formInline.title,
                                 type: this.formInline.type,
                                 num: this.formInline.num, //领取名额
                                 start_time: this.formInline.start_time, //任务时间
+                                time_limit: this.formInline.time_limit,
                                 images: this.formInline.images, //图片信息
                                 //朋友圈
-                                wx_qrcode: this.formInline.wx_qrcode, //二维码
+                                qrcode_url: this.formInline.qrcode_url, //二维码
                                 wx_content: this.formInline.wx_content, //微信文案
 
                                 //抖音
@@ -470,15 +666,13 @@ export default {
                             }
                         })
                         .then(res => {
+                            // console.log(res);
+                            
                             this.$Message.success("新建成功");
                             this.resetData("formInline");
                         })
                         .catch(err => {
-                            for (let i in err.response.data.errors) {
-                                this.$Message.error(
-                                    err.response.data.errors[i][0]
-                                );
-                            }
+                            this.$Message.error(err.response.data.msg);
                         });
                 } else {
                     this.$Message.error("填写的资料有误!");
@@ -495,6 +689,8 @@ export default {
                 type: index,
                 num: 10, //领取名额
                 start_time: "", //任务时间
+                time_limit:'',
+                qrcode_url:'',
                 images: [
                     // "http://img2.imgtn.bdimg.com/it/u=3496345838,732839400&fm=26&gp=0.jpg"
                 ], //图片信息
