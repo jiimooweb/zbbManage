@@ -2,6 +2,20 @@
     <div>
         <Card style="width:600px">
             <i-form ref="formInline" class="formPage" :model="formInline" :rules="ruleInline" inline>
+                <FormItem prop="type" class="formItem">
+                    <row class="formRow">
+                        <i-col span='6'>
+                            <span style="lable">类型:</span>
+                        </i-col>
+                        <i-col span='18'>
+                            <Select v-model="formInline.type">
+                                <Option value='Merchant' key="Merchant">商户</Option>
+                                <Option value='Master' key="Master">师傅</Option>
+                                <Option value='Apprentice' key="Apprentice">徒弟</Option>
+                            </Select>
+                        </i-col>
+                    </row>
+                </FormItem>
                 <FormItem prop="name" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
@@ -52,6 +66,16 @@
                         </i-col>
                     </row>
                 </FormItem>
+                <FormItem prop="remark" class="formItem">
+                    <row class="formRow">
+                        <i-col span='6'>
+                            <span style="lable">备注:</span>
+                        </i-col>
+                        <i-col span='18'>
+                            <i-input placeholder="输入备注" class="formInput" v-model="formInline.remark"></i-input>
+                        </i-col>
+                    </row>
+                </FormItem>
                 <FormItem style="margin:20px 0px 20px 400px">
                     <Button type="primary" @click="handleSubmit('formInline')">新增</Button>
                     <Button style="margin-left:10px;" @click="resetData('formInline')">重置</Button>
@@ -70,7 +94,9 @@ export default {
 				nickname:'',
 				phone:'',
 				qq:'',
-				wx:''
+                wx:'',
+                type:'Merchant',
+                remark:''
 			},
 			ruleInline: {
                 name: [
@@ -126,6 +152,8 @@ export default {
                                 wx: this.formInline.wx,
                                 qq: this.formInline.qq,
                                 phone: this.formInline.phone,
+                                type: this.formInline.type,
+                                remark: this.formInline.remark,
                             }
                         })
                         .then(res => {

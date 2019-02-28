@@ -6,6 +6,20 @@
             :page-size-opts='pageSize' @on-change="getchangeList" @on-page-size-change='changePageGetList' />
         <Modal v-model="editModal" title="客服资料" :mask-closable="false" footer-hide>
             <i-form ref="formInline" class="formPage" :model="formInline" :rules="ruleInline" inline>
+                <FormItem prop="type" class="formItem">
+                    <row class="formRow">
+                        <i-col span='6'>
+                            <span style="lable">类型:</span>
+                        </i-col>
+                        <i-col span='18'>
+                            <Select v-model="formInline.type">
+                                <Option value='Merchant' key="Merchant">商户</Option>
+                                <Option value='Master' key="Master">师傅</Option>
+                                <Option value='Apprentice' key="Apprentice">徒弟</Option>
+                            </Select>
+                        </i-col>
+                    </row>
+                </FormItem>
                 <FormItem prop="name" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
@@ -56,6 +70,16 @@
                         </i-col>
                     </row>
                 </FormItem>
+                <FormItem prop="remark" class="formItem">
+                    <row class="formRow">
+                        <i-col span='6'>
+                            <span style="lable">备注:</span>
+                        </i-col>
+                        <i-col span='18'>
+                            <i-input placeholder="输入备注" class="formInput" v-model="formInline.remark"></i-input>
+                        </i-col>
+                    </row>
+                </FormItem>
                 <FormItem class="formItem">
                     <Button type="primary" @click="handleSubmit('formInline')" style="margin:20px auto;display:block;">提交</Button>
                 </FormItem>
@@ -79,7 +103,9 @@ export default {
 				nickname:'',
 				phone:'',
 				qq:'',
-				wx:''
+                wx:'',
+                type:'Merchant',
+                remark:''
 			},
             column: [
                 {
@@ -96,24 +122,43 @@ export default {
                     }
                 },
                 {
+                    title: "类型",
+                    // key: "type"
+                    render:(h,params)=> {
+                        return h('p',
+                            params.row.type === 'Merchant'?'商户':(params.row.type === 'Master'?'师傅':'徒弟')
+                        )
+                    },
+                },
+                {
                     title: "真实姓名",
+                    // width:100,
                     key: "name"
                 },
                 {
                     title: "昵称",
+                    // width:100,
                     key: "nickname"
                 },
                 {
                     title: "微信号",
+                    // width:150,
                     key: "wx"
                 },
                 {
                     title: "QQ号",
+                    // width:100,
                     key: "qq"
                 },
                 {
                     title: "手机号码",
+                    // width:100,
                     key: "phone"
+                },
+                {
+                    title: "备注",
+                    width:200,
+                    key: "remark"
                 },
                 {
                     title: "操作",
@@ -141,6 +186,8 @@ export default {
                                             this.formInline.wx = params.row.wx
                                             this.formInline.qq = params.row.qq
                                             this.formInline.phone = params.row.phone
+                                            this.formInline.type = params.row.type
+                                            this.formInline.remark = params.row.remark
                                         }
                                     }
                                 },
@@ -222,6 +269,8 @@ export default {
                                 wx: this.formInline.wx,
                                 qq: this.formInline.qq,
                                 phone: this.formInline.phone,
+                                type: this.formInline.type,
+                                remark: this.formInline.remark,
                             }
                         })
                         .then(res => {
