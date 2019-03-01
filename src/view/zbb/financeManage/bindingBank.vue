@@ -6,9 +6,9 @@
                     <row>
                         <i-col span='10'>
                             <FormItem prop="type1">
-                                <Select v-model="searchData.type1">
-                                    <Option value="username">用户账户</Option>
+                                <Select v-model="searchData.type1" @on-change="changeType1">
                                     <Option value="man_id">用户ID</Option>
+                                    <Option value="username">用户账户</Option>
                                     <Option value="check_">审核ID</Option>
                                     <Option value="man_name">真实姓名</Option>
                                 </Select>
@@ -158,7 +158,7 @@ export default {
             editModal: false,
             deleteName: "",
             searchData: {
-                type1: "username",
+                type1: "man_id",
                 type1Text: "",
                 manType:2,
                 type3: "bank_name",
@@ -235,7 +235,7 @@ export default {
                     width: "200",
                     // key: "bank_id"
                     render:(h,params)=> {
-                        return h('p',params.row.bank.id)
+                        return h('p',params.row.bank===null?'无':params.row.bank.id)
                     },
                 },{
                     title: "银行名称",
@@ -243,23 +243,32 @@ export default {
                     width: "200",
                     // key: "bank_name"
                     render:(h,params)=> {
-                        return h('p',params.row.bank.name)
+                        return h('p',params.row.bank===null?'无':params.row.bank.name)
+                    },
+                },{
+                    title: "持卡人姓名",
+                    align: "center",
+                    width: "200",
+                    // key: "bank_man"
+                    render:(h,params)=> {
+                        return h('p',params.row.bank_man===null?'无':params.row.bank_man)
                     },
                 },{
                     title: "卡号",
                     align: "center",
                     width: "200",
-                    key: "bank_number"
+                    // key: "bank_number"
+                    render:(h,params)=> {
+                        return h('p',params.row.bank_number===null?'无':params.row.bank_number)
+                    },
                 },{
                     title: "支付宝号",
                     align: "center",
                     width: "200",
-                    key: "alipay"
-                },{
-                    title: "持卡人姓名",
-                    align: "center",
-                    width: "200",
-                    key: "bank_man"
+                    // key: "alipay"
+                    render:(h,params)=> {
+                        return h('p',params.row.alipay===null?'无':params.row.alipay)
+                    },
                 },{
                     title: "真实姓名",
                     align: "center",
@@ -296,6 +305,7 @@ export default {
                         if(params.row.id_card){
                             return h('img',{
                                 attrs:{
+                                    style:'width:70px;height:70px;display:block;',
                                     src:params.row.id_card
                                 }
                             })
@@ -370,6 +380,12 @@ export default {
         };
     },
     methods: {
+        changeType1(i){
+            console.log(i);
+            if((i === 'username' || i==='man_name') && this.searchData.manType === 2){
+                this.searchData.manType = 'Master'
+            }
+        },
         cancelcancel(i) {
             this.cancelModal = i;
         },
