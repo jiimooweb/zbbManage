@@ -8,7 +8,7 @@
                             <span style="lable">所属分类:</span>
                         </i-col>
                         <i-col span='18'>
-                            <Select v-model="formInline.page">
+                            <Select v-model="formInline.flag">
                                 <Option value='Swiper' key="Swiper">首页幻灯</Option>
                                 <Option value='Top' key="Top">文章顶部</Option>
                                 <Option value='Bottom' key="Bottom">文章底部</Option>
@@ -100,7 +100,7 @@ export default {
         return {
             spinShow: false,
             formInline: {
-                page: "Swiper",
+                flag: "Swiper",
                 title: "",
                 url: "",
                 sort: "",
@@ -143,7 +143,7 @@ export default {
                             url: "ads",
                             method: "post",
                             data: {
-                                page: this.formInline.page,
+                                flag: this.formInline.flag,
                                 title: this.formInline.title,
                                 url: this.formInline.url,
                                 sort: this.formInline.sort,

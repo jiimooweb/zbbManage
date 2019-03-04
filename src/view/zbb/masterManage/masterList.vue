@@ -113,7 +113,7 @@
                 <Button type='error' @click="returnAdd()">批量拒绝</Button>
             </i-col> -->
             <i-col span='2' offset='20'>
-                <Button type="error" @click="returnExcel()">导出</Button>
+                <Button type="error" style="float:right;margin-bottom:10px;" @click="returnExcel()">导出</Button>
             </i-col>
         </row>
         <Table stripe :columns="masterColumn" border :data="masterList" @on-select='selectItem'></Table>
@@ -523,7 +523,22 @@ export default {
                     title: "邮箱",
                     align: "center",
                     width: "200",
-                    key: "email"
+                    // key: "email"
+                    render: (h, params) => {
+                        return h(
+                            "p",
+                            {
+                                attrs: {
+                                    style:
+                                        "color:#" +
+                                        (params.row.email !== ""
+                                            ? "19be6b"
+                                            : "ed4014")
+                                }
+                            },
+                            params.row.email === "" ? "无" : params.row.email
+                        );
+                    }
                 },
                 {
                     title: "备注",
@@ -553,7 +568,7 @@ export default {
                     title: "余额",
                     align: "center",
                     width: "100",
-                    key: "a"
+                    key: "balance"
                 },
                 // {
                 //     title: "推荐人",
@@ -566,17 +581,17 @@ export default {
                     align: "center",
                     width: "200",
                     // key: "ip"
-                    render:(h,params)=> {
-                        return h('p',params.row.login_records[0].ip)
-                    },
+                    render: (h, params) => {
+                        return h("p", params.row.login_records.length===0?'无':params.row.login_records[0].ip);
+                    }
                 },
                 {
                     title: "最后登录时间",
                     align: "center",
                     width: "200",
-                    render:(h,params)=> {
-                        return h('p',params.row.login_records[0].time)
-                    },
+                    render: (h, params) => {
+                        return h("p", params.row.login_records.length===0?'无':params.row.login_records[0].time);
+                    }
                 },
                 {
                     title: "创建日期",
@@ -670,6 +685,40 @@ export default {
         };
     },
     methods: {
+        //导出
+        returnExcel() {
+            let url =
+                "http://120.79.203.214/zbb/public/backend/masters/export?" +
+                "&" +
+                this.searchData.type1 +
+                "=" +
+                this.searchData.type1Text +
+                "&" +
+                this.searchData.type2 +
+                "=" +
+                this.searchData.type2Text +
+                "&" +
+                this.searchData.type3 +
+                "=" +
+                (this.searchData.type3Text === ""
+                    ? ""
+                    : JSON.stringify(
+                          this.searchData.type3Text[0] === ""
+                              ? ""
+                              : this.searchData.type3Text
+                      )) +
+                "&disable=" +
+                (this.searchData.disable === 2 ? "" : this.searchData.disable) +
+                "&blacklist=" +
+                (this.searchData.blacklist === 2
+                    ? ""
+                    : this.searchData.blacklist) +
+                "&sex=" +
+                (this.searchData.sex === 2 ? "" : this.searchData.sex);
+                
+                
+            window.open(url);
+        },
         cancelcancel(i) {
             this.cancelModal = i;
         },
@@ -684,9 +733,6 @@ export default {
                     this.cancelcancel(false);
                     this.searchList();
                 });
-        },
-        returnExcel() {
-            //导出excel
         },
         returnAdd() {
             this.$router.push({ path: "/newMaster" });
@@ -746,7 +792,11 @@ export default {
                         "=" +
                         (this.searchData.type3Text === ""
                             ? ""
-                            : JSON.stringify(this.searchData.type3Text[0]===''?'':this.searchData.type3Text)) +
+                            : JSON.stringify(
+                                  this.searchData.type3Text[0] === ""
+                                      ? ""
+                                      : this.searchData.type3Text
+                              )) +
                         "&disable=" +
                         (this.searchData.disable === 2
                             ? ""
@@ -765,7 +815,7 @@ export default {
 
                     this.currentPage = res.data.data.current_page;
                     this.per_page = res.data.data.per_page;
-                    this.$Message.success("搜索成功");
+                    // this.$Message.success("搜索成功");
                 });
         },
         changePageGetList(size) {
@@ -790,7 +840,11 @@ export default {
                         "=" +
                         (this.searchData.type3Text === ""
                             ? ""
-                            : JSON.stringify(this.searchData.type3Text[0]===''?'':this.searchData.type3Text)) +
+                            : JSON.stringify(
+                                  this.searchData.type3Text[0] === ""
+                                      ? ""
+                                      : this.searchData.type3Text
+                              )) +
                         "&disable=" +
                         (this.searchData.disable === 2
                             ? ""
@@ -812,7 +866,7 @@ export default {
                 });
         },
         getMasterList(index) {
-            this.currentPage = index
+            this.currentPage = index;
             axios
                 .request({
                     url:
@@ -833,7 +887,11 @@ export default {
                         "=" +
                         (this.searchData.type3Text === ""
                             ? ""
-                            : JSON.stringify(this.searchData.type3Text[0]===''?'':this.searchData.type3Text)) +
+                            : JSON.stringify(
+                                  this.searchData.type3Text[0] === ""
+                                      ? ""
+                                      : this.searchData.type3Text
+                              )) +
                         "&disable=" +
                         (this.searchData.disable === 2
                             ? ""
@@ -884,8 +942,10 @@ export default {
                             this.getMasterList();
                         })
                         .catch(err => {
-                            for(let i in err.response.data.errors){
-                                this.$Message.error(err.response.data.errors[i][0]);
+                            for (let i in err.response.data.errors) {
+                                this.$Message.error(
+                                    err.response.data.errors[i][0]
+                                );
                             }
                         });
                 } else {

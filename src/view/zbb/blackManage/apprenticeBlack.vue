@@ -1,5 +1,10 @@
 <template>
     <div>
+        <row>
+            <i-col span='2' offset='22'>
+                <Button type="error" style="float:right;margin-bottom:10px;" @click="returnExcel()">导出</Button>
+            </i-col>
+        </row>
         <Table stripe :columns="column" border :data="list" @on-select='selectItem' @on-select-all='selectItem'></Table>
         <Page style="margin-top:20px;" :total="total" show-total :page-size='defailPage' show-elevator show-sizer
             :page-size-opts='pageSize' @on-change="getMasterList" @on-page-size-change='changePageGetList' />
@@ -104,6 +109,10 @@ export default {
         };
     },
     methods: {
+        returnExcel(){
+            let url = "http://120.79.203.214/zbb/public/backend/apprentices/blacklist/export"
+            window.open(url);
+        },
         getList() {
             axios
                 .request({

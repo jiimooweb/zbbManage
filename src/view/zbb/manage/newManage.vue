@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Card style="width:400px">
+        <Card style="width:600px">
             <i-form ref="formInline" class="formPage" :model="formInline" :rules="ruleInline" inline>
                 <FormItem prop="powers" class="formItem">
                     <row class="formRow">
@@ -67,9 +67,12 @@
                         </i-col>
                     </row>
                 </FormItem>
-                <FormItem style="margin:20px 0px 20px 400px">
-                    <Button type="primary" @click="handleSubmit('formInline')">新增</Button>
-                    <Button style="margin-left:10px;" @click="resetData('formInline')">重置</Button>
+                <FormItem style="width:100%;">
+                    <div style="margin:10px auto 0;width:122px;">
+                        <Button type="primary" @click="handleSubmit('formInline')">新增</Button>
+                        <Button style="margin-left:10px;" @click="resetData('formInline')">重置</Button>
+                    </div>
+                    
                 </FormItem>
             </i-form>
         </Card>
@@ -196,14 +199,14 @@ export default {
         display: block;
         margin: 25px auto;
         .ivu-form-item-error-tip {
-            padding-left: 91.5px;
+            padding-left: 141.5px;
         }
         .formRow {
             display: block;
-            height: 33px;
+            // height: 33px;
             .lable {
                 display: block;
-                line-height: 33px;
+                // line-height: 33px;
             }
             .formInput {
                 // margin-left: 20px;

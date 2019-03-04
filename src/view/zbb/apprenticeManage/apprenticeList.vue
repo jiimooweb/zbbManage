@@ -117,8 +117,12 @@
 
         <Page style="margin-top:20px;" :total="total" show-total :page-size='defailPage' show-elevator show-sizer
             :page-size-opts='pageSize' @on-change="getMasterList" @on-page-size-change='changePageGetList' />
-        <Modal v-model="cancelModal" title='删除' @on-ok="cancelItem()" @on-cancel="cancelcancel(false)">
+        <Modal v-model="cancelModal" title='删除' @on-ok="cancelItem(1)" @on-cancel="cancelcancel(false)">
             <p style="text-align:center;font-size:16px;">是否删除徒弟账号----<span style="color:red;">{{deleteName}}</span>----</p>
+        </Modal>
+        <Modal v-model="oneModal" title='审核' @on-ok="onePassOrFail()" @on-cancel="cancelone(false)">
+            <p v-if="isPass" style="text-align:center;font-size:16px;">是否通过<span style='color:red;'>{{currentName}}</span>的审核</p>
+            <p v-else style="text-align:center;font-size:16px;">是否拒绝<span style='color:red;'>{{currentName}}</span>的审核</p>
         </Modal>
         <Modal v-model="passModal" title='批量通过' @on-ok="allPass()" @on-cancel="cancelpass(false)">
             <p style="text-align:center;font-size:16px;">是否使用批量通过功能</p>
@@ -192,7 +196,7 @@
                         </i-col>
                     </row>
                 </FormItem>
-                <FormItem prop="email" class="formItem">
+                <!-- <FormItem prop="email" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
                             <span style="lable">邮箱:</span>
@@ -201,7 +205,7 @@
                             <i-input placeholder="输入邮箱" class="formInput" v-model="formInline.email"></i-input>
                         </i-col>
                     </row>
-                </FormItem>
+                </FormItem> -->
                 <FormItem prop="referral_id" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
@@ -289,7 +293,7 @@ export default {
                 name: "",
                 phone: "",
                 wx: "",
-                email: "",
+                // email: "",
                 //referral_id: "", //推荐人ID
                 apprentice_limit: "", //徒弟数量限制
                 remark: ""
@@ -337,18 +341,18 @@ export default {
                         trigger: "blur"
                     }
                 ],
-                email: [
-                    {
-                        required: true,
-                        message: "请输入邮箱",
-                        trigger: "blur"
-                    },
-                    {
-                        type: "email",
-                        message: "邮箱格式不正确",
-                        trigger: "blur"
-                    }
-                ],
+                // email: [
+                //     {
+                //         required: true,
+                //         message: "请输入邮箱",
+                //         trigger: "blur"
+                //     },
+                //     {
+                //         type: "email",
+                //         message: "邮箱格式不正确",
+                //         trigger: "blur"
+                //     }
+                // ],
                 apprentice_limit: [
                     // {
                     //     required: true,
@@ -488,14 +492,20 @@ export default {
                             {
                                 attrs: {
                                     style:
-                                        "color:#" + params.row.status === 0
+                                        "color:#" + (params.row.status === 0
                                             ? "#999"
-                                            : "19be6b"
+                                            : "19be6b")
                                 }
                             },
                             params.row.status === 0 ? "待审核" : "已审核"
                         );
                     }
+                },
+                {
+                    title: "余额",
+                    align: "center",
+                    width: "100",
+                    key: "balance"
                 },
                 {
                     title: "真实姓名",
@@ -519,25 +529,77 @@ export default {
                     title: "微信号",
                     align: "center",
                     width: "200",
-                    key: "wx"
+                    // key: "wx"
+                    render: (h, params) => {
+                        return h(
+                            "p",
+                            {
+                                attrs: {
+                                    style:
+                                        "color:#" + (params.row.wx !== ""
+                                            ? "19be6b"
+                                            : "ed4014")
+                                }
+                            },
+                            params.row.wx === "" ? "无" : params.row.wx
+                        );
+                    }
                 },
                 {
                     title: "抖音号",
                     align: "center",
                     width: "200",
-                    key: "dy"
+                    // key: "dy"
+                    render: (h, params) => {
+                        return h(
+                            "p",
+                            {
+                                attrs: {
+                                    style:
+                                        "color:#" + (params.row.dy !== ""
+                                            ? "19be6b"
+                                            : "ed4014")
+                                }
+                            },
+                            params.row.dy === "" ? "无" : params.row.dy
+                        );
+                    }
                 },
                 {
                     title: "头条号",
                     align: "center",
                     width: "200",
-                    key: "tt"
+                    // key: "tt"
+                    render: (h, params) => {
+                        return h(
+                            "p",
+                            {
+                                attrs: {
+                                    style:
+                                        "color:#" + (params.row.tt !== ""
+                                            ? "19be6b"
+                                            : "ed4014")
+                                }
+                            },
+                            params.row.tt === "" ? "无" : params.row.tt
+                        );
+                    }
                 },
                 {
-                    title: "邮箱",
+                    title: "师傅ID",
                     align: "center",
-                    width: "200",
-                    key: "email"
+                    width: "100",
+                    render: (h, params) => {
+                        return h("p", params.row.master.id);
+                    }
+                },
+                {
+                    title: "师傅名称",
+                    align: "center",
+                    width: "100",
+                    render: (h, params) => {
+                        return h("p", params.row.master.name);
+                    }
                 },
                 {
                     title: "备注",
@@ -545,89 +607,93 @@ export default {
                     width: "200",
                     key: "remark"
                 },
-                // {
-                //     title: "徒弟总数",
-                //     align: "center",
-                //     width: "90",
-                //     key: "apprentices_count"
-                // },
-                // {
-                //     title: "徒弟上限数量",
-                //     align: "center",
-                //     width: "150",
-                //     key: "apprentice_limit"
-                // },
-                // {
-                //     title: "邀请码",
-                //     align: "center",
-                //     width: "200",
-                //     key: "invitation_code"
-                // },
-                // {
-                //     title: "余额",
-                //     align: "center",
-                //     width: "100",
-                //     key: "a"
-                // },
-                // {
-                //     title: "师傅ID",
-                //     align: "center",
-                //     width: "100",
-                //     key: "referral_id"
-                // },
-                // {
-                //     title: "最后登录IP",
-                //     align: "center",
-                //     width: "200",
-                //     key: "ip"
-                // },
-                // {
-                //     title: "最后登录时间",
-                //     align: "center",
-                //     width: "200",
-                //     key: "login_time"
-                // },
+                {
+                    title: "任务总数",
+                    align: "center",
+                    width: "120",
+                    key: "tasks_sum"
+                },
+                {
+                    title: "今天完成数",
+                    align: "center",
+                    width: "120",
+                    key: "tasks_day"
+                },
+                {
+                    title: "7日完成数",
+                    align: "center",
+                    width: "120",
+                    key: "tasks_seven"
+                },
+                {
+                    title: "30日完成数",
+                    align: "center",
+                    width: "120",
+                    key: "tasks_thirty"
+                },
                 {
                     title: "入驻日期",
                     align: "center",
                     width: "200",
                     key: "created_at"
                 },
-                // {
-                //     title: "更新日期",
-                //     align: "center",
-                //     width: "200",
-                //     key: "updated_at"
-                // },
                 {
                     title: "操作",
                     align: "center",
-                    width: "200",
+                    width: "250",
                     render: (h, params) => {
                         return h("div", [
-                            // h(
-                            //     "Button",
-                            //     {
-                            //         props: {
-                            //             type: "primary",
-                            //             size: "small",
-                            //             disabled: params.row.status === 1
-                            //         },
-                            //         attrs: {
-                            //             style:
-                            //                 "font-size:12px;margin-right:15px;"
-                            //         },
-                            //         nativeOn: {
-                            //             click: () => {}
-                            //         }
-                            //     },
-                            //     "审核"
-                            // ),
                             h(
                                 "Button",
                                 {
                                     props: {
                                         type: "success",
+                                        size: "small",
+                                        disabled: params.row.status !== 0
+                                    },
+                                    attrs: {
+                                        style:
+                                            "font-size:12px;margin-right:15px;"
+                                    },
+                                    nativeOn: {
+                                        click: () => {
+                                            this.isPass = true
+                                            this.currentId = params.row.id
+                                            this.currentName = params.row.name
+                                            this.cancelone(true)
+                                        }
+                                    }
+                                },
+                                "通过"
+                            ),
+                            h(
+                                "Button",
+                                {
+                                    props: {
+                                        type: "error",
+                                        size: "small",
+                                        disabled: params.row.status !== 0
+                                    },
+                                    attrs: {
+                                        style:
+                                            "font-size:12px;margin-right:15px;"
+                                    },
+                                    nativeOn: {
+                                        click: () => {
+                                            this.isPass = false
+                                            this.currentId = params.row.id
+                                            this.currentName = params.row.name
+                                            this.cancelone(true)
+                                        }
+                                    }
+                                },
+                                "拒绝"
+                            ),
+                            h(
+                                "Button",
+                                {
+                                    props: {
+                                        type: "primary",
                                         size: "small"
                                     },
                                     attrs: {
@@ -678,10 +744,16 @@ export default {
             selectList: [],
             ids: [],
             passModal: false,
-            failModal: false
+            failModal: false,
+            oneModal:false,
+            isPass:false,
+            currentName:''
         };
     },
     methods: {
+        cancelone(i){
+            this.oneModal = i
+        },
         cancelpass(i) {
             if (this.ids.length === 0) {
                 this.$Message.error("没有选择，无法使用批量通过功能");
@@ -695,6 +767,18 @@ export default {
                 return;
             }
             this.failModal = i;
+        },
+        onePassOrFail(){
+            axios.request({
+                url:'apprentices/review/'+this.currentId,
+                method:'post',
+                data:{
+                    status:this.isPass?'1':'-1'
+                }
+            }).then(res=>{
+                this.$Message.success('审核成功!'+(this.isPass?'已通过':'已拒绝'))
+                this.cancelone(false)
+            })
         },
         allPass() {
             if (this.ids.length === 0) {
@@ -767,9 +851,10 @@ export default {
             this.selectList = selection;
             this.ids = [];
             for (let i = 0; i < selection.length; i++) {
-                this.ids.push(selection[i]);
+                this.ids.push(selection[i].id);
             }
-            console.log(this.ids);
+            console.log(this.ids.length);
+            
         },
         changeDate(t) {
             this.searchData.type3Text = t;
@@ -797,7 +882,7 @@ export default {
                     this.formInline.name = this.oneData.name;
                     this.formInline.phone = this.oneData.phone;
                     this.formInline.wx = this.oneData.wx;
-                    this.formInline.email = this.oneData.email;
+                    // this.formInline.email = this.oneData.email;
                     this.formInline.apprentice_limit = this.oneData.apprentice_limit;
                     this.formInline.remark = this.oneData.remark;
                     this.showEdit(true);
@@ -825,7 +910,11 @@ export default {
                         "=" +
                         (this.searchData.type3Text === ""
                             ? ""
-                            : JSON.stringify(this.searchData.type3Text[0]===''?'':this.searchData.type3Text)) +
+                            : JSON.stringify(
+                                  this.searchData.type3Text[0] === ""
+                                      ? ""
+                                      : this.searchData.type3Text
+                              )) +
                         "&disable=" +
                         (this.searchData.disable === 2
                             ? ""
@@ -843,11 +932,11 @@ export default {
                     this.total = res.data.data.total;
                     this.currentPage = res.data.data.data.current_page;
                     this.per_page = res.data.data.per_page;
-                    this.$Message.success("搜索成功");
+                    // this.$Message.success("搜索成功");
                 });
         },
         changePageGetList(size) {
-            this.currentPage = 1
+            this.currentPage = 1;
             axios
                 .request({
                     url:
@@ -868,7 +957,11 @@ export default {
                         "=" +
                         (this.searchData.type3Text === ""
                             ? ""
-                            : JSON.stringify(this.searchData.type3Text[0]===''?'':this.searchData.type3Text)) +
+                            : JSON.stringify(
+                                  this.searchData.type3Text[0] === ""
+                                      ? ""
+                                      : this.searchData.type3Text
+                              )) +
                         "&disable=" +
                         (this.searchData.disable === 2
                             ? ""
@@ -890,7 +983,7 @@ export default {
                 });
         },
         getMasterList(index) {
-            this.currentPage = index
+            this.currentPage = index;
             axios
                 .request({
                     url:
@@ -911,7 +1004,11 @@ export default {
                         "=" +
                         (this.searchData.type3Text === ""
                             ? ""
-                            : JSON.stringify(this.searchData.type3Text[0]===''?'':this.searchData.type3Text)) +
+                            : JSON.stringify(
+                                  this.searchData.type3Text[0] === ""
+                                      ? ""
+                                      : this.searchData.type3Text
+                              )) +
                         "&disable=" +
                         (this.searchData.disable === 2
                             ? ""
@@ -949,7 +1046,7 @@ export default {
                                 name: this.formInline.name,
                                 phone: this.formInline.phone,
                                 wx: this.formInline.wx,
-                                email: this.formInline.email,
+                                // email: this.formInline.email,
                                 apprentice_limit: this.formInline
                                     .apprentice_limit,
                                 remark: this.formInline.remark
@@ -989,7 +1086,7 @@ export default {
         // width: 100px;
     }
 }
-.formItem{
+.formItem {
     width: 100%;
 }
 </style>

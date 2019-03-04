@@ -75,7 +75,7 @@
                         </i-col>
                     </row>
                 </FormItem>
-                <FormItem prop="referral_id" class="formItem">
+                <!-- <FormItem prop="referral_id" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
                             <span style="lable">推荐人ID:</span>
@@ -84,7 +84,7 @@
                             <i-input placeholder="输入推荐人ID" class="formInput" v-model="formInline.referral_id"></i-input>
                         </i-col>
                     </row>
-                </FormItem>
+                </FormItem> -->
                 <FormItem prop="apprentice_limit" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
@@ -129,7 +129,7 @@ export default {
                 phone: "",
                 wx: "",
                 email: "",
-                referral_id: "", //推荐人ID
+                //referral_id: "", //推荐人ID
                 apprentice_limit: "", //徒弟数量限制
                 remark: ""
             },
@@ -181,11 +181,11 @@ export default {
                     //     message: "请输入邮箱",
                     //     trigger: "blur"
                     // },
-                    {
-                        type: "email",
-                        message: "邮箱格式不正确",
-                        trigger: "blur"
-                    }
+                    // {
+                    //     type: "email",
+                    //     message: "邮箱格式不正确",
+                    //     trigger: "blur"
+                    // }
                 ],
                 apprentice_limit: [
                     {
@@ -217,7 +217,7 @@ export default {
                                 phone: this.formInline.phone,
                                 wx: this.formInline.wx,
                                 email: this.formInline.email,
-                                referral_id: this.formInline.referral_id, //推荐人ID
+                                //referral_id: this.formInline.referral_id, //推荐人ID
                                 apprentice_limit: this.formInline
                                     .apprentice_limit, //徒弟数量限制
                                 remark: this.formInline.remark

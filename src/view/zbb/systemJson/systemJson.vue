@@ -10,7 +10,7 @@
                             <span style="lable">配置标识</span>
                         </i-col>
                         <i-col span='18'>
-                            <i-input placeholder="请输入配置标识" class="formInput" v-model="formInline.flag"></i-input>
+                            <i-input placeholder="请输入配置标识" class="formInput" disabled v-model="formInline.flag"></i-input>
                         </i-col>
                     </row>
                 </FormItem>

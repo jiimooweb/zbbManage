@@ -262,6 +262,14 @@ export default [{
                 icon: 'md-list'
             },
             component: () => import('@/view/zbb/financeManage/bindingBank')
+        },{
+            path: '/bindingCheckBank',
+            name: '审核绑定银行管理',
+            meta: {
+                title: '审核绑定银行管理',
+                icon: 'md-list'
+            },
+            component: () => import('@/view/zbb/financeManage/bindingCheckBank')
         }, {
             path: '/masterWithdraw',
             name: '[师傅] 提现管理',
