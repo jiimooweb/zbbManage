@@ -778,6 +778,7 @@ export default {
             }).then(res=>{
                 this.$Message.success('审核成功!'+(this.isPass?'已通过':'已拒绝'))
                 this.cancelone(false)
+                this.searchList();
             })
         },
         allPass() {

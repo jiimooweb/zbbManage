@@ -177,9 +177,7 @@ export default {
                             this.resetData("formInline");
                         })
                         .catch(err => {
-                            for(let i in err.response.data.errors){
-                                this.$Message.error(err.response.data.errors[i][0]);
-                            }
+                            this.$Message.error(err.response.data.msg);
                         });
                 } else {
                     this.$Message.error("填写的资料有误!");
