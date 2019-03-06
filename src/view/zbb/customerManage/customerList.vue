@@ -30,7 +30,7 @@
                         </i-col>
                     </row>
                 </FormItem>
-				<FormItem prop="nickname" class="formItem">
+                <FormItem prop="nickname" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
                             <span style="lable">昵称:</span>
@@ -60,7 +60,7 @@
                         </i-col>
                     </row>
                 </FormItem>
-				<FormItem prop="qq" class="formItem">
+                <FormItem prop="qq" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
                             <span style="lable">QQ号:</span>
@@ -97,16 +97,16 @@ export default {
     data() {
         return {
             editModal: false,
-            cancelModal:false,
-            formInline:{
-				name:'',
-				nickname:'',
-				phone:'',
-				qq:'',
-                wx:'',
-                type:'Merchant',
-                remark:''
-			},
+            cancelModal: false,
+            formInline: {
+                name: "",
+                nickname: "",
+                phone: "",
+                qq: "",
+                wx: "",
+                type: "Merchant",
+                remark: ""
+            },
             column: [
                 {
                     title: "序号",
@@ -124,11 +124,16 @@ export default {
                 {
                     title: "类型",
                     // key: "type"
-                    render:(h,params)=> {
-                        return h('p',
-                            params.row.type === 'Merchant'?'商户':(params.row.type === 'Master'?'师傅':'徒弟')
-                        )
-                    },
+                    render: (h, params) => {
+                        return h(
+                            "p",
+                            params.row.type === "Merchant"
+                                ? "商户"
+                                : params.row.type === "Master"
+                                ? "师傅"
+                                : "徒弟"
+                        );
+                    }
                 },
                 {
                     title: "真实姓名",
@@ -157,7 +162,7 @@ export default {
                 },
                 {
                     title: "备注",
-                    width:200,
+                    width: 200,
                     key: "remark"
                 },
                 {
@@ -180,14 +185,19 @@ export default {
                                     nativeOn: {
                                         click: () => {
                                             this.currentId = params.row.id;
-                                            this.editModal = true
-                                            this.formInline.name = params.row.name
-                                            this.formInline.nickname = params.row.nickname
-                                            this.formInline.wx = params.row.wx
-                                            this.formInline.qq = params.row.qq
-                                            this.formInline.phone = params.row.phone
-                                            this.formInline.type = params.row.type
-                                            this.formInline.remark = params.row.remark
+                                            this.editModal = true;
+                                            this.formInline.name =
+                                                params.row.name;
+                                            this.formInline.nickname =
+                                                params.row.nickname;
+                                            this.formInline.wx = params.row.wx;
+                                            this.formInline.qq = params.row.qq;
+                                            this.formInline.phone =
+                                                params.row.phone;
+                                            this.formInline.type =
+                                                params.row.type;
+                                            this.formInline.remark =
+                                                params.row.remark;
                                         }
                                     }
                                 },
@@ -206,9 +216,8 @@ export default {
                                     nativeOn: {
                                         click: () => {
                                             this.currentId = params.row.id;
-                                            this.deleteName =
-                                                params.row.name;
-                                                this.cancelcancel(true)
+                                            this.deleteName = params.row.name;
+                                            this.cancelcancel(true);
                                         }
                                     }
                                 },
@@ -219,7 +228,7 @@ export default {
                 }
             ],
             list: [],
-            currentId:'',
+            currentId: "",
             total: 1,
             currentPage: 1,
             per_page: 20,
@@ -231,20 +240,27 @@ export default {
         this.getList();
     },
     methods: {
-        newData(){
+        newData() {
             this.$router.push({ path: "/newCustomer" });
         },
-        cancelItem(){
-            axios.request({
-                url: "customer-services/"+this.currentId,
-                method:'delete'
-            }).then(res=>{
-                this.$Message.success("删除成功");
-                this.getList()
-            })
+        cancelItem() {
+            axios
+                .request({
+                    url: "customer-services/" + this.currentId,
+                    method: "delete"
+                })
+                .then(res => {
+                    this.$Message.success("删除成功");
+                    this.getList();
+                })
+                .catch(err => {
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(err.response.data.msg[i][0]);
+                    }
+                });
         },
-        cancelcancel(i){
-            this.cancelModal = i
+        cancelcancel(i) {
+            this.cancelModal = i;
         },
         getList() {
             axios
@@ -254,14 +270,19 @@ export default {
                 })
                 .then(res => {
                     this.list = res.data.data;
+                })
+                .catch(err => {
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(err.response.data.msg[i][0]);
+                    }
                 });
         },
         handleSubmit(name) {
             this.$refs[name].validate(valid => {
                 if (valid) {
-                        axios
+                    axios
                         .request({
-                            url: "customer-services/"+this.currentId,
+                            url: "customer-services/" + this.currentId,
                             method: "put",
                             data: {
                                 name: this.formInline.name,
@@ -270,18 +291,20 @@ export default {
                                 qq: this.formInline.qq,
                                 phone: this.formInline.phone,
                                 type: this.formInline.type,
-                                remark: this.formInline.remark,
+                                remark: this.formInline.remark
                             }
                         })
                         .then(res => {
                             this.$Message.success("修改成功");
                             this.resetData("formInline");
-                            this.editModal = false
-                            this.getList()
+                            this.editModal = false;
+                            this.getList();
                         })
                         .catch(err => {
-                            for(let i in err.response.data.errors){
-                                this.$Message.error(err.response.data.errors[i][0]);
+                            for (let i in err.response.data.msg) {
+                                this.$Message.error(
+                                    err.response.data.msg[i][0]
+                                );
                             }
                         });
                 } else {
@@ -297,7 +320,7 @@ export default {
 </script>
 
 <style lang='less'>
-.formItem{
+.formItem {
     width: 100%;
 }
 </style>

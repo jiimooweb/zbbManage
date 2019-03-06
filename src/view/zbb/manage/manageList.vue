@@ -196,6 +196,12 @@ export default {
                 })
                 .then(res => {
                     this.manageList = res.data.data;
+                }).catch(err => {
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(
+                            err.response.data.msg[i][0]
+                        );
+                    }
                 });
         }
     }

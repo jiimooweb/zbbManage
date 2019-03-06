@@ -26,7 +26,7 @@
                         </i-col>
                     </row>
                 </FormItem>
-				<FormItem prop="nickname" class="formItem">
+                <FormItem prop="nickname" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
                             <span style="lable">昵称:</span>
@@ -56,7 +56,7 @@
                         </i-col>
                     </row>
                 </FormItem>
-				<FormItem prop="qq" class="formItem">
+                <FormItem prop="qq" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
                             <span style="lable">QQ号:</span>
@@ -89,57 +89,57 @@ import axios from "@/libs/api.request";
 export default {
     data() {
         return {
-			formInline:{
-				name:'',
-				nickname:'',
-				phone:'',
-				qq:'',
-                wx:'',
-                type:'Merchant',
-                remark:''
-			},
-			ruleInline: {
+            formInline: {
+                name: "",
+                nickname: "",
+                phone: "",
+                qq: "",
+                wx: "",
+                type: "Merchant",
+                remark: ""
+            },
+            ruleInline: {
                 name: [
                     {
                         required: true,
                         message: "请输入真实姓名",
                         trigger: "blur"
                     }
-				],
-				// nickname: [
+                ],
+                // nickname: [
                 //     {
                 //         required: true,
                 //         message: "请输入昵称",
                 //         trigger: "blur"
                 //     }
-				// ],
-				wx: [
+                // ],
+                wx: [
                     {
                         required: true,
                         message: "请输入微信号",
                         trigger: "blur"
                     }
-				],
-				// qq: [
+                ],
+                // qq: [
                 //     {
                 //         required: true,
                 //         message: "请输入QQ",
                 //         trigger: "blur"
                 //     }
-				// ],
-				phone: [
+                // ],
+                phone: [
                     {
                         required: true,
                         message: "请输入手机号码",
                         trigger: "blur"
                     }
-				]
-			}
-		};
+                ]
+            }
+        };
     },
     mounted() {},
     methods: {
-		handleSubmit(name) {
+        handleSubmit(name) {
             this.$refs[name].validate(valid => {
                 if (valid) {
                     axios
@@ -153,7 +153,7 @@ export default {
                                 qq: this.formInline.qq,
                                 phone: this.formInline.phone,
                                 type: this.formInline.type,
-                                remark: this.formInline.remark,
+                                remark: this.formInline.remark
                             }
                         })
                         .then(res => {
@@ -161,8 +161,10 @@ export default {
                             this.resetData("formInline");
                         })
                         .catch(err => {
-                            for(let i in err.response.data.errors){
-                                this.$Message.error(err.response.data.errors[i][0]);
+                            for (let i in err.response.data.msg) {
+                                this.$Message.error(
+                                    err.response.data.msg[i][0]
+                                );
                             }
                         });
                 } else {
@@ -173,7 +175,7 @@ export default {
         resetData(name) {
             this.$refs[name].resetFields();
         }
-	}
+    }
 };
 </script>
 

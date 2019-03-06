@@ -64,8 +64,8 @@ export default {
     data() {
         return {
             EditModal: false,
-            deleteModal:false,
-            deleteName:'',
+            deleteModal: false,
+            deleteName: "",
             total: 1,
             per_page: 20,
             defailPage: 20,
@@ -117,9 +117,9 @@ export default {
                     title: "手续费(%)",
                     align: "center",
                     // key: "charge"
-                    render:(h,params)=> {
-                        return h('p',params.row.charge+'%')
-                    },
+                    render: (h, params) => {
+                        return h("p", params.row.charge + "%");
+                    }
                 },
                 {
                     title: "备注",
@@ -186,13 +186,14 @@ export default {
                                         size: "small"
                                     },
                                     attrs: {
-                                        style: "font-size:12px;margin-left:10px;"
+                                        style:
+                                            "font-size:12px;margin-left:10px;"
                                     },
                                     nativeOn: {
                                         click: () => {
-                                            this.currentId = params.row.id
-                                            this.deleteName = params.row.name
-                                            this.deletecancel(true)
+                                            this.currentId = params.row.id;
+                                            this.deleteName = params.row.name;
+                                            this.deletecancel(true);
                                         }
                                     }
                                 },
@@ -207,10 +208,10 @@ export default {
         };
     },
     methods: {
-        deletecancel(i){
-            this.deleteModal = i
+        deletecancel(i) {
+            this.deleteModal = i;
         },
-        
+
         newDate() {
             this.EditModal = true;
             this.isNew = true;
@@ -245,17 +246,29 @@ export default {
                     this.total = res.data.data.total;
                     this.currentPage = res.data.data.current_page;
                     this.per_page = res.data.data.per_page;
+                })
+                .catch(err => {
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(err.response.data.msg[i][0]);
+                    }
                 });
         },
-        deleteItem(){
-            axios.request({
-                url:'bank/banks/'+this.currentId,
-                method:'delete'
-            }).then(res=>{
-                this.deletecancel(false)
-                this.$Message.success('删除成功')
-                this.getBankList()
-            })
+        deleteItem() {
+            axios
+                .request({
+                    url: "bank/banks/" + this.currentId,
+                    method: "delete"
+                })
+                .then(res => {
+                    this.deletecancel(false);
+                    this.$Message.success("删除成功");
+                    this.getBankList();
+                })
+                .catch(err => {
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(err.response.data.msg[i][0]);
+                    }
+                });
         },
         handleSubmit(name) {
             this.$refs[name].validate(valid => {
@@ -278,7 +291,11 @@ export default {
                                 this.getBankList();
                             })
                             .catch(err => {
-                                this.$Message.error(err.response.data.msg);
+                                for (let i in err.response.data.msg) {
+                                    this.$Message.error(
+                                        err.response.data.msg[i][0]
+                                    );
+                                }
                             });
                     } else {
                         axios
@@ -298,7 +315,11 @@ export default {
                                 this.getBankList();
                             })
                             .catch(err => {
-                                this.$Message.error(err.response.data.msg);
+                                for (let i in err.response.data.msg) {
+                                    this.$Message.error(
+                                        err.response.data.msg[i][0]
+                                    );
+                                }
                             });
                     }
                     this.EditModal = false;

@@ -24,7 +24,7 @@
                 <i-col span='3'>
                     <row>
                         <i-col span='8' style="line-height:33px;text-align:right;">
-                            用户类型: 
+                            用户类型:
                         </i-col>
                         <i-col span='12'>
                             <FormItem prop="type2" lable='用户类型'>
@@ -75,7 +75,7 @@
                 <i-col span='3'>
                     <row>
                         <i-col span='8' style="line-height:33px;text-align:right;">
-                            审核状态: 
+                            审核状态:
                         </i-col>
                         <i-col span='12'>
                             <FormItem prop="state" lable='审核状态'>
@@ -149,18 +149,18 @@ import axios from "@/libs/api.request";
 export default {
     data() {
         return {
-            currentName:'',
-            onepassModal:false,
-            onefailModal:false,
-            failModal:false,
-            passModal:false,
+            currentName: "",
+            onepassModal: false,
+            onefailModal: false,
+            failModal: false,
+            passModal: false,
             currentId: "",
             editModal: false,
             deleteName: "",
             searchData: {
                 type1: "man_id",
                 type1Text: "",
-                manType:2,
+                manType: 2,
                 type3: "bank_name",
                 type3Text: "",
                 type4: "bank_man",
@@ -168,17 +168,17 @@ export default {
                 type5: "created_at",
                 type5Text: "",
                 //
-                username:'',
-                man_name:'',
-                man_id:'',
-                check_id:'',
-                man_type:'',
-                bank_name:'',
-                bank_id:'',
-                bank_man:'',
-                bank_number:'',
+                username: "",
+                man_name: "",
+                man_id: "",
+                check_id: "",
+                man_type: "",
+                bank_name: "",
+                bank_id: "",
+                bank_man: "",
+                bank_number: "",
                 // bank_deposit:'',
-                state:2
+                state: 2
             },
             oneData: "",
             column: [
@@ -205,78 +205,112 @@ export default {
                     align: "center",
                     width: "100",
                     key: "id"
-                },{
+                },
+                {
                     title: "用户类型",
                     align: "center",
                     width: "200",
                     // key: "man_type"
-                    render:(h,params)=> {
-                        return h('p',params.row.man_type==='Master'?'师傅':'徒弟')
-                    },
+                    render: (h, params) => {
+                        return h(
+                            "p",
+                            params.row.man_type === "Master" ? "师傅" : "徒弟"
+                        );
+                    }
                 },
                 {
                     title: "用户ID",
                     align: "center",
                     width: "200",
-                    render:(h,params)=> {
-                        return h('p',params.row.man.id)
-                    },
-                },{
+                    render: (h, params) => {
+                        return h("p", params.row.man.id);
+                    }
+                },
+                {
                     title: "用户账号",
                     align: "center",
                     width: "200",
                     // key: "username",
-                    render:(h,params)=> {
-                        return h('p',params.row.man.username)
-                    },
-                },{
+                    render: (h, params) => {
+                        return h("p", params.row.man.username);
+                    }
+                },
+                {
                     title: "银行ID",
                     align: "center",
                     width: "200",
                     // key: "bank_id"
-                    render:(h,params)=> {
-                        return h('p',params.row.bank===null?'无':params.row.bank.id)
-                    },
-                },{
+                    render: (h, params) => {
+                        return h(
+                            "p",
+                            params.row.bank === null ? "无" : params.row.bank.id
+                        );
+                    }
+                },
+                {
                     title: "银行名称",
                     align: "center",
                     width: "200",
                     // key: "bank_name"
-                    render:(h,params)=> {
-                        return h('p',params.row.bank===null?'无':params.row.bank.name)
-                    },
-                },{
+                    render: (h, params) => {
+                        return h(
+                            "p",
+                            params.row.bank === null
+                                ? "无"
+                                : params.row.bank.name
+                        );
+                    }
+                },
+                {
                     title: "持卡人姓名",
                     align: "center",
                     width: "200",
                     // key: "bank_man"
-                    render:(h,params)=> {
-                        return h('p',params.row.bank_man===null?'无':params.row.bank_man)
-                    },
-                },{
+                    render: (h, params) => {
+                        return h(
+                            "p",
+                            params.row.bank_man === null
+                                ? "无"
+                                : params.row.bank_man
+                        );
+                    }
+                },
+                {
                     title: "卡号",
                     align: "center",
                     width: "200",
                     // key: "bank_number"
-                    render:(h,params)=> {
-                        return h('p',params.row.bank_number===null?'无':params.row.bank_number)
-                    },
-                },{
+                    render: (h, params) => {
+                        return h(
+                            "p",
+                            params.row.bank_number === null
+                                ? "无"
+                                : params.row.bank_number
+                        );
+                    }
+                },
+                {
                     title: "支付宝号",
                     align: "center",
                     width: "200",
                     // key: "alipay"
-                    render:(h,params)=> {
-                        return h('p',params.row.alipay===null?'无':params.row.alipay)
-                    },
-                },{
+                    render: (h, params) => {
+                        return h(
+                            "p",
+                            params.row.alipay === null
+                                ? "无"
+                                : params.row.alipay
+                        );
+                    }
+                },
+                {
                     title: "真实姓名",
                     align: "center",
                     width: "200",
                     // key: "man_name"
-                    render:(h,params)=> {
-                        return h('p',params.row.man.name)
-                    },
+                    render: (h, params) => {
+                        return h("p", params.row.man.name);
+                    }
                 },
                 {
                     title: "审核状态",
@@ -288,32 +322,40 @@ export default {
                             {
                                 attrs: {
                                     style:
-                                        "color:" + (params.row.state === 0
+                                        "color:" +
+                                        (params.row.state === 0
                                             ? "#999"
-                                            : (params.row.state === 1?'#19be6b':'red'))
+                                            : params.row.state === 1
+                                            ? "#19be6b"
+                                            : "red")
                                 }
                             },
-                            params.row.state === 0 ? "待审核" : (params.row.state === 1?'已通过':'不通过')
+                            params.row.state === 0
+                                ? "待审核"
+                                : params.row.state === 1
+                                ? "已通过"
+                                : "不通过"
                         );
                     }
-                },{
+                },
+                {
                     title: "身份证正面照片",
                     align: "center",
                     width: "200",
                     // key: "id_card"
-                    render:(h,params)=> {
-                        if(params.row.id_card){
-                            return h('img',{
-                                attrs:{
-                                    style:'width:70px;height:70px;display:block;',
-                                    src:params.row.id_card
+                    render: (h, params) => {
+                        if (params.row.id_card) {
+                            return h("img", {
+                                attrs: {
+                                    style:
+                                        "width:70px;height:70px;display:block;",
+                                    src: params.row.id_card
                                 }
-                            })
-                        }else{
-                            return h('p','无')
+                            });
+                        } else {
+                            return h("p", "无");
                         }
-                        
-                    },
+                    }
                 },
                 {
                     title: "操作",
@@ -327,7 +369,7 @@ export default {
                                     props: {
                                         type: "success",
                                         size: "small",
-                                        disabled: params.row.state!==0
+                                        disabled: params.row.state !== 0
                                     },
                                     attrs: {
                                         style:
@@ -336,8 +378,9 @@ export default {
                                     nativeOn: {
                                         click: () => {
                                             this.currentId = params.row.id;
-                                            this.cancelonepass(true)
-                                            this.currentName = params.row.man.username 
+                                            this.cancelonepass(true);
+                                            this.currentName =
+                                                params.row.man.username;
                                         }
                                     }
                                 },
@@ -349,7 +392,7 @@ export default {
                                     props: {
                                         type: "error",
                                         size: "small",
-                                        disabled: params.row.state!==0
+                                        disabled: params.row.state !== 0
                                     },
                                     attrs: {
                                         style: "font-size:12px"
@@ -357,8 +400,9 @@ export default {
                                     nativeOn: {
                                         click: () => {
                                             this.currentId = params.row.id;
-                                            this.canceloneFail(true)
-                                            this.currentName = params.row.man.username 
+                                            this.canceloneFail(true);
+                                            this.currentName =
+                                                params.row.man.username;
                                         }
                                     }
                                 },
@@ -369,7 +413,7 @@ export default {
                 }
             ],
             list: [],
-            ids:[],
+            ids: [],
             cancelModal: false,
             total: 1,
             currentPage: 1,
@@ -380,10 +424,13 @@ export default {
         };
     },
     methods: {
-        changeType1(i){
+        changeType1(i) {
             console.log(i);
-            if((i === 'username' || i==='man_name') && this.searchData.manType === 2){
-                this.searchData.manType = 'Master'
+            if (
+                (i === "username" || i === "man_name") &&
+                this.searchData.manType === 2
+            ) {
+                this.searchData.manType = "Master";
             }
         },
         cancelcancel(i) {
@@ -399,6 +446,11 @@ export default {
                     this.$Message.success("删除成功");
                     this.cancelcancel(false);
                     this.searchList();
+                })
+                .catch(err => {
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(err.response.data.msg[i][0]);
+                    }
                 });
         },
         returnExcel() {
@@ -443,36 +495,85 @@ export default {
                     this.formInline.remark = this.oneData.remark;
                     this.showEdit(true);
                     // this.masterList = res.data.data.data;
+                })
+                .catch(err => {
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(err.response.data.msg[i][0]);
+                    }
                 });
         },
         searchList() {
             axios
                 .request({
-                    url:"bank/check/show?page="+this.currentPage+'&pagesize='+this.per_page,
+                    url:
+                        "bank/check/show?page=" +
+                        this.currentPage +
+                        "&pagesize=" +
+                        this.per_page,
                     method: "post",
-                    data:{
+                    data: {
                         //type1
-                        username:(this.searchData.type1==='username'?this.searchData.type1Text:''),//用户账户 
-                        man_name:(this.searchData.type1==='man_name'?this.searchData.type1Text:''),//真实姓名
-                        man_id:(this.searchData.type1==='man_id'?this.searchData.type1Text:''),//用户id
-                        check_id:(this.searchData.type1==='check_id'?this.searchData.type1Text:''),//审核id
+                        username:
+                            this.searchData.type1 === "username"
+                                ? this.searchData.type1Text
+                                : "", //用户账户
+                        man_name:
+                            this.searchData.type1 === "man_name"
+                                ? this.searchData.type1Text
+                                : "", //真实姓名
+                        man_id:
+                            this.searchData.type1 === "man_id"
+                                ? this.searchData.type1Text
+                                : "", //用户id
+                        check_id:
+                            this.searchData.type1 === "check_id"
+                                ? this.searchData.type1Text
+                                : "", //审核id
 
-                        man_type:(this.searchData.manType===2?'':this.searchData.manType),//用户类型
+                        man_type:
+                            this.searchData.manType === 2
+                                ? ""
+                                : this.searchData.manType, //用户类型
 
                         //type3
-                        bank_name:(this.searchData.type3==='bank_name'?this.searchData.type3Text:''),//银行名称
-                        bank_id:(this.searchData.type3==='bank_id'?this.searchData.type3Text:''),//银行id
+                        bank_name:
+                            this.searchData.type3 === "bank_name"
+                                ? this.searchData.type3Text
+                                : "", //银行名称
+                        bank_id:
+                            this.searchData.type3 === "bank_id"
+                                ? this.searchData.type3Text
+                                : "", //银行id
 
                         //type4
-                        bank_man:(this.searchData.type4==='bank_man'?this.searchData.type4Text:''),//持卡人姓名
-                        bank_number:(this.searchData.type4==='bank_number'?this.searchData.type4Text:''),//卡号
+                        bank_man:
+                            this.searchData.type4 === "bank_man"
+                                ? this.searchData.type4Text
+                                : "", //持卡人姓名
+                        bank_number:
+                            this.searchData.type4 === "bank_number"
+                                ? this.searchData.type4Text
+                                : "", //卡号
 
                         //type5
-                        created_at:(this.searchData.type5==='created_at'?(this.searchData.type5Text[0]===''?'':this.searchData.type5Text):''),
-                        updated_at:(this.searchData.type5==='updated_at'?(this.searchData.type5Text[0]===''?'':this.searchData.type5Text):''),
+                        created_at:
+                            this.searchData.type5 === "created_at"
+                                ? this.searchData.type5Text[0] === ""
+                                    ? ""
+                                    : this.searchData.type5Text
+                                : "",
+                        updated_at:
+                            this.searchData.type5 === "updated_at"
+                                ? this.searchData.type5Text[0] === ""
+                                    ? ""
+                                    : this.searchData.type5Text
+                                : "",
 
                         // bank_deposit:'',
-                        state:(this.searchData.state===2?'':this.searchData.state)//审核状态
+                        state:
+                            this.searchData.state === 2
+                                ? ""
+                                : this.searchData.state //审核状态
                     }
                 })
                 .then(res => {
@@ -480,37 +581,86 @@ export default {
                     this.total = res.data.data.total;
                     this.currentPage = res.data.data.current_page;
                     this.per_page = res.data.data.per_page;
+                })
+                .catch(err => {
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(err.response.data.msg[i][0]);
+                    }
                 });
         },
         changePageGetList(size) {
             this.currentPage = 1;
             axios
                 .request({
-                    url:"bank/check/show?page="+this.currentPage+'&pagesize='+size,
+                    url:
+                        "bank/check/show?page=" +
+                        this.currentPage +
+                        "&pagesize=" +
+                        size,
                     method: "post",
-                    data:{
+                    data: {
                         //type1
-                        username:(this.searchData.type1==='username'?this.searchData.type1Text:''),//用户账户 
-                        man_name:(this.searchData.type1==='man_name'?this.searchData.type1Text:''),//真实姓名
-                        man_id:(this.searchData.type1==='man_id'?this.searchData.type1Text:''),//用户id
-                        check_id:(this.searchData.type1==='check_id'?this.searchData.type1Text:''),//审核id
+                        username:
+                            this.searchData.type1 === "username"
+                                ? this.searchData.type1Text
+                                : "", //用户账户
+                        man_name:
+                            this.searchData.type1 === "man_name"
+                                ? this.searchData.type1Text
+                                : "", //真实姓名
+                        man_id:
+                            this.searchData.type1 === "man_id"
+                                ? this.searchData.type1Text
+                                : "", //用户id
+                        check_id:
+                            this.searchData.type1 === "check_id"
+                                ? this.searchData.type1Text
+                                : "", //审核id
 
-                        man_type:(this.searchData.manType===2?'':this.searchData.manType),//用户类型
+                        man_type:
+                            this.searchData.manType === 2
+                                ? ""
+                                : this.searchData.manType, //用户类型
 
                         //type3
-                        bank_name:(this.searchData.type3==='bank_name'?this.searchData.type3Text:''),//银行名称
-                        bank_id:(this.searchData.type3==='bank_id'?this.searchData.type3Text:''),//银行id
+                        bank_name:
+                            this.searchData.type3 === "bank_name"
+                                ? this.searchData.type3Text
+                                : "", //银行名称
+                        bank_id:
+                            this.searchData.type3 === "bank_id"
+                                ? this.searchData.type3Text
+                                : "", //银行id
 
                         //type4
-                        bank_man:(this.searchData.type4==='bank_man'?this.searchData.type4Text:''),//持卡人姓名
-                        bank_number:(this.searchData.type4==='bank_number'?this.searchData.type4Text:''),//卡号
+                        bank_man:
+                            this.searchData.type4 === "bank_man"
+                                ? this.searchData.type4Text
+                                : "", //持卡人姓名
+                        bank_number:
+                            this.searchData.type4 === "bank_number"
+                                ? this.searchData.type4Text
+                                : "", //卡号
 
                         //type5
-                        created_at:(this.searchData.type5==='created_at'?(this.searchData.type5Text[0]===''?'':this.searchData.type5Text):''),
-                        updated_at:(this.searchData.type5==='updated_at'?(this.searchData.type5Text[0]===''?'':this.searchData.type5Text):''),
+                        created_at:
+                            this.searchData.type5 === "created_at"
+                                ? this.searchData.type5Text[0] === ""
+                                    ? ""
+                                    : this.searchData.type5Text
+                                : "",
+                        updated_at:
+                            this.searchData.type5 === "updated_at"
+                                ? this.searchData.type5Text[0] === ""
+                                    ? ""
+                                    : this.searchData.type5Text
+                                : "",
 
                         // bank_deposit:'',
-                        state:(this.searchData.state===2?'':this.searchData.state)//审核状态
+                        state:
+                            this.searchData.state === 2
+                                ? ""
+                                : this.searchData.state //审核状态
                     }
                 })
                 .then(res => {
@@ -518,37 +668,86 @@ export default {
                     this.total = res.data.data.total;
                     this.currentPage = res.data.data.current_page;
                     this.per_page = res.data.data.per_page;
+                })
+                .catch(err => {
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(err.response.data.msg[i][0]);
+                    }
                 });
         },
         getList(index) {
-            this.currentPage = index
+            this.currentPage = index;
             axios
                 .request({
-                    url:"bank/check/show?page="+this.currentPage+'&pagesize='+this.per_page,
+                    url:
+                        "bank/check/show?page=" +
+                        this.currentPage +
+                        "&pagesize=" +
+                        this.per_page,
                     method: "post",
-                    data:{
+                    data: {
                         //type1
-                        username:(this.searchData.type1==='username'?this.searchData.type1Text:''),//用户账户 
-                        man_name:(this.searchData.type1==='man_name'?this.searchData.type1Text:''),//真实姓名
-                        man_id:(this.searchData.type1==='man_id'?this.searchData.type1Text:''),//用户id
-                        check_id:(this.searchData.type1==='check_id'?this.searchData.type1Text:''),//审核id
+                        username:
+                            this.searchData.type1 === "username"
+                                ? this.searchData.type1Text
+                                : "", //用户账户
+                        man_name:
+                            this.searchData.type1 === "man_name"
+                                ? this.searchData.type1Text
+                                : "", //真实姓名
+                        man_id:
+                            this.searchData.type1 === "man_id"
+                                ? this.searchData.type1Text
+                                : "", //用户id
+                        check_id:
+                            this.searchData.type1 === "check_id"
+                                ? this.searchData.type1Text
+                                : "", //审核id
 
-                        man_type:(this.searchData.manType===2?'':this.searchData.manType),//用户类型
+                        man_type:
+                            this.searchData.manType === 2
+                                ? ""
+                                : this.searchData.manType, //用户类型
 
                         //type3
-                        bank_name:(this.searchData.type3==='bank_name'?this.searchData.type3Text:''),//银行名称
-                        bank_id:(this.searchData.type3==='bank_id'?this.searchData.type3Text:''),//银行id
+                        bank_name:
+                            this.searchData.type3 === "bank_name"
+                                ? this.searchData.type3Text
+                                : "", //银行名称
+                        bank_id:
+                            this.searchData.type3 === "bank_id"
+                                ? this.searchData.type3Text
+                                : "", //银行id
 
                         //type4
-                        bank_man:(this.searchData.type4==='bank_man'?this.searchData.type4Text:''),//持卡人姓名
-                        bank_number:(this.searchData.type4==='bank_number'?this.searchData.type4Text:''),//卡号
+                        bank_man:
+                            this.searchData.type4 === "bank_man"
+                                ? this.searchData.type4Text
+                                : "", //持卡人姓名
+                        bank_number:
+                            this.searchData.type4 === "bank_number"
+                                ? this.searchData.type4Text
+                                : "", //卡号
 
                         //type5
-                        created_at:(this.searchData.type5==='created_at'?(this.searchData.type5Text[0]===''?'':this.searchData.type5Text):''),
-                        updated_at:(this.searchData.type5==='updated_at'?(this.searchData.type5Text[0]===''?'':this.searchData.type5Text):''),
+                        created_at:
+                            this.searchData.type5 === "created_at"
+                                ? this.searchData.type5Text[0] === ""
+                                    ? ""
+                                    : this.searchData.type5Text
+                                : "",
+                        updated_at:
+                            this.searchData.type5 === "updated_at"
+                                ? this.searchData.type5Text[0] === ""
+                                    ? ""
+                                    : this.searchData.type5Text
+                                : "",
 
                         // bank_deposit:'',
-                        state:(this.searchData.state===2?'':this.searchData.state)//审核状态
+                        state:
+                            this.searchData.state === 2
+                                ? ""
+                                : this.searchData.state //审核状态
                     }
                 })
                 .then(res => {
@@ -556,6 +755,11 @@ export default {
                     this.total = res.data.data.total;
                     this.currentPage = res.data.data.current_page;
                     this.per_page = res.data.data.per_page;
+                })
+                .catch(err => {
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(err.response.data.msg[i][0]);
+                    }
                 });
         },
         cancelpass(i) {
@@ -578,8 +782,7 @@ export default {
         canceloneFail(i) {
             this.onefailModal = i;
         },
-        pass(){
-
+        pass() {
             axios
                 .request({
                     url: "bank/check/adopt",
@@ -593,12 +796,12 @@ export default {
                     this.searchList();
                 })
                 .catch(err => {
-                    for (let i in err.response.data.errors) {
-                        this.$Message.error(err.response.data.errors[i][0]);
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(err.response.data.msg[i][0]);
                     }
                 });
         },
-        fail(){
+        fail() {
             axios
                 .request({
                     url: "bank/check/refuse",
@@ -612,8 +815,8 @@ export default {
                     this.searchList();
                 })
                 .catch(err => {
-                    for (let i in err.response.data.errors) {
-                        this.$Message.error(err.response.data.errors[i][0]);
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(err.response.data.msg[i][0]);
                     }
                 });
         },
@@ -635,8 +838,8 @@ export default {
                     this.searchList();
                 })
                 .catch(err => {
-                    for (let i in err.response.data.errors) {
-                        this.$Message.error(err.response.data.errors[i][0]);
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(err.response.data.msg[i][0]);
                     }
                 });
         },
@@ -658,8 +861,8 @@ export default {
                     this.searchList();
                 })
                 .catch(err => {
-                    for (let i in err.response.data.errors) {
-                        this.$Message.error(err.response.data.errors[i][0]);
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(err.response.data.msg[i][0]);
                     }
                 });
         },
@@ -693,8 +896,10 @@ export default {
                             this.getMasterList();
                         })
                         .catch(err => {
-                            for(let i in err.response.data.errors){
-                                this.$Message.error(err.response.data.errors[i][0]);
+                            for (let i in err.response.data.msg) {
+                                this.$Message.error(
+                                    err.response.data.msg[i][0]
+                                );
                             }
                         });
                 } else {

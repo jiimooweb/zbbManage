@@ -186,30 +186,30 @@ export default {
     data() {
         return {
             formInline: {
-                username:'',
-                password:'',
-                name:'',
-                tel:'',
-                wechat:'',
-                wx_commission:'',
+                username: "",
+                password: "",
+                name: "",
+                tel: "",
+                wechat: "",
+                wx_commission: "",
 
                 //dy
-                dy_subscribe:'',
-                dy_like:'',
-                dy_share:'',
-                dy_comment:'',
+                dy_subscribe: "",
+                dy_like: "",
+                dy_share: "",
+                dy_comment: "",
 
                 //tt
-                tt_subscribe:'',
-                tt_like:'',
-                tt_share:'',
-                tt_comment:'',
+                tt_subscribe: "",
+                tt_like: "",
+                tt_share: "",
+                tt_comment: "",
 
-                share_commission:'',
-                principal:'',
-                custom_service:'',
+                share_commission: "",
+                principal: "",
+                custom_service: "",
 
-                remark:''
+                remark: ""
             },
             ruleInline: {
                 username: [
@@ -248,54 +248,65 @@ export default {
                     }
                 ]
             },
-            sysJson:[],
-            JsonFilterArr:[
-                'SHARE_MERCHANT_COST',//分享赚
-                'WECHAT_MERCHANT_COST',//发圈赚
-                'DY_MERCHANT_SUBSCRIBE',//抖音赚 关注
-                'DY_MERCHANT_LIKE',//抖音赚 点赞
-                'DY_MERCHANT_SHARE',//抖音赚 转发
-                'DY_MERCHANT_COMMENT',//抖音赚 评论
-                
-                'TT_MERCHANT_SUBSCRIBE',//头条赚 关注
-                'TT_MERCHANT_LIKE',//头条赚 点赞
-                'TT_MERCHANT_SHARE',//头条赚 转发
-                'TT_MERCHANT_COMMENT',//头条赚 评论
-            ],
-            SHARE_MERCHANT_COST:'',//分享赚
-            WECHAT_MERCHANT_COST:'',//发圈赚
+            sysJson: [],
+            JsonFilterArr: [
+                "SHARE_MERCHANT_COST", //分享赚
+                "WECHAT_MERCHANT_COST", //发圈赚
+                "DY_MERCHANT_SUBSCRIBE", //抖音赚 关注
+                "DY_MERCHANT_LIKE", //抖音赚 点赞
+                "DY_MERCHANT_SHARE", //抖音赚 转发
+                "DY_MERCHANT_COMMENT", //抖音赚 评论
 
-            DY_MERCHANT_SUBSCRIBE:'',//抖音赚 关注
-            DY_MERCHANT_LIKE:'',//抖音赚 点赞
-            DY_MERCHANT_SHARE:'',//抖音赚 转发
-            DY_MERCHANT_COMMENT:'',//抖音赚 评论
-            
-            TT_MERCHANT_SUBSCRIBE:'',//头条赚 关注
-            TT_MERCHANT_LIKE:'',//头条赚 点赞
-            TT_MERCHANT_SHARE:'',//头条赚 转发
-            TT_MERCHANT_COMMENT:'',//头条赚 评论
+                "TT_MERCHANT_SUBSCRIBE", //头条赚 关注
+                "TT_MERCHANT_LIKE", //头条赚 点赞
+                "TT_MERCHANT_SHARE", //头条赚 转发
+                "TT_MERCHANT_COMMENT" //头条赚 评论
+            ],
+            SHARE_MERCHANT_COST: "", //分享赚
+            WECHAT_MERCHANT_COST: "", //发圈赚
+
+            DY_MERCHANT_SUBSCRIBE: "", //抖音赚 关注
+            DY_MERCHANT_LIKE: "", //抖音赚 点赞
+            DY_MERCHANT_SHARE: "", //抖音赚 转发
+            DY_MERCHANT_COMMENT: "", //抖音赚 评论
+
+            TT_MERCHANT_SUBSCRIBE: "", //头条赚 关注
+            TT_MERCHANT_LIKE: "", //头条赚 点赞
+            TT_MERCHANT_SHARE: "", //头条赚 转发
+            TT_MERCHANT_COMMENT: "" //头条赚 评论
         };
     },
     mounted() {
-        this.getJson()
+        this.getJson();
     },
     methods: {
-        getJson(){
+        getJson() {
             //获取系统配置
-            axios.request({
-                url:'system/configs',
-                method:'get'
-            }).then(res=>{
-                this.sysJson = res.data.data
-                for(let i=0;i<this.JsonFilterArr.length;i++){
-                    for(let j=0;j<this.sysJson.length;j++){
-                        if(this.JsonFilterArr[i] === this.sysJson[j].flag){
-                            this.$data[this.JsonFilterArr[i]] = this.sysJson[j].param
+            axios
+                .request({
+                    url: "system/configs",
+                    method: "get"
+                })
+                .then(res => {
+                    this.sysJson = res.data.data;
+                    for (let i = 0; i < this.JsonFilterArr.length; i++) {
+                        for (let j = 0; j < this.sysJson.length; j++) {
+                            if (
+                                this.JsonFilterArr[i] === this.sysJson[j].flag
+                            ) {
+                                this.$data[
+                                    this.JsonFilterArr[i]
+                                ] = this.sysJson[j].param;
+                            }
                         }
                     }
-                }
-                console.log(this.$data);
-            })
+                    console.log(this.$data);
+                })
+                .catch(err => {
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(err.response.data.msg[i][0]);
+                    }
+                });
         },
         handleSubmit(name) {
             this.$refs[name].validate(valid => {
@@ -311,21 +322,51 @@ export default {
                                 tel: this.formInline.tel,
                                 wechat: this.formInline.wechat,
 
-                                wx_commission: this.formInline.wx_commission===''?this.WECHAT_MERCHANT_COST:this.formInline.wx_commission,//发圈赚
+                                wx_commission:
+                                    this.formInline.wx_commission === ""
+                                        ? this.WECHAT_MERCHANT_COST
+                                        : this.formInline.wx_commission, //发圈赚
 
                                 //dy
-                                dy_subscribe: this.formInline.dy_subscribe===''?this.DY_MERCHANT_SUBSCRIBE:this.formInline.dy_subscribe,
-                                dy_like: this.formInline.dy_like===''?this.DY_MERCHANT_LIKE:this.formInline.dy_like,
-                                dy_share: this.formInline.dy_share===''?this.DY_MERCHANT_SHARE:this.formInline.dy_share,
-                                dy_comment: this.formInline.dy_comment===''?this.DY_MERCHANT_COMMENT:this.formInline.dy_comment,
+                                dy_subscribe:
+                                    this.formInline.dy_subscribe === ""
+                                        ? this.DY_MERCHANT_SUBSCRIBE
+                                        : this.formInline.dy_subscribe,
+                                dy_like:
+                                    this.formInline.dy_like === ""
+                                        ? this.DY_MERCHANT_LIKE
+                                        : this.formInline.dy_like,
+                                dy_share:
+                                    this.formInline.dy_share === ""
+                                        ? this.DY_MERCHANT_SHARE
+                                        : this.formInline.dy_share,
+                                dy_comment:
+                                    this.formInline.dy_comment === ""
+                                        ? this.DY_MERCHANT_COMMENT
+                                        : this.formInline.dy_comment,
 
                                 //tt
-                                tt_subscribe: this.formInline.tt_subscribe===''?this.TT_MERCHANT_SUBSCRIBE:this.formInline.tt_subscribe,
-                                tt_like: this.formInline.tt_like===''?this.TT_MERCHANT_LIKE:this.formInline.tt_like,
-                                tt_share: this.formInline.tt_share===''?this.TT_MERCHANT_SHARE:this.formInline.tt_share,
-                                tt_comment: this.formInline.tt_comment===''?this.TT_MERCHANT_COMMENT:this.formInline.tt_comment,
+                                tt_subscribe:
+                                    this.formInline.tt_subscribe === ""
+                                        ? this.TT_MERCHANT_SUBSCRIBE
+                                        : this.formInline.tt_subscribe,
+                                tt_like:
+                                    this.formInline.tt_like === ""
+                                        ? this.TT_MERCHANT_LIKE
+                                        : this.formInline.tt_like,
+                                tt_share:
+                                    this.formInline.tt_share === ""
+                                        ? this.TT_MERCHANT_SHARE
+                                        : this.formInline.tt_share,
+                                tt_comment:
+                                    this.formInline.tt_comment === ""
+                                        ? this.TT_MERCHANT_COMMENT
+                                        : this.formInline.tt_comment,
 
-                                share_commission: this.formInline.share_commission===''?this.SHARE_MERCHANT_COST:this.formInline.share_commission,//分享赚
+                                share_commission:
+                                    this.formInline.share_commission === ""
+                                        ? this.SHARE_MERCHANT_COST
+                                        : this.formInline.share_commission, //分享赚
                                 principal: this.formInline.principal,
                                 custom_service: this.formInline.custom_service,
 
@@ -337,9 +378,9 @@ export default {
                             this.resetData("formInline");
                         })
                         .catch(err => {
-                            for (let i in err.response.data.errors) {
+                            for (let i in err.response.data.msg) {
                                 this.$Message.error(
-                                    err.response.data.errors[i][0]
+                                    err.response.data.msg[i][0]
                                 );
                             }
                         });

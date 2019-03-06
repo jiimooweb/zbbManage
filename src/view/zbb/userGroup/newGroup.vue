@@ -19,37 +19,38 @@
 </template>
 
 <script>
-import axios from '@/libs/api.request'
+import axios from "@/libs/api.request";
 export default {
     data() {
         return {
-            groupName:''
+            groupName: ""
         };
     },
-    mounted() {
-
-    },
+    mounted() {},
     methods: {
-        inputNewGroup(){
-            if(this.groupName !== ''){
-                axios.request({
-                    url:'power/groups',
-                    method:'post',
-                    data:{
-                        name: this.groupName
-                    }
-                }).then(res=>{
-                    this.$Message.success('新建成功')
-                    this.groupName = ''
-                }).catch(err=>{
-                    this.$Message.success('出现错误！')
-                    console.log(err);
-                })
-            }else{
-                this.$Message.error('用户组名不能为空')
+        inputNewGroup() {
+            if (this.groupName !== "") {
+                axios
+                    .request({
+                        url: "power/groups",
+                        method: "post",
+                        data: {
+                            name: this.groupName
+                        }
+                    })
+                    .then(res => {
+                        this.$Message.success("新建成功");
+                        this.groupName = "";
+                    })
+                    .catch(err => {
+                        for (let i in err.response.data.msg) {
+                            this.$Message.error(err.response.data.msg[i][0]);
+                        }
+                    });
+            } else {
+                this.$Message.error("用户组名不能为空");
             }
         }
-        
     }
 };
 </script>

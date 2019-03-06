@@ -9,7 +9,8 @@
                         </i-col>
                         <i-col span='18'>
                             <Select v-model="formInline.page">
-                                <Option v-for="(item,index) in groupsList" :value="item.id" :key="index">{{ item.name }}</Option>
+                                <Option v-for="(item,index) in groupsList" :value="item.id" :key="index">{{ item.name
+                                    }}</Option>
                             </Select>
                         </i-col>
                     </row>
@@ -72,7 +73,7 @@
                         <Button type="primary" @click="handleSubmit('formInline')">新增</Button>
                         <Button style="margin-left:10px;" @click="resetData('formInline')">重置</Button>
                     </div>
-                    
+
                 </FormItem>
             </i-form>
         </Card>
@@ -86,16 +87,16 @@ export default {
         return {
             groupsList: [],
             formInline: {
-                powers:"",
+                powers: "",
                 username: "",
-                password:"",
-                phone:"",
-                email:"",
+                password: "",
+                phone: "",
+                email: "",
                 // wx:'',
-                state:1
+                state: 1
             },
             ruleInline: {
-                powers:[
+                powers: [
                     // {
                     //     required: true,
                     //     message: "请选择用户组",
@@ -153,6 +154,11 @@ export default {
                     console.log(res.data.data);
 
                     this.groupsList = res.data.data;
+                })
+                .catch(err => {
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(err.response.data.msg[i][0]);
+                    }
                 });
         },
         handleSubmit(name) {
@@ -169,7 +175,7 @@ export default {
                                 // wx: this.formInline.wx,
                                 phone: this.formInline.phone,
                                 email: this.formInline.email,
-                                state: this.formInline.state,
+                                state: this.formInline.state
                             }
                         })
                         .then(res => {
@@ -177,7 +183,11 @@ export default {
                             this.resetData("formInline");
                         })
                         .catch(err => {
-                            this.$Message.error(err.response.data.msg);
+                            for (let i in err.response.data.msg) {
+                                this.$Message.error(
+                                    err.response.data.msg[i][0]
+                                );
+                            }
                         });
                 } else {
                     this.$Message.error("填写的资料有误!");

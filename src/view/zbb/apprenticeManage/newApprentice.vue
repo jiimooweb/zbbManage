@@ -137,8 +137,8 @@ export default {
                 name: "",
                 phone: "",
                 wx: "",
-                tt:'',
-                dy:'',
+                tt: "",
+                dy: "",
                 email: "",
                 master_id: "", //推荐人ID
                 remark: ""
@@ -236,10 +236,11 @@ export default {
                             this.resetData("formInline");
                         })
                         .catch(err => {
-                            for(let i in err.response.data.errors){
-                                this.$Message.error(err.response.data.errors[i][0]);
+                            for (let i in err.response.data.msg) {
+                                this.$Message.error(
+                                    err.response.data.msg[i][0]
+                                );
                             }
-                            // console.log(err.err.response.data);
                         });
                 } else {
                     this.$Message.error("填写的资料有误!");

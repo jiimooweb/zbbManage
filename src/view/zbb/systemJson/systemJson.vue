@@ -44,7 +44,7 @@
                         </i-col>
                     </row>
                 </FormItem>
-                
+
                 <FormItem prop="remark" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
@@ -113,10 +113,13 @@ export default {
                                     click: () => {
                                         this.currentId = params.row.id;
                                         this.formInline.flag = params.row.flag;
-                                        this.formInline.param = params.row.param;
+                                        this.formInline.param =
+                                            params.row.param;
                                         this.formInline.text = params.row.text;
-                                        this.formInline.group = params.row.group;
-                                        this.formInline.remark = params.row.remark;
+                                        this.formInline.group =
+                                            params.row.group;
+                                        this.formInline.remark =
+                                            params.row.remark;
                                         this.EditModal = true;
                                     }
                                 }
@@ -160,7 +163,7 @@ export default {
             formInline: {
                 flag: "",
                 param: "",
-                text:'',
+                text: "",
                 group: "",
                 remark: ""
             },
@@ -178,6 +181,11 @@ export default {
                 .then(res => {
                     console.log(res);
                     this.list = res.data.data;
+                })
+                .catch(err => {
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(err.response.data.msg[i][0]);
+                    }
                 });
         },
         newData() {
@@ -186,11 +194,17 @@ export default {
         },
         inputData() {
             if (this.isNew) {
-                axios.request({
-                    url: "system/cofigs",
-                    method: "post",
-                    data: {}
-                });
+                axios
+                    .request({
+                        url: "system/cofigs",
+                        method: "post",
+                        data: {}
+                    })
+                    .catch(err => {
+                        for (let i in err.response.data.msg) {
+                            this.$Message.error(err.response.data.msg[i][0]);
+                        }
+                    });
             }
         },
         handleSubmit(name) {
@@ -215,9 +229,9 @@ export default {
                                 this.getList();
                             })
                             .catch(err => {
-                                for (let i in err.response.data.errors) {
+                                for (let i in err.response.data.msg) {
                                     this.$Message.error(
-                                        err.response.data.errors[i][0]
+                                        err.response.data.msg[i][0]
                                     );
                                 }
                             });
@@ -240,9 +254,9 @@ export default {
                                 this.getList();
                             })
                             .catch(err => {
-                                for (let i in err.response.data.errors) {
+                                for (let i in err.response.data.msg) {
                                     this.$Message.error(
-                                        err.response.data.errors[i][0]
+                                        err.response.data.msg[i][0]
                                     );
                                 }
                             });

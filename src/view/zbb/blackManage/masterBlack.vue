@@ -19,9 +19,9 @@ import axios from "@/libs/api.request";
 export default {
     data() {
         return {
-            currentId:'',
-            deleteName:'',
-            cancelModal:false,
+            currentId: "",
+            deleteName: "",
+            cancelModal: false,
             column: [
                 {
                     title: "师傅ID",
@@ -80,8 +80,9 @@ export default {
                                     nativeOn: {
                                         click: () => {
                                             this.currentId = params.row.id;
-                                            this.deleteName = params.row.username
-                                            this.cancelcancel(true)
+                                            this.deleteName =
+                                                params.row.username;
+                                            this.cancelcancel(true);
                                         }
                                     }
                                 },
@@ -101,8 +102,9 @@ export default {
         };
     },
     methods: {
-        returnExcel(){
-            let url = "http://120.79.203.214/zbb/public/backend/masters/blacklist/export"
+        returnExcel() {
+            let url =
+                "http://120.79.203.214/zbb/public/backend/masters/blacklist/export";
             window.open(url);
         },
         getList() {
@@ -116,22 +118,32 @@ export default {
                     this.total = res.data.data.total;
                     this.currentPage = res.data.data.current_page;
                     this.per_page = res.data.data.per_page;
+                })
+                .catch(err => {
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(err.response.data.msg[i][0]);
+                    }
                 });
         },
         selectItem(all, last) {},
-        cancelItem(){
+        cancelItem() {
             axios
                 .request({
-                    url: "masters/blacklist/" + this.currentId+"?blacklist=0",
+                    url: "masters/blacklist/" + this.currentId + "?blacklist=0",
                     method: "get"
                 })
                 .then(res => {
-                    this.$Message.success('删除成功')
-                    this.getList()
+                    this.$Message.success("删除成功");
+                    this.getList();
+                })
+                .catch(err => {
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(err.response.data.msg[i][0]);
+                    }
                 });
         },
-        cancelcancel(i){
-            this.cancelModal = i
+        cancelcancel(i) {
+            this.cancelModal = i;
         },
         changePageGetList(size) {
             this.currentPage = 1;
@@ -150,6 +162,11 @@ export default {
                     this.total = res.data.data.total;
                     this.currentPage = res.data.data.current_page;
                     this.per_page = res.data.data.per_page;
+                })
+                .catch(err => {
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(err.response.data.msg[i][0]);
+                    }
                 });
         },
         getMasterList(index) {
@@ -167,6 +184,11 @@ export default {
                     this.total = res.data.data.total;
                     this.currentPage = res.data.data.current_page;
                     this.per_page = res.data.data.per_page;
+                })
+                .catch(err => {
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(err.response.data.msg[i][0]);
+                    }
                 });
         }
     },

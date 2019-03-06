@@ -113,13 +113,29 @@
                 </i-col>
             </row>
         </i-form>
+        <row style="margin-bottom:10px;">
+            <i-col span='10'>
+                <Button type='success' @click="cancelAll(true,2)" style="display:block;float:left;margin-left:10px;">批量确认打款</Button>
+                <Button type='warning' @click="cancelAll(true,1)" style="display:block;float:left;margin-left:10px;">批量安排打款</Button>
+                <Button type='error' @click="cancelAll(true,-1)" style="display:block;float:left;margin-left:10px;">批量拒绝</Button>
+            </i-col>
+            <i-col span='2' offset='12'>
+                <Button type="error" @click="returnExcel()">导出</Button>
+            </i-col>
+        </row>
         <Table stripe :columns="column" border :data="list" @on-select='selectItem' @on-select-all='selectItem'></Table>
         <Page style="margin-top:20px;" :total="total" show-total :page-size='defailPage' show-elevator show-sizer
             :page-size-opts='pageSize' @on-change="getchangeList" @on-page-size-change='changePageGetList' />
         <Modal v-model="editModal" title='审核' @on-ok="inputItem()" @on-cancel="cancelEdit(false)">
-            <p v-if="status===1" style="text-align:center;font-size:16px;">是否对<span style="color:red;">{{currentName}}</span>的提现申请安排<span style="color:green">打款</span></p>
+            <p v-if="status===1" style="text-align:center;font-size:16px;">是否对<span style="color:red;">{{currentName}}</span>的提现申请安排<span
+                    style="color:green">打款</span></p>
             <p v-if="status===2" style="text-align:center;font-size:16px;">是否确认已对<span style="color:red;">{{currentName}}</span>进行打款</p>
             <p v-if="status===-1" style="text-align:center;font-size:16px;">是否拒绝<span style="color:red;">{{currentName}}</span>的提现申请</p>
+        </Modal>
+        <Modal v-model="allModal" title='审核' @on-ok="allInput()" @on-cancel="cancelAll(false)">
+            <p v-if="status===1" style="text-align:center;font-size:16px;">是否批量进行提现申请安排<span style="color:green">打款</span></p>
+            <p v-if="status===2" style="text-align:center;font-size:16px;">是否批量确认打款</p>
+            <p v-if="status===-1" style="text-align:center;font-size:16px;">是否批量拒绝提现申请</p>
         </Modal>
     </div>
 </template>
@@ -129,23 +145,29 @@ import axios from "@/libs/api.request";
 export default {
     data() {
         return {
-            editModal:false,
-            status:0,
-            searchData:{
-                type1:'username',//用户名称  用户ID  提现ID
-                type1Text:'',
-                type2:'bank_name',//银行名称  银行ID
-                type2Text:'',
-                type3:'bank_name',//持卡人姓名  真实姓名
-                type3Text:'',
-                type4:'reviewer_user',//审核人名称  审核人ID
-                type4Text:'',
-                type5:'created_at',//申请时间  状态时间
-                type5Text:['',''],
-                status:-2,
+            editModal: false,
+            allModal: false,
+            status: 0,
+            searchData: {
+                type1: "username", //用户名称  用户ID  提现ID
+                type1Text: "",
+                type2: "bank_name", //银行名称  银行ID
+                type2Text: "",
+                type3: "bank_name", //持卡人姓名  真实姓名
+                type3Text: "",
+                type4: "reviewer_user", //审核人名称  审核人ID
+                type4Text: "",
+                type5: "created_at", //申请时间  状态时间
+                type5Text: ["", ""],
+                status: -2
             },
-            
+
             column: [
+                {
+                    type: "selection",
+                    width: 60,
+                    align: "center"
+                },
                 {
                     title: "提现ID",
                     align: "center",
@@ -197,7 +219,10 @@ export default {
                     width: "100",
                     // key:"bank_id"
                     render: (h, params) => {
-                        return h("p",  params.row.bank===null?'':params.row.bank.id);
+                        return h(
+                            "p",
+                            params.row.bank === null ? "" : params.row.bank.id
+                        );
                     }
                 },
                 {
@@ -206,7 +231,10 @@ export default {
                     width: "200",
                     // key:"name"
                     render: (h, params) => {
-                        return h("p", params.row.bank===null?'':params.row.bank.name);
+                        return h(
+                            "p",
+                            params.row.bank === null ? "" : params.row.bank.name
+                        );
                     }
                 },
                 {
@@ -244,9 +272,32 @@ export default {
                     align: "center",
                     width: "100",
                     // key: "status"
-                    render:(h,params)=> {
-                        return h('p',params.row.status===0?'待审核':(params.row.status===1?'处理中':params.row.status===2?'已打款':'拒绝'))
-                    },
+                    fixed: "left",
+                    render: (h, params) => {
+                        return h(
+                            "p",
+                            {
+                                attrs: {
+                                    style:
+                                        "color:#" +
+                                        (params.row.status === 0
+                                            ? "ff9900"
+                                            : params.row.status === 1
+                                            ? "2d8cf0"
+                                            : params.row.status === 2
+                                            ? "19be6b"
+                                            : "ed4014")
+                                }
+                            },
+                            params.row.status === 0
+                                ? "待审核"
+                                : params.row.status === 1
+                                ? "处理中"
+                                : params.row.status === 2
+                                ? "已打款"
+                                : "拒绝"
+                        );
+                    }
                 },
                 {
                     title: "状态时间",
@@ -259,17 +310,25 @@ export default {
                     align: "center",
                     width: "100",
                     // key: "admin.id"
-                    render:(h,params)=> {
-                        return h('p',params.row.admin===null?'':params.row.admin.id)
-                    },
+                    render: (h, params) => {
+                        return h(
+                            "p",
+                            params.row.admin === null ? "" : params.row.admin.id
+                        );
+                    }
                 },
                 {
                     title: "审核用户名",
                     align: "center",
                     width: "100",
-                    render:(h,params)=> {
-                        return h('p',params.row.admin===null?'':params.row.admin.username)
-                    },
+                    render: (h, params) => {
+                        return h(
+                            "p",
+                            params.row.admin === null
+                                ? ""
+                                : params.row.admin.username
+                        );
+                    }
                 },
                 // {
                 //     title: "备注",
@@ -298,13 +357,14 @@ export default {
                                     nativeOn: {
                                         click: () => {
                                             this.currentId = params.row.id;
-                                            this.currentName = params.row.master.username;
-                                            this.status = 2
-                                            this.cancelEdit(true)
+                                            this.currentName =
+                                                params.row.master.username;
+                                            this.status = 2;
+                                            this.cancelEdit(true);
                                         }
                                     }
                                 },
-                                "已打款"
+                                "确认打款"
                             ),
                             h(
                                 "Button",
@@ -321,13 +381,14 @@ export default {
                                     nativeOn: {
                                         click: () => {
                                             this.currentId = params.row.id;
-                                            this.currentName = params.row.master.username;
-                                            this.status = 1
-                                            this.cancelEdit(true)
+                                            this.currentName =
+                                                params.row.master.username;
+                                            this.status = 1;
+                                            this.cancelEdit(true);
                                         }
                                     }
                                 },
-                                "处理中"
+                                "安排打款"
                             ),
                             h(
                                 "Button",
@@ -343,9 +404,10 @@ export default {
                                     nativeOn: {
                                         click: () => {
                                             this.currentId = params.row.id;
-                                            this.currentName = params.row.master.username;
-                                            this.status = -1
-                                            this.cancelEdit(true)
+                                            this.currentName =
+                                                params.row.master.username;
+                                            this.status = -1;
+                                            this.cancelEdit(true);
                                         }
                                     }
                                 },
@@ -356,7 +418,8 @@ export default {
                 }
             ],
             list: [],
-            currentName:'',
+            ids: [],
+            currentName: "",
             currentId: "",
             total: 1,
             currentPage: 1,
@@ -366,53 +429,201 @@ export default {
         };
     },
     methods: {
-        selectItem() {},
-        cancelEdit(i){
-            this.editModal = i
+        returnExcel(){
+            let url = 'http://120.79.203.214/zbb/public/backend/finance/masters/export?' + ("&username=" +
+                        (this.searchData.type1 === "username"
+                            ? this.searchData.type1Text
+                            : "") +
+                        "&master_id=" +
+                        (this.searchData.type1 === "master_id"
+                            ? this.searchData.type1Text
+                            : "") +
+                        "&id=" +
+                        (this.searchData.type1 === "id"
+                            ? this.searchData.type1Text
+                            : "") +
+                        "&bank_name=" +
+                        (this.searchData.type2 === "bank_name"
+                            ? this.searchData.type2Text
+                            : "") +
+                        "&bank_id=" +
+                        (this.searchData.type2 === "bank_id"
+                            ? this.searchData.type2Text
+                            : "") +
+                        "&bank_man=" +
+                        (this.searchData.type3 === "bank_man"
+                            ? this.searchData.type3Text
+                            : "") +
+                        "&bank_number=" +
+                        (this.searchData.type3 === "bank_number"
+                            ? this.searchData.type3Text
+                            : "") +
+                        "&reviewer_user=" +
+                        (this.searchData.type4 === "reviewer_user"
+                            ? this.searchData.type4Text
+                            : "") +
+                        "&reviewer_id=" +
+                        (this.searchData.type4 === "reviewer_id"
+                            ? this.searchData.type4Text
+                            : "") +
+                        "&created_at=" +
+                        (this.searchData.type5 === "created_at"
+                            ? this.searchData.type5Text[0] === ""
+                                ? ""
+                                : JSON.stringify(this.searchData.type5Text)
+                            : "") +
+                        "&status_time=" +
+                        (this.searchData.type5 === "status_time"
+                            ? this.searchData.type5Text[0] === ""
+                                ? ""
+                                : JSON.stringify(this.searchData.type5Text)
+                            : "") +
+                        "&status=" +
+                        (this.searchData.status === -2
+                            ? ""
+                            : this.searchData.status))
+            window.open(url);
         },
-        changeDate(date){
-            this.searchData.type5Text = date
+        selectItem(selection, row) {
+            this.selectList = selection;
+            this.ids = [];
+            for (let i = 0; i < selection.length; i++) {
+                this.ids.push(selection[i].id);
+            }
         },
-        inputItem(i){
-            axios.request({
-                url:'finance/masters/withdraw/'+this.currentId,
-                method:'put',
-                data:{
-                    status:this.status
-                }
-            })
+        cancelEdit(i) {
+            this.editModal = i;
+        },
+        cancelAll(i, status) {
+            this.allModal = i;
+            this.status = status;
+        },
+        changeDate(date) {
+            this.searchData.type5Text = date;
+        },
+        inputItem() {
+            axios
+                .request({
+                    url: "finance/masters/withdraw/" + this.currentId,
+                    method: "put",
+                    data: {
+                        status: this.status
+                    }
+                })
+                .then(res => {
+                    this.$Message.success("操作成功");
+                    this.getList();
+                })
+                .catch(err => {
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(
+                            err.response.data.msg[i][0]
+                        );
+                    }
+                });
+        },
+        allInput() {
+            axios
+                .request({
+                    url: "finance/masters/review",
+                    method: "post",
+                    data: {
+                        ids: this.ids,
+                        status: this.status
+                    }
+                })
+                .then(res => {
+                    this.$Message.success("批量操作成功");
+                    this.getList();
+                })
+                .catch(err => {
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(
+                            err.response.data.msg[i][0]
+                        );
+                    }
+                });
         },
         getList() {
             axios
                 .request({
-                    url: "finance/masters/withdraw?pagesize="+this.per_page+"&page="+this.currentPage+
-                    "&username="+(this.searchData.type1==='username'?this.searchData.type1Text:'') +
-                    "&master_id="+(this.searchData.type1==='master_id'?this.searchData.type1Text:'') +
-                    "&id="+(this.searchData.type1==='id'?this.searchData.type1Text:'') +
-                    "&bank_name="+(this.searchData.type2==='bank_name'?this.searchData.type2Text:'') +
-                    "&bank_id="+(this.searchData.type2==='bank_id'?this.searchData.type2Text:'') +
-                    "&bank_man="+(this.searchData.type3==='bank_man'?this.searchData.type3Text:'') +
-                    "&bank_number="+(this.searchData.type3==='bank_number'?this.searchData.type3Text:'') +
-                    "&reviewer_user="+(this.searchData.type4==='reviewer_user'?this.searchData.type4Text:'') +
-                    "&reviewer_id="+(this.searchData.type4==='reviewer_id'?this.searchData.type4Text:'') +
-                    "&created_at="+(this.searchData.type5==='created_at'?(this.searchData.type5Text[0]===''?'':JSON.stringify(this.searchData.type5Text)):'') +
-                    "&status_time="+(this.searchData.type5==='status_time'?(this.searchData.type5Text[0]===''?'':JSON.stringify(this.searchData.type5Text)):'') +
-                    "&status="+(this.searchData.status===-2?'':this.searchData.status),
+                    url:
+                        "finance/masters/withdraw?pagesize=" +
+                        this.per_page +
+                        "&page=" +
+                        this.currentPage +
+                        "&username=" +
+                        (this.searchData.type1 === "username"
+                            ? this.searchData.type1Text
+                            : "") +
+                        "&master_id=" +
+                        (this.searchData.type1 === "master_id"
+                            ? this.searchData.type1Text
+                            : "") +
+                        "&id=" +
+                        (this.searchData.type1 === "id"
+                            ? this.searchData.type1Text
+                            : "") +
+                        "&bank_name=" +
+                        (this.searchData.type2 === "bank_name"
+                            ? this.searchData.type2Text
+                            : "") +
+                        "&bank_id=" +
+                        (this.searchData.type2 === "bank_id"
+                            ? this.searchData.type2Text
+                            : "") +
+                        "&bank_man=" +
+                        (this.searchData.type3 === "bank_man"
+                            ? this.searchData.type3Text
+                            : "") +
+                        "&bank_number=" +
+                        (this.searchData.type3 === "bank_number"
+                            ? this.searchData.type3Text
+                            : "") +
+                        "&reviewer_user=" +
+                        (this.searchData.type4 === "reviewer_user"
+                            ? this.searchData.type4Text
+                            : "") +
+                        "&reviewer_id=" +
+                        (this.searchData.type4 === "reviewer_id"
+                            ? this.searchData.type4Text
+                            : "") +
+                        "&created_at=" +
+                        (this.searchData.type5 === "created_at"
+                            ? this.searchData.type5Text[0] === ""
+                                ? ""
+                                : JSON.stringify(this.searchData.type5Text)
+                            : "") +
+                        "&status_time=" +
+                        (this.searchData.type5 === "status_time"
+                            ? this.searchData.type5Text[0] === ""
+                                ? ""
+                                : JSON.stringify(this.searchData.type5Text)
+                            : "") +
+                        "&status=" +
+                        (this.searchData.status === -2
+                            ? ""
+                            : this.searchData.status),
                     method: "get"
                 })
                 .then(res => {
-                    console.log(res);
                     this.list = res.data.data.data;
-                });
+                }).catch(err=>{
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(
+                            err.response.data.msg[i][0]
+                        );
+                    }
+                })
         },
         getchangeList(index) {
-            this.currentPage = index
-            this.getList()
+            this.currentPage = index;
+            this.getList();
         },
         changePageGetList(size) {
-            this.per_page = size
-            this.currentPage = 1
-            this.getList()
+            this.per_page = size;
+            this.currentPage = 1;
+            this.getList();
         }
     },
     mounted() {

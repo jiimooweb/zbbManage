@@ -9,6 +9,9 @@
         <DropdownItem name="message">
           消息中心<Badge style="margin-left: 10px" :count="messageUnreadCount"></Badge>
         </DropdownItem>
+        <DropdownItem name="message">
+          修改密码<Badge style="margin-left: 10px" :count="messageUnreadCount"></Badge>
+        </DropdownItem>
         <DropdownItem name="logout">退出登录</DropdownItem>
       </DropdownMenu>
     </Dropdown>
@@ -17,6 +20,7 @@
 
 <script>
 import './user.less'
+import { setToken, getToken } from "@/libs/util";
 import { mapActions } from 'vuex'
 export default {
   name: 'User',
@@ -35,11 +39,8 @@ export default {
       'handleLogOut'
     ]),
     logout () {
-      this.handleLogOut().then(() => {
-        this.$router.push({
-          name: 'login'
-        })
-      })
+      setToken('')
+      this.$router.push({name:'login'})
     },
     message () {
       this.$router.push({

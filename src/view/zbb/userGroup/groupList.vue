@@ -24,9 +24,9 @@ import axios from "@/libs/api.request";
 export default {
     data() {
         return {
-            editModal:false,
-            groupName:'',
-            currentId:'',
+            editModal: false,
+            groupName: "",
+            currentId: "",
             groupsColumn: [
                 {
                     title: "用户组名",
@@ -34,7 +34,7 @@ export default {
                 },
                 {
                     title: "操作",
-                    render:(h, params)=> {
+                    render: (h, params) => {
                         return h("div", [
                             h(
                                 "Button",
@@ -48,9 +48,9 @@ export default {
                                     },
                                     nativeOn: {
                                         click: () => {
-                                            this.currentId = params.row.id
-                                            this.groupName = params.row.name
-                                            this.showModal(true)
+                                            this.currentId = params.row.id;
+                                            this.groupName = params.row.name;
+                                            this.showModal(true);
                                         }
                                     }
                                 },
@@ -67,15 +67,15 @@ export default {
         this.getGroupsList();
     },
     methods: {
-        showModal(i){
-            this.editModal = i
+        showModal(i) {
+            this.editModal = i;
         },
-        okInput(){
+        okInput() {
             //提交修改
         },
-        cancelInput(){
+        cancelInput() {
             //取消显示
-            this.editModal = false
+            this.editModal = false;
         },
         getGroupsList() {
             axios
@@ -85,26 +85,36 @@ export default {
                 })
                 .then(res => {
                     this.groupsList = res.data.data;
+                })
+                .catch(err => {
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(err.response.data.msg[i][0]);
+                    }
                 });
         },
-        okInput(){
+        okInput() {
             //提交用户组修改
-            if(this.groupName !== ''){
-                axios.request({
-                    url:'power/groups/'+this.currentId,
-                    method:'put',
-                    data:{
-                        name: this.groupName
-                    }
-                }).then(res=>{
-                    this.$Message.success('新建成功')
-                    this.groupName = ''
-                    this.getGroupsList()
-                }).catch(err=>{
-                    this.$Message.error('出现错误！')
-                })
-            }else{
-                this.$Message.error('用户组名不能为空')
+            if (this.groupName !== "") {
+                axios
+                    .request({
+                        url: "power/groups/" + this.currentId,
+                        method: "put",
+                        data: {
+                            name: this.groupName
+                        }
+                    })
+                    .then(res => {
+                        this.$Message.success("新建成功");
+                        this.groupName = "";
+                        this.getGroupsList();
+                    })
+                    .catch(err => {
+                        for (let i in err.response.data.msg) {
+                            this.$Message.error(err.response.data.msg[i][0]);
+                        }
+                    });
+            } else {
+                this.$Message.error("用户组名不能为空");
             }
         }
     }

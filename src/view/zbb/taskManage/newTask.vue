@@ -47,7 +47,7 @@
                         <i-col span='18'>
                             <!-- <InputNumber :min="0" :active-change='false' :value="formInline.share_price" style="width: 200px"
                                 :precision='2' placeholder='输入金额'></InputNumber> -->
-                                <i-input placeholder="输入金额" class="formInput" v-model.number="formInline.share_price" type="number"></i-input>
+                            <i-input placeholder="输入金额" class="formInput" v-model.number="formInline.share_price" type="number"></i-input>
                         </i-col>
                     </row>
                 </FormItem>
@@ -277,45 +277,81 @@ export default {
                 // token: localStorage.getItem('')
             };
         },
-        price(){
+        price() {
             // let a = 0
-            if(this.formInline.type === 0){
+            if (this.formInline.type === 0) {
                 //朋友圈
-                this.total_price = this.WECHAT_MERCHANT_COST * this.formInline.num
-            }else if(this.formInline.type === 1){
+                this.total_price =
+                    this.WECHAT_MERCHANT_COST * this.formInline.num;
+            } else if (this.formInline.type === 1) {
                 //抖音
-                this.total_price =  (parseFloat(this.formInline.dy_request.indexOf('SUBSCRIBE')>-1?this.DY_MERCHANT_SUBSCRIBE:0) +
-                parseFloat(this.formInline.dy_request.indexOf('LIKE')>-1?this.DY_MERCHANT_LIKE:0) +
-                parseFloat(this.formInline.dy_request.indexOf('SHARE')>-1?this.DY_MERCHANT_SHARE:0) +
-                parseFloat(this.formInline.dy_request.indexOf('COMMENT')>-1?this.DY_MERCHANT_COMMENT:0)) * 10
+                this.total_price =
+                    (parseFloat(
+                        this.formInline.dy_request.indexOf("SUBSCRIBE") > -1
+                            ? this.DY_MERCHANT_SUBSCRIBE
+                            : 0
+                    ) +
+                        parseFloat(
+                            this.formInline.dy_request.indexOf("LIKE") > -1
+                                ? this.DY_MERCHANT_LIKE
+                                : 0
+                        ) +
+                        parseFloat(
+                            this.formInline.dy_request.indexOf("SHARE") > -1
+                                ? this.DY_MERCHANT_SHARE
+                                : 0
+                        ) +
+                        parseFloat(
+                            this.formInline.dy_request.indexOf("COMMENT") > -1
+                                ? this.DY_MERCHANT_COMMENT
+                                : 0
+                        )) *
+                    10;
 
-                this.total_price = this.total_price  * this.formInline.num
-                this.total_price = this.total_price  / 10            
-            }else if(this.formInline.type === 2){
+                this.total_price = this.total_price * this.formInline.num;
+                this.total_price = this.total_price / 10;
+            } else if (this.formInline.type === 2) {
                 //头条
-                this.total_price = 
-                (parseFloat(this.formInline.tt_request.indexOf('SUBSCRIBE')>-1?this.TT_MERCHANT_SUBSCRIBE:0) +
-                parseFloat(this.formInline.tt_request.indexOf('LIKE')>-1?this.TT_MERCHANT_LIKE:0) +
-                parseFloat(this.formInline.tt_request.indexOf('SHARE')>-1?this.TT_MERCHANT_SHARE:0) +
-                parseFloat(this.formInline.tt_request.indexOf('COMMENT')>-1?this.TT_MERCHANT_COMMENT:0)) * 10
+                this.total_price =
+                    (parseFloat(
+                        this.formInline.tt_request.indexOf("SUBSCRIBE") > -1
+                            ? this.TT_MERCHANT_SUBSCRIBE
+                            : 0
+                    ) +
+                        parseFloat(
+                            this.formInline.tt_request.indexOf("LIKE") > -1
+                                ? this.TT_MERCHANT_LIKE
+                                : 0
+                        ) +
+                        parseFloat(
+                            this.formInline.tt_request.indexOf("SHARE") > -1
+                                ? this.TT_MERCHANT_SHARE
+                                : 0
+                        ) +
+                        parseFloat(
+                            this.formInline.tt_request.indexOf("COMMENT") > -1
+                                ? this.TT_MERCHANT_COMMENT
+                                : 0
+                        )) *
+                    10;
 
-                this.total_price = this.total_price  * this.formInline.num
-                this.total_price = this.total_price  / 10
-            }else if(this.formInline.type === 3){
-                this.total_price =  this.formInline.share_price * 10
-                this.total_price =  this.total_price * this.formInline.num
-                this.total_price =  this.total_price / 10
+                this.total_price = this.total_price * this.formInline.num;
+                this.total_price = this.total_price / 10;
+            } else if (this.formInline.type === 3) {
+                this.total_price = this.formInline.share_price * 10;
+                this.total_price = this.total_price * this.formInline.num;
+                this.total_price = this.total_price / 10;
             }
             console.log(this.formInline.share_price * this.formInline.num);
-            
-            return this.total_price
+
+            return this.total_price;
         }
     },
-    components: { VueUeditorWrap,QRCode },
+    components: { VueUeditorWrap, QRCode },
     data() {
         return {
-            meerchatList:[],
-            
+            meerchatList: [],
+
             myConfig: {
                 // 编辑器不自动被内容撑高
                 autoHeightEnabled: false,
@@ -335,15 +371,15 @@ export default {
             spinShow2: false,
             disabledGroup: [],
             total_price: 0,
-            picHead:'',
+            picHead: "",
             formInline: {
-                merchant_id:'',
+                merchant_id: "",
                 //通用
                 title: "",
                 type: 0,
                 num: 10, //领取名额
                 start_time: "", //任务时间
-                time_limit:'',
+                time_limit: "",
                 images: [
                     // "http://img2.imgtn.bdimg.com/it/u=3496345838,732839400&fm=26&gp=0.jpg"
                 ], //图片信息
@@ -362,10 +398,10 @@ export default {
 
                 //软文推广
                 share_price: 0.0, //赏金
-                share_thumb: "", //分享封面
+                share_thumb: "" //分享封面
                 //share_content: '' //分享文章内容(废弃,编辑器无法识别)
             },
-            msg: '',//分享文章内容
+            msg: "", //分享文章内容
             ruleInline: {
                 merchant_id: [
                     {
@@ -399,22 +435,22 @@ export default {
                         }
                     }
                 ],
-                dy_request:[
+                dy_request: [
                     {
                         validator(rule, value, callback, source, options) {
                             var errors = [];
-                            if (value.length===0) {
+                            if (value.length === 0) {
                                 callback("请至少选择一项任务要求");
                             }
                             callback(errors);
                         }
                     }
                 ],
-                tt_request:[
+                tt_request: [
                     {
                         validator(rule, value, callback, source, options) {
                             var errors = [];
-                            if (value.length===0) {
+                            if (value.length === 0) {
                                 callback("请至少选择一项任务要求");
                             }
                             callback(errors);
@@ -439,7 +475,7 @@ export default {
                         trigger: "blur"
                     }
                 ],
-                time_limit:[
+                time_limit: [
                     {
                         validator(rule, value, callback, source, options) {
                             var errors = [];
@@ -455,9 +491,13 @@ export default {
                         // required: true,
                         // message: "请选择图片",
                         // trigger: "blur"
-                        validator:(rule, value, callback, source, options)=> {
+                        validator: (rule, value, callback, source, options) => {
                             var errors = [];
-                            if ((this.formInline.type===1||this.formInline.type===2) && value.length===0) {
+                            if (
+                                (this.formInline.type === 1 ||
+                                    this.formInline.type === 2) &&
+                                value.length === 0
+                            ) {
                                 callback("请选择图片");
                             }
                             callback(errors);
@@ -479,7 +519,6 @@ export default {
                     }
                 ],
                 share_thumb: [
-                    
                     {
                         // required: true,
                         // message: "请选择标题图片",
@@ -494,65 +533,72 @@ export default {
                     }
                 ]
             },
-            editorInstance: "",//ueditor实例对象
-            JsonFilterArr:[
-                'SHARE_MERCHANT_COST',//分享赚
-                'WECHAT_MERCHANT_COST',//发圈赚
-                'DY_MERCHANT_SUBSCRIBE',//抖音赚 关注
-                'DY_MERCHANT_LIKE',//抖音赚 点赞
-                'DY_MERCHANT_SHARE',//抖音赚 转发
-                'DY_MERCHANT_COMMENT',//抖音赚 评论
-                
-                'TT_MERCHANT_SUBSCRIBE',//头条赚 关注
-                'TT_MERCHANT_LIKE',//头条赚 点赞
-                'TT_MERCHANT_SHARE',//头条赚 转发
-                'TT_MERCHANT_COMMENT',//头条赚 评论
+            editorInstance: "", //ueditor实例对象
+            JsonFilterArr: [
+                "SHARE_MERCHANT_COST", //分享赚
+                "WECHAT_MERCHANT_COST", //发圈赚
+                "DY_MERCHANT_SUBSCRIBE", //抖音赚 关注
+                "DY_MERCHANT_LIKE", //抖音赚 点赞
+                "DY_MERCHANT_SHARE", //抖音赚 转发
+                "DY_MERCHANT_COMMENT", //抖音赚 评论
+
+                "TT_MERCHANT_SUBSCRIBE", //头条赚 关注
+                "TT_MERCHANT_LIKE", //头条赚 点赞
+                "TT_MERCHANT_SHARE", //头条赚 转发
+                "TT_MERCHANT_COMMENT" //头条赚 评论
             ],
-            SHARE_MERCHANT_COST:'',//分享赚
-            WECHAT_MERCHANT_COST:'',//发圈赚
+            SHARE_MERCHANT_COST: "", //分享赚
+            WECHAT_MERCHANT_COST: "", //发圈赚
 
-            DY_MERCHANT_SUBSCRIBE:'',//抖音赚 关注
-            DY_MERCHANT_LIKE:'',//抖音赚 点赞
-            DY_MERCHANT_SHARE:'',//抖音赚 转发
-            DY_MERCHANT_COMMENT:'',//抖音赚 评论
-            
-            TT_MERCHANT_SUBSCRIBE:'',//头条赚 关注
-            TT_MERCHANT_LIKE:'',//头条赚 点赞
-            TT_MERCHANT_SHARE:'',//头条赚 转发
-            TT_MERCHANT_COMMENT:'',//头条赚 评论
+            DY_MERCHANT_SUBSCRIBE: "", //抖音赚 关注
+            DY_MERCHANT_LIKE: "", //抖音赚 点赞
+            DY_MERCHANT_SHARE: "", //抖音赚 转发
+            DY_MERCHANT_COMMENT: "", //抖音赚 评论
 
-            deletePicArr:[]//暂存需要删除的图片路径
+            TT_MERCHANT_SUBSCRIBE: "", //头条赚 关注
+            TT_MERCHANT_LIKE: "", //头条赚 点赞
+            TT_MERCHANT_SHARE: "", //头条赚 转发
+            TT_MERCHANT_COMMENT: "", //头条赚 评论
+
+            deletePicArr: [] //暂存需要删除的图片路径
         };
     },
     mounted() {
         // this.qrcode()
-        this.getJson()
-        this.getMerchatList()
+        this.getJson();
+        this.getMerchatList();
     },
     methods: {
         //清空资料时删除图片
-        deletePic(){
-            for(let i=0;i<this.deletePicArr.length;i++){
-                this.deletePicArr[i] = this.filterUrl(this.deletePicArr[i])
+        deletePic() {
+            for (let i = 0; i < this.deletePicArr.length; i++) {
+                this.deletePicArr[i] = this.filterUrl(this.deletePicArr[i]);
             }
-            axios.request({
-                url: "http://120.79.203.214/zbb/public/delete",
-                method: "post",
-                data: {
-                    url: this.deletePicArr
-                }
-            }).then(res=>{
-                this.deletePicArr = []
-            })
+            axios
+                .request({
+                    url: "http://120.79.203.214/zbb/public/delete",
+                    method: "post",
+                    data: {
+                        url: this.deletePicArr
+                    }
+                })
+                .then(res => {
+                    this.deletePicArr = [];
+                })
+                .catch(err => {
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(err.response.data.msg[i][0]);
+                    }
+                });
         },
         qrcode() {
-            this.$nextTick (() => {
+            this.$nextTick(() => {
                 let qrcode = new QRCode("qrcode", {
                     width: 232, // 设置宽度
                     height: 232, // 设置高度
                     text: "https://zhlsqj.com/#/destroyTicket?id="
                 });
-            })
+            });
         },
         ready(editorInstance) {
             this.editorInstance = editorInstance;
@@ -564,28 +610,36 @@ export default {
         //     let a = this.editorInstance.getContentTxt()
         //     console.log(this.msg);
         // },
-        getSelectData(id){
+        getSelectData(id) {
             //获取单一客户资料
-            for(let i = 0;i<this.meerchatList.length;i++){
-                if(this.meerchatList[i].id === this.formInline.merchant_id){
-                    this.SHARE_MERCHANT_COST = this.meerchatList[i].share_commission//分享赚
-                    this.WECHAT_MERCHANT_COST = this.meerchatList[i].wx_commission//发圈赚
+            for (let i = 0; i < this.meerchatList.length; i++) {
+                if (this.meerchatList[i].id === this.formInline.merchant_id) {
+                    this.SHARE_MERCHANT_COST = this.meerchatList[
+                        i
+                    ].share_commission; //分享赚
+                    this.WECHAT_MERCHANT_COST = this.meerchatList[
+                        i
+                    ].wx_commission; //发圈赚
 
-                    this.DY_MERCHANT_SUBSCRIBE = this.meerchatList[i].dy_subscribe//抖音赚 关注
-                    this.DY_MERCHANT_LIKE = this.meerchatList[i].dy_like//抖音赚 点赞
-                    this.DY_MERCHANT_SHARE = this.meerchatList[i].dy_share//抖音赚 转发
-                    this.DY_MERCHANT_COMMENT = this.meerchatList[i].dy_comment//抖音赚 评论
-                    
-                    this.TT_MERCHANT_SUBSCRIBE = this.meerchatList[i].tt_subscribe//头条赚 关注
-                    this.TT_MERCHANT_LIKE = this.meerchatList[i].tt_like//头条赚 点赞
-                    this.TT_MERCHANT_SHARE = this.meerchatList[i].tt_share//头条赚 转发
-                    this.TT_MERCHANT_COMMENT = this.meerchatList[i].tt_comment//头条赚 评论
+                    this.DY_MERCHANT_SUBSCRIBE = this.meerchatList[
+                        i
+                    ].dy_subscribe; //抖音赚 关注
+                    this.DY_MERCHANT_LIKE = this.meerchatList[i].dy_like; //抖音赚 点赞
+                    this.DY_MERCHANT_SHARE = this.meerchatList[i].dy_share; //抖音赚 转发
+                    this.DY_MERCHANT_COMMENT = this.meerchatList[i].dy_comment; //抖音赚 评论
+
+                    this.TT_MERCHANT_SUBSCRIBE = this.meerchatList[
+                        i
+                    ].tt_subscribe; //头条赚 关注
+                    this.TT_MERCHANT_LIKE = this.meerchatList[i].tt_like; //头条赚 点赞
+                    this.TT_MERCHANT_SHARE = this.meerchatList[i].tt_share; //头条赚 转发
+                    this.TT_MERCHANT_COMMENT = this.meerchatList[i].tt_comment; //头条赚 评论
                 }
             }
         },
         changeType(type) {
             //一下是删除操作
-            this.deletePic()
+            this.deletePic();
             this.resetData1(type);
             this.resetData("formInline");
         },
@@ -605,11 +659,15 @@ export default {
         successUpload(file) {
             this.spinShow = false;
             // this.picHead = file.baseUrl + '/'
-            this.formInline.images.push(file.baseUrl + '/' + file.url);
-            this.deletePicArr.push(file.baseUrl + '/' + file.url);
+            this.formInline.images.push(file.baseUrl + "/" + file.url);
+            this.deletePicArr.push(file.baseUrl + "/" + file.url);
         },
         beforeUpload(file) {
-            if ((this.formInline.images.length + (this.formInline.qrcode_url===''?0:1)) >= 9) {
+            if (
+                this.formInline.images.length +
+                    (this.formInline.qrcode_url === "" ? 0 : 1) >=
+                9
+            ) {
                 this.$Message.error("上传数量不能大于9张");
                 return false;
             }
@@ -618,20 +676,26 @@ export default {
         //2
         successUpload1(file) {
             if (this.formInline.images.length > 0) {
-                axios.request({
-                    url: "http://120.79.203.214/zbb/public/delete",
-                    method: "post",
-                    data: {
-                        url: this.formInline.images[0]
-                    }
-                });
+                axios
+                    .request({
+                        url: "http://120.79.203.214/zbb/public/delete",
+                        method: "post",
+                        data: {
+                            url: this.formInline.images[0]
+                        }
+                    })
+                    .catch(err => {
+                        for (let i in err.response.data.msg) {
+                            this.$Message.error(err.response.data.msg[i][0]);
+                        }
+                    });
             }
             this.spinShow = false;
             this.formInline.images = [];
             this.deletePicArr = [];
             // this.picHead = file.baseUrl + '/'
-            this.formInline.images.push(file.baseUrl + '/' + file.url);
-            this.deletePicArr.push(file.baseUrl + '/' + file.url);
+            this.formInline.images.push(file.baseUrl + "/" + file.url);
+            this.deletePicArr.push(file.baseUrl + "/" + file.url);
         },
         beforeUpload1(file) {
             this.spinShow = true;
@@ -640,72 +704,98 @@ export default {
         //3
         successUpload2(file) {
             if (this.formInline.share_thumb !== "") {
-                axios.request({
-                    url: "http://120.79.203.214/zbb/public/delete",
-                    method: "post",
-                    data: {
-                        url: this.formInline.share_thumb
-                    }
-                });
+                axios
+                    .request({
+                        url: "http://120.79.203.214/zbb/public/delete",
+                        method: "post",
+                        data: {
+                            url: this.formInline.share_thumb
+                        }
+                    })
+                    .catch(err => {
+                        for (let i in err.response.data.msg) {
+                            this.$Message.error(err.response.data.msg[i][0]);
+                        }
+                    });
             }
             this.deletePicArr = [];
             // this.picHead = file.baseUrl + '/'
             this.spinShow = false;
-            this.formInline.share_thumb = file.baseUrl + '/' + file.url;
-            this.deletePicArr.push(file.baseUrl + '/' + file.url);
+            this.formInline.share_thumb = file.baseUrl + "/" + file.url;
+            this.deletePicArr.push(file.baseUrl + "/" + file.url);
         },
         beforeUpload2(file) {
             this.spinShow = true;
         },
         //3
         successUpload3(file) {
-            // console.log(file);  
+            // console.log(file);
             this.spinShow = false;
             // this.picHead = file.baseUrl
-            if(file.msg){
-                this.$Message.error(file.msg)
-                return
+            if (file.msg) {
+                this.$Message.error(file.msg);
+                return;
             }
-            this.formInline.qrcode_url = file
+            this.formInline.qrcode_url = file;
         },
         beforeUpload3(file) {
             this.spinShow = true;
         },
 
-        getMerchatList(){
+        getMerchatList() {
             //获取所有客户
-            axios.request({
-                url:'merchants/all',
-                method:'get'
-            }).then(res=>{
-                // console.log(res);
-                
-                this.meerchatList = res.data.data
-            })
+            axios
+                .request({
+                    url: "merchants/all",
+                    method: "get"
+                })
+                .then(res => {
+                    // console.log(res);
+
+                    this.meerchatList = res.data.data;
+                })
+                .catch(err => {
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(err.response.data.msg[i][0]);
+                    }
+                });
         },
-        getJson(){
+        getJson() {
             //获取系统配置
-            axios.request({
-                url:'system/configs',
-                method:'get'
-            }).then(res=>{
-                this.sysJson = res.data.data
-                for(let i=0;i<this.JsonFilterArr.length;i++){
-                    for(let j=0;j<this.sysJson.length;j++){
-                        if(this.JsonFilterArr[i] === this.sysJson[j].flag){
-                            this.$data[this.JsonFilterArr[i]] = this.sysJson[j].param
+            axios
+                .request({
+                    url: "system/configs",
+                    method: "get"
+                })
+                .then(res => {
+                    this.sysJson = res.data.data;
+                    for (let i = 0; i < this.JsonFilterArr.length; i++) {
+                        for (let j = 0; j < this.sysJson.length; j++) {
+                            if (
+                                this.JsonFilterArr[i] === this.sysJson[j].flag
+                            ) {
+                                this.$data[
+                                    this.JsonFilterArr[i]
+                                ] = this.sysJson[j].param;
+                            }
                         }
                     }
-                }
-                // console.log(this.sysJson);
-            })
+                    // console.log(this.sysJson);
+                })
+                .catch(err => {
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(err.response.data.msg[i][0]);
+                    }
+                });
         },
-        
+
         handleSubmit(name) {
             this.$refs[name].validate(valid => {
                 if (valid) {
-                    for(let i = 0;i<this.formInline.images.length;i++){
-                        this.formInline.images[i] = this.filterUrl(this.formInline.images[i])
+                    for (let i = 0; i < this.formInline.images.length; i++) {
+                        this.formInline.images[i] = this.filterUrl(
+                            this.formInline.images[i]
+                        );
                     }
                     axios
                         .request({
@@ -714,7 +804,7 @@ export default {
                             method: "post",
                             data: {
                                 //通用
-                                total_price:this.total_price,
+                                total_price: this.total_price,
                                 merchant_id: this.formInline.merchant_id,
                                 // merchant_id: this.meerchatList[this.formInline.merchant_id].id,
                                 title: this.formInline.title,
@@ -738,18 +828,24 @@ export default {
 
                                 //软文推广
                                 share_price: this.formInline.share_price, //赏金
-                                share_thumb: this.filterUrl(this.formInline.share_thumb), //分享封面
+                                share_thumb: this.filterUrl(
+                                    this.formInline.share_thumb
+                                ), //分享封面
                                 share_content: this.msg //分享文章内容
                             }
                         })
                         .then(res => {
                             // console.log(res);
-                            
+
                             this.$Message.success("新建成功");
                             this.resetData("formInline");
                         })
                         .catch(err => {
-                            this.$Message.error(err.response.data.msg);
+                            for (let i in err.response.data.msg) {
+                                this.$Message.error(
+                                    err.response.data.msg[i][0]
+                                );
+                            }
                         });
                 } else {
                     this.$Message.error("填写的资料有误!");
@@ -757,9 +853,9 @@ export default {
             });
         },
         //图片路径拼接/去除
-        filterUrl(url){
-            url = url.substring(url.indexOf('public/')+7)
-            return url
+        filterUrl(url) {
+            url = url.substring(url.indexOf("public/") + 7);
+            return url;
         },
         resetData(name) {
             this.$refs[name].resetFields();
@@ -771,8 +867,8 @@ export default {
                 type: index,
                 num: 10, //领取名额
                 start_time: "", //任务时间
-                time_limit:'',
-                qrcode_url:'',
+                time_limit: "",
+                qrcode_url: "",
                 images: [
                     // "http://img2.imgtn.bdimg.com/it/u=3496345838,732839400&fm=26&gp=0.jpg"
                 ], //图片信息
@@ -793,8 +889,8 @@ export default {
                 share_thumb: "", //分享封面
                 share_content: "" //分享文章内容
             };
-        },
-        
+        }
+
         ///编辑器
     }
 };

@@ -76,7 +76,7 @@
         <Modal v-model="returnModal" title='审核' @on-ok="returnItem(1)" @on-cancel="returncancel(false)">
             <p style="text-align:center;font-size:16px;">是否通过任务----<span style="color:red;">{{deleteName}}</span>----的审核</p>
         </Modal>
-        <Modal v-model="returnModal1" title='审核' @on-ok="returnItem(-1)" :mask-closable="false"  @on-cancel="returncancel1(false)">
+        <Modal v-model="returnModal1" title='审核' @on-ok="returnItem(-1)" :mask-closable="false" @on-cancel="returncancel1(false)">
             <p style="text-align:center;font-size:16px;">是否拒绝任务----<span style="color:red;">{{deleteName}}</span>----的审核</p>
             <i-input style="margin-top:20px;" type='textarea' rows='5' placeholder="输入拒绝原因" v-model="reason" class="formInput"></i-input>
         </Modal>
@@ -427,12 +427,12 @@ export default {
     components: { VueUeditorWrap },
     data() {
         return {
-            reason:'',
+            reason: "",
             searchData: {
                 taskType: -1,
                 verify: 2,
                 title: "",
-                start_time:['','']
+                start_time: ["", ""]
             },
             meerchatList: [],
 
@@ -687,9 +687,9 @@ export default {
                     title: "文案",
                     align: "center",
                     // key: "wx_content"
-                    render:(h,params)=> {
-                        return h('pre',params.row.wx_content)
-                    },
+                    render: (h, params) => {
+                        return h("pre", params.row.wx_content);
+                    }
                 },
                 {
                     title: "任务开始时间",
@@ -712,7 +712,7 @@ export default {
                                 {
                                     props: {
                                         type: "success",
-                                        size: "small",
+                                        size: "small"
                                         // disabled: params.row.verify_status !== 0
                                     },
                                     attrs: {
@@ -734,7 +734,7 @@ export default {
                                 {
                                     props: {
                                         type: "warning",
-                                        size: "small",
+                                        size: "small"
                                         // disabled: params.row.verify_status !== 0
                                     },
                                     attrs: {
@@ -854,14 +854,11 @@ export default {
         returnItem(i) {
             axios
                 .request({
-                    url:
-                        "task/tasks/" +
-                        this.currentId +
-                        "/verify",
+                    url: "task/tasks/" + this.currentId + "/verify",
                     method: "post",
-                    data:{
-                        verify_status:i,
-                        reason:this.reason
+                    data: {
+                        verify_status: i,
+                        reason: this.reason
                     }
                 })
                 .then(res => {
@@ -871,7 +868,7 @@ export default {
                         this.$Message.success("拒绝成功");
                     }
                     this.getList();
-                    this.reason = ''
+                    this.reason = "";
                 })
                 .catch(err => {
                     if (i === 1) {
@@ -880,7 +877,7 @@ export default {
                         this.$Message.error("拒绝失败");
                     }
                     this.getList();
-                    this.reason = ''
+                    this.reason = "";
                 });
         },
         returncancel(i) {
@@ -904,6 +901,11 @@ export default {
                 })
                 .then(res => {
                     this.deletePicArr = [];
+                })
+                .catch(err => {
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(err.response.data.msg[i][0]);
+                    }
                 });
         },
         ready(editorInstance) {
@@ -954,8 +956,8 @@ export default {
         changeDate(date1, date2) {
             this.formInline.start_time = date1;
         },
-        changeDate1(date1,date2){
-            this.searchData.start_time = date1
+        changeDate1(date1, date2) {
+            this.searchData.start_time = date1;
         },
         //上传朋友圈图片
         successUpload(file) {
@@ -978,13 +980,19 @@ export default {
         //2
         successUpload1(file) {
             if (this.formInline.images.length > 0) {
-                axios.request({
-                    url: "http://120.79.203.214/zbb/public/delete",
-                    method: "post",
-                    data: {
-                        url: this.formInline.images[0]
-                    }
-                });
+                axios
+                    .request({
+                        url: "http://120.79.203.214/zbb/public/delete",
+                        method: "post",
+                        data: {
+                            url: this.formInline.images[0]
+                        }
+                    })
+                    .catch(err => {
+                        for (let i in err.response.data.msg) {
+                            this.$Message.error(err.response.data.msg[i][0]);
+                        }
+                    });
             }
             this.spinShow = false;
             this.formInline.images = [];
@@ -1000,13 +1008,19 @@ export default {
         //3
         successUpload2(file) {
             if (this.formInline.share_thumb !== "") {
-                axios.request({
-                    url: "http://120.79.203.214/zbb/public/delete",
-                    method: "post",
-                    data: {
-                        url: this.formInline.share_thumb
-                    }
-                });
+                axios
+                    .request({
+                        url: "http://120.79.203.214/zbb/public/delete",
+                        method: "post",
+                        data: {
+                            url: this.formInline.share_thumb
+                        }
+                    })
+                    .catch(err => {
+                        for (let i in err.response.data.msg) {
+                            this.$Message.error(err.response.data.msg[i][0]);
+                        }
+                    });
             }
             this.deletePicArr = [];
             // this.picHead = file.baseUrl + '/'
@@ -1043,6 +1057,11 @@ export default {
                     // console.log(res);
 
                     this.meerchatList = res.data.data;
+                })
+                .catch(err => {
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(err.response.data.msg[i][0]);
+                    }
                 });
         },
         getJson() {
@@ -1066,6 +1085,11 @@ export default {
                         }
                     }
                     // console.log(this.sysJson);
+                })
+                .catch(err => {
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(err.response.data.msg[i][0]);
+                    }
                 });
         },
         handleSubmit(name) {
@@ -1120,7 +1144,11 @@ export default {
                             this.resetData("formInline");
                         })
                         .catch(err => {
-                            this.$Message.error(err.response.data.msg);
+                            for (let i in err.response.data.msg) {
+                                this.$Message.error(
+                                    err.response.data.msg[i][0]
+                                );
+                            }
                         });
                 } else {
                     this.$Message.error("填写的资料有误!");
@@ -1177,11 +1205,27 @@ export default {
             //获取列表
             axios
                 .request({
-                    url: "task/tasks?pagesize="+this.per_page+"&page="+this.currentPage+
-                    "&taskType="+(this.searchData.taskType === -1?'':this.searchData.taskType)+
-                    "&verify="+(this.searchData.verify === 2?'':this.searchData.verify)+
-                    "&title="+this.searchData.title+
-                    "&start_time="+(this.searchData.start_time[0]===''?'':(this.searchData.start_time[0]+','+this.searchData.start_time[1])),
+                    url:
+                        "task/tasks?pagesize=" +
+                        this.per_page +
+                        "&page=" +
+                        this.currentPage +
+                        "&taskType=" +
+                        (this.searchData.taskType === -1
+                            ? ""
+                            : this.searchData.taskType) +
+                        "&verify=" +
+                        (this.searchData.verify === 2
+                            ? ""
+                            : this.searchData.verify) +
+                        "&title=" +
+                        this.searchData.title +
+                        "&start_time=" +
+                        (this.searchData.start_time[0] === ""
+                            ? ""
+                            : this.searchData.start_time[0] +
+                              "," +
+                              this.searchData.start_time[1]),
                     method: "get"
                 })
                 .then(res => {
@@ -1189,6 +1233,11 @@ export default {
                     this.total = res.data.data.total;
                     this.currentPage = res.data.data.current_page;
                     this.per_page = res.data.data.per_page;
+                })
+                .catch(err => {
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(err.response.data.msg[i][0]);
+                    }
                 });
         },
         //删除列表项
@@ -1210,12 +1259,12 @@ export default {
         },
         //
         getchangeList(index) {
-            this.currentPage = index
-            this.getList()
+            this.currentPage = index;
+            this.getList();
         },
         changePageGetList(size) {
-            this.per_page = size
-            this.getList()
+            this.per_page = size;
+            this.getList();
         }
     }
 };

@@ -56,33 +56,31 @@ export default {
     data() {
         return {
             formInline: {
-                table:"masters",
-                tableText:'',
-                from:1,
-                change_fund:0,
-                remark:''
+                table: "masters",
+                tableText: "",
+                from: 1,
+                change_fund: 0,
+                remark: ""
             },
             ruleInline: {
-                tableText:[
+                tableText: [
                     {
                         required: true,
                         message: "请输入对象资料",
                         trigger: "blur"
                     }
                 ],
-                change_fund:[
+                change_fund: [
                     {
                         required: true,
                         message: "请输入数值且不为0",
                         trigger: "blur"
                     }
-                ],
+                ]
             }
         };
     },
-    mounted() {
-        
-    },
+    mounted() {},
     methods: {
         handleSubmit(name) {
             this.$refs[name].validate(valid => {
@@ -92,10 +90,12 @@ export default {
                             url: "finance/funds/update",
                             method: "post",
                             data: {
-                                table:this.formInline.table,
-                                man_id:this.formInline.tableText,
-                                change_fund:this.formInline.from * this.formInline.change_fund,
-                                remark:this.formInline.remark
+                                table: this.formInline.table,
+                                man_id: this.formInline.tableText,
+                                change_fund:
+                                    this.formInline.from *
+                                    this.formInline.change_fund,
+                                remark: this.formInline.remark
                             }
                         })
                         .then(res => {
@@ -103,7 +103,11 @@ export default {
                             this.resetData("formInline");
                         })
                         .catch(err => {
-                            this.$Message.error(err.response.data.msg);
+                            for (let i in err.response.data.msg) {
+                                this.$Message.error(
+                                    err.response.data.msg[i][0]
+                                );
+                            }
                         });
                 } else {
                     this.$Message.error("填写的资料有误!");

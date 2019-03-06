@@ -138,7 +138,7 @@ export default {
         };
     },
     mounted() {
-        this.getList()
+        this.getList();
     },
     methods: {
         getList() {
@@ -167,7 +167,12 @@ export default {
                 })
                 .then(res => {
                     console.log(res);
-                    this.list = res.data.data.data
+                    this.list = res.data.data.data;
+                })
+                .catch(err => {
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(err.response.data.msg[i][0]);
+                    }
                 });
         }
     }

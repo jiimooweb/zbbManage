@@ -210,6 +210,12 @@ export default {
                     this.total = res.data.data.total;
                     this.currentPage = res.data.data.current_page;
                     this.per_page = res.data.data.per_page;
+                }).catch(err => {
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(
+                            err.response.data.msg[i][0]
+                        );
+                    }
                 });
         },
         getchangeList(index) {

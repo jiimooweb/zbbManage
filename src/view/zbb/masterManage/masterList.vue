@@ -427,6 +427,15 @@ export default {
                                                           "修改成功"
                                                       );
                                                       this.searchList();
+                                                  })
+                                                  .catch(err => {
+                                                      for (let i in err.response
+                                                          .data.msg) {
+                                                          this.$Message.error(
+                                                              err.response.data
+                                                                  .msg[i][0]
+                                                          );
+                                                      }
                                                   });
                                           }
                                       }
@@ -467,6 +476,15 @@ export default {
                                                           "修改成功"
                                                       );
                                                       this.searchList();
+                                                  })
+                                                  .catch(err => {
+                                                      for (let i in err.response
+                                                          .data.msg) {
+                                                          this.$Message.error(
+                                                              err.response.data
+                                                                  .msg[i][0]
+                                                          );
+                                                      }
                                                   });
                                           }
                                       }
@@ -582,7 +600,12 @@ export default {
                     width: "200",
                     // key: "ip"
                     render: (h, params) => {
-                        return h("p", params.row.login_records.length===0?'无':params.row.login_records[0].ip);
+                        return h(
+                            "p",
+                            params.row.login_records.length === 0
+                                ? "无"
+                                : params.row.login_records[0].ip
+                        );
                     }
                 },
                 {
@@ -590,7 +613,12 @@ export default {
                     align: "center",
                     width: "200",
                     render: (h, params) => {
-                        return h("p", params.row.login_records.length===0?'无':params.row.login_records[0].time);
+                        return h(
+                            "p",
+                            params.row.login_records.length === 0
+                                ? "无"
+                                : params.row.login_records[0].time
+                        );
                     }
                 },
                 {
@@ -715,8 +743,7 @@ export default {
                     : this.searchData.blacklist) +
                 "&sex=" +
                 (this.searchData.sex === 2 ? "" : this.searchData.sex);
-                
-                
+
             window.open(url);
         },
         cancelcancel(i) {
@@ -732,6 +759,11 @@ export default {
                     this.$Message.success("删除成功");
                     this.cancelcancel(false);
                     this.searchList();
+                })
+                .catch(err => {
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(err.response.data.msg[i][0]);
+                    }
                 });
         },
         returnAdd() {
@@ -769,6 +801,11 @@ export default {
                     this.formInline.remark = this.oneData.remark;
                     this.showEdit(true);
                     // this.masterList = res.data.data.data;
+                })
+                .catch(err => {
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(err.response.data.msg[i][0]);
+                    }
                 });
         },
         searchList() {
@@ -816,6 +853,11 @@ export default {
                     this.currentPage = res.data.data.current_page;
                     this.per_page = res.data.data.per_page;
                     // this.$Message.success("搜索成功");
+                })
+                .catch(err => {
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(err.response.data.msg[i][0]);
+                    }
                 });
         },
         changePageGetList(size) {
@@ -863,6 +905,11 @@ export default {
 
                     this.currentPage = res.data.data.current_page;
                     this.per_page = res.data.data.per_page;
+                })
+                .catch(err => {
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(err.response.data.msg[i][0]);
+                    }
                 });
         },
         getMasterList(index) {
@@ -910,6 +957,11 @@ export default {
 
                     this.currentPage = res.data.data.current_page;
                     this.per_page = res.data.data.per_page;
+                })
+                .catch(err => {
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(err.response.data.msg[i][0]);
+                    }
                 });
         },
         handleSubmit(name) {
@@ -942,9 +994,9 @@ export default {
                             this.getMasterList();
                         })
                         .catch(err => {
-                            for (let i in err.response.data.errors) {
+                            for (let i in err.response.data.msg) {
                                 this.$Message.error(
-                                    err.response.data.errors[i][0]
+                                    err.response.data.msg[i][0]
                                 );
                             }
                         });

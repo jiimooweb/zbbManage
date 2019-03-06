@@ -119,6 +119,12 @@ export default {
             }).then(res=>{
                 this.$Message.success('删除成功')
                 this.cancelcancel(false)
+            }).catch(err=>{
+                for (let i in err.response.data.msg) {
+                    this.$Message.error(
+                        err.response.data.msg[i][0]
+                    );
+                }
             })
         },
         cancelcancel(i){
@@ -134,7 +140,13 @@ export default {
                     this.list = res.data.data.data;
                     console.log(this.list);
                     
-                });
+                }).catch(err=>{
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(
+                            err.response.data.msg[i][0]
+                        );
+                    }
+                })
         },
         getchangeList(index){
             this.currentPage = index

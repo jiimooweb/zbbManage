@@ -156,9 +156,9 @@ export default {
                             this.resetData("formInline");
                         })
                         .catch(err => {
-                            for (let i in err.response.data.errors) {
+                            for (let i in err.response.data.msg) {
                                 this.$Message.error(
-                                    err.response.data.errors[i][0]
+                                    err.response.data.msg[i][0]
                                 );
                             }
                         });

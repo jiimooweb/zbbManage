@@ -433,6 +433,15 @@ export default {
                                                           "修改成功"
                                                       );
                                                       this.searchList();
+                                                  })
+                                                  .catch(err => {
+                                                      for (let i in err.response
+                                                          .data.msg) {
+                                                          this.$Message.error(
+                                                              err.response.data
+                                                                  .msg[i][0]
+                                                          );
+                                                      }
                                                   });
                                           }
                                       }
@@ -473,6 +482,15 @@ export default {
                                                           "修改成功"
                                                       );
                                                       this.searchList();
+                                                  })
+                                                  .catch(err => {
+                                                      for (let i in err.response
+                                                          .data.msg) {
+                                                          this.$Message.error(
+                                                              err.response.data
+                                                                  .msg[i][0]
+                                                          );
+                                                      }
                                                   });
                                           }
                                       }
@@ -492,7 +510,8 @@ export default {
                             {
                                 attrs: {
                                     style:
-                                        "color:#" + (params.row.status === 0
+                                        "color:#" +
+                                        (params.row.status === 0
                                             ? "#999"
                                             : "19be6b")
                                 }
@@ -536,7 +555,8 @@ export default {
                             {
                                 attrs: {
                                     style:
-                                        "color:#" + (params.row.wx !== ""
+                                        "color:#" +
+                                        (params.row.wx !== ""
                                             ? "19be6b"
                                             : "ed4014")
                                 }
@@ -556,7 +576,8 @@ export default {
                             {
                                 attrs: {
                                     style:
-                                        "color:#" + (params.row.dy !== ""
+                                        "color:#" +
+                                        (params.row.dy !== ""
                                             ? "19be6b"
                                             : "ed4014")
                                 }
@@ -576,7 +597,8 @@ export default {
                             {
                                 attrs: {
                                     style:
-                                        "color:#" + (params.row.tt !== ""
+                                        "color:#" +
+                                        (params.row.tt !== ""
                                             ? "19be6b"
                                             : "ed4014")
                                 }
@@ -657,10 +679,10 @@ export default {
                                     },
                                     nativeOn: {
                                         click: () => {
-                                            this.isPass = true
-                                            this.currentId = params.row.id
-                                            this.currentName = params.row.name
-                                            this.cancelone(true)
+                                            this.isPass = true;
+                                            this.currentId = params.row.id;
+                                            this.currentName = params.row.name;
+                                            this.cancelone(true);
                                         }
                                     }
                                 },
@@ -680,10 +702,10 @@ export default {
                                     },
                                     nativeOn: {
                                         click: () => {
-                                            this.isPass = false
-                                            this.currentId = params.row.id
-                                            this.currentName = params.row.name
-                                            this.cancelone(true)
+                                            this.isPass = false;
+                                            this.currentId = params.row.id;
+                                            this.currentName = params.row.name;
+                                            this.cancelone(true);
                                         }
                                     }
                                 },
@@ -745,14 +767,14 @@ export default {
             ids: [],
             passModal: false,
             failModal: false,
-            oneModal:false,
-            isPass:false,
-            currentName:''
+            oneModal: false,
+            isPass: false,
+            currentName: ""
         };
     },
     methods: {
-        cancelone(i){
-            this.oneModal = i
+        cancelone(i) {
+            this.oneModal = i;
         },
         cancelpass(i) {
             if (this.ids.length === 0) {
@@ -768,18 +790,27 @@ export default {
             }
             this.failModal = i;
         },
-        onePassOrFail(){
-            axios.request({
-                url:'apprentices/review/'+this.currentId,
-                method:'post',
-                data:{
-                    status:this.isPass?'1':'-1'
-                }
-            }).then(res=>{
-                this.$Message.success('审核成功!'+(this.isPass?'已通过':'已拒绝'))
-                this.cancelone(false)
-                this.searchList();
-            })
+        onePassOrFail() {
+            axios
+                .request({
+                    url: "apprentices/review/" + this.currentId,
+                    method: "post",
+                    data: {
+                        status: this.isPass ? "1" : "-1"
+                    }
+                })
+                .then(res => {
+                    this.$Message.success(
+                        "审核成功!" + (this.isPass ? "已通过" : "已拒绝")
+                    );
+                    this.cancelone(false);
+                    this.searchList();
+                })
+                .catch(err => {
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(err.response.data.msg[i][0]);
+                    }
+                });
         },
         allPass() {
             if (this.ids.length === 0) {
@@ -799,8 +830,8 @@ export default {
                     this.searchList();
                 })
                 .catch(err => {
-                    for (let i in err.response.data.errors) {
-                        this.$Message.error(err.response.data.errors[i][0]);
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(err.response.data.msg[i][0]);
                     }
                 });
         },
@@ -822,8 +853,8 @@ export default {
                     this.searchList();
                 })
                 .catch(err => {
-                    for (let i in err.response.data.errors) {
-                        this.$Message.error(err.response.data.errors[i][0]);
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(err.response.data.msg[i][0]);
                     }
                 });
         },
@@ -840,6 +871,11 @@ export default {
                     this.$Message.success("删除成功");
                     this.cancelcancel(false);
                     this.searchList();
+                })
+                .catch(err => {
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(err.response.data.msg[i][0]);
+                    }
                 });
         },
         returnExcel() {
@@ -855,7 +891,6 @@ export default {
                 this.ids.push(selection[i].id);
             }
             console.log(this.ids.length);
-            
         },
         changeDate(t) {
             this.searchData.type3Text = t;
@@ -888,6 +923,11 @@ export default {
                     this.formInline.remark = this.oneData.remark;
                     this.showEdit(true);
                     // this.masterList = res.data.data.data;
+                })
+                .catch(err => {
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(err.response.data.msg[i][0]);
+                    }
                 });
         },
         searchList() {
@@ -934,6 +974,11 @@ export default {
                     this.currentPage = res.data.data.data.current_page;
                     this.per_page = res.data.data.per_page;
                     // this.$Message.success("搜索成功");
+                })
+                .catch(err => {
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(err.response.data.msg[i][0]);
+                    }
                 });
         },
         changePageGetList(size) {
@@ -981,6 +1026,11 @@ export default {
 
                     this.currentPage = res.data.data.data.current_page;
                     this.per_page = res.data.data.per_page;
+                })
+                .catch(err => {
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(err.response.data.msg[i][0]);
+                    }
                 });
         },
         getMasterList(index) {
@@ -1028,6 +1078,11 @@ export default {
 
                     this.currentPage = res.data.data.data.current_page;
                     this.per_page = res.data.data.per_page;
+                })
+                .catch(err => {
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(err.response.data.msg[i][0]);
+                    }
                 });
         },
         handleSubmit(name) {
@@ -1060,8 +1115,11 @@ export default {
                             this.getMasterList();
                         })
                         .catch(err => {
-                            this.$Message.success("出现错误！");
-                            console.log(err);
+                            for (let i in err.response.data.msg) {
+                                this.$Message.error(
+                                    err.response.data.msg[i][0]
+                                );
+                            }
                         });
                 } else {
                     this.$Message.error("填写的资料有误!");
