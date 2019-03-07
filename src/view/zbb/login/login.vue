@@ -116,7 +116,7 @@ export default {
         },
     },
     mounted() {
-        if(localStorage.getItem('saveUsername')!==''){
+        if(localStorage.getItem('saveUsername')){
             this.formInline.remenberPW = true
             this.formInline.username = localStorage.getItem('saveUsername')
             this.formInline.password = localStorage.getItem('savePassword')

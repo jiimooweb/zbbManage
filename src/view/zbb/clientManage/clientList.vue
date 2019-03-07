@@ -266,6 +266,12 @@ export default {
                     }
                 },
                 {
+                    title: "客户ID",
+                    width: "100",
+                    align: "center",
+                    key: "id"
+                },
+                {
                     title: "客户账户",
                     width: "100",
                     align: "center",

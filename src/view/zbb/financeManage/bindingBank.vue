@@ -114,13 +114,13 @@
             </row>
         </i-form>
         <row style="margin-bottom:10px;">
-            <!-- <i-col span='2'>
-                <Button @click="returnAdd()">添加</Button>
-            </i-col> -->
-            <i-col span='10'>
+            <i-col span='2' offset='22'>
+                <Button type='error' @click="returnExcel()">导出</Button>
+            </i-col>
+            <!-- <i-col span='10'>
                 <Button type='success' @click="cancelpass(true)" style="display:block;float:left;margin-left:10px;">批量通过</Button>
                 <Button type='error' @click="cancelFail(true)" style="display:block;float:left;margin-left:10px;">批量拒绝</Button>
-            </i-col>
+            </i-col> -->
         </row>
         <Table stripe :columns="column" border :data="list" @on-select='selectItem'></Table>
 
@@ -312,32 +312,33 @@ export default {
                         return h("p", params.row.man.name);
                     }
                 },
-                {
-                    title: "审核状态",
-                    align: "center",
-                    width: "100",
-                    render: (h, params) => {
-                        return h(
-                            "p",
-                            {
-                                attrs: {
-                                    style:
-                                        "color:" +
-                                        (params.row.state === 0
-                                            ? "#999"
-                                            : params.row.state === 1
-                                            ? "#19be6b"
-                                            : "red")
-                                }
-                            },
-                            params.row.state === 0
-                                ? "待审核"
-                                : params.row.state === 1
-                                ? "已通过"
-                                : "不通过"
-                        );
-                    }
-                },
+                // {
+                //     title: "审核状态",
+                //     align: "center",
+                //     width: "100",
+                //     fixed: "right",
+                //     render: (h, params) => {
+                //         return h(
+                //             "p",
+                //             {
+                //                 attrs: {
+                //                     style:
+                //                         "color:" +
+                //                         (params.row.state === 0
+                //                             ? "#999"
+                //                             : params.row.state === 1
+                //                             ? "#19be6b"
+                //                             : "red")
+                //                 }
+                //             },
+                //             params.row.state === 0
+                //                 ? "待审核"
+                //                 : params.row.state === 1
+                //                 ? "已通过"
+                //                 : "不通过"
+                //         );
+                //     }
+                // },
                 {
                     title: "身份证正面照片",
                     align: "center",
@@ -356,60 +357,6 @@ export default {
                             return h("p", "无");
                         }
                     }
-                },
-                {
-                    title: "操作",
-                    align: "center",
-                    width: "200",
-                    render: (h, params) => {
-                        return h("div", [
-                            h(
-                                "Button",
-                                {
-                                    props: {
-                                        type: "success",
-                                        size: "small",
-                                        disabled: params.row.state !== 0
-                                    },
-                                    attrs: {
-                                        style:
-                                            "font-size:12px;margin-right:15px;"
-                                    },
-                                    nativeOn: {
-                                        click: () => {
-                                            this.currentId = params.row.id;
-                                            this.cancelonepass(true);
-                                            this.currentName =
-                                                params.row.man.username;
-                                        }
-                                    }
-                                },
-                                "通过"
-                            ),
-                            h(
-                                "Button",
-                                {
-                                    props: {
-                                        type: "error",
-                                        size: "small",
-                                        disabled: params.row.state !== 0
-                                    },
-                                    attrs: {
-                                        style: "font-size:12px"
-                                    },
-                                    nativeOn: {
-                                        click: () => {
-                                            this.currentId = params.row.id;
-                                            this.canceloneFail(true);
-                                            this.currentName =
-                                                params.row.man.username;
-                                        }
-                                    }
-                                },
-                                "拒绝"
-                            )
-                        ]);
-                    }
                 }
             ],
             list: [],
@@ -424,6 +371,22 @@ export default {
         };
     },
     methods: {
+        returnExcel(){
+            let url = 'http://120.79.203.214/zbb/public/backend/bank/bind/export?username='+ (this.searchData.type1 === "username" ? this.searchData.type1Text : "") +
+            "&man_name="+(this.searchData.type1 === "man_name"? this.searchData.type1Text: "") +
+            "&man_id="+(this.searchData.type1 === "man_id"? this.searchData.type1Text: "") +
+            "&check_id="+(this.searchData.type1 === "check_id" ? this.searchData.type1Text: "") +
+            "&man_type="+(this.searchData.manType === 2? "": this.searchData.manType) +
+            "&bank_name="+(this.searchData.type3 === "bank_name"? this.searchData.type3Text: "") +
+            "&bank_id="+(this.searchData.type3 === "bank_id"? this.searchData.type3Text: "") +
+            "&bank_man="+(this.searchData.type4 === "bank_man"? this.searchData.type4Text: "") +
+            "&bank_number="+(this.searchData.type4 === "bank_number"? this.searchData.type4Text: "") +
+            "&created_at="+(this.searchData.type5 === "created_at"? this.searchData.type5Text[0] === ""? "": this.searchData.type5Text: "") +
+            "&updated_at="+(this.searchData.type5 === "updated_at"? this.searchData.type5Text[0] === ""? "": this.searchData.type5Text: "") +
+            "&state="+(this.searchData.state === 2? "": this.searchData.state)
+            
+            window.open(url);
+        },
         changeType1(i) {
             console.log(i);
             if (
@@ -452,9 +415,6 @@ export default {
                         this.$Message.error(err.response.data.msg[i][0]);
                     }
                 });
-        },
-        returnExcel() {
-            //导出excel
         },
         returnAdd() {
             this.$router.push({ path: "/newMaster" });
@@ -506,7 +466,7 @@ export default {
             axios
                 .request({
                     url:
-                        "bank/check/show?page=" +
+                        "bank/bind/show?page=" +
                         this.currentPage +
                         "&pagesize=" +
                         this.per_page,
@@ -593,7 +553,7 @@ export default {
             axios
                 .request({
                     url:
-                        "bank/check/show?page=" +
+                        "bank/bind/show?page=" +
                         this.currentPage +
                         "&pagesize=" +
                         size,
@@ -680,7 +640,7 @@ export default {
             axios
                 .request({
                     url:
-                        "bank/check/show?page=" +
+                        "bank/bind/show?page=" +
                         this.currentPage +
                         "&pagesize=" +
                         this.per_page,
@@ -785,10 +745,10 @@ export default {
         pass() {
             axios
                 .request({
-                    url: "bank/check/adopt",
+                    url: "bank/bind/adopt",
                     method: "post",
                     data: {
-                        check: this.currentId
+                        bind: this.currentId
                     }
                 })
                 .then(res => {
@@ -804,10 +764,10 @@ export default {
         fail() {
             axios
                 .request({
-                    url: "bank/check/refuse",
+                    url: "bank/bind/refuse",
                     method: "post",
                     data: {
-                        check: this.currentId
+                        bind: this.currentId
                     }
                 })
                 .then(res => {
@@ -827,7 +787,7 @@ export default {
             }
             axios
                 .request({
-                    url: "bank/check/all/adopt",
+                    url: "bank/bind/all/adopt",
                     method: "post",
                     data: {
                         checks: this.ids
@@ -850,7 +810,7 @@ export default {
             }
             axios
                 .request({
-                    url: "bank/check/all/refuse",
+                    url: "bank/bind/all/refuse",
                     method: "post",
                     data: {
                         checks: this.ids

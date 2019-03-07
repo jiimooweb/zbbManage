@@ -143,6 +143,9 @@ export default {
         };
     },
     methods: {
+        returnExcel(){
+
+        },
         clearDate(){
             this.searchData.type2Text = ''
         },

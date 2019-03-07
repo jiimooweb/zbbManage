@@ -127,15 +127,15 @@
         <Page style="margin-top:20px;" :total="total" show-total :page-size='defailPage' show-elevator show-sizer
             :page-size-opts='pageSize' @on-change="getchangeList" @on-page-size-change='changePageGetList' />
         <Modal v-model="editModal" title='审核' @on-ok="inputItem()" @on-cancel="cancelEdit(false)">
-            <p v-if="status===1" style="text-align:center;font-size:16px;">是否对<span style="color:red;">{{currentName}}</span>的提现申请安排<span
+            <p v-if="status===1" style="text-align:center;font-size:16px;">是否对<span style="color:red;">{{currentName}}</span>的提现申请安排?<span
                     style="color:green">打款</span></p>
-            <p v-if="status===2" style="text-align:center;font-size:16px;">是否确认已对<span style="color:red;">{{currentName}}</span>进行打款</p>
-            <p v-if="status===-1" style="text-align:center;font-size:16px;">是否拒绝<span style="color:red;">{{currentName}}</span>的提现申请</p>
+            <p v-if="status===2" style="text-align:center;font-size:16px;">是否确认已对<span style="color:red;">{{currentName}}</span>进行打款?</p>
+            <p v-if="status===-1" style="text-align:center;font-size:16px;">是否拒绝<span style="color:red;">{{currentName}}</span>的提现申请?</p>
         </Modal>
         <Modal v-model="allModal" title='审核' @on-ok="allInput()" @on-cancel="cancelAll(false)">
-            <p v-if="status===1" style="text-align:center;font-size:16px;">是否批量进行提现申请安排<span style="color:green">打款</span></p>
-            <p v-if="status===2" style="text-align:center;font-size:16px;">是否批量确认打款</p>
-            <p v-if="status===-1" style="text-align:center;font-size:16px;">是否批量拒绝提现申请</p>
+            <p v-if="status===1" style="text-align:center;font-size:16px;">是否批量进行提现申请安排<span style="color:green">打款</span>?</p>
+            <p v-if="status===2" style="text-align:center;font-size:16px;">是否批量确认打款?</p>
+            <p v-if="status===-1" style="text-align:center;font-size:16px;">是否批量拒绝提现申请?</p>
         </Modal>
     </div>
 </template>
