@@ -113,7 +113,7 @@
                 <Button type="error" @click="returnExcel()">导出</Button>
             </i-col>
         </row>
-        <Table stripe :columns="masterColumn" border :data="masterList" @on-select='selectItem' @on-select-all='selectItem'></Table>
+        <Table stripe :columns="masterColumn" border :data="masterList" @on-select='selectItem' @on-select-all='selectItem' @on-selection-change='selectItem'></Table>
 
         <Page style="margin-top:20px;" :total="total" show-total :page-size='defailPage' show-elevator show-sizer
             :page-size-opts='pageSize' @on-change="getMasterList" @on-page-size-change='changePageGetList' />

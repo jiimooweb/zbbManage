@@ -1,7 +1,7 @@
 <template>
     <div>
         <Button type="primary" style='margin:10px 0;display:block;' @click="newData()">添加客服</Button>
-        <Table stripe :columns="column" border :data="list" @on-select='selectItem' @on-select-all='selectItem'></Table>
+        <Table stripe :columns="column" border :data="list" @on-select='selectItem' @on-select-all='selectItem' @on-selection-change='selectItem'></Table>
         <Page style="margin-top:20px;" :total="total" show-total :page-size='defailPage' show-elevator show-sizer
             :page-size-opts='pageSize' @on-change="getchangeList" @on-page-size-change='changePageGetList' />
         <Modal v-model="editModal" title="客服资料" :mask-closable="false" footer-hide>

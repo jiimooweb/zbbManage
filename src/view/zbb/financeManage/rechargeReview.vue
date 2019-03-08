@@ -88,7 +88,7 @@
                 <Button type="error" @click="returnExcel()">导出</Button>
             </i-col>
         </row>
-        <Table stripe :columns="column" border :data="list" @on-select='selectItem' @on-select-all='selectItem'></Table>
+        <Table stripe :columns="column" border :data="list" @on-select='selectItem' @on-select-all='selectItem' @on-selection-change='selectItem'></Table>
         <Page style="margin-top:20px;" :total="total" show-total :page-size='defailPage' show-elevator show-sizer
             :page-size-opts='pageSize' @on-change="getchangeList" @on-page-size-change='changePageGetList' />
         <Modal v-model="editModal" title='审核' @on-ok="inputItem()" @on-cancel="cancelEdit(false)">
@@ -128,10 +128,34 @@ export default {
                     align: "center"
                 },
                 {
+                    title: "充值ID",
+                    align: "center",
+                    width: "100px",
+                    key: "id"
+                },
+                {
                     title: "客户ID",
                     align: "center",
                     width: "100px",
                     key: "merchant_id"
+                },
+                {
+                    title: "客户账户",
+                    align: "center",
+                    width: "100px",
+                    // key: "merchant.name"
+                    render:(h,params)=> {
+                        return h('p',params.row.merchant.username)
+                    },
+                },
+                {
+                    title: "客户名字",
+                    align: "center",
+                    width: "100px",
+                    // key: "merchant.name"
+                    render:(h,params)=> {
+                        return h('p',params.row.merchant.name)
+                    },
                 },
                 {
                     title: "充值编号",
@@ -370,6 +394,8 @@ export default {
             this.per_page = size;
         },
         selectItem(selection, row) {
+            console.log(selection);
+            
             this.selectList = selection;
             this.ids = [];
             for (let i = 0; i < selection.length; i++) {

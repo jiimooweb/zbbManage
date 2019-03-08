@@ -5,7 +5,7 @@
                 <Button type="error" style="float:right;margin-bottom:10px;" @click="returnExcel()">导出</Button>
             </i-col>
         </row>
-        <Table stripe :columns="column" border :data="list" @on-select='selectItem' @on-select-all='selectItem'></Table>
+        <Table stripe :columns="column" border :data="list" @on-select='selectItem' @on-select-all='selectItem' @on-selection-change='selectItem'></Table>
         <Page style="margin-top:20px;" :total="total" show-total :page-size='defailPage' show-elevator show-sizer
             :page-size-opts='pageSize' @on-change="getMasterList" @on-page-size-change='changePageGetList' />
         <Modal v-model="cancelModal" title='删除' @on-ok="cancelItem()" @on-cancel="cancelcancel(false)">
