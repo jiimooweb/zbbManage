@@ -153,7 +153,7 @@ export default {
                 type1Text: "",
                 type2: "bank_name", //银行名称  银行ID
                 type2Text: "",
-                type3: "bank_name", //持卡人姓名  真实姓名
+                type3: "bank_man", //持卡人姓名  真实姓名
                 type3Text: "",
                 type4: "reviewer_user", //审核人名称  审核人ID
                 type4Text: "",

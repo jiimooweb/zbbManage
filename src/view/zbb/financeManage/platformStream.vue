@@ -203,7 +203,7 @@ export default {
             axios
                 .request({
                     url: "finance/flowaccount?pagesize="+this.per_page+"&page="+this.currentPage+
-                    "&man_type="+this.searchData.man_type+
+                    "&man_type="+(this.searchData.man_type===2?'':this.searchData.man_type)+
                     "&type="+(this.searchData.type===0?'':this.searchData.type)+
                     "&man_id="+this.searchData.man_id+
                     "&created_at="+(this.searchData.created_at[0]===''?'':this.searchData.created_at),

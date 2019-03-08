@@ -44,6 +44,7 @@ export default {
         },
         series: [
           {
+            name:'数量(占比)',
             type: 'pie',
             radius: '55%',
             center: ['50%', '60%'],
