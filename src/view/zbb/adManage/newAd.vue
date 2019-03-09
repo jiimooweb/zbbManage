@@ -109,10 +109,42 @@ export default {
             },
             ruleInline: {
                 powers: {},
-                title: {},
-                url: {},
-                sort: {},
-                hidden: {}
+                title: [
+                    {
+                        required: true,
+                        message: "请输入标题",
+                        trigger: "blur"
+                    }
+                ],
+                url: [
+                    {
+                        required: true,
+                        message: "请输入链接",
+                        trigger: "blur"
+                    }
+                ],
+                sort: [
+                    {
+                        required: true,
+                        message: "请输入排序",
+                        trigger: "blur"
+                    }
+                ],
+                image: [
+                    {
+                        // required: true,
+                        // message: "请上传图片",
+                        // trigger: "blur"
+                        validator(rule, value, callback, source, options) {
+                            var errors = [];
+                            if (value==='') {
+                                callback("请上传图片");
+                            }
+                            callback(errors);
+                        }
+                    }
+                    
+                ]
             }
         };
     },
