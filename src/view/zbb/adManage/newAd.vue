@@ -151,16 +151,15 @@ export default {
     methods: {
         //upload
         successUpload(file) {
-            // if (this.picData.cover !== "") {
-            //     axios.request({
-            //         url: "qiniu/delete",
-            //         method: "post",
-            //         data: {
-            //             url: this.picData.cover
-            //         }
-            //     });
-            // }
-            // this.isUpload = true
+            if (this.formInline.image !== "") {
+                axios.request({
+                    url: "http://120.79.203.214/zbb/public/delete",
+                    method: "post",
+                    data: {
+                        url: this.formInline.image
+                    }
+                });
+            }
             this.spinShow = false;
             this.formInline.image = file.url;
         },
