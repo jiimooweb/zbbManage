@@ -70,6 +70,12 @@
         <Table stripe :columns="column" border :data="list"></Table>
         <Page style="margin-top:20px;" :total="total" show-total :page-size='defailPage' show-elevator show-sizer
             :page-size-opts='pageSize' @on-change="getchangeList" @on-page-size-change='changePageGetList' />
+            <Modal v-model="returnModal" title='审核' @on-ok="returnItem(1)" @on-cancel="returncancel(false)">
+            <p style="text-align:center;font-size:16px;">是否通过----<span style="color:red;">{{deleteName}}</span>----的审核</p>
+        </Modal>
+        <Modal v-model="returnModal1" title='审核' @on-ok="returnItem(-1)" :mask-closable="false" @on-cancel="returncancel1(false)">
+            <p style="text-align:center;font-size:16px;">是否拒绝----<span style="color:red;">{{deleteName}}</span>----的审核</p>
+        </Modal>
     </div>
 </template>
 
@@ -87,44 +93,128 @@ export default {
             column: [
                 {
                     title: "任务ID",
+                    align:'center',
+                    width:'100',
                     key: "task_id"
                 },
                 {
                     title: "任务完成时间",
+                    align:'center',
+                    width:'200',
                     key: "task_time"
                 },
-                {
-                    title: "数量",
-                    key: "num"
-                },
+                // {
+                //     title: "数量",
+                //     width:'100',
+                //     align:'center',
+                //     key: "num"
+                // },
                 {
                     title: "徒弟ID",
+                    width:'100',
+                    align:'center',
                     key: "apprentice_id"
                 },
                 {
                     title: "任务状态",
-                    key: "status"
+                    width:'100',
+                    align:'center',
+                    // key: "status"
+                    render:(h,params)=> {
+                        return h('p',params.row.status===0?'执行中':(params.row.status===1?'已完成':'已取消'))
+                    },
                 },
                 {
                     title: "审核状态",
-                    key: "verify_status"
+                    width:'100',
+                    align:'center',
+                    // key: "verify_status"
+                    render:(h,params)=> {
+                        return h('p',params.row.verify_status===0?'待处理':(params.row.verify_status===1?'已通过':'未通过'))
+                    },
                 },
                 {
                     title: "完成截图",
-                    key: "success_url"
+                    align:'center',
+                    width:'100',
+                    // key: "success_url"
+                    render:(h,params)=> {
+                        if(params.row.success_url === ''){
+                            return h('h','无')
+                        }else{
+                            return h('img',{
+                                attrs:{
+                                    style:'width:70px;height:70px;',
+                                    src:params.row.success_url
+                                }   
+                            })
+                        }
+                        
+                    },
                 },
                 {
                     title: "确认时间",
+                    width:'100',
+                    align:'center',
                     key: "confirm_time"
                 },
                 {
                     title: "确认人",
+                    width:'100',
+                    align:'center',
                     key: "confirmor"
                 },
                 {
                     title: "操作",
+                    width:'200',
+                    align:'center',
                     render: (h, params) => {
-                        return h();
+                        return h("div", [
+                        h(
+                                "Button",
+                                {
+                                    props: {
+                                        type: "success",
+                                        size: "small",
+                                        disabled: params.row.verify_status !== 0
+                                    },
+                                    attrs: {
+                                        style:
+                                            "font-size:12px;margin-right:15px;"
+                                    },
+                                    nativeOn: {
+                                        click: () => {
+                                            this.currentId = params.row.id;
+                                            this.deleteName = params.row.apprentice.username;
+                                            this.returncancel(true);
+                                        }
+                                    }
+                                },
+                                "通过"
+                            ),
+                            h(
+                                "Button",
+                                {
+                                    props: {
+                                        type: "error",
+                                        size: "small",
+                                        disabled: params.row.verify_status !== 0
+                                    },
+                                    attrs: {
+                                        style:
+                                            "font-size:12px;margin-right:15px;"
+                                    },
+                                    nativeOn: {
+                                        click: () => {
+                                            this.currentId = params.row.id;
+                                            this.deleteName = params.row.apprentice.username;
+                                            this.returncancel1(true);
+                                        }
+                                    }
+                                },
+                                "拒绝"
+                            )
+                        ])
                     }
                 }
             ],
@@ -134,13 +224,58 @@ export default {
             currentPage: 1,
             per_page: 20,
             defailPage: 20,
-            pageSize: [2, 20, 50, 100, 200]
+            pageSize: [5, 20, 50, 100, 200],
+
+
+            deleteName:'',
+            returnModal:false,
+            returnModal1:false,
         };
     },
     mounted() {
         this.getList();
     },
     methods: {
+        returnItem(i){
+            axios
+                .request({
+                    url: "task/records/" + this.currentId + "/verify",
+                    method: "post",
+                    data: {
+                        verify_status: i,
+                    }
+                })
+                .then(res => {
+                    if (i === 1) {
+                        this.$Message.success("通过成功");
+                    } else {
+                        this.$Message.success("拒绝成功");
+                    }
+                    this.getList();
+                })
+                .catch(err => {
+                    if (i === 1) {
+                        this.$Message.error("通过失败");
+                    } else {
+                        this.$Message.error("拒绝失败");
+                    }
+                    this.getList();
+                });
+        },
+        returncancel(i) {
+            this.returnModal = i;
+        },
+        returncancel1(i) {
+            this.returnModal1 = i;
+        },
+        changePageGetList(size){
+            this.per_page = size
+            this.getList()
+        },
+        getchangeList(index){
+            this.currentPage = index
+            this.getList()
+        },
         getList() {
             axios
                 .request({
@@ -159,7 +294,7 @@ export default {
                             : this.searchData.verify) +
                         "&title=" +
                         this.searchData.title +
-                        "&start_time=" +
+                        "&create_time=" +
                         (this.searchData.start_time[0] === ""
                             ? ""
                             : JSON.stringify(this.searchData.start_time)),

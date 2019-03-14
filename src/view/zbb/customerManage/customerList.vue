@@ -233,7 +233,7 @@ export default {
             currentPage: 1,
             per_page: 20,
             defailPage: 20,
-            pageSize: [2, 20, 50, 100, 200]
+            pageSize: [5, 20, 50, 100, 200]
         };
     },
     mounted() {

@@ -1,7 +1,7 @@
 <template>
     <div>
         <Button type="primary" style='margin:10px 0;display:block;' @click="newDate()">添加银行</Button>
-        <Table :columns="bankColumn" :data="bankList"></Table>
+        <Table :columns="bankColumn" border :data="bankList"></Table>
         <Page style="margin-top:20px;" :total="total" show-total :page-size='defailPage' show-elevator show-sizer
             :page-size-opts='pageSize' @on-change="changeGetList" @on-page-size-change='changePageGetList' />
         <Modal v-model="deleteModal" title='删除' @on-ok="deleteItem()" @on-cancel="deletecancel(false)">
@@ -70,7 +70,7 @@ export default {
             per_page: 20,
             defailPage: 20,
             currentPage: 1,
-            pageSize: [2, 20, 50, 100, 200],
+            pageSize: [5, 20, 50, 100, 200],
             formInline: {
                 name: "",
                 charge: "",

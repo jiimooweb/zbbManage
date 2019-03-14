@@ -146,6 +146,29 @@
                         </i-col>
                     </row>
                 </FormItem>
+                <FormItem prop="recommend_type" class="formItem">
+                    <row class="formRow">
+                        <i-col span='6'>
+                            <span style="lable">推荐人类型:</span>
+                        </i-col>
+                        <i-col span='18'>
+                            <Select v-model="formInline.recommend_type">
+                                <Option value="Master">师傅</Option>
+                                <Option value="Apprentice">徒弟</Option>
+                            </Select>
+                        </i-col>
+                    </row>
+                </FormItem>
+                <FormItem prop="recommend_id" class="formItem">
+                    <row class="formRow">
+                        <i-col span='6'>
+                            <span style="lable">推荐人ID:</span>
+                        </i-col>
+                        <i-col span='18'>
+                            <i-input placeholder="可留空" class="formInput" v-model="formInline.recommend_id"></i-input>
+                        </i-col>
+                    </row>
+                </FormItem>
                 <FormItem prop="principal" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
@@ -219,7 +242,9 @@ export default {
                 principal: "",
                 custom_service: "",
 
-                remark: ""
+                remark: "",
+                recommend_type:'Master',
+                recommend_id:''
             },
             ruleInline: {
                 username: [
@@ -296,11 +321,26 @@ export default {
                     key: "tel"
                 },
                 {
-                    title: "对接人",
+                    title: "推荐人类型",
                     width: "100",
                     align: "center",
-                    key: "principal"
+                    // key: "recommend_type"
+                    render:(h,params)=> {
+                        return h('p',params.row.recommend_type==='Master'?'师傅':'徒弟')
+                    },
                 },
+                {
+                    title: "推荐人ID",
+                    width: "100",
+                    align: "center",
+                    key: "recommend_id"
+                },
+                // {
+                //     title: "对接人",
+                //     width: "100",
+                //     align: "center",
+                //     key: "principal"
+                // },
                 {
                     title: "余额",
                     width: "100",
@@ -499,7 +539,7 @@ export default {
             currentPage: 1,
             per_page: 20,
             defailPage: 20,
-            pageSize: [2, 20, 50, 100, 200]
+            pageSize: [5, 20, 50, 100, 200]
         };
     },
     mounted() {
@@ -656,7 +696,9 @@ export default {
                                 principal: this.formInline.principal,
                                 custom_service: this.formInline.custom_service,
 
-                                remark: this.formInline.remark
+                                remark: this.formInline.remark,
+                                recommend_type:this.formInline.recommend_type,
+                                recommend_id:this.formInline.recommend_id,
                             }
                         })
                         .then(res => {

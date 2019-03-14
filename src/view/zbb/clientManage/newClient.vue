@@ -142,6 +142,29 @@
                         </i-col>
                     </row>
                 </FormItem>
+                <FormItem prop="recommend_type" class="formItem">
+                    <row class="formRow">
+                        <i-col span='6'>
+                            <span style="lable">推荐人类型:</span>
+                        </i-col>
+                        <i-col span='18'>
+                            <Select v-model="formInline.recommend_type">
+                                <Option value="Master">师傅</Option>
+                                <Option value="Apprentice">徒弟</Option>
+                            </Select>
+                        </i-col>
+                    </row>
+                </FormItem>
+                <FormItem prop="recommend_id" class="formItem">
+                    <row class="formRow">
+                        <i-col span='6'>
+                            <span style="lable">推荐人ID:</span>
+                        </i-col>
+                        <i-col span='18'>
+                            <i-input placeholder="可留空" class="formInput" v-model="formInline.recommend_id"></i-input>
+                        </i-col>
+                    </row>
+                </FormItem>
                 <FormItem prop="principal" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
@@ -209,7 +232,12 @@ export default {
                 principal: "",
                 custom_service: "",
 
-                remark: ""
+                remark: "",
+
+                recommend_type:'Master',
+                recommend_id:''
+
+                
             },
             ruleInline: {
                 username: [
@@ -370,7 +398,9 @@ export default {
                                 principal: this.formInline.principal,
                                 custom_service: this.formInline.custom_service,
 
-                                remark: this.formInline.remark
+                                remark: this.formInline.remark,
+                                recommend_type:this.formInline.recommend_type,
+                                recommend_id:this.formInline.recommend_id,
                             }
                         })
                         .then(res => {

@@ -129,7 +129,7 @@
         <!-- <Modal v-model="cancelModal" title='删除' @on-ok="cancelItem()" @on-cancel="cancelcancel(false)">
             <p style="text-align:center;font-size:16px;">是否删除师傅账号----<span style="color:red;">{{deleteName}}</span>----</p>
         </Modal> -->
-        <Modal v-model="passModal" title='批量通过' @on-ok="allPass()" @on-cancel="cancelpass(false)">
+        <!-- <Modal v-model="passModal" title='批量通过' @on-ok="allPass()" @on-cancel="cancelpass(false)">
             <p style="text-align:center;font-size:16px;">是否使用批量通过功能</p>
         </Modal>
         <Modal v-model="failModal" title='批量拒绝' @on-ok="allFail()" @on-cancel="cancelFail(false)">
@@ -140,15 +140,154 @@
         </Modal>
         <Modal v-model="onefailModal" title='批量拒绝' @on-ok="fail()" @on-cancel="canceloneFail(false)">
             <p style="text-align:center;font-size:16px;">是否拒绝---<span style="color:red;">{{currentName}}</span>---的绑定请求</p>
+        </Modal> -->
+        <Modal v-model="editModal" title='资料详情' footer-hide width='600px'>
+            <i-form ref="formInline" class="formPage" :model="formInline" :rules="ruleInline" inline>
+                <FormItem prop="bank_id" class="formItem">
+                    <row class="formRow">
+                        <i-col span='6'>
+                            <span style="lable">银行ID</span>
+                        </i-col>
+                        <i-col span='18'>
+                            <i-input placeholder="请输入银行ID" class="formInput" v-model="formInline.bank_id"></i-input>
+                        </i-col>
+                    </row>
+                </FormItem>
+                <FormItem prop="bank_man" class="formItem">
+                    <row class="formRow">
+                        <i-col span='6'>
+                            <span style="lable">持卡人姓名</span>
+                        </i-col>
+                        <i-col span='18'>
+                            <i-input placeholder="请输入持卡人姓名" class="formInput" v-model="formInline.bank_man"></i-input>
+                        </i-col>
+                    </row>
+                </FormItem>
+                <FormItem prop="bank_number" class="formItem">
+                    <row class="formRow">
+                        <i-col span='6'>
+                            <span style="lable">卡号</span>
+                        </i-col>
+                        <i-col span='18'>
+                            <i-input placeholder="请输入卡号" type='number' class="formInput" v-model="formInline.bank_number"></i-input>
+                        </i-col>
+                    </row>
+                </FormItem>
+                <FormItem prop="alipay" class="formItem">
+                    <row class="formRow">
+                        <i-col span='6'>
+                            <span style="lable">支付宝号</span>
+                        </i-col>
+                        <i-col span='18'>
+                            <i-input placeholder="请输入支付宝号" class="formInput" v-model="formInline.alipay"></i-input>
+                        </i-col>
+                    </row>
+                </FormItem>
+                <FormItem prop="id_card" class="formItem">
+                    <row class="formRow">
+                        <i-col span='6'>
+                            <span style="lable">身份证正面照片</span>
+                        </i-col>
+                        <i-col span='18'>
+                            <Upload style="margin-bottom:10px;" action="http://120.79.203.214/zbb/public/upload"
+                                :on-success='successUpload' :before-upload='beforeUpload' :show-upload-list='false'
+                                :headers="headers">
+                                <Button icon="md-add" class="btnUp">
+                                    <span>上传身份证正面照片</span>
+                                </Button>
+                            </Upload>
+                            <img :src="formInline.id_card" width="150px" style="float:left;margin-right:10px;margin-bottom:10px;">
+                        </i-col>
+                    </row>
+                </FormItem>
+                <FormItem style="width:100%">
+                    <Button type="primary" style="margin:10px auto;display:block" @click="handleSubmit('formInline')">提交</Button>
+                    <!-- <Button style="margin-left:10px;" @click="resetData('formInline')">重置</Button> -->
+                </FormItem>
+            </i-form>
         </Modal>
     </div>
 </template>
 
 <script>
 import axios from "@/libs/api.request";
+import Cookies from "js-cookie";
 export default {
+    computed: {
+        headers() {
+            return {
+                token: Cookies.get("token")
+                // token: localStorage.getItem('')
+            };
+        }
+    },
     data() {
         return {
+            formInline:{
+                bank_id:'',
+                bank_man:'',
+                bank_number:'',
+                alipay:'',
+                id_card:''
+            },  
+            ruleInline:{
+                bank_id: [
+                    {
+                        validator(rule, value, callback, source, options) {
+                            var errors = [];
+                            if (!value && value !== 0) {
+                                callback("请输入银行ID");
+                            }
+                            callback(errors);
+                        }
+                    }
+                ],
+                bank_man: [
+                    {
+                        validator(rule, value, callback, source, options) {
+                            var errors = [];
+                            if (!value) {
+                                callback("请输入持卡人姓名");
+                            }
+                            callback(errors);
+                        }
+                    }
+                ],
+                bank_number: [
+                    {
+                        validator(rule, value, callback, source, options) {
+                            var errors = [];
+                            if (!value) {
+                                callback("请输入持卡号");
+                            }
+                            callback(errors);
+                        }
+                    }
+                ],
+                alipay: [
+                    {
+                        validator(rule, value, callback, source, options) {
+                            var errors = [];
+                            if (!value) {
+                                callback("请输入支付宝账号");
+                            }
+                            callback(errors);
+                        }
+                    }
+                ],
+                id_card: [
+                    {
+                        validator(rule, value, callback, source, options) {
+                            var errors = [];
+                            if (value === "" || !value) {
+                                callback("请上传身份证截图");
+                            }
+                            callback(errors);
+                        }
+                    }
+                ]
+            },
+            EditModal:false,
             currentName: "",
             onepassModal: false,
             onefailModal: false,
@@ -349,13 +488,45 @@ export default {
                             return h("img", {
                                 attrs: {
                                     style:
-                                        "width:70px;height:70px;display:block;",
+                                        "width:70px;height:70px;display:block;margin:0 auto;",
                                     src: params.row.id_card
                                 }
                             });
                         } else {
                             return h("p", "无");
                         }
+                    }
+                },{
+                    title: "操作",
+                    align: "center",
+                    width:'100',
+                    render: (h, params) => {
+                        return h("div", [
+                            h(
+                                "Button",
+                                {
+                                    props: {
+                                        type: "primary",
+                                        size: "small"
+                                    },
+                                    attrs: {
+                                        style: "font-size:12px;"
+                                    },
+                                    nativeOn: {
+                                        click: () => {
+                                            this.currentId = params.row.id;
+                                            this.formInline.bank_id = params.row.bank_id
+                                            this.formInline.bank_man = params.row.bank_man
+                                            this.formInline.bank_number = params.row.bank_number
+                                            this.formInline.alipay = params.row.alipay,
+                                            this.formInline.id_card = params.row.id_card
+                                            this.showEdit(true)
+                                        }
+                                    }
+                                },
+                                "修改"
+                            )
+                        ]);
                     }
                 }
             ],
@@ -366,11 +537,32 @@ export default {
             currentPage: 1,
             per_page: 20,
             defailPage: 20,
-            pageSize: [2, 20, 50, 100, 200],
+            pageSize: [5, 20, 50, 100, 200],
             selectList: []
         };
     },
     methods: {
+        successUpload(file){
+            if(this.formInline.id_card !== ''){
+                axios
+                .request({
+                    url: "http://120.79.203.214/zbb/public/delete",
+                    method: "post",
+                    data: {
+                        url: this.formInline.id_card
+                    }
+                })
+                .catch(err => {
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(err.response.data.msg[i][0]);
+                    }
+                });
+            }
+            this.formInline.id_card = file.url
+        },
+        beforeUpload(){
+
+        },
         returnExcel(){
             let url = 'http://120.79.203.214/zbb/public/backend/bank/bind/export?username='+ (this.searchData.type1 === "username" ? this.searchData.type1Text : "") +
             "&man_name="+(this.searchData.type1 === "man_name"? this.searchData.type1Text: "") +
@@ -388,7 +580,6 @@ export default {
             window.open(url);
         },
         changeType1(i) {
-            console.log(i);
             if (
                 (i === "username" || i === "man_name") &&
                 this.searchData.manType === 2
@@ -831,29 +1022,21 @@ export default {
                 if (valid) {
                     axios
                         .request({
-                            url: "masters/" + this.currentId,
+                            url: "bank/bind/" + this.currentId + '/update',
                             method: "put",
                             data: {
-                                referral_id: this.formInline.referral_id,
-                                // blacklist: this.formInline.blacklist,
-                                // disable: this.formInline.disable,
-                                sex: this.formInline.sex,
-                                username: this.formInline.username,
-                                password: this.formInline.password,
-                                name: this.formInline.name,
-                                phone: this.formInline.phone,
-                                wx: this.formInline.wx,
-                                email: this.formInline.email,
-                                apprentice_limit: this.formInline
-                                    .apprentice_limit,
-                                remark: this.formInline.remark
+                                bank_id: this.formInline.bank_id,
+                                bank_man: this.formInline.bank_man,
+                                bank_number: this.formInline.bank_number,
+                                alipay: this.formInline.alipay,
+                                id_card: this.formInline.id_card,
                             }
                         })
                         .then(res => {
                             this.$Message.success("修改成功");
                             this.resetData("formInline");
                             this.showEdit(false);
-                            this.getMasterList();
+                            this.searchList();
                         })
                         .catch(err => {
                             for (let i in err.response.data.msg) {

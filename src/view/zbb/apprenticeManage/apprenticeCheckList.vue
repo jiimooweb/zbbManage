@@ -1,89 +1,93 @@
 <template>
     <div>
-        <i-form ref="search" class="search" :model="searchData" :label-width="80">
+        <i-form ref="search" class="search" :model="searchData">
             <row>
-                <i-col span='4'>
+                <i-col :md="8" :lg="4">
                     <row>
-                        <i-col span='10'>
+                        <i-col span='8' style="line-height:33px;text-align:center;">
                             <FormItem prop="type1">
                                 <Select v-model="searchData.type1">
                                     <Option value="username">徒弟名称</Option>
-                                    <Option value="id">徒弟ID</Option>
+                                    <Option value="apprentice_id">徒弟ID</Option>
                                 </Select>
                             </FormItem>
                         </i-col>
-                        <i-col span='14'>
+                        <i-col span='16'>
                             <FormItem prop="type1Text">
                                 <Input type="text" v-model="searchData.type1Text" />
                             </FormItem>
                         </i-col>
                     </row>
                 </i-col>
-                <i-col span='4'>
+                <i-col :md="8" :lg="4">
                     <row>
-                        <i-col span='10'>
+                        <i-col span='8' style="line-height:33px;text-align:center;">
                             <FormItem prop="type2">
                                 <Select v-model="searchData.type2">
                                     <Option value="name">真实姓名</Option>
                                     <Option value="phone">手机号</Option>
-                                    <Option value="wx">微信号</Option>
-                                    <Option value="dy">抖音号</Option>
-                                    <Option value="tt">头条号</Option>
                                 </Select>
                             </FormItem>
                         </i-col>
-                        <i-col span='14'>
+                        <i-col span='16'>
                             <FormItem prop="type2Text">
                                 <Input type="text" v-model="searchData.type2Text" />
                             </FormItem>
                         </i-col>
                     </row>
                 </i-col>
-                <i-col span='3'>
+                <i-col :md="8" :lg="4">
                     <row>
-                        <i-col>
-                            <FormItem label="禁用状态">
-                                <Select v-model="searchData.disable" style="display:block;padding-left:75px;">
-                                    <Option :value="2">无</Option>
-                                    <Option :value="1">是</Option>
-                                    <Option :value="0">否</Option>
+                        <i-col span='8' style="line-height:33px;text-align:center;">
+                            <span style="lable">账号：</span>
+                        </i-col>
+                        <i-col span='16'>
+                            <FormItem>
+                                <Input type="text" v-model="searchData.account" />
+                            </FormItem>
+                        </i-col>
+                    </row>
+                </i-col>
+                <i-col :md="8" :lg="4">
+                    <row>
+                        <i-col span='8' style="line-height:33px;text-align:center;">
+                            <span style="lable">审核类型：</span>
+                        </i-col>
+                        <i-col span='16'>
+                            <FormItem>
+                                <Select v-model="searchData.type" style="display:block;">
+                                    <Option :value="2">全部</Option>
+                                    <Option value="wx">微信</Option>
+                                    <Option value="dy">抖音号</Option>
+                                    <Option value="tt">头条号</Option>
                                 </Select>
                             </FormItem>
                         </i-col>
                     </row>
                 </i-col>
-                <i-col span='3'>
+                <i-col :md="8" :lg="4">
                     <row>
-                        <i-col>
-                            <FormItem label="拉黑状态">
-                                <Select v-model="searchData.blacklist" style="display:block;padding-left:75px;">
-                                    <Option :value="2">无</Option>
-                                    <Option :value="1">是</Option>
-                                    <Option :value="0">否</Option>
+                        <i-col span='8' style="line-height:33px;text-align:center;">
+                            <span style="lable">审核状态：</span>
+                        </i-col>
+                        <i-col span='16'>
+                            <FormItem>
+                                <Select v-model="searchData.status" style="display:block;">
+                                    <Option :value="2">全部</Option>
+                                    <Option :value="0">待审核</Option>
+                                    <Option :value="1">已通过</Option>
+                                    <Option :value="-1">拒绝</Option>
                                 </Select>
                             </FormItem>
                         </i-col>
                     </row>
                 </i-col>
-                <i-col span='3'>
+                <i-col :md="8" :lg="4">
                     <row>
-                        <i-col>
-                            <FormItem label=" 性 别 ">
-                                <Select v-model="searchData.sex" style="display:block;padding-left:75px;">
-                                    <Option :value="2">无</Option>
-                                    <Option :value="1">男</Option>
-                                    <Option :value="0">女</Option>
-                                </Select>
-                            </FormItem>
-                        </i-col>
-                    </row>
-                </i-col>
-                <i-col span='5'>
-                    <row>
-                        <i-col span='8'>
+                        <i-col span='8' style="line-height:33px;text-align:center;">
                             <FormItem prop="type3">
                                 <Select v-model="searchData.type3">
-                                    <Option value="created_at">入驻时间</Option>
+                                    <Option value="created_at">创建时间</Option>
                                     <!-- <Option value="updated_at">更新时间</Option>
                                     <Option value="login_time">最后登录时间</Option> -->
                                 </Select>
@@ -105,15 +109,16 @@
         </i-form>
         <row style="margin-bottom:10px;">
             <i-col span='10'>
-                <Button @click="returnAdd()" style="display:block;float:left;">添加</Button>
-                <!-- <Button type='success' @click="cancelpass(true)" style="display:block;float:left;margin-left:10px;">批量通过</Button>
-                <Button type='error' @click="cancelFail(true)" style="display:block;float:left;margin-left:10px;">批量拒绝</Button> -->
+                <!-- <Button @click="returnAdd()" style="display:block;float:left;">添加</Button> -->
+                <Button type='success' @click="cancelpass(true)" style="display:block;float:left;">批量通过</Button>
+                <Button type='error' @click="cancelFail(true)" style="display:block;float:left;margin-left:10px;">批量拒绝</Button>
             </i-col>
             <i-col span='2' offset='12'>
                 <Button type="error" @click="returnExcel()">导出</Button>
             </i-col>
         </row>
-        <Table stripe :columns="masterColumn" border :data="masterList" @on-select='selectItem' @on-select-all='selectItem' @on-selection-change='selectItem'></Table>
+        <Table stripe :columns="masterColumn" border :data="masterList" @on-select='selectItem' @on-select-all='selectItem'
+            @on-selection-change='selectItem'></Table>
 
         <Page style="margin-top:20px;" :total="total" show-total :page-size='defailPage' show-elevator show-sizer
             :page-size-opts='pageSize' @on-change="getMasterList" @on-page-size-change='changePageGetList' />
@@ -278,9 +283,9 @@ export default {
                 type1Text: "",
                 type2: "name",
                 type2Text: "",
-                disable: 2,
-                blacklist: 2,
-                sex: 2,
+                type: 2,
+                status: 2,
+                account: "",
                 type3: "created_at",
                 type3Text: ""
             },
@@ -393,116 +398,25 @@ export default {
                     title: "徒弟ID",
                     align: "center",
                     width: "100",
-                    key: "id"
+                    // key: "id"
+                    render(h, params) {
+                        return h("p", params.row.apprentice.id);
+                    }
                 },
                 {
                     title: "徒弟名称",
                     align: "center",
                     width: "200",
-                    key: "username"
-                },
-                {
-                    title: "拉黑",
-                    align: "center",
-                    width: "100",
-                    // key:'blacklist'
-                    render: (h, params) => {
-                        return 1 > 2
-                            ? h("p", params.row.blacklist === 0 ? "否" : "是")
-                            : h(
-                                  "i-switch",
-                                  {
-                                      props: {
-                                          trueValue: 1,
-                                          falseValue: 0,
-                                          value: params.row.blacklist
-                                      },
-                                      on: {
-                                          "on-change": val => {
-                                              axios
-                                                  .request({
-                                                      url:
-                                                          "apprentices/blacklist/" +
-                                                          params.row.id +
-                                                          "?blacklist=" +
-                                                          val,
-                                                      method: "get"
-                                                  })
-                                                  .then(res => {
-                                                      this.$Message.success(
-                                                          "修改成功"
-                                                      );
-                                                      this.searchList();
-                                                  })
-                                                  .catch(err => {
-                                                      for (let i in err.response
-                                                          .data.msg) {
-                                                          this.$Message.error(
-                                                              err.response.data
-                                                                  .msg[i][0]
-                                                          );
-                                                      }
-                                                  });
-                                          }
-                                      }
-                                  },
-                                  0
-                              );
-                    }
-                },
-                {
-                    title: "禁用",
-                    align: "center",
-                    width: "100",
-                    // key:'disable'
-                    render: (h, params) => {
-                        return 1 > 2
-                            ? h("p", params.row.disable === 0 ? "否" : "是")
-                            : h(
-                                  "i-switch",
-                                  {
-                                      props: {
-                                          trueValue: 1,
-                                          falseValue: 0,
-                                          value: params.row.disable
-                                      },
-                                      on: {
-                                          "on-change": val => {
-                                              axios
-                                                  .request({
-                                                      url:
-                                                          "apprentices/disable/" +
-                                                          params.row.id +
-                                                          "?disable=" +
-                                                          val,
-                                                      method: "get"
-                                                  })
-                                                  .then(res => {
-                                                      this.$Message.success(
-                                                          "修改成功"
-                                                      );
-                                                      this.searchList();
-                                                  })
-                                                  .catch(err => {
-                                                      for (let i in err.response
-                                                          .data.msg) {
-                                                          this.$Message.error(
-                                                              err.response.data
-                                                                  .msg[i][0]
-                                                          );
-                                                      }
-                                                  });
-                                          }
-                                      }
-                                  },
-                                  0
-                              );
+                    // key: "username"
+                    render(h, params) {
+                        return h("p", params.row.apprentice.username);
                     }
                 },
                 {
                     title: "审核状态",
                     align: "center",
-                    width: "100",
+                    // width: "100",
+                    fixed: "left",
                     // key:'status'
                     render: (h, params) => {
                         return h(
@@ -512,40 +426,66 @@ export default {
                                     style:
                                         "color:#" +
                                         (params.row.status === 0
-                                            ? "#999"
-                                            : "19be6b")
+                                            ? "ff9900"
+                                            : params.row.status === 1
+                                            ? "19be6b"
+                                            : "ed4014")
                                 }
                             },
-                            params.row.status === 0 ? "待审核" : "已审核"
+                            params.row.status === 0
+                                ? "待审核"
+                                : params.row.status === 1
+                                ? "已通过"
+                                : "已拒绝"
                         );
                     }
-                },
-                {
-                    title: "余额",
-                    align: "center",
-                    width: "100",
-                    key: "balance"
                 },
                 {
                     title: "真实姓名",
                     align: "center",
                     width: "100",
-                    key: "name"
+                    // key: "name"
+                    render(h, params) {
+                        return h("p", params.row.apprentice.name);
+                    }
                 },
                 {
                     title: "手机号",
                     align: "center",
                     width: "150",
-                    key: "phone"
+                    // key: "phone"
+                    render(h, params) {
+                        return h("p", params.row.apprentice.phone);
+                    }
                 },
                 {
-                    title: "性别",
+                    title: "审核类型",
                     align: "center",
-                    width: "70",
-                    key: "sex"
+                    width: "200",
+                    // key: "wx"
+                    render: (h, params) => {
+                        return h(
+                            "p",
+                            {
+                                attrs: {
+                                    style:
+                                        "color:#" + (params.row.type === "wx"
+                                            ? "2f9833"
+                                            : params.row.type === "dy"
+                                            ? "161823"
+                                            : "ed4040")
+                                }
+                            },
+                            params.row.type === "wx"
+                                ? "微信"
+                                : params.row.type === "dy"
+                                ? "抖音"
+                                : "头条"
+                        );
+                    }
                 },
                 {
-                    title: "微信号",
+                    title: "账号",
                     align: "center",
                     width: "200",
                     // key: "wx"
@@ -556,105 +496,19 @@ export default {
                                 attrs: {
                                     style:
                                         "color:#" +
-                                        (params.row.wx !== ""
+                                        (params.row.account !== ""
                                             ? "19be6b"
                                             : "ed4014")
                                 }
                             },
-                            params.row.wx === "" ? "无" : params.row.wx
+                            params.row.account === ""
+                                ? "无"
+                                : params.row.account
                         );
                     }
                 },
                 {
-                    title: "抖音号",
-                    align: "center",
-                    width: "200",
-                    // key: "dy"
-                    render: (h, params) => {
-                        return h(
-                            "p",
-                            {
-                                attrs: {
-                                    style:
-                                        "color:#" +
-                                        (params.row.dy !== ""
-                                            ? "19be6b"
-                                            : "ed4014")
-                                }
-                            },
-                            params.row.dy === "" ? "无" : params.row.dy
-                        );
-                    }
-                },
-                {
-                    title: "头条号",
-                    align: "center",
-                    width: "200",
-                    // key: "tt"
-                    render: (h, params) => {
-                        return h(
-                            "p",
-                            {
-                                attrs: {
-                                    style:
-                                        "color:#" +
-                                        (params.row.tt !== ""
-                                            ? "19be6b"
-                                            : "ed4014")
-                                }
-                            },
-                            params.row.tt === "" ? "无" : params.row.tt
-                        );
-                    }
-                },
-                {
-                    title: "师傅ID",
-                    align: "center",
-                    width: "100",
-                    render: (h, params) => {
-                        return h("p", params.row.master.id);
-                    }
-                },
-                {
-                    title: "师傅名称",
-                    align: "center",
-                    width: "100",
-                    render: (h, params) => {
-                        return h("p", params.row.master.name);
-                    }
-                },
-                {
-                    title: "备注",
-                    align: "center",
-                    width: "200",
-                    key: "remark"
-                },
-                {
-                    title: "任务总数",
-                    align: "center",
-                    width: "120",
-                    key: "tasks_sum"
-                },
-                {
-                    title: "今天完成数",
-                    align: "center",
-                    width: "120",
-                    key: "tasks_day"
-                },
-                {
-                    title: "7日完成数",
-                    align: "center",
-                    width: "120",
-                    key: "tasks_seven"
-                },
-                {
-                    title: "30日完成数",
-                    align: "center",
-                    width: "120",
-                    key: "tasks_thirty"
-                },
-                {
-                    title: "入驻日期",
+                    title: "创建日期",
                     align: "center",
                     width: "200",
                     key: "created_at"
@@ -665,58 +519,13 @@ export default {
                     width: "250",
                     render: (h, params) => {
                         return h("div", [
-                            // h(
-                            //     "Button",
-                            //     {
-                            //         props: {
-                            //             type: "success",
-                            //             size: "small",
-                            //             disabled: params.row.status !== 0
-                            //         },
-                            //         attrs: {
-                            //             style:
-                            //                 "font-size:12px;margin-right:15px;"
-                            //         },
-                            //         nativeOn: {
-                            //             click: () => {
-                            //                 this.isPass = true;
-                            //                 this.currentId = params.row.id;
-                            //                 this.currentName = params.row.name;
-                            //                 this.cancelone(true);
-                            //             }
-                            //         }
-                            //     },
-                            //     "通过"
-                            // ),
-                            // h(
-                            //     "Button",
-                            //     {
-                            //         props: {
-                            //             type: "error",
-                            //             size: "small",
-                            //             disabled: params.row.status !== 0
-                            //         },
-                            //         attrs: {
-                            //             style:
-                            //                 "font-size:12px;margin-right:15px;"
-                            //         },
-                            //         nativeOn: {
-                            //             click: () => {
-                            //                 this.isPass = false;
-                            //                 this.currentId = params.row.id;
-                            //                 this.currentName = params.row.name;
-                            //                 this.cancelone(true);
-                            //             }
-                            //         }
-                            //     },
-                            //     "拒绝"
-                            // ),
                             h(
                                 "Button",
                                 {
                                     props: {
-                                        type: "primary",
-                                        size: "small"
+                                        type: "success",
+                                        size: "small",
+                                        disabled: params.row.status !== 0
                                     },
                                     attrs: {
                                         style:
@@ -724,33 +533,37 @@ export default {
                                     },
                                     nativeOn: {
                                         click: () => {
+                                            this.isPass = true;
                                             this.currentId = params.row.id;
-                                            this.getOneMaster();
+                                            this.currentName = params.row.name;
+                                            this.cancelone(true);
                                         }
                                     }
                                 },
-                                "修改"
+                                "通过"
                             ),
                             h(
                                 "Button",
                                 {
                                     props: {
                                         type: "error",
-                                        size: "small"
+                                        size: "small",
+                                        disabled: params.row.status !== 0
                                     },
                                     attrs: {
-                                        style: "font-size:12px"
+                                        style:
+                                            "font-size:12px;margin-right:15px;"
                                     },
                                     nativeOn: {
                                         click: () => {
-                                            this.cancelcancel(true);
+                                            this.isPass = false;
                                             this.currentId = params.row.id;
-                                            this.deleteName =
-                                                params.row.username;
+                                            this.currentName = params.row.name;
+                                            this.cancelone(true);
                                         }
                                     }
                                 },
-                                "删除"
+                                "拒绝"
                             )
                         ]);
                     }
@@ -793,8 +606,8 @@ export default {
         onePassOrFail() {
             axios
                 .request({
-                    url: "apprentices/review/" + this.currentId,
-                    method: "post",
+                    url: "apprentices/checks/" + this.currentId,
+                    method: "put",
                     data: {
                         status: this.isPass ? "1" : "-1"
                     }
@@ -819,10 +632,11 @@ export default {
             }
             axios
                 .request({
-                    url: "apprentices/pass",
+                    url: "apprentices/bathchecks",
                     method: "post",
                     data: {
-                        ids: this.ids
+                        ids: this.ids,
+                        status: 1
                     }
                 })
                 .then(res => {
@@ -842,10 +656,11 @@ export default {
             }
             axios
                 .request({
-                    url: "apprentices/fail",
+                    url: "apprentices/bathchecks",
                     method: "post",
                     data: {
-                        ids: this.ids
+                        ids: this.ids,
+                        status: -1
                     }
                 })
                 .then(res => {
@@ -903,7 +718,7 @@ export default {
         getOneMaster() {
             axios
                 .request({
-                    url: "apprentices/" + this.currentId,
+                    url: "apprentices/checks/" + this.currentId,
                     method: "get"
                 })
                 .then(res => {
@@ -934,7 +749,7 @@ export default {
             axios
                 .request({
                     url:
-                        "apprentices/search?pagesize=" +
+                        "apprentices/checks?pagesize=" +
                         this.per_page +
                         "&page=" +
                         this.currentPage +
@@ -951,27 +766,25 @@ export default {
                         "=" +
                         (this.searchData.type3Text === ""
                             ? ""
-                            : JSON.stringify(
-                                  this.searchData.type3Text[0] === ""
-                                      ? ""
-                                      : this.searchData.type3Text
-                              )) +
-                        "&disable=" +
-                        (this.searchData.disable === 2
+                            : this.searchData.type3Text[0] === ""
                             ? ""
-                            : this.searchData.disable) +
-                        "&blacklist=" +
-                        (this.searchData.blacklist === 2
+                            : JSON.stringify(this.searchData.type3Text)) +
+                        "&type=" +
+                        (this.searchData.type === 2
                             ? ""
-                            : this.searchData.blacklist) +
-                        "&sex=" +
-                        (this.searchData.sex === 2 ? "" : this.searchData.sex),
+                            : this.searchData.type) +
+                        "&status=" +
+                        (this.searchData.status === 2
+                            ? ""
+                            : this.searchData.status) +
+                        "&account=" +
+                        this.searchData.account,
                     method: "get"
                 })
                 .then(res => {
-                    this.masterList = res.data.data.data.data;
+                    this.masterList = res.data.data.data;
                     this.total = res.data.data.total;
-                    this.currentPage = res.data.data.data.current_page;
+                    this.currentPage = res.data.data.current_page;
                     this.per_page = res.data.data.per_page;
                     // this.$Message.success("搜索成功");
                 })
@@ -983,107 +796,12 @@ export default {
         },
         changePageGetList(size) {
             this.currentPage = 1;
-            axios
-                .request({
-                    url:
-                        "apprentices/search?pagesize=" +
-                        size +
-                        "&page=" +
-                        this.currentPage +
-                        "&" +
-                        this.searchData.type1 +
-                        "=" +
-                        this.searchData.type1Text +
-                        "&" +
-                        this.searchData.type2 +
-                        "=" +
-                        this.searchData.type2Text +
-                        "&" +
-                        this.searchData.type3 +
-                        "=" +
-                        (this.searchData.type3Text === ""
-                            ? ""
-                            : JSON.stringify(
-                                  this.searchData.type3Text[0] === ""
-                                      ? ""
-                                      : this.searchData.type3Text
-                              )) +
-                        "&disable=" +
-                        (this.searchData.disable === 2
-                            ? ""
-                            : this.searchData.disable) +
-                        "&blacklist=" +
-                        (this.searchData.blacklist === 2
-                            ? ""
-                            : this.searchData.blacklist) +
-                        "&sex=" +
-                        (this.searchData.sex === 2 ? "" : this.searchData.sex),
-                    method: "get"
-                })
-                .then(res => {
-                    this.masterList = res.data.data.data.data;
-                    this.total = res.data.data.total;
-
-                    this.currentPage = res.data.data.data.current_page;
-                    this.per_page = res.data.data.per_page;
-                })
-                .catch(err => {
-                    for (let i in err.response.data.msg) {
-                        this.$Message.error(err.response.data.msg[i][0]);
-                    }
-                });
+            this.per_page = size;
+            this.searchList();
         },
         getMasterList(index) {
             this.currentPage = index;
-            axios
-                .request({
-                    url:
-                        "apprentices/search?pagesize=" +
-                        this.per_page +
-                        "&page=" +
-                        this.currentPage +
-                        "&" +
-                        this.searchData.type1 +
-                        "=" +
-                        this.searchData.type1Text +
-                        "&" +
-                        this.searchData.type2 +
-                        "=" +
-                        this.searchData.type2Text +
-                        "&" +
-                        this.searchData.type3 +
-                        "=" +
-                        (this.searchData.type3Text === ""
-                            ? ""
-                            : JSON.stringify(
-                                  this.searchData.type3Text[0] === ""
-                                      ? ""
-                                      : this.searchData.type3Text
-                              )) +
-                        "&disable=" +
-                        (this.searchData.disable === 2
-                            ? ""
-                            : this.searchData.disable) +
-                        "&blacklist=" +
-                        (this.searchData.blacklist === 2
-                            ? ""
-                            : this.searchData.blacklist) +
-                        "&sex=" +
-                        (this.searchData.sex === 2 ? "" : this.searchData.sex),
-                    method: "get"
-                })
-                .then(res => {
-                    this.masterList = res.data.data.data.data;
-                    this.total = res.data.data.total;
-
-                    this.currentPage = res.data.data.data.current_page;
-                    this.per_page = res.data.data.per_page;
-                })
-                .catch(err => {
-                    for (let i in err.response.data.msg) {
-                        this.$Message.error(err.response.data.msg[i][0]);
-                    }
-                });
+            this.searchList();
         },
         handleSubmit(name) {
             this.$refs[name].validate(valid => {
@@ -1131,13 +849,14 @@ export default {
         }
     },
     mounted() {
-        this.getMasterList();
+        this.searchList();
     }
 };
 </script>
 
 <style lang='less'>
 .search {
+    margin-bottom: 15px;
     .ivu-form-item-content {
         margin-left: 0 !important;
     }
@@ -1147,5 +866,29 @@ export default {
 }
 .formItem {
     width: 100%;
+}
+.formPage {
+    .formItem {
+        display: block;
+        margin: 25px auto;
+        .ivu-form-item-error-tip {
+            padding-left: 141.5px;
+        }
+        // .formRow.textarea{
+        //     height: 94px;
+        // }
+        .formRow {
+            display: block;
+            // height: 33px;
+            .lable {
+                display: block;
+                // line-height: 33px;
+            }
+            .formInput {
+                // margin-left: 20px;
+                // width: 300px;
+            }
+        }
+    }
 }
 </style>

@@ -229,6 +229,14 @@ export default [{
             },
             component: () => import('@/view/zbb/apprenticeManage/apprenticeList')
         }, {
+            path: '/apprenticeCheckList',
+            name: '徒弟审核列表',
+            meta: {
+                title: '徒弟审核列表',
+                icon: 'md-list'
+            },
+            component: () => import('@/view/zbb/apprenticeManage/apprenticeCheckList')
+        }, {
             path: '/newApprentice',
             name: '新增徒弟',
             meta: {
@@ -262,15 +270,17 @@ export default [{
                 icon: 'md-list'
             },
             component: () => import('@/view/zbb/financeManage/bindingBank')
-        },{
-            path: '/bindingCheckBank',
-            name: '审核绑定银行管理',
-            meta: {
-                title: '审核绑定银行管理',
-                icon: 'md-list'
-            },
-            component: () => import('@/view/zbb/financeManage/bindingCheckBank')
-        }, {
+        },
+        // {
+        //     path: '/bindingCheckBank',
+        //     name: '审核绑定银行管理',
+        //     meta: {
+        //         title: '审核绑定银行管理',
+        //         icon: 'md-list'
+        //     },
+        //     component: () => import('@/view/zbb/financeManage/bindingCheckBank')
+        // }, 
+        {
             path: '/masterWithdraw',
             name: '[师傅] 提现管理',
             meta: {
@@ -337,6 +347,14 @@ export default [{
     },
     children: [
         {
+            path: '/adRecommend',
+            name: '投放推荐管理',
+            meta: {
+                title: '投放推荐管理',
+                icon: 'md-list'
+            },
+            component: () => import('@/view/zbb/adManage/adRecommend')
+        },{
             path: '/adList',
             name: '广告列表',
             meta: {
