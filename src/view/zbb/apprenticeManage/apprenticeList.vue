@@ -113,7 +113,8 @@
                 <Button type="error" @click="returnExcel()">导出</Button>
             </i-col>
         </row>
-        <Table stripe :columns="masterColumn" border :data="masterList" @on-select='selectItem' @on-select-all='selectItem' @on-selection-change='selectItem'></Table>
+        <Table stripe :columns="masterColumn" border :data="masterList" @on-select='selectItem' @on-select-all='selectItem'
+            @on-selection-change='selectItem'></Table>
 
         <Page style="margin-top:20px;" :total="total" show-total :page-size='defailPage' show-elevator show-sizer
             :page-size-opts='pageSize' @on-change="getMasterList" @on-page-size-change='changePageGetList' />
@@ -880,6 +881,34 @@ export default {
         },
         returnExcel() {
             //导出excel
+            let url =
+                "http://120.79.203.214/zbb/public/backend/apprentices/export?" +
+                this.searchData.type1 +
+                "=" +
+                this.searchData.type1Text +
+                "&" +
+                this.searchData.type2 +
+                "=" +
+                this.searchData.type2Text +
+                "&" +
+                this.searchData.type3 +
+                "=" +
+                (this.searchData.type3Text === ""
+                    ? ""
+                    : JSON.stringify(
+                          this.searchData.type3Text[0] === ""
+                              ? ""
+                              : this.searchData.type3Text
+                      )) +
+                "&disable=" +
+                (this.searchData.disable === 2 ? "" : this.searchData.disable) +
+                "&blacklist=" +
+                (this.searchData.blacklist === 2
+                    ? ""
+                    : this.searchData.blacklist) +
+                "&sex=" +
+                (this.searchData.sex === 2 ? "" : this.searchData.sex);
+            window.open(url);
         },
         returnAdd() {
             this.$router.push({ path: "/newMaster" });

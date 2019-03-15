@@ -114,7 +114,7 @@
                 <Button type='error' @click="cancelFail(true)" style="display:block;float:left;margin-left:10px;">批量拒绝</Button>
             </i-col>
             <i-col span='2' offset='12'>
-                <Button type="error" @click="returnExcel()">导出</Button>
+                <!-- <Button type="error" @click="returnExcel()">导出</Button> -->
             </i-col>
         </row>
         <Table stripe :columns="masterColumn" border :data="masterList" @on-select='selectItem' @on-select-all='selectItem'
@@ -395,6 +395,15 @@ export default {
                     }
                 },
                 {
+                    title: "ID",
+                    align: "center",
+                    width: "100",
+                    // key: "id"
+                    render(h, params) {
+                        return h("p", params.row.id);
+                    }
+                },
+                {
                     title: "徒弟ID",
                     align: "center",
                     width: "100",
@@ -415,7 +424,7 @@ export default {
                 {
                     title: "审核状态",
                     align: "center",
-                    // width: "100",
+                    width: "100",
                     fixed: "left",
                     // key:'status'
                     render: (h, params) => {
@@ -429,14 +438,15 @@ export default {
                                             ? "ff9900"
                                             : params.row.status === 1
                                             ? "19be6b"
-                                            : "ed4014")
+                                            : (params.row.status === -1?'ed4014':'999'))
                                 }
                             },
                             params.row.status === 0
                                 ? "待审核"
-                                : params.row.status === 1
+                                : (params.row.status === 1
                                 ? "已通过"
-                                : "已拒绝"
+                                : (params.row.status === -1
+                                ? "已拒绝" : '已失效'))
                         );
                     }
                 },

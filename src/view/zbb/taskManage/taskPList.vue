@@ -962,9 +962,8 @@ export default {
         //上传朋友圈图片
         successUpload(file) {
             this.spinShow = false;
-            // this.picHead = file.baseUrl + '/'
-            this.formInline.images.push(file.baseUrl + "/" + file.url);
-            this.deletePicArr.push(file.baseUrl + "/" + file.url);
+            this.formInline.images.push(file.url);
+            this.deletePicArr.push(file.url);
         },
         beforeUpload(file) {
             if (
@@ -997,9 +996,8 @@ export default {
             this.spinShow = false;
             this.formInline.images = [];
             this.deletePicArr = [];
-            // this.picHead = file.baseUrl + '/'
-            this.formInline.images.push(file.baseUrl + "/" + file.url);
-            this.deletePicArr.push(file.baseUrl + "/" + file.url);
+            this.formInline.images.push(file.url);
+            this.deletePicArr.push(file.url);
         },
         beforeUpload1(file) {
             this.spinShow = true;
@@ -1023,10 +1021,9 @@ export default {
                     });
             }
             this.deletePicArr = [];
-            // this.picHead = file.baseUrl + '/'
             this.spinShow = false;
-            this.formInline.share_thumb = file.baseUrl + "/" + file.url;
-            this.deletePicArr.push(file.baseUrl + "/" + file.url);
+            this.formInline.share_thumb = file.url;
+            this.deletePicArr.push(file.url);
         },
         beforeUpload2(file) {
             this.spinShow = true;
@@ -1035,7 +1032,6 @@ export default {
         successUpload3(file) {
             // console.log(file);
             this.spinShow = false;
-            // this.picHead = file.baseUrl
             if (file.msg) {
                 this.$Message.error(file.msg);
                 return;
