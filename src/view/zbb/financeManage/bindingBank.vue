@@ -1,8 +1,8 @@
 <template>
-    <div>
+    <div class="BINDINGBANK">
         <i-form ref="search" class="search" :model="searchData" :label-width="80">
-            <row>
-                <i-col span='3'>
+            <row :gutter='16'>
+                <i-col span='5'>
                     <row>
                         <i-col span='10'>
                             <FormItem prop="type1">
@@ -21,12 +21,12 @@
                         </i-col>
                     </row>
                 </i-col>
-                <i-col span='3'>
+                <i-col span='5'>
                     <row>
-                        <i-col span='8' style="line-height:33px;text-align:right;">
+                        <i-col span='6' style="line-height:33px;text-align:right;">
                             用户类型:
                         </i-col>
-                        <i-col span='12'>
+                        <i-col span='18'>
                             <FormItem prop="type2" lable='用户类型'>
                                 <Select v-model="searchData.manType">
                                     <Option :value="2">全部</Option>
@@ -37,7 +37,7 @@
                         </i-col>
                     </row>
                 </i-col>
-                <i-col span='4'>
+                <i-col span='5'>
                     <row>
                         <i-col span='10'>
                             <FormItem prop="type3">
@@ -54,7 +54,7 @@
                         </i-col>
                     </row>
                 </i-col>
-                <i-col span='4'>
+                <i-col span='5'>
                     <row>
                         <i-col span='10'>
                             <FormItem prop="type4">
@@ -72,12 +72,12 @@
                         </i-col>
                     </row>
                 </i-col>
-                <i-col span='3'>
+                <i-col span='5'>
                     <row>
-                        <i-col span='8' style="line-height:33px;text-align:right;">
+                        <i-col span='6' style="line-height:33px;text-align:right;">
                             审核状态:
                         </i-col>
-                        <i-col span='12'>
+                        <i-col span='18'>
                             <FormItem prop="state" lable='审核状态'>
                                 <Select v-model="searchData.state">
                                     <Option :value="2">全部</Option>
@@ -89,9 +89,9 @@
                         </i-col>
                     </row>
                 </i-col>
-                <i-col span='4'>
+                <i-col span='5'>
                     <row>
-                        <i-col span='8'>
+                        <i-col span='10'>
                             <FormItem prop="type5">
                                 <Select v-model="searchData.type5">
                                     <Option value="created_at">创建时间</Option>
@@ -99,7 +99,7 @@
                                 </Select>
                             </FormItem>
                         </i-col>
-                        <i-col span='16'>
+                        <i-col span='14'>
                             <FormItem prop="type5Text">
                                 <DatePicker :value="searchData.type5Text" @on-change='changeDate' type="daterange"
                                     placeholder="选择日期"></DatePicker>
@@ -108,7 +108,7 @@
                         </i-col>
                     </row>
                 </i-col>
-                <i-col span='1' offset='1'>
+                <i-col span='2'>
                     <Button type="success" @click="searchList()">搜索</Button>
                 </i-col>
             </row>
@@ -1061,12 +1061,16 @@ export default {
 </script>
 
 <style lang='less'>
-.search {
-    .ivu-form-item-content {
-        margin-left: 0 !important;
-    }
-    .ivu-select-dropdown {
-        // width: 100px;
+.BINDINGBANK{
+    min-width: 1100px;
+    .search {
+        .ivu-form-item-content {
+            line-height: 1 !important;
+            margin-left: 0 !important;
+        }
+        .ivu-form-item-label{
+            text-align: center;
+        }
     }
 }
 </style>

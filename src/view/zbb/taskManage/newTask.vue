@@ -39,7 +39,7 @@
                         </i-col>
                     </row>
                 </FormItem>
-                <FormItem prop="share_price" class="formItem" v-if="formInline.type===3">
+                <FormItem prop="share_price" class="formItem" v-show="formInline.type===3">
                     <row class="formRow">
                         <i-col span='4'>
                             <span style="lable">悬赏金额:</span>
@@ -84,7 +84,7 @@
                         </i-col>
                     </row>
                 </FormItem>
-                <FormItem prop="wx_content" class="formItem textarea" v-if="formInline.type===0">
+                <FormItem prop="wx_content" class="formItem textarea" v-show="formInline.type===0">
                     <row class="formRow">
                         <i-col span='4'>
                             <span style="lable">文案:</span>
@@ -94,13 +94,13 @@
                         </i-col>
                     </row>
                 </FormItem>
-                <FormItem prop="qrcode_url" class="formItem" v-if="formInline.type===0">
+                <FormItem prop="qrcode_url" class="formItem" v-show="formInline.type===0">
                     <row class="formRow">
                         <i-col span='4'>
                             <span style="lable">二维码图片：</span>
                         </i-col>
                         <i-col span='18'>
-                            <Spin fix v-if="spinShow2">
+                            <Spin fix v-show="spinShow2">
                                 <Icon type="ios-loading" size=18 class="demo-spin-icon-load"></Icon>
                                 <div>上传中~~~</div>
                             </Spin>
@@ -117,13 +117,13 @@
                     </row>
                 </FormItem>
                 <!-- 朋友圈 -->
-                <FormItem prop="images" class="formItem" v-if="formInline.type===0">
+                <FormItem prop="images" class="formItem" v-show="formInline.type===0">
                     <row class="formRow">
                         <i-col span='4'>
                             <span style="lable">图片信息：</span>
                         </i-col>
                         <i-col span='18'>
-                            <Spin fix v-if="spinShow">
+                            <Spin fix v-show="spinShow">
                                 <Icon type="ios-loading" size=18 class="demo-spin-icon-load"></Icon>
                                 <div>上传中~~~</div>
                             </Spin>
@@ -139,17 +139,17 @@
                 </FormItem>
 
                 <!-- 抖音 头条 -->
-                <FormItem prop="dy_request" class="formItem" v-if="formInline.type===1">
+                <FormItem prop="dy_request" class="formItem" v-show="formInline.type===1">
                     <row class="formRow">
                         <i-col span='4'>
                             <span style="lable">要求:</span>
                         </i-col>
                         <i-col span='18'>
-                            <Checkbox label="香蕉" :value='true' disabled v-if="formInline.type===1">必须观看(播放)完1次以上</Checkbox>
+                            <Checkbox label="香蕉" :value='true' disabled v-show="formInline.type===1">必须观看(播放)完1次以上</Checkbox>
                             <CheckboxGroup v-model="disabledGroup" @on-change='changeCheck'>
                                 <Checkbox label="SUBSCRIBE">关注</Checkbox>
                                 <Checkbox label="LIKE">点赞</Checkbox>
-                                <Checkbox label="SHARE" v-if="formInline.type===1">转发到抖音</Checkbox>
+                                <Checkbox label="SHARE" v-show="formInline.type===1">转发到抖音</Checkbox>
                                 <Checkbox label="COMMENT">评论</Checkbox>
                             </CheckboxGroup>
                             <i-input placeholder="输入评论:如不填，则默认显示：“评论随意填即可”" v-model="formInline.comment" class="formInput"></i-input>
@@ -157,17 +157,17 @@
                         </i-col>
                     </row>
                 </FormItem>
-                <FormItem prop="tt_request" class="formItem" v-if="formInline.type===2">
+                <FormItem prop="tt_request" class="formItem" v-show="formInline.type===2">
                     <row class="formRow">
                         <i-col span='4'>
                             <span style="lable">要求:</span>
                         </i-col>
                         <i-col span='18'>
-                            <Checkbox label="香蕉" :value='true' disabled v-if="formInline.type===2">浏览5分钟以上，并浏览到底部</Checkbox>
+                            <Checkbox label="香蕉" :value='true' disabled v-show="formInline.type===2">浏览5分钟以上，并浏览到底部</Checkbox>
                             <CheckboxGroup v-model="disabledGroup" @on-change='changeCheck'>
                                 <Checkbox label="SUBSCRIBE">关注</Checkbox>
                                 <Checkbox label="LIKE">点赞</Checkbox>
-                                <Checkbox label="SHARE" v-if="formInline.type===2">转发到头条</Checkbox>
+                                <Checkbox label="SHARE" v-show="formInline.type===2">转发到头条</Checkbox>
                                 <Checkbox label="COMMENT">评论</Checkbox>
                             </CheckboxGroup>
                             <i-input placeholder="输入评论:如不填，则默认显示：“评论随意填即可”" v-model="formInline.comment" class="formInput"></i-input>
@@ -175,13 +175,13 @@
                         </i-col>
                     </row>
                 </FormItem>
-                <FormItem prop="images" class="formItem" v-if="formInline.type===1 || formInline.type===2">
+                <FormItem prop="images" class="formItem" v-show="formInline.type===1 || formInline.type===2">
                     <row class="formRow">
                         <i-col span='4'>
                             <span style="lable">图片信息：</span>
                         </i-col>
                         <i-col span='18'>
-                            <Spin fix v-if="spinShow">
+                            <Spin fix v-show="spinShow">
                                 <Icon type="ios-loading" size=18 class="demo-spin-icon-load"></Icon>
                                 <div>上传中~~~</div>
                             </Spin>
@@ -198,25 +198,25 @@
                         </i-col>
                     </row>
                 </FormItem>
-                <FormItem prop="url" class="formItem" v-if="formInline.type===1 || formInline.type===2">
+                <FormItem prop="url" class="formItem" v-show="formInline.type===1 || formInline.type===2">
                     <row class="formRow">
                         <i-col span='4'>
-                            <span style="lable" v-if="formInline.type===1">抖音作品链接:</span>
-                            <span style="lable" v-if="formInline.type===2">今日头条作品链接:</span>
+                            <span style="lable" v-show="formInline.type===1">抖音作品链接:</span>
+                            <span style="lable" v-show="formInline.type===2">今日头条作品链接:</span>
                         </i-col>
                         <i-col span='18'>
-                            <i-input placeholder="抖音作品的复制链接直接粘贴即可" v-model="formInline.url" class="formInput" v-if="formInline.type===1"></i-input>
-                            <i-input placeholder="今日头条作品的复制链接直接粘贴即可" v-model="formInline.url" class="formInput" v-if="formInline.type===2"></i-input>
+                            <i-input placeholder="抖音作品的复制链接直接粘贴即可" v-model="formInline.url" class="formInput" v-show="formInline.type===1"></i-input>
+                            <i-input placeholder="今日头条作品的复制链接直接粘贴即可" v-model="formInline.url" class="formInput" v-show="formInline.type===2"></i-input>
                         </i-col>
                     </row>
                 </FormItem>
-                <FormItem prop="share_thumb" class="formItem" v-if="formInline.type===3">
+                <FormItem prop="share_thumb" class="formItem" v-show="formInline.type===3">
                     <row class="formRow">
                         <i-col span='4'>
                             <span style="lable">标题图片：</span>
                         </i-col>
                         <i-col span='18'>
-                            <Spin fix v-if="spinShow">
+                            <Spin fix v-show="spinShow">
                                 <Icon type="ios-loading" size=18 class="demo-spin-icon-load"></Icon>
                                 <div>上传中~~~</div>
                             </Spin>
@@ -231,14 +231,35 @@
                         </i-col>
                     </row>
                 </FormItem>
-                <FormItem prop="share_content" class="formItem" v-show="formInline.type===3">
+                <FormItem prop="share_content" class="formItem f1" v-show='formInline.type===3'>
                     <row class="formRow">
                         <i-col span='4'>
                             <span style="lable">文章信息：</span>
                         </i-col>
                         <i-col span='18'>
-                            <VueUeditorWrap ref="ueditor" v-model="msg" @ready="ready" style="line-height:20px;z-index:100;position: relative;"
-                                :config="myConfig"></VueUeditorWrap>
+                            <VueUeditorWrap ref="ueditor" v-model="msg" :destroy="false" @ready="ready" :config="myConfig" style="line-height:20px;z-index:100;position: relative;"></VueUeditorWrap>
+                        </i-col>
+                    </row>
+                </FormItem>
+                <FormItem prop="cate_id" class="formItem" v-show='formInline.type===3'>
+                    <row class="formRow">
+                        <i-col span='4'>
+                            <span style="lable">分类:</span>
+                        </i-col>
+                        <i-col span='18'>
+                            <Select v-model="formInline.cate_id" filterable>
+                                <Option v-for="(item,index) in typeList" :value="item.id" :key="index">{{ item.name }}</Option>
+                            </Select>
+                        </i-col>
+                    </row>
+                </FormItem>
+                <FormItem class="formItem" v-show='formInline.type===3'>
+                    <row class="formRow">
+                        <i-col span='4' offset='4'>
+                            <Input v-model="newType" />
+                        </i-col>
+                        <i-col span='13' offset='1'>
+                            <i-button type="primary" @click='oNewtype(true)'>新建分类</i-button>
                         </i-col>
                     </row>
                 </FormItem>
@@ -260,6 +281,13 @@
                 </FormItem>
             </i-form>
         </Card>
+        <Modal v-model="TypeModal" title="新建分类" @on-ok="inputNewType()" @on-cancel="oNewType(false)">
+            <row>
+                <i-col style="margin:0 auto;">
+                    <p style="font-size:25px;text-align:center;">是否添加分类---<span style="color:red"> {{newType}} </span>---</p>
+                </i-col>
+            </row>
+        </Modal>
     </div>
 </template>
 
@@ -360,11 +388,13 @@ export default {
                 // 初始容器宽度
                 initialFrameWidth: "100%",
                 // 上传文件接口（这个地址是我为了方便各位体验文件上传功能搭建的临时接口，请勿在生产环境使用！！！）
-                // serverUrl: "http://35.201.165.105:8000/controller.php",
+                // serverUrl: "http://120.79.203.214/zbb/public/controller.php",
                 serverUrl: "http://120.79.203.214/zbb/public/get-edit",
+                // serverUrl: "http://120.79.203.214/zbb/public/ueditor/server",
 
                 // UEditor 资源文件的存放路径，如果你使用的是 vue-cli 生成的项目，通常不需要设置该选项，vue-ueditor-wrap 会自动处理常见的情况，如果需要特殊配置，参考下方的常见问题2
-                UEDITOR_HOME_URL: "/UEditor/"
+                // UEDITOR_HOME_URL: "http://120.79.203.214/zbb/"
+                UEDITOR_HOME_URL: "/zbbManage/UEditor/"
             },
 
             spinShow: false,
@@ -398,8 +428,10 @@ export default {
 
                 //软文推广
                 share_price: 0.0, //赏金
-                share_thumb: "" //分享封面
+                share_thumb: "", //分享封面
                 //share_content: '' //分享文章内容(废弃,编辑器无法识别)
+
+                cate_id: ""
             },
             msg: "", //分享文章内容
             ruleInline: {
@@ -518,6 +550,18 @@ export default {
                         }
                     }
                 ],
+                cate_id: [
+                    {
+                        // validator:(rule, value, callback, source, options)=> {
+                        //     var errors = [];
+                        //     console.log(value);
+                        //     if (!value) {
+                        //         callback("请选择分类");
+                        //     }
+                        //     callback(errors);
+                        // }
+                    }
+                ],
                 share_thumb: [
                     {
                         // required: true,
@@ -560,19 +604,66 @@ export default {
             TT_MERCHANT_SHARE: "", //头条赚 转发
             TT_MERCHANT_COMMENT: "", //头条赚 评论
 
-            deletePicArr: [] //暂存需要删除的图片路径
+            deletePicArr: [], //暂存需要删除的图片路径
+
+            newType: "",
+            TypeModal: false,
+            typeList: []
         };
     },
     mounted() {
         // this.qrcode()
         this.getJson();
         this.getMerchatList();
+        this.getTypeList();
     },
     methods: {
+        inputNewType() {
+            axios
+                .request({
+                    url: "task/cates/store",
+                    method: "post",
+                    data: {
+                        //通用
+                        name: this.newType
+                    }
+                })
+                .then(res => {
+                    this.newType = "";
+                    this.$Message.success("新建成功");
+                    this.oNewtype(false);
+                    this.getTypeList();
+                })
+                .catch(err => {
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(err.response.data.msg[i][0]);
+                    }
+                });
+        },
+        oNewtype(i) {
+            if (this.newType === "") {
+                this.$Message.error("分类名不能为空");
+                return;
+            }
+            this.TypeModal = i;
+        },
+        getTypeList() {
+            axios
+                .request({
+                    url: "task/cates",
+                    method: "get"
+                })
+                .then(res => {
+                    this.typeList = res.data.data;
+                });
+        },
         //清空资料时删除图片
         deletePic() {
             for (let i = 0; i < this.deletePicArr.length; i++) {
                 this.deletePicArr[i] = this.filterUrl(this.deletePicArr[i]);
+            }
+            if (this.deletePicArr.length === 0) {
+                return;
             }
             axios
                 .request({
@@ -602,7 +693,7 @@ export default {
         },
         ready(editorInstance) {
             this.editorInstance = editorInstance;
-            // console.log(`实例${editorInstance.key}已经初始化:`, editorInstance);
+            console.log(`实例${editorInstance.key}已经初始化:`, editorInstance);
             // editorInstance.setContent('ueditor', { zIndex: 100});
             // UE.getEditor('ueditor');
         },
@@ -661,7 +752,6 @@ export default {
             this.formInline.images.push(file.url);
             this.deletePicArr.push(file.url);
             console.log(this.formInline.images);
-            
         },
         beforeUpload(file) {
             if (
@@ -802,6 +892,7 @@ export default {
                             method: "post",
                             data: {
                                 //通用
+                                cate_id: this.formInline.cate_id,
                                 total_price: this.total_price,
                                 merchant_id: this.formInline.merchant_id,
                                 // merchant_id: this.meerchatList[this.formInline.merchant_id].id,

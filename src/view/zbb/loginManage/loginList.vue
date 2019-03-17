@@ -1,13 +1,13 @@
 <template>
-    <div>
-        <i-form ref="search" class="search" :model="searchData" :label-width="80">
-            <row>
-                <i-col span='4'>
+    <div class="LOGINLIST">
+        <i-form ref="search" class="search" :model="searchData">
+            <row :gutter='16'>
+                <i-col span='5'>
                     <row>
-                        <i-col span='8' style="line-height:33px;text-align:center;">
+                        <i-col span='6' style="line-height:33px;text-align:center;">
                             账户类型:
                         </i-col>
-                        <i-col span='16'>
+                        <i-col span='18'>
                             <FormItem>
                                 <Select v-model="searchData.user_type">
                                     <Option :value="2">全部</Option>
@@ -20,7 +20,7 @@
                         </i-col>
                     </row>
                 </i-col>
-                <i-col span='4' offset='1'>
+                <i-col span='5'>
                     <row>
                         <i-col span='10'>
                             <FormItem prop="type1">
@@ -37,28 +37,28 @@
                         </i-col>
                     </row>
                 </i-col>
-                <i-col span='4'>
+                <i-col span='5'>
                     <row>
-                        <i-col span='8' style="line-height:33px;text-align:center;">
+                        <i-col span='6' style="line-height:33px;text-align:center;">
                             IP地址:
                         </i-col>
-                        <i-col span='16'>
+                        <i-col span='18'>
                             <FormItem prop="type1Text">
                                 <Input type="text" v-model="searchData.ip" />
                             </FormItem>
                         </i-col>
                     </row>
                 </i-col>
-                <i-col span='4' offset='1'>
+                <i-col span='5'>
                     <row>
-                        <i-col span='8'>
+                        <i-col span='10'>
                             <FormItem prop="type2">
                                 <Select v-model="searchData.type2">
                                     <Option value="time">登录时间</Option>
                                 </Select>
                             </FormItem>
                         </i-col>
-                        <i-col span='16'>
+                        <i-col span='14'>
                             <FormItem prop="type2Text">
                                 <DatePicker :value="searchData.type2Text" @on-change='changeDate' @on-clear='clearDate' type="daterange"
                                     placeholder="选择日期"></DatePicker>
@@ -67,7 +67,7 @@
                         </i-col>
                     </row>
                 </i-col>
-                <i-col span='2' offset='1'>
+                <i-col span='2'>
                     <Button type="success" @click="searchList()">搜索</Button>
                 </i-col>
             </row>
@@ -272,12 +272,16 @@ export default {
 </script>
 
 <style lang='less'>
-.search {
-    .ivu-form-item-content {
-        margin-left: 0 !important;
-    }
-    .ivu-select-dropdown {
-        // width: 100px;
+.LOGINLIST{
+    min-width: 1100px;
+    .search {
+        .ivu-form-item-content {
+            line-height: 1 !important;
+            margin-left: 0 !important;
+        }
+        .ivu-form-item-label {
+            text-align: center;
+        }
     }
 }
 </style>

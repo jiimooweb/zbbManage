@@ -1,10 +1,10 @@
 <template>
     <div>
         <Table stripe :columns="manageColumn" border :data="manageList"></Table>
-        <Modal v-model="EditModal" title='编辑'>
-            <Card style="width:400px">
+        <Modal v-model="EditModal" title='编辑' footer-hide >
+            <!-- <Card style="width:400px"> -->
                 <i-form ref="formInline" class="formPage" :model="formInline" :rules="ruleInline" inline>
-                    <FormItem prop="powers" class="formItem">
+                    <!-- <FormItem prop="powers" class="formItem">
                         <row class="formRow">
                             <i-col span='6'>
                                 <span style="lable">用户组</span>
@@ -16,7 +16,7 @@
                                 </Select>
                             </i-col>
                         </row>
-                    </FormItem>
+                    </FormItem> -->
                     <FormItem prop="username" class="formItem">
                         <row class="formRow">
                             <i-col span='6'>
@@ -27,7 +27,7 @@
                             </i-col>
                         </row>
                     </FormItem>
-                    <FormItem prop="password" class="formItem">
+                    <!-- <FormItem prop="password" class="formItem">
                         <row class="formRow">
                             <i-col span='6'>
                                 <span style="lable">密码</span>
@@ -36,7 +36,7 @@
                                 <i-input placeholder="请输入密码" class="formInput" v-model="formInline.password"></i-input>
                             </i-col>
                         </row>
-                    </FormItem>
+                    </FormItem> -->
                     <FormItem prop="phone" class="formItem">
                         <row class="formRow">
                             <i-col span='6'>
@@ -70,12 +70,11 @@
                             </i-col>
                         </row>
                     </FormItem>
-                    <FormItem style="margin:20px 0px 20px 400px">
-                        <Button type="primary" @click="handleSubmit('formInline')">新增</Button>
-                        <Button style="margin-left:10px;" @click="resetData('formInline')">重置</Button>
+                    <FormItem style="width:100%;">
+                        <Button type="primary" style="margin:0 auto;display:block;" @click="handleSubmit('formInline')">提交</Button>
                     </FormItem>
                 </i-form>
-            </Card>
+            <!-- </Card> -->
         </Modal>
     </div>
 </template>
@@ -89,7 +88,7 @@ export default {
             formInline: {
                 powers:"",
                 username: "",
-                password:"",
+                // password:"",
                 phone:"",
                 email:"",
                 state:1
@@ -109,19 +108,19 @@ export default {
                         trigger: "blur"
                     }
                 ],
-                password: [
-                    {
-                        required: true,
-                        message: "请输入密码",
-                        trigger: "blur"
-                    },
-                    {
-                        type: "string",
-                        min: 6,
-                        message: "密码最少6个字符",
-                        trigger: "blur"
-                    }
-                ],
+                // password: [
+                //     {
+                //         required: true,
+                //         message: "请输入密码",
+                //         trigger: "blur"
+                //     },
+                //     {
+                //         type: "string",
+                //         min: 6,
+                //         message: "密码最少6个字符",
+                //         trigger: "blur"
+                //     }
+                // ],
                 phone: [
                     {
                         required: true,
@@ -155,7 +154,15 @@ export default {
                                             "font-size:12px;margin-right:15px;"
                                     },
                                     nativeOn: {
-                                        click: () => {}
+                                        click: () => {
+                                            this.EditModal = true
+                                            this.formInline.powers = params.row.powers,
+                                            this.formInline.username = params.row.username,
+                                            this.formInline.password = params.row.password,
+                                            this.formInline.phone = params.row.phone,
+                                            this.formInline.email = params.row.email,
+                                            this.formInline.state = params.row.state
+                                        }
                                     }
                                 },
                                 "修改"
@@ -181,13 +188,30 @@ export default {
                     }
                 }
             ],
-            manageList: []
+            manageList: [],
+            groupsList:[]
         };
     },
     mounted() {
         this.getList();
+        this.getGroup()
     },
     methods: {
+        getGroup(){
+            axios
+                .request({
+                    url: "power/groups",
+                    method: "get"
+                })
+                .then(res => {
+                    this.groupsList = res.data.data;
+                })
+                .catch(err => {
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(err.response.data.msg[i][0]);
+                    }
+                });
+        },
         getList() {
             axios
                 .request({
@@ -203,6 +227,41 @@ export default {
                         );
                     }
                 });
+        },
+        handleSubmit(name) {
+            this.$refs[name].validate(valid => {
+                if (valid) {
+                    axios
+                        .request({
+                            url: "admin/admins",
+                            method: "put",
+                            data: {
+                                username: this.formInline.username,
+                                // password: this.formInline.password,
+                                // powers: this.formInline.powers,
+                                phone: this.formInline.phone,
+                                email: this.formInline.email,
+                                state: this.formInline.state
+                            }
+                        })
+                        .then(res => {
+                            this.$Message.success("修改成功");
+                            this.resetData("formInline");
+                        })
+                        .catch(err => {
+                            for (let i in err.response.data.msg) {
+                                this.$Message.error(
+                                    err.response.data.msg[i][0]
+                                );
+                            }
+                        });
+                } else {
+                    this.$Message.error("填写的资料有误!");
+                }
+            });
+        },
+        resetData(name) {
+            this.$refs[name].resetFields();
         }
     }
 };

@@ -161,6 +161,14 @@ export default [{
         icon: 'ios-albums'
     },
     children: [{
+        path: '/taskTypeManage',
+        name: '任务分类管理',
+        meta: {
+            title: '任务分类管理',
+            icon: 'md-list'
+        },
+        component: () => import('@/view/zbb/taskManage/taskTypeManage')
+    },{
         path: '/taskPList',
         name: '母任务列表',
         meta: {

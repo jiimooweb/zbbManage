@@ -345,7 +345,7 @@ export default {
                     title: "余额",
                     width: "100",
                     align: "center",
-                    key: "principal"
+                    key: "money"
                 },
                 {
                     title: "发圈-佣",

@@ -1,8 +1,8 @@
 <template>
-    <div>
+    <div class="MASTERFUNDS">
         <i-form ref="search" class="search" :model="searchData" :label-width="80">
-            <row>
-                <i-col span='4'>
+            <row :gutter='16'>
+                <i-col span='5'>
                     <row>
                         <i-col span='10'>
                             <FormItem prop="type1">
@@ -19,12 +19,12 @@
                         </i-col>
                     </row>
                 </i-col>
-                <i-col span='4'>
+                <i-col span='5'>
                     <row>
-                        <i-col span='8' style="line-height:33px;text-align:center;">
+                        <i-col span='6' style="line-height:33px;text-align:center;">
                             变动类型:
                         </i-col>
-                        <i-col span='16'>
+                        <i-col span='18'>
                             <FormItem prop="type" lable='任务类型'>
                                 <Select v-model="searchData.type">
                                     <Option :value="-1">全部</Option>
@@ -36,7 +36,7 @@
                         </i-col>
                     </row>
                 </i-col>
-                <i-col span='4'>
+                <i-col span='5'>
                     <row>
                         <i-col span='8' style="line-height:33px;text-align:center;">
                             变动金额:
@@ -57,7 +57,7 @@
                         </i-col>
                     </row>
                 </i-col>
-                <i-col span='4'>
+                <i-col span='5'>
                     <row>
                         <i-col span='8' style="line-height:33px;text-align:center;">
                             变动后金额:
@@ -78,12 +78,12 @@
                         </i-col>
                     </row>
                 </i-col>
-                <i-col span='4'>
+                <i-col span='5'>
                     <row>
-                        <i-col span='8' style="line-height:33px;text-align:center;">
+                        <i-col span='6' style="line-height:33px;text-align:center;">
                             变动时间:
                         </i-col>
-                        <i-col span='16'>
+                        <i-col span='18'>
                             <FormItem prop="start_time">
                                 <DatePicker :value="searchData.start_time" @on-change='changeDate1' type="daterange"
                                     placeholder="选择日期"></DatePicker>
@@ -91,7 +91,7 @@
                         </i-col>
                     </row>
                 </i-col>
-                <i-col span='1' offset='1'>
+                <i-col span='2'>
                     <Button type="success" @click="getList()">搜索</Button>
                 </i-col>
             </row>
@@ -140,7 +140,14 @@ export default {
                     title: "变动类型",
                     // key: "type"
                     render: (h, params) => {
-                        return h("p", params.row.type==='task'?'完成任务':(params.row.type==='withdraws'?'提现':'其他'));
+                        return h(
+                            "p",
+                            params.row.type === "task"
+                                ? "完成任务"
+                                : params.row.type === "withdraws"
+                                ? "提现"
+                                : "其他"
+                        );
                     }
                 },
                 {
@@ -210,11 +217,10 @@ export default {
                     this.total = res.data.data.total;
                     this.currentPage = res.data.data.current_page;
                     this.per_page = res.data.data.per_page;
-                }).catch(err => {
+                })
+                .catch(err => {
                     for (let i in err.response.data.msg) {
-                        this.$Message.error(
-                            err.response.data.msg[i][0]
-                        );
+                        this.$Message.error(err.response.data.msg[i][0]);
                     }
                 });
         },
@@ -229,15 +235,29 @@ export default {
         },
         returnExcel() {
             let url =
-                ("http://120.79.203.214/zbb/public/backend/finance/masters/fund/export?" +
-                    "master_username="+(this.searchData.type1 === "master_username" ? this.searchData.type1Text : "") +
-                    "&master_id=" + (this.searchData.type1 === "master_id" ? this.searchData.type1Text : "") +
-                    "&type=" + (this.searchData.type === -1 ? "" : this.searchData.type) +
-                    "&change_fund=" + this.searchData.change_fund +
-                    "&symbol_c=" + this.searchData.symbol_c +
-                    "&result_fund=" + this.searchData.result_fund +
-                    "&symbol_r=" + this.searchData.symbol_r +
-                    "&created_at=" + (this.searchData.created_at[0] === "" ? "" : this.searchData.created_at))
+                "http://120.79.203.214/zbb/public/backend/finance/masters/fund/export?" +
+                "master_username=" +
+                (this.searchData.type1 === "master_username"
+                    ? this.searchData.type1Text
+                    : "") +
+                "&master_id=" +
+                (this.searchData.type1 === "master_id"
+                    ? this.searchData.type1Text
+                    : "") +
+                "&type=" +
+                (this.searchData.type === -1 ? "" : this.searchData.type) +
+                "&change_fund=" +
+                this.searchData.change_fund +
+                "&symbol_c=" +
+                this.searchData.symbol_c +
+                "&result_fund=" +
+                this.searchData.result_fund +
+                "&symbol_r=" +
+                this.searchData.symbol_r +
+                "&created_at=" +
+                (this.searchData.created_at[0] === ""
+                    ? ""
+                    : this.searchData.created_at);
             window.open(url);
         }
     },
@@ -247,26 +267,38 @@ export default {
 };
 </script>
 <style lang='less'>
-.formPage {
-    .formItem {
-        display: block;
-        margin: 25px auto;
-        .ivu-form-item-error-tip {
-            padding-left: 141.5px;
+.MASTERFUNDS {
+    min-width: 1100px;
+    .search {
+        .ivu-form-item-content {
+            line-height: 1 !important;
+            margin-left: 0 !important;
         }
-        // .formRow.textarea{
-        //     height: 94px;
-        // }
-        .formRow {
+        .ivu-form-item-label {
+            text-align: center;
+        }
+    }
+    .formPage {
+        .formItem {
             display: block;
-            // height: 33px;
-            .lable {
-                display: block;
-                // line-height: 33px;
+            margin: 25px auto;
+            .ivu-form-item-error-tip {
+                padding-left: 141.5px;
             }
-            .formInput {
-                // margin-left: 20px;
-                // width: 300px;
+            // .formRow.textarea{
+            //     height: 94px;
+            // }
+            .formRow {
+                display: block;
+                // height: 33px;
+                .lable {
+                    display: block;
+                    // line-height: 33px;
+                }
+                .formInput {
+                    // margin-left: 20px;
+                    // width: 300px;
+                }
             }
         }
     }

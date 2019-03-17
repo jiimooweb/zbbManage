@@ -1,8 +1,8 @@
 <template>
-    <div>
-        <i-form ref="search" class="search" :model="searchData" :label-width="80">
-            <row>
-                <i-col span='4'>
+    <div class="APPRENTICEWITHDRAW">
+        <i-form ref="search" class="search" :model="searchData">
+            <row :gutter='16'>
+                <i-col span='5'>
                     <row>
                         <i-col span='10'>
                             <FormItem prop="type1">
@@ -20,7 +20,7 @@
                         </i-col>
                     </row>
                 </i-col>
-                <i-col span='4'>
+                <i-col span='5'>
                     <row>
                         <i-col span='10'>
                             <FormItem prop="type2">
@@ -37,7 +37,7 @@
                         </i-col>
                     </row>
                 </i-col>
-                <i-col span='4'>
+                <i-col span='5'>
                     <row>
                         <i-col span='10'>
                             <FormItem prop="type3">
@@ -54,12 +54,12 @@
                         </i-col>
                     </row>
                 </i-col>
-                <i-col span='4'>
+                <i-col span='5'>
                     <row>
-                        <i-col span='8' style="line-height:33px;text-align:center;">
+                        <i-col span='6' style="line-height:33px;text-align:center;">
                             审核状态:
                         </i-col>
-                        <i-col span='12'>
+                        <i-col span='18'>
                             <FormItem prop="status" lable='状态'>
                                 <Select v-model="searchData.status">
                                     <Option :value="-2">全部</Option>
@@ -72,7 +72,7 @@
                         </i-col>
                     </row>
                 </i-col>
-                <i-col span='4'>
+                <i-col span='5'>
                     <row>
                         <i-col span='10'>
                             <FormItem prop="type4">
@@ -91,7 +91,7 @@
                 </i-col>
                 <i-col span='5'>
                     <row>
-                        <i-col span='8'>
+                        <i-col span='10'>
                             <FormItem prop="type5">
                                 <Select v-model="searchData.type5">
                                     <Option value="created_at">申请时间</Option>
@@ -99,7 +99,7 @@
                                 </Select>
                             </FormItem>
                         </i-col>
-                        <i-col span='16'>
+                        <i-col span='14'>
                             <FormItem prop="type5Text">
                                 <DatePicker :value="searchData.type5Text" @on-change='changeDate' type="daterange"
                                     placeholder="选择日期"></DatePicker>
@@ -633,12 +633,16 @@ export default {
 </script>
 
 <style lang='less'>
-.search {
-    .ivu-form-item-content {
-        margin-left: 0 !important;
-    }
-    .ivu-select-dropdown {
-        // width: 100px;
+.APPRENTICEWITHDRAW{
+    min-width: 1100px;
+    .search {
+        .ivu-form-item-content {
+            line-height: 1 !important;
+            margin-left: 0 !important;
+        }
+        .ivu-form-item-label{
+            text-align: center;
+        }
     }
 }
 </style>

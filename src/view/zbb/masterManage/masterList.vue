@@ -1,8 +1,8 @@
 <template>
-    <div>
+    <div class="MASTERLIST">
         <i-form ref="search" class="search" :model="searchData" :label-width="80">
-            <row>
-                <i-col span='4'>
+            <row :gutter='16'>
+                <i-col span='5'>
                     <row>
                         <i-col span='10'>
                             <FormItem prop="type1">
@@ -19,7 +19,7 @@
                         </i-col>
                     </row>
                 </i-col>
-                <i-col span='4'>
+                <i-col span='5'>
                     <row>
                         <i-col span='10'>
                             <FormItem prop="type2">
@@ -38,11 +38,14 @@
                         </i-col>
                     </row>
                 </i-col>
-                <i-col span='3'>
+                <i-col span='5'>
                     <row>
-                        <i-col>
-                            <FormItem label="禁用状态">
-                                <Select v-model="searchData.disable" style="display:block;padding-left:75px;">
+                        <i-col span='6' style="line-height:33px;text-align:center;">
+                            禁用状态:
+                        </i-col>
+                        <i-col span='18'>
+                            <FormItem>
+                                <Select v-model="searchData.disable">
                                     <Option :value="2">无</Option>
                                     <Option :value="1">是</Option>
                                     <Option :value="0">否</Option>
@@ -51,11 +54,14 @@
                         </i-col>
                     </row>
                 </i-col>
-                <i-col span='3'>
+                <i-col span='5'>
                     <row>
-                        <i-col>
-                            <FormItem label="拉黑状态">
-                                <Select v-model="searchData.blacklist" style="display:block;padding-left:75px;">
+                        <i-col span='6' style="line-height:33px;text-align:center;">
+                            拉黑状态:
+                        </i-col>
+                        <i-col span='18'>
+                            <FormItem>
+                                <Select v-model="searchData.blacklist">
                                     <Option :value="2">无</Option>
                                     <Option :value="1">是</Option>
                                     <Option :value="0">否</Option>
@@ -64,11 +70,14 @@
                         </i-col>
                     </row>
                 </i-col>
-                <i-col span='3'>
+                <i-col span='5'>
                     <row>
-                        <i-col>
-                            <FormItem label=" 性 别 ">
-                                <Select v-model="searchData.sex" style="display:block;padding-left:75px;">
+                        <i-col span='6' style="line-height:33px;text-align:center;">
+                            性 别:
+                        </i-col>
+                        <i-col span='18'>
+                            <FormItem>
+                                <Select v-model="searchData.sex">
                                     <Option :value="2">无</Option>
                                     <Option :value="1">男</Option>
                                     <Option :value="0">女</Option>
@@ -1016,12 +1025,16 @@ export default {
 </script>
 
 <style lang='less'>
-.search {
-    .ivu-form-item-content {
-        margin-left: 0 !important;
-    }
-    .ivu-select-dropdown {
-        // width: 100px;
+.MASTERLIST {
+    min-width: 1100px;
+    .search {
+        .ivu-form-item-content {
+            line-height: 1 !important;
+            margin-left: 0 !important;
+        }
+        .ivu-form-item-label{
+            text-align: center;
+        }
     }
 }
 </style>

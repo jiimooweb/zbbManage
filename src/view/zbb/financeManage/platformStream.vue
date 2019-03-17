@@ -1,13 +1,13 @@
 <template>
-    <div>
+    <div class="PLATFORMSTREAM">
         <i-form ref="search" class="search" :model="searchData" :label-width="80">
-            <row>
-                <i-col span='4'>
+            <row :gutter='16'>
+                <i-col span='5'>
                     <row>
-                        <i-col span='8' style="line-height:33px;text-align:center;">
+                        <i-col span='6' style="line-height:33px;text-align:center;">
                             业务类型:
                         </i-col>
-                        <i-col span='16'>
+                        <i-col span='18'>
                             <FormItem>
                                 <Select v-model="searchData.type">
                                     <Option :value="0">全部</Option>
@@ -23,12 +23,12 @@
                         </i-col>
                     </row>
                 </i-col>
-                <i-col span='4'>
+                <i-col span='5'>
                     <row>
-                        <i-col span='8' style="line-height:33px;text-align:center;">
+                        <i-col span='6' style="line-height:33px;text-align:center;">
                             账户类型:
                         </i-col>
-                        <i-col span='16'>
+                        <i-col span='18'>
                             <FormItem>
                                 <Select v-model="searchData.man_type">
                                     <Option :value="2">全部</Option>
@@ -41,28 +41,28 @@
                         </i-col>
                     </row>
                 </i-col>
-                <i-col span='4'>
+                <i-col span='5'>
                     <row>
-                        <i-col span='8' style="line-height:33px;text-align:center;">
+                        <i-col span='6' style="line-height:33px;text-align:center;">
                             账户ID:
                         </i-col>
-                        <i-col span='16'>
+                        <i-col span='18'>
                             <FormItem prop="man_id">
                                 <Input type="text" v-model="searchData.man_id" />
                             </FormItem>
                         </i-col>
                     </row>
                 </i-col>
-                <i-col span='4' offset='1'>
+                <i-col span='5'>
                     <row>
-                        <i-col span='8'>
+                        <i-col span='10'>
                             <FormItem prop="type2">
                                 <Select v-model="searchData.type2">
                                     <Option value="time">业务时间</Option>
                                 </Select>
                             </FormItem>
                         </i-col>
-                        <i-col span='16'>
+                        <i-col span='14'>
                             <FormItem prop="created_at">
                                 <DatePicker :value="searchData.created_at" @on-change='changeDate' type="daterange"
                                     placeholder="选择日期"></DatePicker>
@@ -71,7 +71,7 @@
                         </i-col>
                     </row>
                 </i-col>
-                <i-col span='2' offset='1'>
+                <i-col span='2'>
                     <Button type="success" @click="getList()">搜索</Button>
                 </i-col>
             </row>
@@ -248,12 +248,16 @@ export default {
 </script>
 
 <style lang='less'>
-.search {
-    .ivu-form-item-content {
-        margin-left: 0 !important;
-    }
-    .ivu-select-dropdown {
-        // width: 100px;
+.PLATFORMSTREAM{
+    min-width: 1100px;
+    .search {
+        .ivu-form-item-content {
+            line-height: 1 !important;
+            margin-left: 0 !important;
+        }
+        .ivu-form-item-label {
+            text-align: center;
+        }
     }
 }
 </style>

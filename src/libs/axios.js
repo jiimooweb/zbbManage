@@ -53,6 +53,7 @@ class HttpRequest {
       return { data, status }
     }, error => {
       this.destroy(url)
+    
       let errorInfo = error.response
       if (!errorInfo) {
         const { request: { statusText, status }, config } = JSON.parse(JSON.stringify(error))

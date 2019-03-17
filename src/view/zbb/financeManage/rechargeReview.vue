@@ -1,13 +1,13 @@
 <template>
-    <div>
+    <div class="RECHARGEREVIEW">
         <i-form ref="search" class="search" :model="searchData" :label-width="80">
-            <row>
-                <i-col span='4'>
+            <row :gutter='16'>
+                <i-col span='5'>
                     <row>
-                        <i-col span='8' style="line-height:33px;text-align:center;">
+                        <i-col span='6' style="line-height:33px;text-align:center;">
                             支付渠道:
                         </i-col>
-                        <i-col span='12'>
+                        <i-col span='18'>
                             <FormItem prop="type" lable='支付渠道'>
                                 <Select v-model="searchData.type">
                                     <Option :value="-2">所有渠道</Option>
@@ -20,12 +20,12 @@
                         </i-col>
                     </row>
                 </i-col>
-                <i-col span='4'>
+                <i-col span='5'>
                     <row>
-                        <i-col span='8' style="line-height:33px;text-align:center;">
+                        <i-col span='6' style="line-height:33px;text-align:center;">
                             状态:
                         </i-col>
-                        <i-col span='12'>
+                        <i-col span='18'>
                             <FormItem prop="status" lable='状态'>
                                 <Select v-model="searchData.status">
                                     <Option :value="-2">全部</Option>
@@ -38,12 +38,12 @@
                         </i-col>
                     </row>
                 </i-col>
-                <i-col span='4'>
+                <i-col span='5'>
                     <row>
-                        <i-col span='8' style="line-height:33px;text-align:center;">
+                        <i-col span='6' style="line-height:33px;text-align:center;">
                             充值编号:
                         </i-col>
-                        <i-col span='12'>
+                        <i-col span='18'>
                             <FormItem prop="recharge_no">
                                 <Input type="text" v-model="searchData.recharge_no" />
                             </FormItem>
@@ -52,14 +52,14 @@
                 </i-col>
                 <i-col span='5'>
                     <row>
-                        <i-col span='8'>
+                        <i-col span='10'>
                             <FormItem prop="type5">
                                 <Select v-model="searchData.type5">
                                     <Option value="time">申请时间</Option>
                                 </Select>
                             </FormItem>
                         </i-col>
-                        <i-col span='16'>
+                        <i-col span='14'>
                             <FormItem prop="time">
                                 <DatePicker :value="searchData.time" @on-change='changeDate' type="daterange"
                                     placeholder="选择日期"></DatePicker>
@@ -459,12 +459,16 @@ export default {
 </script>
 
 <style lang='less'>
-.search {
-    .ivu-form-item-content {
-        margin-left: 0 !important;
-    }
-    .ivu-select-dropdown {
-        // width: 100px;
+.RECHARGEREVIEW{
+    min-width: 1100px;
+    .search {
+        .ivu-form-item-content {
+            line-height: 1 !important;
+            margin-left: 0 !important;
+        }
+        .ivu-form-item-label {
+            text-align: center;
+        }
     }
 }
 </style>

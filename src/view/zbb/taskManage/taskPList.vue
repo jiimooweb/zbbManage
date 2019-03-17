@@ -1,13 +1,13 @@
 <template>
-    <div>
+    <div class="TASKPLIST">
         <i-form ref="search" class="search" :model="searchData" :label-width="80">
-            <row>
-                <i-col span='4'>
+            <row :gutter='16'>
+                <i-col span='5'>
                     <row>
-                        <i-col span='8' style="line-height:33px;text-align:center;">
+                        <i-col span='6' style="line-height:33px;text-align:center;">
                             任务类型:
                         </i-col>
-                        <i-col span='12'>
+                        <i-col span='18'>
                             <FormItem prop="taskType" lable='任务类型'>
                                 <Select v-model="searchData.taskType">
                                     <Option :value="-1">全部</Option>
@@ -20,12 +20,12 @@
                         </i-col>
                     </row>
                 </i-col>
-                <i-col span='4'>
+                <i-col span='5'>
                     <row>
-                        <i-col span='8' style="line-height:33px;text-align:center;">
+                        <i-col span='6' style="line-height:33px;text-align:center;">
                             状态:
                         </i-col>
-                        <i-col span='12'>
+                        <i-col span='18'>
                             <FormItem prop="verify" lable='状态'>
                                 <Select v-model="searchData.verify">
                                     <Option :value="2">全部</Option>
@@ -37,24 +37,24 @@
                         </i-col>
                     </row>
                 </i-col>
-                <i-col span='4'>
+                <i-col span='5'>
                     <row>
-                        <i-col span='8' style="line-height:33px;text-align:center;">
+                        <i-col span='6' style="line-height:33px;text-align:center;">
                             标题:
                         </i-col>
-                        <i-col span='12'>
+                        <i-col span='18'>
                             <FormItem prop="title" lable='审核状态'>
                                 <Input type="text" v-model="searchData.title" />
                             </FormItem>
                         </i-col>
                     </row>
                 </i-col>
-                <i-col span='4'>
+                <i-col span='5'>
                     <row>
-                        <i-col span='8' style="line-height:33px;text-align:center;">
+                        <i-col span='6' style="line-height:33px;text-align:center;">
                             时间段:
                         </i-col>
-                        <i-col span='16'>
+                        <i-col span='18'>
                             <FormItem prop="start_time">
                                 <DatePicker :value="searchData.start_time" @on-change='changeDate1' type="daterange"
                                     placeholder="选择日期"></DatePicker>
@@ -119,7 +119,7 @@
                         </i-col>
                     </row>
                 </FormItem>
-                <FormItem prop="share_price" class="formItem" v-if="formInline.type===3">
+                <FormItem prop="share_price" class="formItem" v-show="formInline.type===3">
                     <row class="formRow">
                         <i-col span='4'>
                             <span style="lable">悬赏金额:</span>
@@ -164,7 +164,7 @@
                         </i-col>
                     </row>
                 </FormItem>
-                <FormItem prop="wx_content" class="formItem textarea" v-if="formInline.type===0">
+                <FormItem prop="wx_content" class="formItem textarea" v-show="formInline.type===0">
                     <row class="formRow">
                         <i-col span='4'>
                             <span style="lable">文案:</span>
@@ -174,13 +174,13 @@
                         </i-col>
                     </row>
                 </FormItem>
-                <FormItem prop="qrcode_url" class="formItem" v-if="formInline.type===0">
+                <FormItem prop="qrcode_url" class="formItem" v-show="formInline.type===0">
                     <row class="formRow">
                         <i-col span='4'>
                             <span style="lable">二维码图片：</span>
                         </i-col>
                         <i-col span='18'>
-                            <Spin fix v-if="spinShow2">
+                            <Spin fix v-show="spinShow2">
                                 <Icon type="ios-loading" size=18 class="demo-spin-icon-load"></Icon>
                                 <div>上传中~~~</div>
                             </Spin>
@@ -197,13 +197,13 @@
                     </row>
                 </FormItem>
                 <!-- 朋友圈 -->
-                <FormItem prop="images" class="formItem" v-if="formInline.type===0">
+                <FormItem prop="images" class="formItem" v-show="formInline.type===0">
                     <row class="formRow">
                         <i-col span='4'>
                             <span style="lable">图片信息：</span>
                         </i-col>
                         <i-col span='18'>
-                            <Spin fix v-if="spinShow">
+                            <Spin fix v-show="spinShow">
                                 <Icon type="ios-loading" size=18 class="demo-spin-icon-load"></Icon>
                                 <div>上传中~~~</div>
                             </Spin>
@@ -219,17 +219,17 @@
                 </FormItem>
 
                 <!-- 抖音 头条 -->
-                <FormItem prop="dy_request" class="formItem" v-if="formInline.type===1">
+                <FormItem prop="dy_request" class="formItem" v-show="formInline.type===1">
                     <row class="formRow">
                         <i-col span='4'>
                             <span style="lable">要求:</span>
                         </i-col>
                         <i-col span='18'>
-                            <Checkbox label="香蕉" :value='true' disabled v-if="formInline.type===1">必须观看(播放)完1次以上</Checkbox>
+                            <Checkbox label="香蕉" :value='true' disabled v-show="formInline.type===1">必须观看(播放)完1次以上</Checkbox>
                             <CheckboxGroup v-model="disabledGroup" @on-change='changeCheck'>
                                 <Checkbox label="SUBSCRIBE">关注</Checkbox>
                                 <Checkbox label="LIKE">点赞</Checkbox>
-                                <Checkbox label="SHARE" v-if="formInline.type===1">转发到抖音</Checkbox>
+                                <Checkbox label="SHARE" v-show="formInline.type===1">转发到抖音</Checkbox>
                                 <Checkbox label="COMMENT">评论</Checkbox>
                             </CheckboxGroup>
                             <i-input placeholder="输入评论:如不填，则默认显示：“评论随意填即可”" v-model="formInline.comment" class="formInput"></i-input>
@@ -237,17 +237,17 @@
                         </i-col>
                     </row>
                 </FormItem>
-                <FormItem prop="tt_request" class="formItem" v-if="formInline.type===2">
+                <FormItem prop="tt_request" class="formItem" v-show="formInline.type===2">
                     <row class="formRow">
                         <i-col span='4'>
                             <span style="lable">要求:</span>
                         </i-col>
                         <i-col span='18'>
-                            <Checkbox label="香蕉" :value='true' disabled v-if="formInline.type===2">浏览5分钟以上，并浏览到底部</Checkbox>
+                            <Checkbox label="香蕉" :value='true' disabled v-show="formInline.type===2">浏览5分钟以上，并浏览到底部</Checkbox>
                             <CheckboxGroup v-model="disabledGroup" @on-change='changeCheck'>
                                 <Checkbox label="SUBSCRIBE">关注</Checkbox>
                                 <Checkbox label="LIKE">点赞</Checkbox>
-                                <Checkbox label="SHARE" v-if="formInline.type===2">转发到头条</Checkbox>
+                                <Checkbox label="SHARE" v-show="formInline.type===2">转发到头条</Checkbox>
                                 <Checkbox label="COMMENT">评论</Checkbox>
                             </CheckboxGroup>
                             <i-input placeholder="输入评论:如不填，则默认显示：“评论随意填即可”" v-model="formInline.comment" class="formInput"></i-input>
@@ -255,13 +255,13 @@
                         </i-col>
                     </row>
                 </FormItem>
-                <FormItem prop="images" class="formItem" v-if="formInline.type===1 || formInline.type===2">
+                <FormItem prop="images" class="formItem" v-show="formInline.type===1 || formInline.type===2">
                     <row class="formRow">
                         <i-col span='4'>
                             <span style="lable">图片信息：</span>
                         </i-col>
                         <i-col span='18'>
-                            <Spin fix v-if="spinShow">
+                            <Spin fix v-show="spinShow">
                                 <Icon type="ios-loading" size=18 class="demo-spin-icon-load"></Icon>
                                 <div>上传中~~~</div>
                             </Spin>
@@ -277,25 +277,25 @@
                         </i-col>
                     </row>
                 </FormItem>
-                <FormItem prop="url" class="formItem" v-if="formInline.type===1 || formInline.type===2">
+                <FormItem prop="url" class="formItem" v-show="formInline.type===1 || formInline.type===2">
                     <row class="formRow">
                         <i-col span='4'>
-                            <span style="lable" v-if="formInline.type===1">抖音作品链接:</span>
-                            <span style="lable" v-if="formInline.type===2">今日头条作品链接:</span>
+                            <span style="lable" v-show="formInline.type===1">抖音作品链接:</span>
+                            <span style="lable" v-show="formInline.type===2">今日头条作品链接:</span>
                         </i-col>
                         <i-col span='18'>
-                            <i-input placeholder="抖音作品的复制链接直接粘贴即可" v-model="formInline.url" class="formInput" v-if="formInline.type===1"></i-input>
-                            <i-input placeholder="今日头条作品的复制链接直接粘贴即可" v-model="formInline.url" class="formInput" v-if="formInline.type===2"></i-input>
+                            <i-input placeholder="抖音作品的复制链接直接粘贴即可" v-model="formInline.url" class="formInput" v-show="formInline.type===1"></i-input>
+                            <i-input placeholder="今日头条作品的复制链接直接粘贴即可" v-model="formInline.url" class="formInput" v-show="formInline.type===2"></i-input>
                         </i-col>
                     </row>
                 </FormItem>
-                <FormItem prop="share_thumb" class="formItem" v-if="formInline.type===3">
+                <FormItem prop="share_thumb" class="formItem" v-show="formInline.type===3">
                     <row class="formRow">
                         <i-col span='4'>
                             <span style="lable">标题图片：</span>
                         </i-col>
                         <i-col span='18'>
-                            <Spin fix v-if="spinShow">
+                            <Spin fix v-show="spinShow">
                                 <Icon type="ios-loading" size=18 class="demo-spin-icon-load"></Icon>
                                 <div>上传中~~~</div>
                             </Spin>
@@ -321,6 +321,18 @@
                         </i-col>
                     </row>
                 </FormItem>
+                <FormItem prop="cate_id" class="formItem" v-show='formInline.type===3'>
+                    <row class="formRow">
+                        <i-col span='4'>
+                            <span style="lable">分类:</span>
+                        </i-col>
+                        <i-col span='18'>
+                            <Select v-model="formInline.cate_id" filterable>
+                                <Option v-for="(item,index) in typeList" :value="item.id" :key="index">{{ item.name }}</Option>
+                            </Select>
+                        </i-col>
+                    </row>
+                </FormItem>
                 <FormItem prop="total_price" class="formItem">
                     <row class="formRow">
                         <i-col span='4'>
@@ -337,6 +349,271 @@
                     <!-- <Button type="primary" @click="clicka()">新增</Button> -->
                     <!-- <Button style="margin-left:10px;" @click="resetData('formInline')">重置</Button> -->
                 </FormItem>
+            </i-form>
+        </Modal>
+        <Modal v-model="showModal" width='800px' class="TASKLISTModal" title='任务详情' footer-hide>
+            <i-form ref="formInline" class="formPage" inline>
+                <row class='listRow'>
+                    <i-col class="listItem">
+                        <FormItem class="formItem">
+                            <row class="formRow">
+                                <i-col span='5'>
+                                    <span class="lable">主任务号:</span>
+                                </i-col>
+                                <i-col span='19'>
+                                    <p>{{showData.id}}</p>
+                                </i-col>
+                            </row>
+                        </FormItem>
+                    </i-col>
+                    <i-col class="listItem">
+                        <FormItem class="formItem">
+                            <row class="formRow">
+                                <i-col span='5'>
+                                    <span class="lable">创建时间:</span>
+                                </i-col>
+                                <i-col span='19'>
+                                    <p>{{showData.created_at}}</p>
+                                </i-col>
+                            </row>
+                        </FormItem>
+                    </i-col>
+                    <i-col class="listItem">
+                        <FormItem class="formItem">
+                            <row class="formRow">
+                                <i-col span='5'>
+                                    <span class="lable">开始时间:</span>
+                                </i-col>
+                                <i-col span='19'>
+                                    <p>{{showData.start_time}}</p>
+                                </i-col>
+                            </row>
+                        </FormItem>
+                    </i-col>
+                    <i-col class="listItem">
+                        <FormItem class="formItem">
+                            <row class="formRow">
+                                <i-col span='5'>
+                                    <span class="lable">开启状态:</span>
+                                </i-col>
+                                <i-col span='19'>
+                                    <p>{{showData.status === 0 ? "关" : "开"}}</p>
+                                </i-col>
+                            </row>
+                        </FormItem>
+                    </i-col>
+                    <i-col class="listItem">
+                        <FormItem class="formItem">
+                            <row class="formRow">
+                                <i-col span='5'>
+                                    <span class="lable">业务类型:</span>
+                                </i-col>
+                                <i-col span='19'>
+                                    <p>{{showData.type === 0
+                                        ? "朋友圈"
+                                        : showData.type === 1
+                                        ? "抖音"
+                                        : showData.type === 2
+                                        ? "头条"
+                                        : "分享"}}</p>
+                                </i-col>
+                            </row>
+                        </FormItem>
+                    </i-col>
+                </row>
+                <!-- 右边 -->
+                <row class='listRow'>
+                    <i-col class="listItem">
+                        <FormItem class="formItem">
+                            <row class="formRow">
+                                <i-col span='5'>
+                                    <span class="lable">佣金:</span>
+                                </i-col>
+                                <i-col span='19'>
+                                    <p>{{showData.total_price / showData.num}}</p>
+                                </i-col>
+                            </row>
+                        </FormItem>
+                    </i-col>
+                    <i-col class="listItem">
+                        <FormItem class="formItem">
+                            <row class="formRow">
+                                <i-col span='5'>
+                                    <span class="lable">总名额:</span>
+                                </i-col>
+                                <i-col span='19'>
+                                    <p>{{showData.num}}</p>
+                                </i-col>
+                            </row>
+                        </FormItem>
+                    </i-col>
+                    <i-col class="listItem">
+                        <FormItem class="formItem">
+                            <row class="formRow">
+                                <i-col span='5'>
+                                    <span class="lable">总金额:</span>
+                                </i-col>
+                                <i-col span='19'>
+                                    <p>{{showData.total_price}}</p>
+                                </i-col>
+                            </row>
+                        </FormItem>
+                    </i-col>
+                    <i-col class="listItem">
+                        <FormItem class="formItem">
+                            <row class="formRow">
+                                <i-col span='5'>
+                                    <span class="lable">已用金额:</span>
+                                </i-col>
+                                <i-col span='19'>
+                                    <p>{{(showData.total_price / showData.num) *
+                                        showData.record_verifys_count}}</p>
+                                </i-col>
+                            </row>
+                        </FormItem>
+                    </i-col>
+                    <i-col class="listItem">
+                        <FormItem class="formItem">
+                            <row class="formRow">
+                                <i-col span='5'>
+                                    <span class="lable">冻结金额:</span>
+                                </i-col>
+                                <i-col span='19'>
+                                    <p>{{showData.verify_status === -1
+                                        ? "0"
+                                        : showData.total_price}}</p>
+                                </i-col>
+                            </row>
+                        </FormItem>
+                    </i-col>
+                </row>
+            </i-form>
+            <p class="jg"></p>
+            <i-form ref="formInline" class="formPage" inline>
+                <row class='listRow'>
+                    <i-col class="listItem">
+                        <FormItem class="formItem">
+                            <row class="formRow">
+                                <i-col span='5'>
+                                    <span class="lable">未进行:</span>
+                                </i-col>
+                                <i-col span='19'>
+                                    <p>{{showData.num - showData.records_count}}</p>
+                                </i-col>
+                            </row>
+                        </FormItem>
+                    </i-col>
+                    <i-col class="listItem">
+                        <FormItem class="formItem">
+                            <row class="formRow">
+                                <i-col span='5'>
+                                    <span class="lable">执行中:</span>
+                                </i-col>
+                                <i-col span='19'>
+                                    <p>{{showData.records_count - showData.record_verifys_count}}</p>
+                                </i-col>
+                            </row>
+                        </FormItem>
+                    </i-col>
+                    <i-col class="listItem">
+                        <FormItem class="formItem">
+                            <row class="formRow">
+                                <i-col span='5'>
+                                    <span class="lable">已完成:</span>
+                                </i-col>
+                                <i-col span='19'>
+                                    <p>{{showData.record_verifys_count}}</p>
+                                </i-col>
+                            </row>
+                        </FormItem>
+                    </i-col>
+                </row>
+                <!-- 右边 -->
+                <row class='listRow'>
+                    <i-col class="listItem">
+                        <FormItem class="formItem">
+                            <row class="formRow">
+                                <i-col span='5'>
+                                    <span class="lable">金额:</span>
+                                </i-col>
+                                <i-col span='19'>
+                                    <p>{{(showData.num - showData.records_count) * (showData.total_price /
+                                        showData.num)}}</p>
+                                </i-col>
+                            </row>
+                        </FormItem>
+                    </i-col>
+                    <i-col class="listItem">
+                        <FormItem class="formItem">
+                            <row class="formRow">
+                                <i-col span='5'>
+                                    <span class="lable">金额:</span>
+                                </i-col>
+                                <i-col span='19'>
+                                    <p>{{(showData.records_count - showData.record_verifys_count) *
+                                        (showData.total_price / showData.num)}}</p>
+                                </i-col>
+                            </row>
+                        </FormItem>
+                    </i-col>
+                    <i-col class="listItem">
+                        <FormItem class="formItem">
+                            <row class="formRow">
+                                <i-col span='5'>
+                                    <span class="lable">金额:</span>
+                                </i-col>
+                                <i-col span='19'>
+                                    <p>{{showData.record_verifys_count * (showData.total_price / showData.num)}}</p>
+                                </i-col>
+                            </row>
+                        </FormItem>
+                    </i-col>
+                </row>
+            </i-form>
+            <p class="jg"></p>
+            <i-form ref="formInline" class="formPage" inline>
+                <row class='listRow all'>
+                    <i-col class="listItem">
+                        <FormItem class="formItem">
+                            <row class="formRow">
+                                <i-col span='5'>
+                                    <span class="lable">标题:</span>
+                                </i-col>
+                                <i-col span='19'>
+                                    <p>{{showData.title}}</p>
+                                </i-col>
+                            </row>
+                        </FormItem>
+                    </i-col>
+                    <i-col class="listItem" v-if="showData.type === 0 || showData.type === 3">
+                        <FormItem class="formItem">
+                            <row class="formRow">
+                                <i-col span='5'>
+                                    <span class="lable">文案:</span>
+                                </i-col>
+                                <i-col span='19' v-if="showData.type === 0">
+                                    <p>{{showData.wx_content}}</p>
+                                </i-col>
+                                <i-col span='19' v-if="showData.type === 3">
+                                    <p>{{showData.share_content}}</p>
+                                </i-col>
+                            </row>
+                        </FormItem>
+                    </i-col>
+                    <i-col class="listItem">
+                        <FormItem class="formItem">
+                            <row class="formRow">
+                                <i-col span='5'>
+                                    <span class="lable">图片:</span>
+                                </i-col>
+                                <i-col span='19' v-if="showData.type === 0 ||showData.type === 1||showData.type === 2">
+                                    <img v-for="(item,index) in JSON.parse(showData.images)" :key='index' :src="item"
+                                        style="width:100px;height:100px;float:left;margin-right:5px;">
+                                </i-col>
+                            </row>
+                        </FormItem>
+                    </i-col>
+                </row>
             </i-form>
         </Modal>
     </div>
@@ -427,6 +704,10 @@ export default {
     components: { VueUeditorWrap },
     data() {
         return {
+            showData:{
+
+            },
+            showModal:false,
             reason: "",
             searchData: {
                 taskType: -1,
@@ -595,6 +876,17 @@ export default {
                         trigger: "blur"
                     }
                 ],
+                cate_id: [
+                    {
+                        // validator(rule, value, callback, source, options) {
+                        //     var errors = [];
+                        //     if (!value) {
+                        //         callback("请选择分类");
+                        //     }
+                        //     callback(errors);
+                        // }
+                    }
+                ],
                 share_thumb: [
                     {
                         // required: true,
@@ -653,9 +945,28 @@ export default {
                     key: "title"
                 },
                 {
+                    title: "分类",
+                    align: "center",
+                    render(h,params) {
+                        return h('p',params.row.cate.name)
+                    },
+                },
+                {
                     title: "任务类型",
                     align: "center",
-                    key: "type"
+                    // key: "type"
+                    render(h, params) {
+                        return h(
+                            "p",
+                            params.row.type === 0
+                                ? "朋友圈"
+                                : params.row.type === 1
+                                ? "抖音"
+                                : params.row.type === 2
+                                ? "头条"
+                                : "分享"
+                        );
+                    }
                 },
                 {
                     title: "已领/名额",
@@ -702,12 +1013,71 @@ export default {
                     key: "created_at"
                 },
                 {
+                    title: "任务开关",
+                    align: "center",
+                    render:(h,params)=> {
+                        return h("i-switch",
+                            {
+                                props: {
+                                    trueValue: 1,
+                                    falseValue: 0,
+                                    value: params.row.status
+                                },
+                                nativeOn: {
+                                    click: () => {
+                                        axios.request({
+                                            url:'task/tasks/'+ params.row.id +'/change',
+                                            method:'post'
+                                        }).then(res=>{
+                                            this.$Message.success('状态修改成功')
+                                            this.getList()
+                                        })
+                                    }
+                                }
+                            },
+                            0)
+                    },
+                },
+                {
                     title: "操作",
                     align: "center",
                     width: "300",
                     render: (h, params) => {
                         return h("div", [
                             h(
+                                "Button",
+                                {
+                                    props: {
+                                        type: "primary",
+                                        size: "small"
+                                        // disabled: params.row.verify_status !== 0
+                                    },
+                                    attrs: {
+                                        style:
+                                            "font-size:12px;margin-right:15px;"
+                                    },
+                                    nativeOn: {
+                                        click: () => {
+                                            this.showData.id = params.row.id;
+                                            this.showData.created_at = params.row.created_at;
+                                            this.showData.start_time = params.row.start_time;
+                                            this.showData.status = params.row.status;
+                                            // this.showData.type = params.row.type;
+                                            this.showData.total_price = params.row.total_price;
+                                            this.showData.num = params.row.num;
+                                            this.showData.record_verifys_count = params.row.record_verifys_count;
+                                            this.showData.verify_status = params.row.verify_status;
+                                            this.showData.records_count = params.row.records_count;
+                                            this.showData.title = params.row.title;
+                                            this.showData.wx_content = params.row.wx_content;
+                                            this.showData.share_content = params.row.share_content;
+                                            this.showData.images = params.row.images;
+                                            this.showModal = true;
+                                        }
+                                    }
+                                },
+                                "查看"
+                            ),h(
                                 "Button",
                                 {
                                     props: {
@@ -842,15 +1212,29 @@ export default {
             currentPage: 1,
             per_page: 20,
             defailPage: 20,
-            pageSize: [5, 20, 50, 100, 200]
+            pageSize: [5, 20, 50, 100, 200],
+
+            typeList:[]
+
         };
     },
     mounted() {
         this.getList();
         this.getJson();
         this.getMerchatList();
+        this.getTypeList()
     },
     methods: {
+        getTypeList() {
+            axios
+                .request({
+                    url: "task/cates",
+                    method: "get"
+                })
+                .then(res => {
+                    this.typeList = res.data.data;
+                });
+        },
         returnItem(i) {
             axios
                 .request({
@@ -890,6 +1274,9 @@ export default {
         deletePic() {
             for (let i = 0; i < this.deletePicArr.length; i++) {
                 this.deletePicArr[i] = this.filterUrl(this.deletePicArr[i]);
+            }
+            if(this.deletePicArr.length===0){
+                return
             }
             axios
                 .request({
@@ -1103,6 +1490,7 @@ export default {
                             method: "post",
                             data: {
                                 //通用
+                                cate_id:this.formInline.cate_id,
                                 total_price: this.total_price,
                                 merchant_id: this.formInline.merchant_id,
                                 // merchant_id: this.meerchatList[this.formInline.merchant_id].id,
@@ -1267,26 +1655,92 @@ export default {
 </script>
 
 <style lang='less'>
-.formPage {
-    .formItem {
-        display: block;
-        margin: 25px auto;
-        .ivu-form-item-error-tip {
-            padding-left: 141.5px;
+.TASKPLIST {
+    min-width: 1100px;
+    .search {
+        .ivu-form-item-content {
+            line-height: 1 !important;
+            margin-left: 0 !important;
         }
-        // .formRow.textarea{
-        //     height: 94px;
-        // }
-        .formRow {
+        .ivu-form-item-label {
+            text-align: center;
+        }
+    }
+    .formPage {
+        .formItem {
             display: block;
-            // height: 33px;
-            .lable {
-                display: block;
-                // line-height: 33px;
+            margin: 25px auto;
+            .ivu-form-item-error-tip {
+                padding-left: 141.5px;
             }
-            .formInput {
-                // margin-left: 20px;
-                // width: 300px;
+            // .formRow.textarea{
+            //     height: 94px;
+            // }
+            .formRow {
+                display: block;
+                // height: 33px;
+                .lable {
+                    display: block;
+                    // line-height: 33px;
+                }
+                .formInput {
+                    // margin-left: 20px;
+                    // width: 300px;
+                }
+            }
+        }
+    }
+}
+.TASKLISTModal {
+    .formPage {
+        margin-bottom: 20px;
+        overflow: hidden;
+        .listRow {
+            width: 49%;
+            float: left;
+            .listItem:last-child .formItem .formRow {
+                border-bottom: 1px solid #ddd;
+            }
+        }
+        .listRow.all {
+            width: 100%;
+        }
+        .listRow + .listRow {
+            margin-left: 2%;
+        }
+        .formItem {
+            display: block;
+            margin: 0px auto;
+            .ivu-form-item-error-tip {
+                padding-left: 141.5px;
+            }
+            // .formRow.textarea{
+            //     height: 94px;
+            // }
+
+            .formRow {
+                display: block;
+                border-top: 1px solid #ddd;
+                border-left: 1px solid #ddd;
+                border-right: 1px solid #ddd;
+                padding: 5px 10px;
+                .ivu-col:first-child {
+                    border-right: 1px solid #ddd;
+                }
+                p {
+                    text-align: center;
+                }
+                // height: 33px;
+                .lable {
+                    display: block;
+                    padding-right: 10px;
+                    text-align: center;
+                    // line-height: 33px;
+                }
+                .formInput {
+                    // margin-left: 20px;
+                    // width: 300px;
+                }
             }
         }
     }
