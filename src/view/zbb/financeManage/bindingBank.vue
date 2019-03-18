@@ -564,7 +564,13 @@ export default {
 
         },
         returnExcel(){
-            let url = 'http://120.79.203.214/zbb/public/backend/bank/bind/export?username='+ (this.searchData.type1 === "username" ? this.searchData.type1Text : "") +
+            let token = ''
+            axios.request({
+                url:'http://120.79.203.214/zbb/public/export-token',
+                method:'get'
+            }).then(res=>{
+                token = res.data
+                let url = 'http://120.79.203.214/zbb/public/backend/bank/bind/export?username='+ (this.searchData.type1 === "username" ? this.searchData.type1Text : "") +
             "&man_name="+(this.searchData.type1 === "man_name"? this.searchData.type1Text: "") +
             "&man_id="+(this.searchData.type1 === "man_id"? this.searchData.type1Text: "") +
             "&check_id="+(this.searchData.type1 === "check_id" ? this.searchData.type1Text: "") +
@@ -575,9 +581,12 @@ export default {
             "&bank_number="+(this.searchData.type4 === "bank_number"? this.searchData.type4Text: "") +
             "&created_at="+(this.searchData.type5 === "created_at"? this.searchData.type5Text[0] === ""? "": this.searchData.type5Text: "") +
             "&updated_at="+(this.searchData.type5 === "updated_at"? this.searchData.type5Text[0] === ""? "": this.searchData.type5Text: "") +
-            "&state="+(this.searchData.state === 2? "": this.searchData.state)
+            "&state="+(this.searchData.state === 2? "": this.searchData.state) +
+            "&token="+token
             
-            window.open(url);
+                window.open(url);
+            })
+            
         },
         changeType1(i) {
             if (

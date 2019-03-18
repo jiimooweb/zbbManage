@@ -132,8 +132,8 @@
         <Modal v-model="cancelModal" title='删除' @on-ok="cancelItem()" @on-cancel="cancelcancel(false)">
             <p style="text-align:center;font-size:16px;">是否删除师傅账号----<span style="color:red;">{{deleteName}}</span>----</p>
         </Modal>
-        <Modal v-model="editModal" title="修改" @on-ok="okEdit" @on-cancel="cancelEdit" :mask-closable="false"
-            footer-hide>
+        <Modal v-model="editModal" class="MASTERLISTModal" title="修改" @on-ok="okEdit" @on-cancel="cancelEdit"
+            :mask-closable="false" footer-hide>
             <i-form ref="formInline" class="formPage" :model="formInline" :rules="ruleInline" inline>
                 <FormItem prop="username" class="formItem">
                     <row class="formRow">
@@ -724,7 +724,13 @@ export default {
     methods: {
         //导出
         returnExcel() {
-            let url =
+            let token = ''
+            axios.request({
+                url:'http://120.79.203.214/zbb/public/export-token',
+                method:'get'
+            }).then(res=>{
+                token = res.data
+                let url =
                 "http://120.79.203.214/zbb/public/backend/masters/export?" +
                 "&" +
                 this.searchData.type1 +
@@ -751,9 +757,12 @@ export default {
                     ? ""
                     : this.searchData.blacklist) +
                 "&sex=" +
-                (this.searchData.sex === 2 ? "" : this.searchData.sex);
+                (this.searchData.sex === 2 ? "" : this.searchData.sex)+
+                "&token="+token;
 
             window.open(url);
+            })
+            
         },
         cancelcancel(i) {
             this.cancelModal = i;
@@ -1032,8 +1041,35 @@ export default {
             line-height: 1 !important;
             margin-left: 0 !important;
         }
-        .ivu-form-item-label{
+        .ivu-form-item-label {
             text-align: center;
+        }
+    }
+}
+.MASTERLISTModal {
+    .formPage {
+        .formItem {
+            display: block;
+            margin: 25px auto;
+            width: 100%;
+            .ivu-form-item-error-tip {
+                padding-left: 141.5px;
+            }
+            // .formRow.textarea{
+            //     height: 94px;
+            // }
+            .formRow {
+                display: block;
+                // height: 33px;
+                .lable {
+                    display: block;
+                    // line-height: 33px;
+                }
+                .formInput {
+                    // margin-left: 20px;
+                    // width: 300px;
+                }
+            }
         }
     }
 }

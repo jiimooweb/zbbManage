@@ -234,7 +234,13 @@ export default {
             this.getList();
         },
         returnExcel() {
-            let url =
+            let token = ''
+            axios.request({
+                url:'http://120.79.203.214/zbb/public/export-token',
+                method:'get'
+            }).then(res=>{
+                token = res.data
+                let url =
                 "http://120.79.203.214/zbb/public/backend/finance/masters/fund/export?" +
                 "master_username=" +
                 (this.searchData.type1 === "master_username"
@@ -257,8 +263,11 @@ export default {
                 "&created_at=" +
                 (this.searchData.created_at[0] === ""
                     ? ""
-                    : this.searchData.created_at);
+                    : this.searchData.created_at)+
+                    "&token="+token
             window.open(url);
+            })
+            
         }
     },
     mounted() {

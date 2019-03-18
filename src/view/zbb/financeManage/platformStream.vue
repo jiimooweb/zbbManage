@@ -179,6 +179,27 @@ export default {
     },
     methods: {
         returnExcel(){
+            let token = ''
+            axios.request({
+                url:'http://120.79.203.214/zbb/public/export-token',
+                method:'get'
+            }).then(res=>{
+                token = res.data
+                let url =
+                "http://120.79.203.214/zbb/public/backend/finance/recharges/export?" +
+                "type=" +
+                (this.searchData.type === -2 ? "" : this.searchData.type) +
+                "&status=" +
+                (this.searchData.status === -2 ? "" : this.searchData.status) +
+                "&recharge_no=" +
+                this.searchData.recharge_no +
+                "&time=" +
+                (this.searchData.time[0] === ""
+                    ? ""
+                    : this.searchData.time[0] + "," + this.searchData.time[1])+
+                    "&token="+token;
+            window.open(url);
+            })
             // let url =
             //     "http://120.79.203.214/zbb/public/backend/finance/recharges/export?" +
             //     "type=" +

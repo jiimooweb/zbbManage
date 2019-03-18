@@ -129,6 +129,7 @@ export default {
                     }
                 ]
             },
+            currentId:'',
             manageColumn: [
                 {
                     title: "用户名",
@@ -156,6 +157,7 @@ export default {
                                     nativeOn: {
                                         click: () => {
                                             this.EditModal = true
+                                            this.currentId = params.row.id
                                             this.formInline.powers = params.row.powers,
                                             this.formInline.username = params.row.username,
                                             this.formInline.password = params.row.password,
@@ -233,7 +235,7 @@ export default {
                 if (valid) {
                     axios
                         .request({
-                            url: "admin/admins",
+                            url: "admin/admins/"+this.currentId,
                             method: "put",
                             data: {
                                 username: this.formInline.username,

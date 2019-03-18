@@ -454,20 +454,29 @@ export default {
                 });
         },
         returnExcel(){
-            let url = 'http://120.79.203.214/zbb/public/backend/bank/check/export?username='+ (this.searchData.type1 === "username" ? this.searchData.type1Text : "") +
-            "&man_name="+(this.searchData.type1 === "man_name"? this.searchData.type1Text: "") +
-            "&man_id="+(this.searchData.type1 === "man_id"? this.searchData.type1Text: "") +
-            "&check_id="+(this.searchData.type1 === "check_id" ? this.searchData.type1Text: "") +
-            "&man_type="+(this.searchData.manType === 2? "": this.searchData.manType) +
-            "&bank_name="+(this.searchData.type3 === "bank_name"? this.searchData.type3Text: "") +
-            "&bank_id="+(this.searchData.type3 === "bank_id"? this.searchData.type3Text: "") +
-            "&bank_man="+(this.searchData.type4 === "bank_man"? this.searchData.type4Text: "") +
-            "&bank_number="+(this.searchData.type4 === "bank_number"? this.searchData.type4Text: "") +
-            "&created_at="+(this.searchData.type5 === "created_at"? this.searchData.type5Text[0] === ""? "": this.searchData.type5Text: "") +
-            "&updated_at="+(this.searchData.type5 === "updated_at"? this.searchData.type5Text[0] === ""? "": this.searchData.type5Text: "") +
-            "&state="+(this.searchData.state === 2? "": this.searchData.state)
+            let token = ''
+            axios.request({
+                url:'http://120.79.203.214/zbb/public/export-token',
+                method:'get'
+            }).then(res=>{
+                token = res.data
+                let url = 'http://120.79.203.214/zbb/public/backend/bank/check/export?username='+ (this.searchData.type1 === "username" ? this.searchData.type1Text : "") +
+                "&man_name="+(this.searchData.type1 === "man_name"? this.searchData.type1Text: "") +
+                "&man_id="+(this.searchData.type1 === "man_id"? this.searchData.type1Text: "") +
+                "&check_id="+(this.searchData.type1 === "check_id" ? this.searchData.type1Text: "") +
+                "&man_type="+(this.searchData.manType === 2? "": this.searchData.manType) +
+                "&bank_name="+(this.searchData.type3 === "bank_name"? this.searchData.type3Text: "") +
+                "&bank_id="+(this.searchData.type3 === "bank_id"? this.searchData.type3Text: "") +
+                "&bank_man="+(this.searchData.type4 === "bank_man"? this.searchData.type4Text: "") +
+                "&bank_number="+(this.searchData.type4 === "bank_number"? this.searchData.type4Text: "") +
+                "&created_at="+(this.searchData.type5 === "created_at"? this.searchData.type5Text[0] === ""? "": this.searchData.type5Text: "") +
+                "&updated_at="+(this.searchData.type5 === "updated_at"? this.searchData.type5Text[0] === ""? "": this.searchData.type5Text: "") +
+                "&state="+(this.searchData.state === 2? "": this.searchData.state) +
+                "&token="+token
+                
+                window.open(url);
+            })
             
-            window.open(url);
         },
         returnAdd() {
             this.$router.push({ path: "/newMaster" });

@@ -389,9 +389,12 @@ export default {
         },
         getchangeList(index) {
             this.page = index;
+            this.getList()
         },
         changePageGetList(size) {
             this.per_page = size;
+            this.currentPage = 1
+            this.getList()
         },
         selectItem(selection, row) {
             console.log(selection);
@@ -437,7 +440,13 @@ export default {
             this.isOne = false;
         },
         returnExcel() {
-            let url =
+            let token = ''
+            axios.request({
+                url:'http://120.79.203.214/zbb/public/export-token',
+                method:'get'
+            }).then(res=>{
+                token = res.data
+                let url =
                 "http://120.79.203.214/zbb/public/backend/finance/recharges/export?" +
                 "type=" +
                 (this.searchData.type === -2 ? "" : this.searchData.type) +
@@ -448,8 +457,11 @@ export default {
                 "&time=" +
                 (this.searchData.time[0] === ""
                     ? ""
-                    : this.searchData.time[0] + "," + this.searchData.time[1]);
+                    : this.searchData.time[0] + "," + this.searchData.time[1])+
+                    "&token="+token;
             window.open(url);
+            })
+            
         }
     },
     mounted() {

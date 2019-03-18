@@ -67,6 +67,11 @@
                 </i-col>
             </row>
         </i-form>
+        <row style="margin-bottom:10px;">
+            <i-col span='2'>
+                <Button @click="returnAdd()">添加</Button>
+            </i-col>
+        </row>
         <Table stripe :columns="column" border :data="list"></Table>
         <Page style="margin-top:20px;" :total="total" show-total :page-size='defailPage' show-elevator show-sizer
             :page-size-opts='pageSize' @on-change="getchangeList" @on-page-size-change='changePageGetList' />
@@ -1225,6 +1230,9 @@ export default {
         this.getTypeList()
     },
     methods: {
+        returnAdd(){
+            this.$router.push({path:'/newTask'})
+        },
         getTypeList() {
             axios
                 .request({
@@ -1648,6 +1656,7 @@ export default {
         },
         changePageGetList(size) {
             this.per_page = size;
+            this.currentPage = 1
             this.getList();
         }
     }

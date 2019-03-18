@@ -140,10 +140,10 @@
         <Modal v-model="failModal" title='批量拒绝' @on-ok="allFail()" @on-cancel="cancelFail(false)">
             <p style="text-align:center;font-size:16px;">是否使用批量拒绝功能</p>
         </Modal>
-        <Modal v-model="editModal" title="修改" @on-ok="okEdit" @on-cancel="cancelEdit" :mask-closable="false"
+        <Modal v-model="editModal" class="APPRENTICELISTModal" title="修改" @on-ok="okEdit" @on-cancel="cancelEdit" :mask-closable="false"
             footer-hide>
             <i-form ref="formInline" class="formPage" :model="formInline" :rules="ruleInline" inline>
-                <FormItem prop="username" class="formItem">
+                <FormItem prop="username" class="formItem f1">
                     <row class="formRow">
                         <i-col span='6'>
                             <span style="lable">徒弟账号:</span>
@@ -889,7 +889,13 @@ export default {
                 });
         },
         returnExcel() {
-            //导出excel
+            let token = ''
+            axios.request({
+                url:'http://120.79.203.214/zbb/public/export-token',
+                method:'get'
+            }).then(res=>{
+                token = res.data
+                //导出excel
             let url =
                 "http://120.79.203.214/zbb/public/backend/apprentices/export?" +
                 this.searchData.type1 +
@@ -916,8 +922,11 @@ export default {
                     ? ""
                     : this.searchData.blacklist) +
                 "&sex=" +
-                (this.searchData.sex === 2 ? "" : this.searchData.sex);
+                (this.searchData.sex === 2 ? "" : this.searchData.sex) +
+                "&token="+token
             window.open(url);
+            })
+            
         },
         returnAdd() {
             this.$router.push({ path: "/newMaster" });
@@ -1188,6 +1197,34 @@ export default {
     }
     .formItem {
         width: 100%;
+    }
+    
+}
+.APPRENTICELISTModal{
+    .formPage {
+        .formItem {
+            display: block;
+            margin: 25px auto;
+            width: 100%;
+            .ivu-form-item-error-tip {
+                padding-left: 141.5px;
+            }
+            // .formRow.textarea{
+            //     height: 94px;
+            // }
+            .formRow {
+                display: block;
+                // height: 33px;
+                .lable {
+                    display: block;
+                    // line-height: 33px;
+                }
+                .formInput {
+                    // margin-left: 20px;
+                    // width: 300px;
+                }
+            }
+        }
     }
 }
 </style>

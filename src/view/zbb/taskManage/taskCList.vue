@@ -284,6 +284,7 @@ export default {
         },
         changePageGetList(size) {
             this.per_page = size;
+            this.currentPage = 1
             this.getList();
         },
         getchangeList(index) {

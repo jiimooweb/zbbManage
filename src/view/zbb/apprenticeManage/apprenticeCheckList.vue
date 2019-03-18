@@ -135,8 +135,8 @@
         <Modal v-model="failModal" title='批量拒绝' @on-ok="allFail()" @on-cancel="cancelFail(false)">
             <p style="text-align:center;font-size:16px;">是否使用批量拒绝功能</p>
         </Modal>
-        <Modal v-model="editModal" title="修改" @on-ok="okEdit" @on-cancel="cancelEdit" :mask-closable="false"
-            footer-hide>
+        <Modal v-model="editModal" title="修改" class="APPRENTICECHECKLISTModal" @on-ok="okEdit" @on-cancel="cancelEdit"
+            :mask-closable="false" footer-hide>
             <i-form ref="formInline" class="formPage" :model="formInline" :rules="ruleInline" inline>
                 <FormItem prop="username" class="formItem">
                     <row class="formRow">
@@ -709,6 +709,13 @@ export default {
         },
         returnExcel() {
             //导出excel
+            let token = ''
+            axios.request({
+                url:'http://120.79.203.214/zbb/public/export-token',
+                method:'get'
+            }).then(res=>{
+                token = res.data
+            })
         },
         returnAdd() {
             this.$router.push({ path: "/newMaster" });
@@ -877,15 +884,18 @@ export default {
             line-height: 1 !important;
             margin-left: 0 !important;
         }
-        .ivu-form-item-label{
+        .ivu-form-item-label {
             text-align: center;
         }
     }
     .formItem {
         width: 100%;
     }
+}
+.APPRENTICECHECKLISTModal {
     .formPage {
         .formItem {
+            width: 100%;
             display: block;
             margin: 25px auto;
             .ivu-form-item-error-tip {

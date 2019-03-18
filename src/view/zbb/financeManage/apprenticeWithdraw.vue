@@ -430,7 +430,13 @@ export default {
     },
     methods: {
         returnExcel(){
-            let url = 'http://120.79.203.214/zbb/public/backend/finance/apprentices/export?' + ("&username=" +
+            let token = ''
+            axios.request({
+                url:'http://120.79.203.214/zbb/public/export-token',
+                method:'get'
+            }).then(res=>{
+                token = res.data
+                let url = 'http://120.79.203.214/zbb/public/backend/finance/apprentices/export?' + ("&username=" +
                         (this.searchData.type1 === "username"
                             ? this.searchData.type1Text
                             : "") +
@@ -481,8 +487,11 @@ export default {
                         "&status=" +
                         (this.searchData.status === -2
                             ? ""
-                            : this.searchData.status))
+                            : this.searchData.status)) + 
+                            "&token="+token
             window.open(url);
+            })
+            
         },
         selectItem(selection, row) {
             this.selectList = selection;

@@ -103,9 +103,17 @@ export default {
     },
     methods: {
         returnExcel() {
-            let url =
-                "http://120.79.203.214/zbb/public/backend/masters/blacklist/export";
-            window.open(url);
+            let token = ''
+            axios.request({
+                url:'http://120.79.203.214/zbb/public/export-token',
+                method:'get'
+            }).then(res=>{
+                token = res.data
+                let url =
+                "http://120.79.203.214/zbb/public/backend/masters/blacklist/export" + "?token="+token;
+                window.open(url);
+            })
+            
         },
         getList() {
             axios

@@ -226,6 +226,7 @@ export default {
         changePageGetList(size) {
             //改变每页条数时请求
             this.per_page = size;
+            this.currentPage = 1
             this.getBankList();
         },
 
