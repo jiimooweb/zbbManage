@@ -2,13 +2,14 @@
   <div class="user-avator-dropdown">
     <Dropdown @on-click="handleClick">
       <Badge :dot="!!messageUnreadCount">
-        <Avatar :src="userAvator"/>
+        <!-- <Avatar :src="userAvator"/> -->
+        <p>{{username}}</p>
       </Badge>
       <Icon :size="18" type="md-arrow-dropdown"></Icon>
       <DropdownMenu slot="list">
-        <DropdownItem name="message">
+        <!-- <DropdownItem name="message">
           消息中心<Badge style="margin-left: 10px" :count="messageUnreadCount"></Badge>
-        </DropdownItem>
+        </DropdownItem> -->
         <DropdownItem name="message">
           修改密码<Badge style="margin-left: 10px" :count="messageUnreadCount"></Badge>
         </DropdownItem>
@@ -28,6 +29,10 @@ export default {
     userAvator: {
       type: String,
       default: ''
+    },
+    username: {
+      type: String,
+      default: '用户'
     },
     messageUnreadCount: {
       type: Number,

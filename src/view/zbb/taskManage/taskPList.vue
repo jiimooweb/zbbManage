@@ -1030,6 +1030,11 @@ export default {
                                 },
                                 nativeOn: {
                                     click: () => {
+                                        if(params.row.merchant_status === 1){
+                                            this.$Message.error('该任务已由客户关闭，无法进行操作')
+                                            params.row.status = !params.row.status
+                                            return false
+                                        }
                                         axios.request({
                                             url:'task/tasks/'+ params.row.id +'/change',
                                             method:'post'

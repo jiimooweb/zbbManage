@@ -217,6 +217,7 @@ export default {
                                 method: "post",
                                 data: {
                                     flag: this.formInline.flag,
+                                    text:this.formInline.text,
                                     param: this.formInline.param,
                                     group: this.formInline.group,
                                     remark: this.formInline.remark
@@ -242,6 +243,7 @@ export default {
                                 method: "put",
                                 data: {
                                     flag: this.formInline.flag,
+                                    text:this.formInline.text,
                                     param: this.formInline.param,
                                     group: this.formInline.group,
                                     remark: this.formInline.remark
