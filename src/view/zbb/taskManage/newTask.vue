@@ -520,9 +520,6 @@ export default {
                 ],
                 images: [
                     {
-                        // required: true,
-                        // message: "请选择图片",
-                        // trigger: "blur"
                         validator: (rule, value, callback, source, options) => {
                             var errors = [];
                             if (
@@ -538,9 +535,6 @@ export default {
                 ],
                 url: [
                     {
-                        // required: true,
-                        // message: "请输入抖音链接",
-                        // trigger: "blur"
                         validator(rule, value, callback, source, options) {
                             var errors = [];
                             if (!value) {
@@ -550,12 +544,8 @@ export default {
                         }
                     }
                 ],
-                cate_id: [],
                 share_thumb: [
                     {
-                        // required: true,
-                        // message: "请选择标题图片",
-                        // trigger: "blur"
                         validator(rule, value, callback, source, options) {
                             var errors = [];
                             if (!value) {
