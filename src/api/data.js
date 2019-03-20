@@ -22,11 +22,7 @@ export const errorReq = () => {
 }
 
 export const saveErrorLogger = info => {
-  return axios.request({
-    url: 'save_error_logger',
-    data: info,
-    method: 'post'
-  })
+  return false
 }
 
 export const uploadImg = formData => {

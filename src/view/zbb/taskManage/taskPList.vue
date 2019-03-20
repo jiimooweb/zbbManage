@@ -600,7 +600,7 @@
                                     <p>{{showData.wx_content}}</p>
                                 </i-col>
                                 <i-col span='19' v-if="showData.type === 3">
-                                    <p>{{showData.share_content}}</p>
+                                    <div v-html='showData.share_content'></div>
                                 </i-col>
                             </row>
                         </FormItem>
@@ -612,10 +612,11 @@
                                     <span class="lable">图片:</span>
                                 </i-col>
                                 <i-col span='19' v-if="showData.type === 0 ||showData.type === 1||showData.type === 2">
-                                    <!-- <img v-for="(item,index) in JSON.parse(showData.images)" :key='index' :src="item"
-                                        style="width:100px;height:100px;float:left;margin-right:5px;"> -->
-                                    <img v-for="(item,index) in showData.images" :key='index' :src="item"
+                                    <img class="img1" v-for="(item,index) in showData.images" :key='index' :src="item"
                                         style="width:100px;height:100px;float:left;margin-right:5px;">
+                                </i-col>
+                                <i-col span='19' v-if="showData.type === 3">
+                                    <img class="img2" :src="showData.share_thumb" style="width:100px;height:100px;float:left;margin-right:5px;">
                                 </i-col>
                             </row>
                         </FormItem>
@@ -784,9 +785,6 @@ export default {
             ruleInline: {
                 merchant_id: [
                     {
-                        // required: true,
-                        // message: "请选择发布客户",
-                        // trigger: "blur"
                         validator(rule, value, callback, source, options) {
                             var errors = [];
                             if (!value && value !== 0) {
@@ -805,9 +803,9 @@ export default {
                 ],
                 share_price: [
                     {
-                        validator(rule, value, callback, source, options) {
+                        validator:(rule, value, callback, source, options)=> {
                             var errors = [];
-                            if (!value && value !== 0) {
+                            if (!value && value !== 0 && this.formInline.type === 3) {
                                 callback("请输入金额");
                             }
                             callback(errors);
@@ -816,9 +814,10 @@ export default {
                 ],
                 dy_request: [
                     {
-                        validator(rule, value, callback, source, options) {
+                        validator:(rule, value, callback, source, options)=> {
                             var errors = [];
-                            if (value.length === 0) {
+                            if (value.length === 0 && this.formInline.type === 1) {
+                                console.log('dy_request');
                                 callback("请至少选择一项任务要求");
                             }
                             callback(errors);
@@ -827,9 +826,10 @@ export default {
                 ],
                 tt_request: [
                     {
-                        validator(rule, value, callback, source, options) {
+                        validator:(rule, value, callback, source, options)=> {
                             var errors = [];
-                            if (value.length === 0) {
+                            if (value.length === 0 && this.formInline.type === 2) {
+                                console.log('tt_request');
                                 callback("请至少选择一项任务要求");
                             }
                             callback(errors);
@@ -867,9 +867,6 @@ export default {
                 ],
                 images: [
                     {
-                        // required: true,
-                        // message: "请选择图片",
-                        // trigger: "blur"
                         validator: (rule, value, callback, source, options) => {
                             var errors = [];
                             if (
@@ -877,6 +874,7 @@ export default {
                                     this.formInline.type === 2) &&
                                 value.length === 0
                             ) {
+                                console.log('images');
                                 callback("请选择图片");
                             }
                             callback(errors);
@@ -885,20 +883,15 @@ export default {
                 ],
                 url: [
                     {
-                        required: true,
-                        message: "请输入抖音链接",
-                        trigger: "blur"
-                    }
-                ],
-                cate_id: [
-                    {
-                        // validator(rule, value, callback, source, options) {
-                        //     var errors = [];
-                        //     if (!value) {
-                        //         callback("请选择分类");
-                        //     }
-                        //     callback(errors);
-                        // }
+                        validator:(rule, value, callback, source, options)=> {
+                            var errors = [];
+                            if (!value && (this.formInline.type === 1 ||
+                                    this.formInline.type === 2)) {
+                                        console.log('url');
+                                callback("请输入作品链接");
+                            }
+                            callback(errors);
+                        }
                     }
                 ],
                 share_thumb: [
@@ -906,9 +899,11 @@ export default {
                         // required: true,
                         // message: "请选择标题图片",
                         // trigger: "blur"
-                        validator(rule, value, callback, source, options) {
+                        validator:(rule, value, callback, source, options)=> {
                             var errors = [];
-                            if (!value) {
+                            if (!value && this.formInline.type === 3) {
+                                console.log('share_thumb');
+                                
                                 callback("请选择标题图片");
                             }
                             callback(errors);
@@ -1092,7 +1087,9 @@ export default {
                                             this.showData.wx_content = params.row.wx_content;
                                             this.showData.share_content = params.row.share_content;
                                             this.showData.images = params.row.images;
+                                            this.showData.share_thumb = params.row.share_thumb;
                                             this.showModal = true;
+                                            
                                         }
                                     }
                                 },
@@ -1239,6 +1236,8 @@ export default {
         };
     },
     mounted() {
+        console.log('刷新');
+        
         this.getList();
         this.getJson();
         this.getMerchatList();
@@ -1500,6 +1499,8 @@ export default {
         },
         handleSubmit(name) {
             this.$refs[name].validate(valid => {
+                console.log(valid);
+                
                 if (valid) {
                     for (let i = 0; i < this.formInline.images.length; i++) {
                         this.formInline.images[i] = this.filterUrl(
