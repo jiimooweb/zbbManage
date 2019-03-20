@@ -1,6 +1,6 @@
 <template>
     <div class="MASTERLIST">
-        <i-form ref="search" class="search" :model="searchData" :label-width="80">
+        <i-form ref="search" class="search" :model="searchData" >
             <row :gutter='16'>
                 <i-col span='5'>
                     <row>
@@ -138,7 +138,7 @@
                 <FormItem prop="username" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">师傅账号:</span>
+                            <span class="lable">师傅账号:</span>
                         </i-col>
                         <i-col span='18'>
                             <i-input placeholder="输入账号" class="formInput" v-model="formInline.username"></i-input>
@@ -148,7 +148,7 @@
                 <FormItem prop="password" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">密码:</span>
+                            <span class="lable">密码:</span>
                         </i-col>
                         <i-col span='18'>
                             <i-input placeholder="密码留空则不修改" v-model="formInline.password" class="formInput"></i-input>
@@ -158,7 +158,7 @@
                 <FormItem prop="sex" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">性别:</span>
+                            <span class="lable">性别:</span>
                         </i-col>
                         <i-col span='18'>
                             <RadioGroup v-model="formInline.sex">
@@ -171,7 +171,7 @@
                 <FormItem prop="name" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">真实姓名:</span>
+                            <span class="lable">真实姓名:</span>
                         </i-col>
                         <i-col span='18'>
                             <i-input placeholder="输入姓名" class="formInput" v-model="formInline.name"></i-input>
@@ -181,7 +181,7 @@
                 <FormItem prop="phone" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">手机号码:</span>
+                            <span class="lable">手机号码:</span>
                         </i-col>
                         <i-col span='18'>
                             <i-input placeholder="输入手机号码" class="formInput" v-model="formInline.phone"></i-input>
@@ -191,7 +191,7 @@
                 <FormItem prop="wx" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">微信号:</span>
+                            <span class="lable">微信号:</span>
                         </i-col>
                         <i-col span='18'>
                             <i-input placeholder="输入微信号" class="formInput" v-model="formInline.wx"></i-input>
@@ -201,7 +201,7 @@
                 <FormItem prop="email" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">邮箱:</span>
+                            <span class="lable">邮箱:</span>
                         </i-col>
                         <i-col span='18'>
                             <i-input placeholder="输入邮箱" class="formInput" v-model="formInline.email"></i-input>
@@ -211,7 +211,7 @@
                 <FormItem prop="referral_id" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">推荐人ID:</span>
+                            <span class="lable">推荐人ID:</span>
                         </i-col>
                         <i-col span='18'>
                             <i-input placeholder="输入推荐人ID" class="formInput" v-model="formInline.referral_id"></i-input>
@@ -221,10 +221,10 @@
                 <FormItem prop="apprentice_limit" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">徒弟数量限制:</span>
+                            <span class="lable">徒弟数量限制:</span>
                         </i-col>
                         <i-col span='18'>
-                            <i-input placeholder="输入徒弟数量限制" class="formInput" type='number' v-model="formInline.apprentice_limit"></i-input>
+                            <i-input placeholder="输入徒弟数量限制" class="formInput" type='number' v-model="formInline.apprentice_limit" @mousewheel.native.prevent></i-input>
                             <!-- <InputNumber placeholder="输入徒弟数量限制" :min='0' style="width:100%;" v-model="formInline.apprentice_limit"></InputNumber> -->
                         </i-col>
                     </row>
@@ -232,7 +232,7 @@
                 <FormItem prop="remark" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">备注:</span>
+                            <span class="lable">备注:</span>
                         </i-col>
                         <i-col span='18'>
                             <i-input placeholder="备注" class="formInput" v-model="formInline.remark"></i-input>
@@ -242,7 +242,7 @@
                 <!-- <FormItem prop="blacklist" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">拉黑:</span>
+                            <span class="lable">拉黑:</span>
                         </i-col>
                         <i-col span='18'>
                             <i-switch v-model="formInline.blacklist" :true-value='1' :false-value='0' />
@@ -252,7 +252,7 @@
                 <FormItem prop="disable" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">禁用:</span>
+                            <span class="lable">禁用:</span>
                         </i-col>
                         <i-col span='18'>
                             <i-switch v-model="formInline.disable" :true-value='1' :false-value='0' />

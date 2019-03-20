@@ -5,7 +5,7 @@
                 <FormItem prop="username" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">客户账号:</span>
+                            <span>客户账号:</span>
                         </i-col>
                         <i-col span='18'>
                             <i-input placeholder="输入客户账号" class="formInput" v-model="formInline.username"></i-input>
@@ -15,7 +15,7 @@
                 <FormItem prop="password" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">密码:</span>
+                            <span>密码:</span>
                         </i-col>
                         <i-col span='18'>
                             <i-input placeholder="输入密码" v-model="formInline.password" class="formInput"></i-input>
@@ -25,7 +25,7 @@
                 <FormItem prop="name" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">姓名:</span>
+                            <span>姓名:</span>
                         </i-col>
                         <i-col span='18'>
                             <i-input placeholder="输入姓名" class="formInput" v-model="formInline.name"></i-input>
@@ -35,7 +35,7 @@
                 <FormItem prop="tel" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">手机号码:</span>
+                            <span>手机号码:</span>
                         </i-col>
                         <i-col span='18'>
                             <i-input placeholder="输入手机号码" class="formInput" v-model="formInline.tel"></i-input>
@@ -45,7 +45,7 @@
                 <FormItem prop="wechat" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">微信号:</span>
+                            <span>微信号:</span>
                         </i-col>
                         <i-col span='18'>
                             <i-input placeholder="输入微信号" class="formInput" v-model="formInline.wechat"></i-input>
@@ -55,7 +55,7 @@
                 <FormItem prop="wx_commission" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">发圈赚-佣:</span>
+                            <span>发圈赚-佣:</span>
                         </i-col>
                         <i-col span='18'>
                             <i-input placeholder="留空为默认佣金" class="formInput" v-model="formInline.wx_commission"></i-input>
@@ -65,30 +65,30 @@
                 <FormItem prop="" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">抖音-佣:</span>
+                            <span>抖音-佣:</span>
                         </i-col>
                         <i-col span='18'>
                             <row class="formRow">
                                 <i-col span='4'>
-                                    <span style="lable">关注:</span>
+                                    <span>关注:</span>
                                 </i-col>
                                 <i-col span='6'>
                                     <i-input placeholder="留空为默认佣金" class="formInput" v-model="formInline.dy_subscribe"></i-input>
                                 </i-col>
                                 <i-col span='4' offset='4'>
-                                    <span style="lable">双击:</span>
+                                    <span>双击:</span>
                                 </i-col>
                                 <i-col span='6'>
                                     <i-input placeholder="留空为默认佣金" class="formInput" v-model="formInline.dy_like"></i-input>
                                 </i-col>
                                 <i-col span='4' style="margin-top:10px;">
-                                    <span style="lable">转发:</span>
+                                    <span>转发:</span>
                                 </i-col>
                                 <i-col span='6' style="margin-top:10px;">
                                     <i-input placeholder="留空为默认佣金" class="formInput" v-model="formInline.dy_share"></i-input>
                                 </i-col>
                                 <i-col span='4' offset='4' style="margin-top:10px;">
-                                    <span style="lable">评论:</span>
+                                    <span>评论:</span>
                                 </i-col>
                                 <i-col span='6' style="margin-top:10px;">
                                     <i-input placeholder="留空为默认佣金" class="formInput" v-model="formInline.dy_comment"></i-input>
@@ -100,30 +100,30 @@
                 <FormItem prop="" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">头条-佣:</span>
+                            <span>头条-佣:</span>
                         </i-col>
                         <i-col span='18'>
                             <row class="formRow">
                                 <i-col span='4'>
-                                    <span style="lable">关注:</span>
+                                    <span>关注:</span>
                                 </i-col>
                                 <i-col span='6'>
                                     <i-input placeholder="留空为默认佣金" class="formInput" v-model="formInline.tt_subscribe"></i-input>
                                 </i-col>
                                 <i-col span='4' offset='4'>
-                                    <span style="lable">双击:</span>
+                                    <span>双击:</span>
                                 </i-col>
                                 <i-col span='6'>
                                     <i-input placeholder="留空为默认佣金" class="formInput" v-model="formInline.tt_like"></i-input>
                                 </i-col>
                                 <i-col span='4' style="margin-top:10px;">
-                                    <span style="lable">转发:</span>
+                                    <span>转发:</span>
                                 </i-col>
                                 <i-col span='6' style="margin-top:10px;">
                                     <i-input placeholder="留空为默认佣金" class="formInput" v-model="formInline.tt_share"></i-input>
                                 </i-col>
                                 <i-col span='4' offset='4' style="margin-top:10px;">
-                                    <span style="lable">评论:</span>
+                                    <span>评论:</span>
                                 </i-col>
                                 <i-col span='6' style="margin-top:10px;">
                                     <i-input placeholder="留空为默认佣金" class="formInput" v-model="formInline.tt_comment"></i-input>
@@ -135,7 +135,7 @@
                 <FormItem prop="share_commission" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">分享赚-佣:</span>
+                            <span>分享赚-佣:</span>
                         </i-col>
                         <i-col span='18'>
                             <i-input placeholder="留空为默认佣金" class="formInput" v-model="formInline.share_commission"></i-input>
@@ -145,7 +145,7 @@
                 <FormItem prop="recommend_type" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">推荐人类型:</span>
+                            <span>推荐人类型:</span>
                         </i-col>
                         <i-col span='18'>
                             <Select v-model="formInline.recommend_type">
@@ -158,7 +158,7 @@
                 <FormItem prop="recommend_id" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">推荐人ID:</span>
+                            <span>推荐人ID:</span>
                         </i-col>
                         <i-col span='18'>
                             <i-input placeholder="可留空" class="formInput" v-model="formInline.recommend_id"></i-input>
@@ -168,7 +168,7 @@
                 <FormItem prop="principal" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">对接人:</span>
+                            <span>对接人:</span>
                         </i-col>
                         <i-col span='18'>
                             <i-input placeholder="默认操作人ID" class="formInput" v-model="formInline.principal"></i-input>
@@ -178,7 +178,7 @@
                 <FormItem prop="custom_service" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">客服人员ID:</span>
+                            <span>客服人员ID:</span>
                         </i-col>
                         <i-col span='18'>
                             <i-input placeholder="客服人员ID" class="formInput" v-model="formInline.custom_service"></i-input>
@@ -188,7 +188,7 @@
                 <FormItem prop="remark" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">备注:</span>
+                            <span>备注:</span>
                         </i-col>
                         <i-col span='18'>
                             <i-input placeholder="" class="formInput" v-model="formInline.remark"></i-input>

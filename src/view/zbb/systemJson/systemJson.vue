@@ -7,17 +7,17 @@
                 <FormItem prop="flag" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">配置标识</span>
+                            <span class="lable">配置标识</span>
                         </i-col>
                         <i-col span='18'>
-                            <i-input placeholder="请输入配置标识" class="formInput" disabled v-model="formInline.flag"></i-input>
+                            <i-input placeholder="请输入配置标识" class="formInput" :disabled='!isNew' v-model="formInline.flag"></i-input>
                         </i-col>
                     </row>
                 </FormItem>
                 <FormItem prop="text" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">配置信息</span>
+                            <span class="lable">配置信息</span>
                         </i-col>
                         <i-col span='18'>
                             <i-input placeholder="请输入配置信息" class="formInput" v-model="formInline.text"></i-input>
@@ -27,7 +27,7 @@
                 <FormItem prop="param" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">配置值</span>
+                            <span class="lable">配置值</span>
                         </i-col>
                         <i-col span='18'>
                             <i-input placeholder="请输入配置值" class="formInput" v-model="formInline.param"></i-input>
@@ -37,7 +37,7 @@
                 <FormItem prop="group" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">配置组</span>
+                            <span class="lable">配置组</span>
                         </i-col>
                         <i-col span='18'>
                             <i-input placeholder="请输入配置组" class="formInput" v-model="formInline.group"></i-input>
@@ -48,7 +48,7 @@
                 <FormItem prop="remark" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">备注</span>
+                            <span class="lable">备注</span>
                         </i-col>
                         <i-col span='18'>
                             <i-input placeholder="请输入备注" class="formInput" v-model="formInline.remark"></i-input>
@@ -111,6 +111,7 @@ export default {
                                 },
                                 nativeOn: {
                                     click: () => {
+                                        this.isNew = false;
                                         this.currentId = params.row.id;
                                         this.formInline.flag = params.row.flag;
                                         this.formInline.param =
@@ -189,6 +190,11 @@ export default {
                 });
         },
         newData() {
+            this.formInline.flag = "";
+            this.formInline.param = "";
+            this.formInline.text = "";
+            this.formInline.group = "";
+            this.formInline.remark = "";
             this.EditModal = true;
             this.isNew = true;
         },
@@ -217,7 +223,7 @@ export default {
                                 method: "post",
                                 data: {
                                     flag: this.formInline.flag,
-                                    text:this.formInline.text,
+                                    text: this.formInline.text,
                                     param: this.formInline.param,
                                     group: this.formInline.group,
                                     remark: this.formInline.remark
@@ -243,7 +249,7 @@ export default {
                                 method: "put",
                                 data: {
                                     flag: this.formInline.flag,
-                                    text:this.formInline.text,
+                                    text: this.formInline.text,
                                     param: this.formInline.param,
                                     group: this.formInline.group,
                                     remark: this.formInline.remark

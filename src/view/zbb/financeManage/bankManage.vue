@@ -12,7 +12,7 @@
                 <FormItem prop="name" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">银行名称</span>
+                            <span class="lable">银行名称</span>
                         </i-col>
                         <i-col span='18'>
                             <i-input placeholder="请输入银行名称" class="formInput" v-model="formInline.name"></i-input>
@@ -22,17 +22,17 @@
                 <FormItem prop="charge" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">手续费(%)</span>
+                            <span class="lable">手续费(%)</span>
                         </i-col>
                         <i-col span='18'>
-                            <i-input placeholder="请输入手续费" class="formInput" v-model="formInline.charge" type="number"></i-input>
+                            <i-input placeholder="请输入手续费" class="formInput" v-model="formInline.charge" type="number" @mousewheel.native.prevent></i-input>
                         </i-col>
                     </row>
                 </FormItem>
                 <FormItem prop="comment" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">备注</span>
+                            <span class="lable">备注</span>
                         </i-col>
                         <i-col span='18'>
                             <i-input placeholder="请输入备注" class="formInput" v-model="formInline.comment"></i-input>
@@ -42,7 +42,7 @@
                 <FormItem prop="state" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">禁用</span>
+                            <span class="lable">禁用</span>
                         </i-col>
                         <i-col span='18'>
                             <i-switch v-model="formInline.state" :true-value='1' :false-value='0' />

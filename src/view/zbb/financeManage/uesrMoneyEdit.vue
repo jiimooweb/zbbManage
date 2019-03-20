@@ -12,7 +12,7 @@
                             </Select>
                         </i-col>
                         <i-col span='18' offset='2'>
-                            <i-input placeholder="请输入搜索值" class="formInput" type='number' v-model="formInline.tableText"></i-input>
+                            <i-input placeholder="请输入搜索值" class="formInput" type='number' v-model="formInline.tableText" @mousewheel.native.prevent></i-input>
                         </i-col>
                     </row>
                 </FormItem>
@@ -25,14 +25,14 @@
                             </Select>
                         </i-col>
                         <i-col span='18' offset='2'>
-                            <i-input placeholder="请输入数值" class="formInput" type='number' v-model="formInline.change_fund"></i-input>
+                            <i-input placeholder="请输入数值" class="formInput" type='number' v-model="formInline.change_fund" @mousewheel.native.prevent></i-input>
                         </i-col>
                     </row>
                 </FormItem>
                 <FormItem prop="remark" class="formItem">
                     <row class="formRow">
                         <i-col span='4'>
-                            <span style="lable">备注:</span>
+                            <span class="lable">备注:</span>
                         </i-col>
                         <i-col span='18' offset='2'>
                             <i-input placeholder="输入金额变动原因" class="formInput" v-model="formInline.remark"></i-input>

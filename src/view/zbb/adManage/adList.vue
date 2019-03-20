@@ -11,7 +11,7 @@
                 <FormItem prop="page" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">所属分类:</span>
+                            <span class="lable">所属分类:</span>
                         </i-col>
                         <i-col span='18'>
                             <Select v-model="formInline.flag">
@@ -25,7 +25,7 @@
                 <FormItem prop="title" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">标题:</span>
+                            <span class="lable">标题:</span>
                         </i-col>
                         <i-col span='18'>
                             <i-input placeholder="输入标题" v-model="formInline.title" class="formInput"></i-input>
@@ -35,7 +35,7 @@
                 <FormItem prop="image" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">图片：</span>
+                            <span class="lable">图片：</span>
                         </i-col>
                         <i-col span='18'>
                             <Spin fix v-if="spinShow">
@@ -54,7 +54,7 @@
                 <FormItem prop="url" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">链接:</span>
+                            <span class="lable">链接:</span>
                         </i-col>
                         <i-col span='18'>
                             <i-input placeholder="输入链接" class="formInput" v-model="formInline.url"></i-input>
@@ -64,7 +64,7 @@
                 <FormItem prop="sort" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">排序:</span>
+                            <span class="lable">排序:</span>
                         </i-col>
                         <i-col span='18'>
                             <i-input placeholder="输入排序(从小到大)" class="formInput" v-model="formInline.sort"></i-input>
@@ -74,7 +74,7 @@
                 <FormItem prop="hidden" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">是否显示:</span>
+                            <span class="lable">是否显示:</span>
                         </i-col>
                         <i-col span='18'>
                             <i-switch v-model="formInline.hidden" :true-value='1' :false-value='0' />

@@ -1,6 +1,6 @@
 <template>
     <div class="BINDINGCHECKBANK">
-        <i-form ref="search" class="search" :model="searchData" :label-width="80">
+        <i-form ref="search" class="search" :model="searchData" >
             <row :gutter='16'>
                 <i-col span='5'>
                     <row>

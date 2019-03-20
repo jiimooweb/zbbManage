@@ -7,7 +7,7 @@
                 <FormItem prop="flag" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">收款配置（标识）:</span>
+                            <span class="lable">收款配置（标识）:</span>
                         </i-col>
                         <i-col span='18'>
                             <i-input placeholder="输入收款配置" class="formInput" v-model="formInline.flag"></i-input>
@@ -17,7 +17,7 @@
                 <FormItem prop="way" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">收款商:</span>
+                            <span class="lable">收款商:</span>
                         </i-col>
                         <i-col span='18'>
                             <Select v-model="formInline.way">
@@ -31,7 +31,7 @@
                 <FormItem prop="title" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">收款商名称:</span>
+                            <span class="lable">收款商名称:</span>
                         </i-col>
                         <i-col span='18'>
                             <i-input placeholder="输入收款商名称" class="formInput" v-model="formInline.title"></i-input>
@@ -41,7 +41,7 @@
                 <FormItem prop="name" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">收款人名称:</span>
+                            <span class="lable">收款人名称:</span>
                         </i-col>
                         <i-col span='18'>
                             <i-input placeholder="输入收款人名称" class="formInput" v-model="formInline.name"></i-input>
@@ -51,7 +51,7 @@
                 <FormItem prop="card" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">收款账号</span>
+                            <span class="lable">收款账号</span>
                         </i-col>
                         <i-col span='18'>
                             <i-input placeholder="收款账号" class="formInput" v-model="formInline.card"></i-input>
@@ -61,7 +61,7 @@
                 <FormItem prop="subbranch" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">支行</span>
+                            <span class="lable">支行</span>
                         </i-col>
                         <i-col span='18'>
                             <i-input placeholder="支行" class="formInput" v-model="formInline.subbranch"></i-input>
@@ -85,7 +85,7 @@
                 <FormItem prop="remark" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">备注:</span>
+                            <span class="lable">备注:</span>
                         </i-col>
                         <i-col span='18'>
                             <i-input placeholder="" class="formInput" v-model="formInline.remark"></i-input>

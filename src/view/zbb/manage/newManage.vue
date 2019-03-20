@@ -5,7 +5,7 @@
                 <FormItem prop="powers" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">用户组</span>
+                            <span class="lable">用户组</span>
                         </i-col>
                         <i-col span='18'>
                             <Select v-model="formInline.page">
@@ -18,7 +18,7 @@
                 <FormItem prop="username" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">用户名</span>
+                            <span class="lable">用户名</span>
                         </i-col>
                         <i-col span='18'>
                             <i-input placeholder="请输入用户名" class="formInput" v-model="formInline.username"></i-input>
@@ -28,7 +28,7 @@
                 <FormItem prop="password" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">密码</span>
+                            <span class="lable">密码</span>
                         </i-col>
                         <i-col span='18'>
                             <i-input placeholder="请输入密码" class="formInput" v-model="formInline.password"></i-input>
@@ -38,7 +38,7 @@
                 <FormItem prop="phone" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">手机</span>
+                            <span class="lable">手机</span>
                         </i-col>
                         <i-col span='18'>
                             <i-input placeholder="请输入手机" class="formInput" v-model="formInline.phone"></i-input>
@@ -48,7 +48,7 @@
                 <FormItem prop="email" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">邮箱</span>
+                            <span class="lable">邮箱</span>
                         </i-col>
                         <i-col span='18'>
                             <i-input placeholder="请输入邮箱" class="formInput" v-model="formInline.email"></i-input>
@@ -58,7 +58,7 @@
                 <FormItem prop="state" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">状态</span>
+                            <span class="lable">状态</span>
                         </i-col>
                         <i-col span='18'>
                             <RadioGroup v-model="formInline.state">

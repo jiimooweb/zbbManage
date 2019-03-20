@@ -1,6 +1,6 @@
 <template>
     <div class="TASKPLIST">
-        <i-form ref="search" class="search" :model="searchData" :label-width="80">
+        <i-form ref="search" class="search" :model="searchData" >
             <row :gutter='16'>
                 <i-col span='5'>
                     <row>
@@ -90,7 +90,7 @@
                 <FormItem prop="merchant_id" class="formItem">
                     <row class="formRow">
                         <i-col span='4'>
-                            <span style="lable">客户:</span>
+                            <span class="lable">客户:</span>
                         </i-col>
                         <i-col span='18'>
                             <Select v-model="formInline.merchant_id" @on-change='getSelectData'>
@@ -102,7 +102,7 @@
                 <FormItem prop="title" class="formItem">
                     <row class="formRow">
                         <i-col span='4'>
-                            <span style="lable">标题:</span>
+                            <span class="lable">标题:</span>
                         </i-col>
                         <i-col span='18'>
                             <i-input placeholder="输入标题" v-model="formInline.title" class="formInput"></i-input>
@@ -112,7 +112,7 @@
                 <FormItem prop="type" class="formItem">
                     <row class="formRow">
                         <i-col span='4'>
-                            <span style="lable">任务类型:</span>
+                            <span class="lable">任务类型:</span>
                         </i-col>
                         <i-col span='18'>
                             <RadioGroup v-model="formInline.type" @on-change='changeType'>
@@ -127,22 +127,22 @@
                 <FormItem prop="share_price" class="formItem" v-show="formInline.type===3">
                     <row class="formRow">
                         <i-col span='4'>
-                            <span style="lable">悬赏金额:</span>
+                            <span class="lable">悬赏金额:</span>
                         </i-col>
                         <i-col span='18'>
                             <!-- <InputNumber :min="0" :active-change='false' :value="formInline.share_price" style="width: 200px"
                                 :precision='2' placeholder='输入金额'></InputNumber> -->
-                            <i-input placeholder="输入金额" class="formInput" v-model.number="formInline.share_price" type="number"></i-input>
+                            <i-input placeholder="输入金额" class="formInput" v-model.number="formInline.share_price" type="number" @mousewheel.native.prevent></i-input>
                         </i-col>
                     </row>
                 </FormItem>
                 <FormItem prop="num" class="formItem">
                     <row class="formRow">
                         <i-col span='4'>
-                            <span style="lable">领取名额:</span>
+                            <span class="lable">领取名额:</span>
                         </i-col>
                         <i-col span='18'>
-                            <i-input placeholder="输入名额" class="formInput" v-model.number="formInline.num" type="number"></i-input>
+                            <i-input placeholder="输入名额" class="formInput" v-model.number="formInline.num" type="number" @mousewheel.native.prevent></i-input>
                             <!-- <InputNumber :min="1" :value="formInline.num" style="width: 200px" :precision='0'
                                 placeholder='输入名额'></InputNumber> -->
                         </i-col>
@@ -151,7 +151,7 @@
                 <FormItem prop="start_time" class="formItem">
                     <row class="formRow">
                         <i-col span='4'>
-                            <span style="lable">任务时间:</span>
+                            <span class="lable">任务时间:</span>
                         </i-col>
                         <i-col span='18'>
                             <DatePicker type="datetime" placeholder="选择开始时间" @on-change='changeDate' :value="formInline.start_time"
@@ -162,17 +162,17 @@
                 <FormItem prop="time_limit" class="formItem">
                     <row class="formRow">
                         <i-col span='4'>
-                            <span style="lable">时间限制（分钟）:</span>
+                            <span class="lable">时间限制（分钟）:</span>
                         </i-col>
                         <i-col span='18'>
-                            <i-input placeholder="输入时间限制" class="formInput" v-model.number="formInline.time_limit" type="number"></i-input>
+                            <i-input placeholder="输入时间限制" class="formInput" v-model.number="formInline.time_limit" type="number" @mousewheel.native.prevent></i-input>
                         </i-col>
                     </row>
                 </FormItem>
                 <FormItem prop="wx_content" class="formItem textarea" v-show="formInline.type===0">
                     <row class="formRow">
                         <i-col span='4'>
-                            <span style="lable">文案:</span>
+                            <span class="lable">文案:</span>
                         </i-col>
                         <i-col span='18'>
                             <Input v-model="formInline.wx_content" type="textarea" :rows="4" placeholder="输入文案" />
@@ -182,7 +182,7 @@
                 <FormItem prop="qrcode_url" class="formItem" v-show="formInline.type===0">
                     <row class="formRow">
                         <i-col span='4'>
-                            <span style="lable">二维码图片：</span>
+                            <span class="lable">二维码图片：</span>
                         </i-col>
                         <i-col span='18'>
                             <Spin fix v-show="spinShow2">
@@ -205,7 +205,7 @@
                 <FormItem prop="images" class="formItem" v-show="formInline.type===0">
                     <row class="formRow">
                         <i-col span='4'>
-                            <span style="lable">图片信息：</span>
+                            <span class="lable">图片信息：</span>
                         </i-col>
                         <i-col span='18'>
                             <Spin fix v-show="spinShow">
@@ -227,7 +227,7 @@
                 <FormItem prop="dy_request" class="formItem" v-show="formInline.type===1">
                     <row class="formRow">
                         <i-col span='4'>
-                            <span style="lable">要求:</span>
+                            <span class="lable">要求:</span>
                         </i-col>
                         <i-col span='18'>
                             <Checkbox label="香蕉" :value='true' disabled v-show="formInline.type===1">必须观看(播放)完1次以上</Checkbox>
@@ -245,7 +245,7 @@
                 <FormItem prop="tt_request" class="formItem" v-show="formInline.type===2">
                     <row class="formRow">
                         <i-col span='4'>
-                            <span style="lable">要求:</span>
+                            <span class="lable">要求:</span>
                         </i-col>
                         <i-col span='18'>
                             <Checkbox label="香蕉" :value='true' disabled v-show="formInline.type===2">浏览5分钟以上，并浏览到底部</Checkbox>
@@ -263,7 +263,7 @@
                 <FormItem prop="images" class="formItem" v-show="formInline.type===1 || formInline.type===2">
                     <row class="formRow">
                         <i-col span='4'>
-                            <span style="lable">图片信息：</span>
+                            <span class="lable">图片信息：</span>
                         </i-col>
                         <i-col span='18'>
                             <Spin fix v-show="spinShow">
@@ -285,8 +285,8 @@
                 <FormItem prop="url" class="formItem" v-show="formInline.type===1 || formInline.type===2">
                     <row class="formRow">
                         <i-col span='4'>
-                            <span style="lable" v-show="formInline.type===1">抖音作品链接:</span>
-                            <span style="lable" v-show="formInline.type===2">今日头条作品链接:</span>
+                            <span class="lable" v-show="formInline.type===1">抖音作品链接:</span>
+                            <span class="lable" v-show="formInline.type===2">今日头条作品链接:</span>
                         </i-col>
                         <i-col span='18'>
                             <i-input placeholder="抖音作品的复制链接直接粘贴即可" v-model="formInline.url" class="formInput" v-show="formInline.type===1"></i-input>
@@ -297,7 +297,7 @@
                 <FormItem prop="share_thumb" class="formItem" v-show="formInline.type===3">
                     <row class="formRow">
                         <i-col span='4'>
-                            <span style="lable">标题图片：</span>
+                            <span class="lable">标题图片：</span>
                         </i-col>
                         <i-col span='18'>
                             <Spin fix v-show="spinShow">
@@ -318,7 +318,7 @@
                 <FormItem prop="share_content" class="formItem" v-show="formInline.type===3">
                     <row class="formRow">
                         <i-col span='4'>
-                            <span style="lable">文章信息：</span>
+                            <span class="lable">文章信息：</span>
                         </i-col>
                         <i-col span='18'>
                             <VueUeditorWrap ref="ueditor" v-model="msg" @ready="ready" style="line-height:20px;z-index:100;position: relative;"
@@ -329,7 +329,7 @@
                 <FormItem prop="cate_id" class="formItem" v-show='formInline.type===3'>
                     <row class="formRow">
                         <i-col span='4'>
-                            <span style="lable">分类:</span>
+                            <span class="lable">分类:</span>
                         </i-col>
                         <i-col span='18'>
                             <Select v-model="formInline.cate_id" filterable>
@@ -341,7 +341,7 @@
                 <FormItem prop="total_price" class="formItem">
                     <row class="formRow">
                         <i-col span='4'>
-                            <span style="lable">预计金额:</span>
+                            <span class="lable">预计金额:</span>
                         </i-col>
                         <i-col span='18'>
                             <p>{{price}}元</p>
@@ -407,24 +407,7 @@
                             </row>
                         </FormItem>
                     </i-col>
-                    <i-col class="listItem">
-                        <FormItem class="formItem">
-                            <row class="formRow">
-                                <i-col span='5'>
-                                    <span class="lable">业务类型:</span>
-                                </i-col>
-                                <i-col span='19'>
-                                    <p>{{showData.type === 0
-                                        ? "朋友圈"
-                                        : showData.type === 1
-                                        ? "抖音"
-                                        : showData.type === 2
-                                        ? "头条"
-                                        : "分享"}}</p>
-                                </i-col>
-                            </row>
-                        </FormItem>
-                    </i-col>
+                    
                 </row>
                 <!-- 右边 -->
                 <row class='listRow'>
@@ -468,6 +451,24 @@
                         <FormItem class="formItem">
                             <row class="formRow">
                                 <i-col span='5'>
+                                    <span class="lable">业务类型:</span>
+                                </i-col>
+                                <i-col span='19'>
+                                    <p>{{showData.type === 0
+                                        ? "朋友圈"
+                                        : showData.type === 1
+                                        ? "抖音"
+                                        : showData.type === 2
+                                        ? "头条"
+                                        : "分享"}}</p>
+                                </i-col>
+                            </row>
+                        </FormItem>
+                    </i-col>
+                    <!-- <i-col class="listItem">
+                        <FormItem class="formItem">
+                            <row class="formRow">
+                                <i-col span='5'>
                                     <span class="lable">已用金额:</span>
                                 </i-col>
                                 <i-col span='19'>
@@ -490,10 +491,10 @@
                                 </i-col>
                             </row>
                         </FormItem>
-                    </i-col>
+                    </i-col> -->
                 </row>
             </i-form>
-            <p class="jg"></p>
+            <!-- <p class="jg"></p>
             <i-form ref="formInline" class="formPage" inline>
                 <row class='listRow'>
                     <i-col class="listItem">
@@ -533,7 +534,6 @@
                         </FormItem>
                     </i-col>
                 </row>
-                <!-- 右边 -->
                 <row class='listRow'>
                     <i-col class="listItem">
                         <FormItem class="formItem">
@@ -574,7 +574,7 @@
                         </FormItem>
                     </i-col>
                 </row>
-            </i-form>
+            </i-form> -->
             <p class="jg"></p>
             <i-form ref="formInline" class="formPage" inline>
                 <row class='listRow all'>
@@ -612,7 +612,9 @@
                                     <span class="lable">图片:</span>
                                 </i-col>
                                 <i-col span='19' v-if="showData.type === 0 ||showData.type === 1||showData.type === 2">
-                                    <img v-for="(item,index) in JSON.parse(showData.images)" :key='index' :src="item"
+                                    <!-- <img v-for="(item,index) in JSON.parse(showData.images)" :key='index' :src="item"
+                                        style="width:100px;height:100px;float:left;margin-right:5px;"> -->
+                                    <img v-for="(item,index) in showData.images" :key='index' :src="item"
                                         style="width:100px;height:100px;float:left;margin-right:5px;">
                                 </i-col>
                             </row>
@@ -701,7 +703,7 @@ export default {
                 this.total_price = this.total_price * this.formInline.num;
                 this.total_price = this.total_price / 10;
             }
-            console.log(this.formInline.share_price * this.formInline.num);
+            // console.log(this.formInline.share_price * this.formInline.num);
 
             return this.total_price;
         }
@@ -710,6 +712,13 @@ export default {
     data() {
         return {
             showData:{
+                id:'',
+                created_at:'',
+                start_time:'',
+                status:'',
+                type:0,
+                total_price:'',
+                num:'',
 
             },
             showModal:false,
@@ -1072,7 +1081,8 @@ export default {
                                             this.showData.created_at = params.row.created_at;
                                             this.showData.start_time = params.row.start_time;
                                             this.showData.status = params.row.status;
-                                            // this.showData.type = params.row.type;
+                                            this.showData.type = params.row.type;
+                                            
                                             this.showData.total_price = params.row.total_price;
                                             this.showData.num = params.row.num;
                                             this.showData.record_verifys_count = params.row.record_verifys_count;
@@ -1737,9 +1747,9 @@ export default {
                 border-top: 1px solid #ddd;
                 border-left: 1px solid #ddd;
                 border-right: 1px solid #ddd;
-                padding: 5px 10px;
-                .ivu-col:first-child {
-                    border-right: 1px solid #ddd;
+                // padding: 5px 10px;
+                .ivu-col:last-child {
+                    border-left: 1px solid #ddd;
                 }
                 p {
                     text-align: center;

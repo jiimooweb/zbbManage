@@ -1,6 +1,6 @@
 <template>
     <div class="BINDINGBANK">
-        <i-form ref="search" class="search" :model="searchData" :label-width="80">
+        <i-form ref="search" class="search" :model="searchData" >
             <row :gutter='16'>
                 <i-col span='5'>
                     <row>
@@ -146,7 +146,7 @@
                 <FormItem prop="bank_id" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">银行ID</span>
+                            <span class="lable">银行ID</span>
                         </i-col>
                         <i-col span='18'>
                             <i-input placeholder="请输入银行ID" class="formInput" v-model="formInline.bank_id"></i-input>
@@ -156,7 +156,7 @@
                 <FormItem prop="bank_man" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">持卡人姓名</span>
+                            <span class="lable">持卡人姓名</span>
                         </i-col>
                         <i-col span='18'>
                             <i-input placeholder="请输入持卡人姓名" class="formInput" v-model="formInline.bank_man"></i-input>
@@ -166,17 +166,17 @@
                 <FormItem prop="bank_number" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">卡号</span>
+                            <span class="lable">卡号</span>
                         </i-col>
                         <i-col span='18'>
-                            <i-input placeholder="请输入卡号" type='number' class="formInput" v-model="formInline.bank_number"></i-input>
+                            <i-input placeholder="请输入卡号" type='number' class="formInput" v-model="formInline.bank_number" @mousewheel.native.prevent></i-input>
                         </i-col>
                     </row>
                 </FormItem>
                 <FormItem prop="alipay" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">支付宝号</span>
+                            <span class="lable">支付宝号</span>
                         </i-col>
                         <i-col span='18'>
                             <i-input placeholder="请输入支付宝号" class="formInput" v-model="formInline.alipay"></i-input>
@@ -186,7 +186,7 @@
                 <FormItem prop="id_card" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">身份证正面照片</span>
+                            <span class="lable">身份证正面照片</span>
                         </i-col>
                         <i-col span='18'>
                             <Upload style="margin-bottom:10px;" action="http://120.79.203.214/zbb/public/upload"

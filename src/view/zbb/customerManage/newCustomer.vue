@@ -5,7 +5,7 @@
                 <FormItem prop="type" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">类型:</span>
+                            <span class="lable">类型:</span>
                         </i-col>
                         <i-col span='18'>
                             <Select v-model="formInline.type">
@@ -19,7 +19,7 @@
                 <FormItem prop="name" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">真实姓名:</span>
+                            <span class="lable">真实姓名:</span>
                         </i-col>
                         <i-col span='18'>
                             <i-input placeholder="输入真实姓名" class="formInput" v-model="formInline.name"></i-input>
@@ -29,7 +29,7 @@
                 <FormItem prop="nickname" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">昵称:</span>
+                            <span class="lable">昵称:</span>
                         </i-col>
                         <i-col span='18'>
                             <i-input placeholder="输入昵称" class="formInput" v-model="formInline.nickname"></i-input>
@@ -39,7 +39,7 @@
                 <FormItem prop="phone" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">手机号码:</span>
+                            <span class="lable">手机号码:</span>
                         </i-col>
                         <i-col span='18'>
                             <i-input placeholder="输入手机号码" class="formInput" v-model="formInline.phone"></i-input>
@@ -49,7 +49,7 @@
                 <FormItem prop="wx" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">微信号:</span>
+                            <span class="lable">微信号:</span>
                         </i-col>
                         <i-col span='18'>
                             <i-input placeholder="输入微信号" class="formInput" v-model="formInline.wx"></i-input>
@@ -59,7 +59,7 @@
                 <FormItem prop="qq" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">QQ号:</span>
+                            <span class="lable">QQ号:</span>
                         </i-col>
                         <i-col span='18'>
                             <i-input placeholder="输入QQ" class="formInput" v-model="formInline.qq"></i-input>
@@ -69,7 +69,7 @@
                 <FormItem prop="remark" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
-                            <span style="lable">备注:</span>
+                            <span class="lable">备注:</span>
                         </i-col>
                         <i-col span='18'>
                             <i-input placeholder="输入备注" class="formInput" v-model="formInline.remark"></i-input>

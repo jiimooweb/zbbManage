@@ -83,6 +83,8 @@ export default {
                 }).then(res => {
                     const data = res.data
                     commit('setToken', data.token)
+                    commit('setUserId', data.id)
+                    commit('setUserName', data.userName)
                     resolve()
                 }).catch(err => {
                     reject(err)

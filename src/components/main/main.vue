@@ -85,7 +85,7 @@ export default {
       return this.$store.state.user.avatorImgPath
     },
     username () {
-      return this.$store.state.user.username
+      return this.$store.state.user.userName
     },
     cacheList () {
       const list = ['ParentView', ...this.tagNavList.length ? this.tagNavList.filter(item => !(item.meta && item.meta.notCache)).map(item => item.name) : []]
@@ -187,6 +187,8 @@ export default {
     }
     // 获取未读消息条数
     this.getUnreadMessageCount()
+    console.log(this.$store.state.user.userName);
+    
   }
 }
 </script>

@@ -5,7 +5,7 @@
                 <FormItem prop="merchant_id" class="formItem">
                     <row class="formRow">
                         <i-col span='4'>
-                            <span style="lable">客户:</span>
+                            <span class="lable">客户:</span>
                         </i-col>
                         <i-col span='18'>
                             <Select v-model="formInline.merchant_id" @on-change='getSelectData'>
@@ -17,7 +17,7 @@
                 <FormItem prop="title" class="formItem">
                     <row class="formRow">
                         <i-col span='4'>
-                            <span style="lable">标题:</span>
+                            <span class="lable">标题:</span>
                         </i-col>
                         <i-col span='18'>
                             <i-input placeholder="输入标题" v-model="formInline.title" class="formInput"></i-input>
@@ -27,7 +27,7 @@
                 <FormItem prop="type" class="formItem">
                     <row class="formRow">
                         <i-col span='4'>
-                            <span style="lable">任务类型:</span>
+                            <span class="lable">任务类型:</span>
                         </i-col>
                         <i-col span='18'>
                             <RadioGroup v-model="formInline.type" @on-change='changeType'>
@@ -42,22 +42,22 @@
                 <FormItem prop="share_price" class="formItem" v-show="formInline.type===3">
                     <row class="formRow">
                         <i-col span='4'>
-                            <span style="lable">悬赏金额:</span>
+                            <span class="lable">悬赏金额:</span>
                         </i-col>
                         <i-col span='18'>
                             <!-- <InputNumber :min="0" :active-change='false' :value="formInline.share_price" style="width: 200px"
                                 :precision='2' placeholder='输入金额'></InputNumber> -->
-                            <i-input placeholder="输入金额" class="formInput" v-model.number="formInline.share_price" type="number"></i-input>
+                            <i-input placeholder="输入金额" class="formInput" v-model.number="formInline.share_price" type="number" @mousewheel.native.prevent></i-input>
                         </i-col>
                     </row>
                 </FormItem>
                 <FormItem prop="num" class="formItem">
                     <row class="formRow">
                         <i-col span='4'>
-                            <span style="lable">领取名额:</span>
+                            <span class="lable">领取名额:</span>
                         </i-col>
                         <i-col span='18'>
-                            <i-input placeholder="输入名额" class="formInput" v-model.number="formInline.num" type="number"></i-input>
+                            <i-input placeholder="输入名额" class="formInput" v-model.number="formInline.num" type="number" @mousewheel.native.prevent></i-input>
                             <!-- <InputNumber :min="1" :value="formInline.num" style="width: 200px" :precision='0'
                                 placeholder='输入名额'></InputNumber> -->
                         </i-col>
@@ -66,7 +66,7 @@
                 <FormItem prop="start_time" class="formItem">
                     <row class="formRow">
                         <i-col span='4'>
-                            <span style="lable">任务时间:</span>
+                            <span class="lable">任务时间:</span>
                         </i-col>
                         <i-col span='18'>
                             <DatePicker type="datetime" placeholder="选择开始时间" @on-change='changeDate' :value="formInline.start_time"
@@ -77,17 +77,17 @@
                 <FormItem prop="time_limit" class="formItem">
                     <row class="formRow">
                         <i-col span='4'>
-                            <span style="lable">时间限制（分钟）:</span>
+                            <span class="lable">时间限制（分钟）:</span>
                         </i-col>
                         <i-col span='18'>
-                            <i-input placeholder="输入时间限制" class="formInput" v-model.number="formInline.time_limit" type="number"></i-input>
+                            <i-input placeholder="输入时间限制" class="formInput" v-model.number="formInline.time_limit" type="number" @mousewheel.native.prevent></i-input>
                         </i-col>
                     </row>
                 </FormItem>
                 <FormItem prop="wx_content" class="formItem textarea" v-show="formInline.type===0">
                     <row class="formRow">
                         <i-col span='4'>
-                            <span style="lable">文案:</span>
+                            <span class="lable">文案:</span>
                         </i-col>
                         <i-col span='18'>
                             <Input v-model="formInline.wx_content" type="textarea" :rows="4" placeholder="输入文案" />
@@ -97,7 +97,7 @@
                 <FormItem prop="qrcode_url" class="formItem" v-show="formInline.type===0">
                     <row class="formRow">
                         <i-col span='4'>
-                            <span style="lable">二维码图片：</span>
+                            <span class="lable">二维码图片：</span>
                         </i-col>
                         <i-col span='18'>
                             <Spin fix v-show="spinShow2">
@@ -120,7 +120,7 @@
                 <FormItem prop="images" class="formItem" v-show="formInline.type===0">
                     <row class="formRow">
                         <i-col span='4'>
-                            <span style="lable">图片信息：</span>
+                            <span class="lable">图片信息：</span>
                         </i-col>
                         <i-col span='18'>
                             <Spin fix v-show="spinShow">
@@ -142,7 +142,7 @@
                 <FormItem prop="dy_request" class="formItem" v-show="formInline.type===1">
                     <row class="formRow">
                         <i-col span='4'>
-                            <span style="lable">要求:</span>
+                            <span class="lable">要求:</span>
                         </i-col>
                         <i-col span='18'>
                             <Checkbox label="香蕉" :value='true' disabled v-show="formInline.type===1">必须观看(播放)完1次以上</Checkbox>
@@ -160,7 +160,7 @@
                 <FormItem prop="tt_request" class="formItem" v-show="formInline.type===2">
                     <row class="formRow">
                         <i-col span='4'>
-                            <span style="lable">要求:</span>
+                            <span class="lable">要求:</span>
                         </i-col>
                         <i-col span='18'>
                             <Checkbox label="香蕉" :value='true' disabled v-show="formInline.type===2">浏览5分钟以上，并浏览到底部</Checkbox>
@@ -178,7 +178,7 @@
                 <FormItem prop="images" class="formItem" v-show="formInline.type===1 || formInline.type===2">
                     <row class="formRow">
                         <i-col span='4'>
-                            <span style="lable">图片信息：</span>
+                            <span class="lable">图片信息：</span>
                         </i-col>
                         <i-col span='18'>
                             <Spin fix v-show="spinShow">
@@ -201,8 +201,8 @@
                 <FormItem prop="url" class="formItem" v-show="formInline.type===1 || formInline.type===2">
                     <row class="formRow">
                         <i-col span='4'>
-                            <span style="lable" v-show="formInline.type===1">抖音作品链接:</span>
-                            <span style="lable" v-show="formInline.type===2">今日头条作品链接:</span>
+                            <span class="lable" v-show="formInline.type===1">抖音作品链接:</span>
+                            <span class="lable" v-show="formInline.type===2">今日头条作品链接:</span>
                         </i-col>
                         <i-col span='18'>
                             <i-input placeholder="抖音作品的复制链接直接粘贴即可" v-model="formInline.url" class="formInput" v-show="formInline.type===1"></i-input>
@@ -213,7 +213,7 @@
                 <FormItem prop="share_thumb" class="formItem" v-show="formInline.type===3">
                     <row class="formRow">
                         <i-col span='4'>
-                            <span style="lable">标题图片：</span>
+                            <span class="lable">标题图片：</span>
                         </i-col>
                         <i-col span='18'>
                             <Spin fix v-show="spinShow">
@@ -234,7 +234,7 @@
                 <FormItem prop="share_content" class="formItem f1" v-show='formInline.type===3'>
                     <row class="formRow">
                         <i-col span='4'>
-                            <span style="lable">文章信息：</span>
+                            <span class="lable">文章信息：</span>
                         </i-col>
                         <i-col span='18'>
                             <VueUeditorWrap ref="ueditor" v-model="msg" :destroy="false" @ready="ready" :config="myConfig" style="line-height:20px;z-index:100;position: relative;"></VueUeditorWrap>
@@ -244,7 +244,7 @@
                 <FormItem prop="cate_id" class="formItem" v-show='formInline.type===3'>
                     <row class="formRow">
                         <i-col span='4'>
-                            <span style="lable">分类:</span>
+                            <span class="lable">分类:</span>
                         </i-col>
                         <i-col span='18'>
                             <Select v-model="formInline.cate_id" filterable>
@@ -266,7 +266,7 @@
                 <FormItem prop="total_price" class="formItem">
                     <row class="formRow">
                         <i-col span='4'>
-                            <span style="lable">预计金额:</span>
+                            <span class="lable">预计金额:</span>
                         </i-col>
                         <i-col span='18'>
                             <p>{{price}}元</p>
@@ -550,18 +550,7 @@ export default {
                         }
                     }
                 ],
-                cate_id: [
-                    {
-                        // validator:(rule, value, callback, source, options)=> {
-                        //     var errors = [];
-                        //     console.log(value);
-                        //     if (!value) {
-                        //         callback("请选择分类");
-                        //     }
-                        //     callback(errors);
-                        // }
-                    }
-                ],
+                cate_id: [],
                 share_thumb: [
                     {
                         // required: true,

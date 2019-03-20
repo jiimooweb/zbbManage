@@ -97,6 +97,8 @@ export default {
                             this.$Message.success("登录成功");
                             // this.resetData("formInline");
                             setToken(res.data.token);
+                            this.$store.commit('setUserName',res.data.user.username)
+                            this.$store.commit('setUserId',res.data.user.id)
                             this.$router.push({ name: "home" });
                         })
                         .catch(err => {

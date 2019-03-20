@@ -1,6 +1,6 @@
 <template>
     <div class="TASKCLIST">
-        <i-form ref="search" class="search" :model="searchData" :label-width="80">
+        <i-form ref="search" class="search" :model="searchData" >
             <row :gutter='16'>
                 <i-col span='5'>
                     <row>
@@ -76,6 +76,9 @@
         <Modal v-model="returnModal1" title='审核' @on-ok="returnItem(-1)" :mask-closable="false" @on-cancel="returncancel1(false)">
             <p style="text-align:center;font-size:16px;">是否拒绝----<span style="color:red;">{{deleteName}}</span>----的审核</p>
         </Modal>
+        <div v-if='showPic' @click="hidePic" style="background:rgba(0,0,0,0.8);">
+            <img :src="bigPic" style="width:50%;margin:0 auto;display:block;">
+        </div>
     </div>
 </template>
 
@@ -84,6 +87,8 @@ import axios from "@/libs/api.request";
 export default {
     data() {
         return {
+            showPic: false,
+            bigPic: "",
             searchData: {
                 taskType: -1,
                 verify: 2,
@@ -94,7 +99,7 @@ export default {
                 {
                     title: "任务ID",
                     align: "center",
-                    width:'100',
+                    width: "100",
                     key: "task_id"
                 },
                 {
@@ -111,7 +116,7 @@ export default {
                 // },
                 {
                     title: "徒弟ID",
-                    width: "100",
+                    // width: "100",
                     align: "center",
                     key: "apprentice_id"
                 },
@@ -123,6 +128,17 @@ export default {
                     render: (h, params) => {
                         return h(
                             "p",
+                            {
+                                attrs: {
+                                    style:
+                                        "color:#" +
+                                        (params.row.status === 0
+                                            ? "ff9900"
+                                            : params.row.status === 1
+                                            ? "19be6b"
+                                            : "ed4014")
+                                }
+                            },
                             params.row.status === 0
                                 ? "执行中"
                                 : params.row.status === 1
@@ -139,6 +155,17 @@ export default {
                     render: (h, params) => {
                         return h(
                             "p",
+                            {
+                                attrs: {
+                                    style:
+                                        "color:#" +
+                                        (params.row.verify_status === 0
+                                            ? "ff9900"
+                                            : params.row.verify_status === 1
+                                            ? "19be6b"
+                                            : "ed4014")
+                                }
+                            },
                             params.row.verify_status === 0
                                 ? "待处理"
                                 : params.row.verify_status === 1
@@ -160,6 +187,12 @@ export default {
                                 attrs: {
                                     style: "width:70px;height:70px;",
                                     src: params.row.success_url
+                                },
+                                nativeOn: {
+                                    click: () => {
+                                        this.showPic = true;
+                                        this.bigPic = params.row.success_url;
+                                    }
                                 }
                             });
                         }
@@ -189,7 +222,7 @@ export default {
                                     props: {
                                         type: "success",
                                         size: "small",
-                                        disabled: params.row.verify_status !== 0
+                                        disabled: params.row.verify_status !== 0 || params.row.status !== 1
                                     },
                                     attrs: {
                                         style:
@@ -212,7 +245,7 @@ export default {
                                     props: {
                                         type: "error",
                                         size: "small",
-                                        disabled: params.row.verify_status !== 0
+                                        disabled: params.row.verify_status !== 0 || params.row.status !== 1
                                     },
                                     attrs: {
                                         style:
@@ -250,6 +283,9 @@ export default {
         this.getList();
     },
     methods: {
+        hidePic() {
+            this.showPic = false;
+        },
         returnItem(i) {
             axios
                 .request({
@@ -284,7 +320,7 @@ export default {
         },
         changePageGetList(size) {
             this.per_page = size;
-            this.currentPage = 1
+            this.currentPage = 1;
             this.getList();
         },
         getchangeList(index) {

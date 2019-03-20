@@ -13,7 +13,7 @@
                 <FormItem prop="name" class="formItem">
                     <row class="formRow">
                         <i-col span='4'>
-                            <span style="lable">分类名称:</span>
+                            <span class="lable">分类名称:</span>
                         </i-col>
                         <i-col span='18'>
                             <i-input placeholder="输入分类名称" v-model="formInline.name" class="formInput"></i-input>
