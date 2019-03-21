@@ -321,8 +321,8 @@
                             <span class="lable">文章信息：</span>
                         </i-col>
                         <i-col span='18'>
-                            <VueUeditorWrap ref="ueditor" v-model="msg" @ready="ready" style="line-height:20px;z-index:100;position: relative;"
-                                :config="myConfig"></VueUeditorWrap>
+                            <!-- <VueUeditorWrap ref="ueditor" v-model="msg" @ready="ready" style="line-height:20px;z-index:100;position: relative;"
+                                :config="myConfig"></VueUeditorWrap> -->
                         </i-col>
                     </row>
                 </FormItem>
@@ -1238,7 +1238,7 @@ export default {
     mounted() {
         console.log('刷新');
         
-        this.getList();
+        // this.getList();
         this.getJson();
         this.getMerchatList();
         this.getTypeList()
