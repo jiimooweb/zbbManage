@@ -1,11 +1,13 @@
 <template>
     <div>
+        <p style="margin:10px 0;font-size:16px;">当前管理用户组 : <span style="color:red;">{{this.$store.state.currentPowerName}}</span></p>
         <Table stripe border :columns="permissColumn" :data="permissList"></Table>
-        <!-- <Button type="success" style="margin:0 auto;display:block;" @click="log()">123</Button> -->
+        <Button type="success" style="margin:10px auto;display:block;" @click="inputData()">提交</Button>
     </div>
 </template>
 
 <script>
+import axios from "@/libs/api.request";
 export default {
     data() {
         return {
@@ -416,13 +418,45 @@ export default {
                         }
                     ]
                 }
-            ]
+            ],
+            currentPermiss:[],
+            currentName:''
         };
     },
-    mounted() {},
+    mounted() {
+        this.hasPowerIntoPower()
+        this.getCurrent()
+    },
     methods: {
-        log(){
-            console.log(this.permissList);
+        //是否有进入权限
+        hasPowerIntoPower(){
+            if(this.$store.state.currentPowerId === ''){
+                this.$router.push({path:'home'})
+            }
+        },
+        inputData(){
+            axios.request({
+                url:'power/groups/'+this.$store.state.currentPowerId,
+                method:'put',
+                data:{
+                    name:this.currentName,
+                    has_powers: this.permissList
+                }
+            }).then(res=>{
+                //提交成功
+                // this.$router.push({path:'groupList'})
+                // this.$store.commit('setPowerId','')
+            })
+            
+        },
+        getCurrent(){
+            axios.request({
+                url:'power/groups/'+this.$store.state.currentPowerId,
+                method:'get'
+            }).then(res=>{
+                this.currentPermiss = res.data.data.has_powers
+                this.currentName = res.data.data.name
+            })
         }
     }
 };

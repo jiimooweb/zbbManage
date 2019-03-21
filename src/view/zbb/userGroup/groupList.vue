@@ -55,6 +55,28 @@ export default {
                                     }
                                 },
                                 "修改"
+                            ),
+                            h(
+                                "Button",
+                                {
+                                    props: {
+                                        type: "error",
+                                        size: "small"
+                                    },
+                                    attrs: {
+                                        style:
+                                            "font-size:12px;margin-left:15px;"
+                                    },
+                                    nativeOn: {
+                                        click: () => {
+                                            this.$store.commit('setPowerId',params.row.id)
+                                            this.$store.commit('setPowerName',params.row.name)
+                                            
+                                            this.$router.push({path:'permissionManage'})
+                                        }
+                                    }
+                                },
+                                "权限"
                             )
                         ]);
                     }

@@ -8,10 +8,18 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    //
+    //当前权限组id
+    currentPowerId:'',
+    currentPowerName:'',
   },
   mutations: {
     //
+    setPowerId(state,data){
+      state.currentPowerId = data
+    },
+    setPowerName(state,data){
+      state.currentPowerName = data
+    }
   },
   actions: {
     //

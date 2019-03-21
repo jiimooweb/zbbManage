@@ -160,6 +160,7 @@ export default {
     mounted() {
         //
         this.getData()
+        this.getUser()
     },
     methods: {
         returnIndex(index){
@@ -172,6 +173,15 @@ export default {
             }else if(index === 3){
                 this.$router.push({name:'apprenticeList'})
             }
+        },
+        getUser(){
+            axios.request({
+                url:'admin',
+                method:'get'
+            }).then(res=>{
+                this.$store.commit('setUserName',res.data.data.username)
+                this.$store.commit('setUserId',res.data.data.id)
+            })
         },
         getData() {
             axios.request({

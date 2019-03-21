@@ -2,6 +2,21 @@
     <div>
         <Card style="width:900px">
             <i-form ref="formInline" class="formPage" :model="formInline" :rules="ruleInline" inline>
+                <FormItem prop="type" class="formItem">
+                    <row class="formRow">
+                        <i-col span='4'>
+                            <span class="lable">任务类型:</span>
+                        </i-col>
+                        <i-col span='18'>
+                            <RadioGroup v-model="formInline.type" @on-change='changeType'>
+                                <Radio :value='0' :label="0">朋友圈</Radio>
+                                <Radio :value='1' :label="1">抖音</Radio>
+                                <Radio :value='2' :label="2">头条</Radio>
+                                <Radio :value='3' :label="3">软文推广</Radio>
+                            </RadioGroup>
+                        </i-col>
+                    </row>
+                </FormItem>
                 <FormItem prop="merchant_id" class="formItem">
                     <row class="formRow">
                         <i-col span='4'>
@@ -24,21 +39,7 @@
                         </i-col>
                     </row>
                 </FormItem>
-                <FormItem prop="type" class="formItem">
-                    <row class="formRow">
-                        <i-col span='4'>
-                            <span class="lable">任务类型:</span>
-                        </i-col>
-                        <i-col span='18'>
-                            <RadioGroup v-model="formInline.type" @on-change='changeType'>
-                                <Radio :value='0' :label="0">朋友圈</Radio>
-                                <Radio :value='1' :label="1">抖音</Radio>
-                                <Radio :value='2' :label="2">头条</Radio>
-                                <Radio :value='3' :label="3">软文推广</Radio>
-                            </RadioGroup>
-                        </i-col>
-                    </row>
-                </FormItem>
+                
                 <FormItem prop="share_price" class="formItem" v-show="formInline.type===3">
                     <row class="formRow">
                         <i-col span='4'>
