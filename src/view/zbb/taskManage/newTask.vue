@@ -438,9 +438,6 @@ export default {
             ruleInline: {
                 merchant_id: [
                     {
-                        // required: true,
-                        // message: "请选择发布客户",
-                        // trigger: "blur"
                         validator(rule, value, callback, source, options) {
                             var errors = [];
                             if (!value && value !== 0) {
@@ -459,9 +456,9 @@ export default {
                 ],
                 share_price: [
                     {
-                        validator(rule, value, callback, source, options) {
+                        validator:(rule, value, callback, source, options)=> {
                             var errors = [];
-                            if (!value && value !== 0) {
+                            if (!value && value !== 0 && this.formInline.type === 3) {
                                 callback("请输入金额");
                             }
                             callback(errors);
@@ -470,9 +467,10 @@ export default {
                 ],
                 dy_request: [
                     {
-                        validator(rule, value, callback, source, options) {
+                        validator:(rule, value, callback, source, options)=> {
                             var errors = [];
-                            if (value.length === 0) {
+                            if (value.length === 0 && this.formInline.type === 1) {
+                                console.log('dy_request');
                                 callback("请至少选择一项任务要求");
                             }
                             callback(errors);
@@ -481,9 +479,10 @@ export default {
                 ],
                 tt_request: [
                     {
-                        validator(rule, value, callback, source, options) {
+                        validator:(rule, value, callback, source, options)=> {
                             var errors = [];
-                            if (value.length === 0) {
+                            if (value.length === 0 && this.formInline.type === 2) {
+                                console.log('tt_request');
                                 callback("请至少选择一项任务要求");
                             }
                             callback(errors);
@@ -494,7 +493,7 @@ export default {
                     {
                         validator(rule, value, callback, source, options) {
                             var errors = [];
-                            if (!value) {
+                            if (!value && value !== 0) {
                                 callback("请输入名额");
                             }
                             callback(errors);
@@ -512,7 +511,7 @@ export default {
                     {
                         validator(rule, value, callback, source, options) {
                             var errors = [];
-                            if (!value) {
+                            if (!value && value !== 0) {
                                 callback("请输入时间限制");
                             }
                             callback(errors);
@@ -528,6 +527,7 @@ export default {
                                     this.formInline.type === 2) &&
                                 value.length === 0
                             ) {
+                                console.log('images');
                                 callback("请选择图片");
                             }
                             callback(errors);
@@ -536,10 +536,12 @@ export default {
                 ],
                 url: [
                     {
-                        validator(rule, value, callback, source, options) {
+                        validator:(rule, value, callback, source, options)=> {
                             var errors = [];
-                            if (!value) {
-                                callback("请输入链接");
+                            if (!value && (this.formInline.type === 1 ||
+                                    this.formInline.type === 2)) {
+                                        console.log('url');
+                                callback("请输入作品链接");
                             }
                             callback(errors);
                         }
@@ -547,9 +549,14 @@ export default {
                 ],
                 share_thumb: [
                     {
-                        validator(rule, value, callback, source, options) {
+                        // required: true,
+                        // message: "请选择标题图片",
+                        // trigger: "blur"
+                        validator:(rule, value, callback, source, options)=> {
                             var errors = [];
-                            if (!value) {
+                            if (!value && this.formInline.type === 3) {
+                                console.log('share_thumb');
+                                
                                 callback("请选择标题图片");
                             }
                             callback(errors);
