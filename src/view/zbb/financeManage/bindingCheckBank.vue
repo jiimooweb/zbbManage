@@ -456,11 +456,11 @@ export default {
         returnExcel(){
             let token = ''
             axios.request({
-                url:'http://120.79.203.214/zbb/public/export-token',
+                url:'http://47.101.217.238/zbb/public/export-token',
                 method:'get'
             }).then(res=>{
                 token = res.data
-                let url = 'http://120.79.203.214/zbb/public/backend/bank/check/export?username='+ (this.searchData.type1 === "username" ? this.searchData.type1Text : "") +
+                let url = 'http://47.101.217.238/zbb/public/backend/bank/check/export?username='+ (this.searchData.type1 === "username" ? this.searchData.type1Text : "") +
                 "&man_name="+(this.searchData.type1 === "man_name"? this.searchData.type1Text: "") +
                 "&man_id="+(this.searchData.type1 === "man_id"? this.searchData.type1Text: "") +
                 "&check_id="+(this.searchData.type1 === "check_id" ? this.searchData.type1Text: "") +

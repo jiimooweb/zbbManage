@@ -146,13 +146,13 @@ export default {
         returnExcel(){
             let token = ''
             axios.request({
-                url:'http://120.79.203.214/zbb/public/export-token',
+                url:'http://47.101.217.238/zbb/public/export-token',
                 method:'get'
             }).then(res=>{
                 token = res.data
             })
             // let url =
-            //     "http://120.79.203.214/zbb/public/backend/finance/recharges/export?" +
+            //     "http://47.101.217.238/zbb/public/backend/finance/recharges/export?" +
             //     "type=" +
             //     (this.searchData.type === -2 ? "" : this.searchData.type) +
             //     "&status=" +

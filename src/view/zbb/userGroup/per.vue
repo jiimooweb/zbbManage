@@ -1,40 +1,39 @@
 <template>
     <div>
-        <p style="margin:10px 0;font-size:16px;">当前管理用户组 : <span style="color:red;">{{this.$store.state.currentPowerName}}</span></p>
         <Table stripe border :columns="permissColumn" :data="permissList"></Table>
-        <Button type="success" style="margin:10px auto;display:block;" @click="inputData()">提交</Button>
     </div>
 </template>
 
 <script>
-import axios from "@/libs/api.request";
 export default {
     data() {
         return {
             permissColumn: [
                 {
                     title: "模块",
-                    width:150,
+                    width: 150,
                     key: "moudal"
                 },
                 {
                     title: "权限",
-                    width:'600',
+                    width: "600",
                     // key:'permiss'
-                    render:(h, params)=> {
-                        var self = this
+                    render: (h, params) => {
+                        var self = this;
                         return h(
                             "div",
-                            params.row.permiss.map((v,index) => {
+                            params.row.permiss.map((v, index) => {
                                 return h(
                                     "Checkbox",
                                     {
-                                        props:{
+                                        props: {
                                             value: v.value
                                         },
                                         on: {
-                                            'on-change': (val) => {
-                                                this.permissList[params.row._index].permiss[index].value = val
+                                            "on-change": val => {
+                                                this.permissList[
+                                                    params.row._index
+                                                ].permiss[index].value = val;
                                             }
                                         }
                                     },
@@ -43,9 +42,103 @@ export default {
                             })
                         );
                     }
-                } 
+                }
             ],
             permissList: [
+                {
+                    moudal: "首页",
+                    permiss: [
+                        {
+                            sign: "home",
+                            name: "欢迎界面",
+                            value: true
+                        }
+                    ]
+                },{
+                    moudal: "管理员管理",
+                    permiss: [
+                        {
+                            sign:'manageList',
+                            name: "管理员管理",
+                            value: true
+                        },
+                        {
+                            sign:'manageEdit',
+                            name: "添加管理员",
+                            value: true
+                        },
+                        {
+                            sign:'manageList-edit',
+                            name: "修改管理员",
+                            value: true
+                        },
+                        {
+                            sign:'manageList-delete',
+                            name: "删除管理员",
+                            value: true
+                        },
+                        {
+                            sign:'manageList-power',
+                            name: "修改权限组",
+                            value: true
+                        }
+                    ]
+                },{
+                    moudal: "用户组管理",
+                    permiss: [
+                        {
+                            sign:'groupList',
+                            name: "用户组管理",
+                            value: true
+                        },
+                        {
+                            sign:'newGroup',
+                            name: "添加用户组",
+                            value: true
+                        },
+                        {
+                            sign:'groupList-edit',
+                            name: "修改用户组",
+                            value: true
+                        },
+                        {
+                            sign:'groupList-delete',
+                            name: "删除用户组",
+                            value: true
+                        },
+                        {
+                            sign:'groupList-powers',
+                            name: "分配权限",
+                            value: true
+                        }
+                    ]
+                },{
+                    moudal: "客服管理",
+                    permiss: [
+                        {
+                            sign:'customerList',
+                            name: "客服管理",
+                            value: true
+                        },
+                        {
+                            sign:'newCustomer',
+                            name: "添加客服",
+                            value: true
+                        },
+                        {
+                            sign:'customerList-edit',
+                            name: "修改客服",
+                            value: true
+                        },
+                        {
+                            sign:'customerList-delete',
+                            name: "删除客服",
+                            value: true
+                        }
+                    ]
+                }
+            ],
+            permissList1: [
                 {
                     moudal: "首页",
                     permiss: [
@@ -507,70 +600,7 @@ export default {
                     ]
                 }
             ],
-            currentPermiss:[],
-            currentName:''
         };
-    },
-    mounted() {
-        // this.hasPowerIntoPower()
-        // this.getCurrent()
-        // this.getDomData()
-    },
-    methods: {
-        //是否有进入权限
-        hasPowerIntoPower(){
-            if(this.$store.state.currentPowerId === ''){
-                this.$router.push({path:'home'})
-            }
-        },
-        //存储后台使用值
-        inputData(){
-            axios.request({
-                url:'power/groups/'+this.$store.state.currentPowerId,
-                method:'put',
-                data:{
-                    name:this.currentName,
-                    has_powers: this.permissList
-                }
-            }).then(res=>{
-                //提交成功
-                this.inputDomData()
-                this.$Message.success('提交成功')
-                this.$router.push({path:'groupList'})
-                this.$store.commit('setPowerId','')
-            })
-        },
-        //存储前台使用值
-        inputDomData(){
-            axios.request({
-                url:'power/powers/1',
-                method:'put',
-                data:{
-                    power_name: this.permissList
-                }
-            }).then(res=>{
-                //提交成功
-            })
-        },
-        //获取前台使用值
-        getDomData(){
-            axios.request({
-                url:'power/powers',
-                method:'get',
-            }).then(res=>{
-                //提交成功
-            })
-        },
-        getCurrent(){
-            axios.request({
-                url:'power/groups/'+this.$store.state.currentPowerId,
-                method:'get'
-            }).then(res=>{
-                // this.currentPermiss = JSON.parse(res.data.data.has_powers)
-                console.log(res.data.data.has_powers);
-                this.currentName = res.data.data.name
-            })
-        }
     }
 };
 </script>

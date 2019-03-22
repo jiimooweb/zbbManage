@@ -73,6 +73,7 @@
             </i-col>
         </row>
         <Table stripe :columns="column" border :data="list"></Table>
+        <!-- <i-table stripe :columns="column" border :data="list1"></i-table> -->
         <Page style="margin-top:20px;" :total="total" show-total :page-size='defailPage' show-elevator show-sizer
             :page-size-opts='pageSize' @on-change="getchangeList" @on-page-size-change='changePageGetList' />
         <Modal v-model="cancelModal" title='删除' @on-ok="deleteItem()" @on-cancel="cancelcancel(false)">
@@ -469,7 +470,7 @@ export default {
                 initialFrameWidth: "100%",
                 // 上传文件接口（这个地址是我为了方便各位体验文件上传功能搭建的临时接口，请勿在生产环境使用！！！）
                 // serverUrl: "http://35.201.165.105:8000/controller.php",
-                serverUrl: "http://120.79.203.214/zbb/public/get-edit",
+                serverUrl: "http://47.101.217.238/zbb/public/get-edit",
 
                 // UEditor 资源文件的存放路径，如果你使用的是 vue-cli 生成的项目，通常不需要设置该选项，vue-ueditor-wrap 会自动处理常见的情况，如果需要特殊配置，参考下方的常见问题2
                 UEDITOR_HOME_URL: "/UEditor/"
@@ -510,148 +511,6 @@ export default {
                 //share_content: '' //分享文章内容(废弃,编辑器无法识别)
             },
             msg: "", //分享文章内容
-            ruleInline: {
-                merchant_id: [
-                    {
-                        validator(rule, value, callback, source, options) {
-                            var errors = [];
-                            if (!value && value !== 0) {
-                                callback("请选择发布客户");
-                            }
-                            callback(errors);
-                        }
-                    }
-                ],
-                title: [
-                    {
-                        required: true,
-                        message: "请输入标题",
-                        trigger: "blur"
-                    }
-                ],
-                share_price: [
-                    {
-                        validator: (rule, value, callback, source, options) => {
-                            var errors = [];
-                            if (
-                                !value &&
-                                value !== 0 &&
-                                this.formInline.type === 3
-                            ) {
-                                callback("请输入金额");
-                            }
-                            callback(errors);
-                        }
-                    }
-                ],
-                dy_request: [
-                    {
-                        validator: (rule, value, callback, source, options) => {
-                            var errors = [];
-                            if (
-                                value.length === 0 &&
-                                this.formInline.type === 1
-                            ) {
-                                console.log("dy_request");
-                                callback("请至少选择一项任务要求");
-                            }
-                            callback(errors);
-                        }
-                    }
-                ],
-                tt_request: [
-                    {
-                        validator: (rule, value, callback, source, options) => {
-                            var errors = [];
-                            if (
-                                value.length === 0 &&
-                                this.formInline.type === 2
-                            ) {
-                                console.log("tt_request");
-                                callback("请至少选择一项任务要求");
-                            }
-                            callback(errors);
-                        }
-                    }
-                ],
-                num: [
-                    {
-                        validator(rule, value, callback, source, options) {
-                            var errors = [];
-                            if (!value && value !== 0) {
-                                callback("请输入名额");
-                            }
-                            callback(errors);
-                        }
-                    }
-                ],
-                start_time: [
-                    {
-                        required: true,
-                        message: "请输入任务时间",
-                        trigger: "blur"
-                    }
-                ],
-                time_limit: [
-                    {
-                        validator(rule, value, callback, source, options) {
-                            var errors = [];
-                            if (!value && value !== 0) {
-                                callback("请输入时间限制");
-                            }
-                            callback(errors);
-                        }
-                    }
-                ],
-                images: [
-                    {
-                        validator: (rule, value, callback, source, options) => {
-                            var errors = [];
-                            if (
-                                (this.formInline.type === 1 ||
-                                    this.formInline.type === 2) &&
-                                value.length === 0
-                            ) {
-                                console.log("images");
-                                callback("请选择图片");
-                            }
-                            callback(errors);
-                        }
-                    }
-                ],
-                url: [
-                    {
-                        validator: (rule, value, callback, source, options) => {
-                            var errors = [];
-                            if (
-                                !value &&
-                                (this.formInline.type === 1 ||
-                                    this.formInline.type === 2)
-                            ) {
-                                console.log("url");
-                                callback("请输入作品链接");
-                            }
-                            callback(errors);
-                        }
-                    }
-                ],
-                share_thumb: [
-                    {
-                        // required: true,
-                        // message: "请选择标题图片",
-                        // trigger: "blur"
-                        validator: (rule, value, callback, source, options) => {
-                            var errors = [];
-                            if (!value && this.formInline.type === 3) {
-                                console.log("share_thumb");
-
-                                callback("请选择标题图片");
-                            }
-                            callback(errors);
-                        }
-                    }
-                ]
-            },
             editorInstance: "", //ueditor实例对象
             JsonFilterArr: [
                 "SHARE_MERCHANT_COST", //分享赚
@@ -762,171 +621,168 @@ export default {
                     align: "center",
                     key: "created_at"
                 },
-                {
-                    title: "任务开关",
-                    align: "center",
-                    render: (h, params) => {
-                        return h(
-                            "i-switch",
-                            {
-                                props: {
-                                    trueValue: 1,
-                                    falseValue: 0,
-                                    value: params.row.status
-                                },
-                                nativeOn: {
-                                    click: () => {
-                                        if (params.row.merchant_status === 1) {
-                                            this.$Message.error(
-                                                "该任务已由客户关闭，无法进行操作"
-                                            );
-                                            params.row.status = !params.row
-                                                .status;
-                                            return false;
-                                        }
-                                        axios
-                                            .request({
-                                                url:
-                                                    "task/tasks/" +
-                                                    params.row.id +
-                                                    "/change",
-                                                method: "post"
-                                            })
-                                            .then(res => {
-                                                this.$Message.success(
-                                                    "状态修改成功"
-                                                );
-                                                this.getList();
-                                            });
-                                    }
-                                }
-                            },
-                            0
-                        );
-                    }
-                },
-                {
-                    title: "操作",
-                    align: "center",
-                    width: "300",
-                    render: (h, params) => {
-                        return h("div", [
-                            h(
-                                "Button",
-                                {
-                                    props: {
-                                        type: "primary",
-                                        size: "small"
-                                        // disabled: params.row.verify_status !== 0
-                                    },
-                                    attrs: {
-                                        style:
-                                            "font-size:12px;margin-right:15px;"
-                                    },
-                                    nativeOn: {
-                                        click: () => {
-                                            this.showData.id = params.row.id;
-                                            this.showData.created_at =
-                                                params.row.created_at;
-                                            this.showData.start_time =
-                                                params.row.start_time;
-                                            this.showData.status =
-                                                params.row.status;
-                                            this.showData.type =
-                                                params.row.type;
+                // {
+                //     title: "任务开关",
+                //     align: "center",
+                //     render: (h, params) => {
+                //         return h(
+                //             "i-switch",
+                //             {
+                //                 props: {
+                //                     trueValue: 1,
+                //                     falseValue: 0,
+                //                     value: params.row.status
+                //                 },
+                //                 nativeOn: {
+                //                     click: () => {
+                //                         if (params.row.merchant_status === 1) {
+                //                             this.$Message.error(
+                //                                 "该任务已由客户关闭，无法进行操作"
+                //                             );
+                //                             params.row.status = !params.row
+                //                                 .status;
+                //                             return false;
+                //                         }
+                //                         axios
+                //                             .request({
+                //                                 url:
+                //                                     "task/tasks/" +
+                //                                     params.row.id +
+                //                                     "/change",
+                //                                 method: "post"
+                //                             })
+                //                             .then(res => {
+                //                                 this.$Message.success(
+                //                                     "状态修改成功"
+                //                                 );
+                //                                 this.getList();
+                //                             });
+                //                     }
+                //                 }
+                //             },
+                //             0
+                //         );
+                //     }
+                // },
+                // {
+                //     title: "操作",
+                //     align: "center",
+                //     width: "300",
+                //     render: (h, params) => {
+                //         return h("div", [
+                //             h(
+                //                 "Button",
+                //                 {
+                //                     props: {
+                //                         type: "primary",
+                //                         size: "small"
+                //                     },
+                //                     attrs: {
+                //                         style:
+                //                             "font-size:12px;margin-right:15px;"
+                //                     },
+                //                     nativeOn: {
+                //                         click: () => {
+                //                             this.showData.id = params.row.id;
+                //                             this.showData.created_at =
+                //                                 params.row.created_at;
+                //                             this.showData.start_time =
+                //                                 params.row.start_time;
+                //                             this.showData.status =
+                //                                 params.row.status;
+                //                             this.showData.type =
+                //                                 params.row.type;
 
-                                            this.showData.total_price =
-                                                params.row.total_price;
-                                            this.showData.num = params.row.num;
-                                            this.showData.record_verifys_count =
-                                                params.row.record_verifys_count;
-                                            this.showData.verify_status =
-                                                params.row.verify_status;
-                                            this.showData.records_count =
-                                                params.row.records_count;
-                                            this.showData.title =
-                                                params.row.title;
-                                            this.showData.wx_content =
-                                                params.row.wx_content;
-                                            this.showData.share_content =
-                                                params.row.share_content;
-                                            this.showData.images =
-                                                params.row.images;
-                                            this.showData.share_thumb =
-                                                params.row.share_thumb;
-                                            this.showModal = true;
-                                        }
-                                    }
-                                },
-                                "查看"
-                            ),
-                            h(
-                                "Button",
-                                {
-                                    props: {
-                                        type: "success",
-                                        size: "small"
-                                        // disabled: params.row.verify_status !== 0
-                                    },
-                                    attrs: {
-                                        style:
-                                            "font-size:12px;margin-right:15px;"
-                                    },
-                                    nativeOn: {
-                                        click: () => {
-                                            this.currentId = params.row.id;
-                                            this.deleteName = params.row.title;
-                                            this.returncancel(true);
-                                        }
-                                    }
-                                },
-                                "通过"
-                            ),
-                            h(
-                                "Button",
-                                {
-                                    props: {
-                                        type: "warning",
-                                        size: "small"
-                                        // disabled: params.row.verify_status !== 0
-                                    },
-                                    attrs: {
-                                        style:
-                                            "font-size:12px;margin-right:15px;"
-                                    },
-                                    nativeOn: {
-                                        click: () => {
-                                            this.currentId = params.row.id;
-                                            this.deleteName = params.row.title;
-                                            this.returncancel1(true);
-                                        }
-                                    }
-                                },
-                                "拒绝"
-                            ),
-                            h(
-                                "Button",
-                                {
-                                    props: {
-                                        type: "error",
-                                        size: "small"
-                                    },
-                                    attrs: {
-                                        style: "font-size:12px"
-                                    },
-                                    nativeOn: {
-                                        click: () => {
-                                            this.currentId = params.row.id;
-                                            this.deleteName = params.row.title;
-                                            this.cancelcancel(true);
-                                        }
-                                    }
-                                },
-                                "删除"
-                            )
-                        ]);
-                    }
-                }
+                //                             this.showData.total_price =
+                //                                 params.row.total_price;
+                //                             this.showData.num = params.row.num;
+                //                             this.showData.record_verifys_count =
+                //                                 params.row.record_verifys_count;
+                //                             this.showData.verify_status =
+                //                                 params.row.verify_status;
+                //                             this.showData.records_count =
+                //                                 params.row.records_count;
+                //                             this.showData.title =
+                //                                 params.row.title;
+                //                             this.showData.wx_content =
+                //                                 params.row.wx_content;
+                //                             this.showData.share_content =
+                //                                 params.row.share_content;
+                //                             this.showData.images =
+                //                                 params.row.images;
+                //                             this.showData.share_thumb =
+                //                                 params.row.share_thumb;
+                //                             this.showModal = true;
+                //                         }
+                //                     }
+                //                 },
+                //                 "查看"
+                //             ),
+                //             h(
+                //                 "Button",
+                //                 {
+                //                     props: {
+                //                         type: "success",
+                //                         size: "small"
+                //                     },
+                //                     attrs: {
+                //                         style:
+                //                             "font-size:12px;margin-right:15px;"
+                //                     },
+                //                     nativeOn: {
+                //                         click: () => {
+                //                             this.currentId = params.row.id;
+                //                             this.deleteName = params.row.title;
+                //                             this.returncancel(true);
+                //                         }
+                //                     }
+                //                 },
+                //                 "通过"
+                //             ),
+                //             h(
+                //                 "Button",
+                //                 {
+                //                     props: {
+                //                         type: "warning",
+                //                         size: "small"
+                //                     },
+                //                     attrs: {
+                //                         style:
+                //                             "font-size:12px;margin-right:15px;"
+                //                     },
+                //                     nativeOn: {
+                //                         click: () => {
+                //                             this.currentId = params.row.id;
+                //                             this.deleteName = params.row.title;
+                //                             this.returncancel1(true);
+                //                         }
+                //                     }
+                //                 },
+                //                 "拒绝"
+                //             ),
+                //             h(
+                //                 "Button",
+                //                 {
+                //                     props: {
+                //                         type: "error",
+                //                         size: "small"
+                //                     },
+                //                     attrs: {
+                //                         style: "font-size:12px"
+                //                     },
+                //                     nativeOn: {
+                //                         click: () => {
+                //                             this.currentId = params.row.id;
+                //                             this.deleteName = params.row.title;
+                //                             this.cancelcancel(true);
+                //                         }
+                //                     }
+                //                 },
+                //                 "删除"
+                //             )
+                //         ]);
+                //     }
+                // }
             ],
             list: [],
             deleteName: "",
@@ -937,8 +793,8 @@ export default {
             editModal: false,
             total: 1,
             currentPage: 1,
-            per_page: 20,
-            defailPage: 20,
+            per_page: 5,
+            defailPage: 5,
             pageSize: [5, 10, 20, 50, 100, 200],
 
             typeList: []
@@ -1011,7 +867,7 @@ export default {
             }
             axios
                 .request({
-                    url: "http://120.79.203.214/zbb/public/delete",
+                    url: "http://47.101.217.238/zbb/public/delete",
                     method: "post",
                     data: {
                         url: this.deletePicArr
@@ -1099,7 +955,7 @@ export default {
             if (this.formInline.images.length > 0) {
                 axios
                     .request({
-                        url: "http://120.79.203.214/zbb/public/delete",
+                        url: "http://47.101.217.238/zbb/public/delete",
                         method: "post",
                         data: {
                             url: this.formInline.images[0]
@@ -1126,7 +982,7 @@ export default {
             if (this.formInline.share_thumb !== "") {
                 axios
                     .request({
-                        url: "http://120.79.203.214/zbb/public/delete",
+                        url: "http://47.101.217.238/zbb/public/delete",
                         method: "post",
                         data: {
                             url: this.formInline.share_thumb
@@ -1218,7 +1074,7 @@ export default {
                     }
                     axios
                         .request({
-                            // url: "http://120.79.203.214/zbb/public/total",
+                            // url: "http://47.101.217.238/zbb/public/total",
                             url: "task/tasks",
                             method: "post",
                             data: {
@@ -1315,6 +1171,7 @@ export default {
         cancelcancel(i) {
             this.cancelModal = i;
         },
+        
         getList() {
             //获取列表
             axios
@@ -1345,6 +1202,7 @@ export default {
                 .then(res => {
                     // console.log(res.data.data.data);
                     this.list = res.data.data.data;
+                    // this.list1 = [{id:123}]
                     this.total = res.data.data.total;
                     this.currentPage = res.data.data.current_page;
                     this.per_page = res.data.data.per_page;
