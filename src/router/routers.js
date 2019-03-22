@@ -93,15 +93,17 @@ export default [{
             icon: 'md-add'
         },
         component: () => import('@/view/zbb/userGroup/newGroup')
-    }, {
-        path: '/permissionManage',
-        name: '权限管理',
-        meta: {
-            title: '权限管理',
-            icon: 'md-add'
-        },
-        component: () => import('@/view/zbb/userGroup/permissionManage')
-    }]
+    }, 
+    // {
+    //     path: '/permissionManage',
+    //     name: '权限管理',
+    //     meta: {
+    //         title: '权限管理',
+    //         icon: 'md-add'
+    //     },
+    //     component: () => import('@/view/zbb/userGroup/permissionManage')
+    // }
+]
 }, {
     path: '/customerManage',
     name: '客服管理',

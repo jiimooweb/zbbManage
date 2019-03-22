@@ -1,6 +1,6 @@
 <template>
     <div class="TASKPLIST">
-        <i-form ref="search" class="search" :model="searchData" >
+        <i-form ref="search" class="search" :model="searchData">
             <row :gutter='16'>
                 <i-col span='5'>
                     <row>
@@ -85,277 +85,6 @@
             <p style="text-align:center;font-size:16px;">是否拒绝任务----<span style="color:red;">{{deleteName}}</span>----的审核</p>
             <i-input style="margin-top:20px;" type='textarea' rows='5' placeholder="输入拒绝原因" v-model="reason" class="formInput"></i-input>
         </Modal>
-        <Modal v-model="editModal" width='900px' title="任务资料" :mask-closable="false" footer-hide>
-            <i-form ref="formInline" class="formPage" :model="formInline" :rules="ruleInline" inline>
-                <FormItem prop="merchant_id" class="formItem">
-                    <row class="formRow">
-                        <i-col span='4'>
-                            <span class="lable">客户:</span>
-                        </i-col>
-                        <i-col span='18'>
-                            <Select v-model="formInline.merchant_id" @on-change='getSelectData'>
-                                <Option :value='item.id' v-for="(item, index) in meerchatList" :key="index">{{item.name}}</Option>
-                            </Select>
-                        </i-col>
-                    </row>
-                </FormItem>
-                <FormItem prop="title" class="formItem">
-                    <row class="formRow">
-                        <i-col span='4'>
-                            <span class="lable">标题:</span>
-                        </i-col>
-                        <i-col span='18'>
-                            <i-input placeholder="输入标题" v-model="formInline.title" class="formInput"></i-input>
-                        </i-col>
-                    </row>
-                </FormItem>
-                <FormItem prop="type" class="formItem">
-                    <row class="formRow">
-                        <i-col span='4'>
-                            <span class="lable">任务类型:</span>
-                        </i-col>
-                        <i-col span='18'>
-                            <RadioGroup v-model="formInline.type" @on-change='changeType'>
-                                <Radio :value='0' :label="0">朋友圈</Radio>
-                                <Radio :value='1' :label="1">抖音</Radio>
-                                <Radio :value='2' :label="2">头条</Radio>
-                                <Radio :value='3' :label="3">软文推广</Radio>
-                            </RadioGroup>
-                        </i-col>
-                    </row>
-                </FormItem>
-                <FormItem prop="share_price" class="formItem" v-show="formInline.type===3">
-                    <row class="formRow">
-                        <i-col span='4'>
-                            <span class="lable">悬赏金额:</span>
-                        </i-col>
-                        <i-col span='18'>
-                            <!-- <InputNumber :min="0" :active-change='false' :value="formInline.share_price" style="width: 200px"
-                                :precision='2' placeholder='输入金额'></InputNumber> -->
-                            <i-input placeholder="输入金额" class="formInput" v-model.number="formInline.share_price" type="number" @mousewheel.native.prevent></i-input>
-                        </i-col>
-                    </row>
-                </FormItem>
-                <FormItem prop="num" class="formItem">
-                    <row class="formRow">
-                        <i-col span='4'>
-                            <span class="lable">领取名额:</span>
-                        </i-col>
-                        <i-col span='18'>
-                            <i-input placeholder="输入名额" class="formInput" v-model.number="formInline.num" type="number" @mousewheel.native.prevent></i-input>
-                            <!-- <InputNumber :min="1" :value="formInline.num" style="width: 200px" :precision='0'
-                                placeholder='输入名额'></InputNumber> -->
-                        </i-col>
-                    </row>
-                </FormItem>
-                <FormItem prop="start_time" class="formItem">
-                    <row class="formRow">
-                        <i-col span='4'>
-                            <span class="lable">任务时间:</span>
-                        </i-col>
-                        <i-col span='18'>
-                            <DatePicker type="datetime" placeholder="选择开始时间" @on-change='changeDate' :value="formInline.start_time"
-                                style="z-index:100000;width: 200px"></DatePicker>
-                        </i-col>
-                    </row>
-                </FormItem>
-                <FormItem prop="time_limit" class="formItem">
-                    <row class="formRow">
-                        <i-col span='4'>
-                            <span class="lable">时间限制（分钟）:</span>
-                        </i-col>
-                        <i-col span='18'>
-                            <i-input placeholder="输入时间限制" class="formInput" v-model.number="formInline.time_limit" type="number" @mousewheel.native.prevent></i-input>
-                        </i-col>
-                    </row>
-                </FormItem>
-                <FormItem prop="wx_content" class="formItem textarea" v-show="formInline.type===0">
-                    <row class="formRow">
-                        <i-col span='4'>
-                            <span class="lable">文案:</span>
-                        </i-col>
-                        <i-col span='18'>
-                            <Input v-model="formInline.wx_content" type="textarea" :rows="4" placeholder="输入文案" />
-                        </i-col>
-                    </row>
-                </FormItem>
-                <FormItem prop="qrcode_url" class="formItem" v-show="formInline.type===0">
-                    <row class="formRow">
-                        <i-col span='4'>
-                            <span class="lable">二维码图片：</span>
-                        </i-col>
-                        <i-col span='18'>
-                            <Spin fix v-show="spinShow2">
-                                <Icon type="ios-loading" size=18 class="demo-spin-icon-load"></Icon>
-                                <div>上传中~~~</div>
-                            </Spin>
-                            <Upload style="margin-bottom:10px;" action="http://120.79.203.214/zbb/public/qrcode-reader"
-                                :on-success='successUpload3' :before-upload='beforeUpload3' :show-upload-list='false'
-                                :headers="headers">
-                                <Button icon="md-add" class="btnUp">
-                                    上传图片
-                                </Button>
-                            </Upload>
-                            <!-- <img :src="formInline.qrcode_url" width="150px" style="float:left;margin-right:10px;margin-bottom:10px;"> -->
-                            <p>{{formInline.qrcode_url}}</p>
-                        </i-col>
-                    </row>
-                </FormItem>
-                <!-- 朋友圈 -->
-                <FormItem prop="images" class="formItem" v-show="formInline.type===0">
-                    <row class="formRow">
-                        <i-col span='4'>
-                            <span class="lable">图片信息：</span>
-                        </i-col>
-                        <i-col span='18'>
-                            <Spin fix v-show="spinShow">
-                                <Icon type="ios-loading" size=18 class="demo-spin-icon-load"></Icon>
-                                <div>上传中~~~</div>
-                            </Spin>
-                            <Upload style="margin-bottom:10px;" action="http://120.79.203.214/zbb/public/upload"
-                                :on-success='successUpload' :before-upload='beforeUpload' :show-upload-list='false'
-                                :headers="headers" multiple>
-                                <Button icon="ios-cloud-upload-outline">上传图片(最多9张)</Button>
-                            </Upload>
-                            <img v-for="(item,index) in formInline.images" :key="index" :src="formInline.images[index]"
-                                width="150px" style="float:left;margin-right:10px;margin-bottom:10px;">
-                        </i-col>
-                    </row>
-                </FormItem>
-
-                <!-- 抖音 头条 -->
-                <FormItem prop="dy_request" class="formItem" v-show="formInline.type===1">
-                    <row class="formRow">
-                        <i-col span='4'>
-                            <span class="lable">要求:</span>
-                        </i-col>
-                        <i-col span='18'>
-                            <Checkbox label="香蕉" :value='true' disabled v-show="formInline.type===1">必须观看(播放)完1次以上</Checkbox>
-                            <CheckboxGroup v-model="disabledGroup" @on-change='changeCheck'>
-                                <Checkbox label="SUBSCRIBE">关注</Checkbox>
-                                <Checkbox label="LIKE">点赞</Checkbox>
-                                <Checkbox label="SHARE" v-show="formInline.type===1">转发到抖音</Checkbox>
-                                <Checkbox label="COMMENT">评论</Checkbox>
-                            </CheckboxGroup>
-                            <i-input placeholder="输入评论:如不填，则默认显示：“评论随意填即可”" v-model="formInline.comment" class="formInput"></i-input>
-                            <p style="color:#aaa;">注：每个项都有不同的收费，多项费用叠加</p>
-                        </i-col>
-                    </row>
-                </FormItem>
-                <FormItem prop="tt_request" class="formItem" v-show="formInline.type===2">
-                    <row class="formRow">
-                        <i-col span='4'>
-                            <span class="lable">要求:</span>
-                        </i-col>
-                        <i-col span='18'>
-                            <Checkbox label="香蕉" :value='true' disabled v-show="formInline.type===2">浏览5分钟以上，并浏览到底部</Checkbox>
-                            <CheckboxGroup v-model="disabledGroup" @on-change='changeCheck'>
-                                <Checkbox label="SUBSCRIBE">关注</Checkbox>
-                                <Checkbox label="LIKE">点赞</Checkbox>
-                                <Checkbox label="SHARE" v-show="formInline.type===2">转发到头条</Checkbox>
-                                <Checkbox label="COMMENT">评论</Checkbox>
-                            </CheckboxGroup>
-                            <i-input placeholder="输入评论:如不填，则默认显示：“评论随意填即可”" v-model="formInline.comment" class="formInput"></i-input>
-                            <p style="color:#aaa;">注：每个项都有不同的收费，多项费用叠加</p>
-                        </i-col>
-                    </row>
-                </FormItem>
-                <FormItem prop="images" class="formItem" v-show="formInline.type===1 || formInline.type===2">
-                    <row class="formRow">
-                        <i-col span='4'>
-                            <span class="lable">图片信息：</span>
-                        </i-col>
-                        <i-col span='18'>
-                            <Spin fix v-show="spinShow">
-                                <Icon type="ios-loading" size=18 class="demo-spin-icon-load"></Icon>
-                                <div>上传中~~~</div>
-                            </Spin>
-                            <Upload style="margin-bottom:10px;" action="http://120.79.203.214/zbb/public/upload"
-                                :on-success='successUpload1' :before-upload='beforeUpload1' :show-upload-list='false'
-                                :headers="headers">
-                                <Button icon="md-add" class="btnUp">
-                                    <span v-if="formInline.type===1">上传抖音作品二位码</span>
-                                    <span v-else>上传今日头条作品截图</span>
-                                </Button>
-                            </Upload>
-                            <img :src="formInline.images[0]" width="150px" style="float:left;margin-right:10px;margin-bottom:10px;">
-                        </i-col>
-                    </row>
-                </FormItem>
-                <FormItem prop="url" class="formItem" v-show="formInline.type===1 || formInline.type===2">
-                    <row class="formRow">
-                        <i-col span='4'>
-                            <span class="lable" v-show="formInline.type===1">抖音作品链接:</span>
-                            <span class="lable" v-show="formInline.type===2">今日头条作品链接:</span>
-                        </i-col>
-                        <i-col span='18'>
-                            <i-input placeholder="抖音作品的复制链接直接粘贴即可" v-model="formInline.url" class="formInput" v-show="formInline.type===1"></i-input>
-                            <i-input placeholder="今日头条作品的复制链接直接粘贴即可" v-model="formInline.url" class="formInput" v-show="formInline.type===2"></i-input>
-                        </i-col>
-                    </row>
-                </FormItem>
-                <FormItem prop="share_thumb" class="formItem" v-show="formInline.type===3">
-                    <row class="formRow">
-                        <i-col span='4'>
-                            <span class="lable">标题图片：</span>
-                        </i-col>
-                        <i-col span='18'>
-                            <Spin fix v-show="spinShow">
-                                <Icon type="ios-loading" size=18 class="demo-spin-icon-load"></Icon>
-                                <div>上传中~~~</div>
-                            </Spin>
-                            <Upload style="margin-bottom:10px;" action="http://120.79.203.214/zbb/public/upload"
-                                :on-success='successUpload2' :before-upload='beforeUpload2' :show-upload-list='false'
-                                :headers="headers">
-                                <Button icon="md-add" class="btnUp">
-                                    上传图片
-                                </Button>
-                            </Upload>
-                            <img :src="formInline.share_thumb===''?'':formInline.share_thumb" width="150px" style="float:left;margin-right:10px;margin-bottom:10px;">
-                        </i-col>
-                    </row>
-                </FormItem>
-                <FormItem prop="share_content" class="formItem" v-show="formInline.type===3">
-                    <row class="formRow">
-                        <i-col span='4'>
-                            <span class="lable">文章信息：</span>
-                        </i-col>
-                        <i-col span='18'>
-                            <!-- <VueUeditorWrap ref="ueditor" v-model="msg" @ready="ready" style="line-height:20px;z-index:100;position: relative;"
-                                :config="myConfig"></VueUeditorWrap> -->
-                        </i-col>
-                    </row>
-                </FormItem>
-                <FormItem prop="cate_id" class="formItem" v-show='formInline.type===3'>
-                    <row class="formRow">
-                        <i-col span='4'>
-                            <span class="lable">分类:</span>
-                        </i-col>
-                        <i-col span='18'>
-                            <Select v-model="formInline.cate_id" filterable>
-                                <Option v-for="(item,index) in typeList" :value="item.id" :key="index">{{ item.name }}</Option>
-                            </Select>
-                        </i-col>
-                    </row>
-                </FormItem>
-                <FormItem prop="total_price" class="formItem">
-                    <row class="formRow">
-                        <i-col span='4'>
-                            <span class="lable">预计金额:</span>
-                        </i-col>
-                        <i-col span='18'>
-                            <p>{{price}}元</p>
-                        </i-col>
-                    </row>
-                </FormItem>
-                <div id="qrcode" ref="qrcode"></div>
-                <FormItem style="width:100%;">
-                    <Button style="margin:10px auto;display:block;" type="primary" @click="handleSubmit('formInline')">提交</Button>
-                    <!-- <Button type="primary" @click="clicka()">新增</Button> -->
-                    <!-- <Button style="margin-left:10px;" @click="resetData('formInline')">重置</Button> -->
-                </FormItem>
-            </i-form>
-        </Modal>
         <Modal v-model="showModal" width='800px' class="TASKLISTModal" title='任务详情' footer-hide>
             <i-form ref="formInline" class="formPage" inline>
                 <row class='listRow'>
@@ -407,7 +136,7 @@
                             </row>
                         </FormItem>
                     </i-col>
-                    
+
                 </row>
                 <!-- 右边 -->
                 <row class='listRow'>
@@ -712,17 +441,16 @@ export default {
     components: { VueUeditorWrap },
     data() {
         return {
-            showData:{
-                id:'',
-                created_at:'',
-                start_time:'',
-                status:'',
-                type:0,
-                total_price:'',
-                num:'',
-
+            showData: {
+                id: "",
+                created_at: "",
+                start_time: "",
+                status: "",
+                type: 0,
+                total_price: "",
+                num: ""
             },
-            showModal:false,
+            showModal: false,
             reason: "",
             searchData: {
                 taskType: -1,
@@ -803,9 +531,13 @@ export default {
                 ],
                 share_price: [
                     {
-                        validator:(rule, value, callback, source, options)=> {
+                        validator: (rule, value, callback, source, options) => {
                             var errors = [];
-                            if (!value && value !== 0 && this.formInline.type === 3) {
+                            if (
+                                !value &&
+                                value !== 0 &&
+                                this.formInline.type === 3
+                            ) {
                                 callback("请输入金额");
                             }
                             callback(errors);
@@ -814,10 +546,13 @@ export default {
                 ],
                 dy_request: [
                     {
-                        validator:(rule, value, callback, source, options)=> {
+                        validator: (rule, value, callback, source, options) => {
                             var errors = [];
-                            if (value.length === 0 && this.formInline.type === 1) {
-                                console.log('dy_request');
+                            if (
+                                value.length === 0 &&
+                                this.formInline.type === 1
+                            ) {
+                                console.log("dy_request");
                                 callback("请至少选择一项任务要求");
                             }
                             callback(errors);
@@ -826,10 +561,13 @@ export default {
                 ],
                 tt_request: [
                     {
-                        validator:(rule, value, callback, source, options)=> {
+                        validator: (rule, value, callback, source, options) => {
                             var errors = [];
-                            if (value.length === 0 && this.formInline.type === 2) {
-                                console.log('tt_request');
+                            if (
+                                value.length === 0 &&
+                                this.formInline.type === 2
+                            ) {
+                                console.log("tt_request");
                                 callback("请至少选择一项任务要求");
                             }
                             callback(errors);
@@ -874,7 +612,7 @@ export default {
                                     this.formInline.type === 2) &&
                                 value.length === 0
                             ) {
-                                console.log('images');
+                                console.log("images");
                                 callback("请选择图片");
                             }
                             callback(errors);
@@ -883,11 +621,14 @@ export default {
                 ],
                 url: [
                     {
-                        validator:(rule, value, callback, source, options)=> {
+                        validator: (rule, value, callback, source, options) => {
                             var errors = [];
-                            if (!value && (this.formInline.type === 1 ||
-                                    this.formInline.type === 2)) {
-                                        console.log('url');
+                            if (
+                                !value &&
+                                (this.formInline.type === 1 ||
+                                    this.formInline.type === 2)
+                            ) {
+                                console.log("url");
                                 callback("请输入作品链接");
                             }
                             callback(errors);
@@ -899,11 +640,11 @@ export default {
                         // required: true,
                         // message: "请选择标题图片",
                         // trigger: "blur"
-                        validator:(rule, value, callback, source, options)=> {
+                        validator: (rule, value, callback, source, options) => {
                             var errors = [];
                             if (!value && this.formInline.type === 3) {
-                                console.log('share_thumb');
-                                
+                                console.log("share_thumb");
+
                                 callback("请选择标题图片");
                             }
                             callback(errors);
@@ -956,9 +697,9 @@ export default {
                 {
                     title: "分类",
                     align: "center",
-                    render(h,params) {
-                        return h('p',params.row.cate.name)
-                    },
+                    render(h, params) {
+                        return h("p", params.row.cate.name);
+                    }
                 },
                 {
                     title: "任务类型",
@@ -1024,8 +765,9 @@ export default {
                 {
                     title: "任务开关",
                     align: "center",
-                    render:(h,params)=> {
-                        return h("i-switch",
+                    render: (h, params) => {
+                        return h(
+                            "i-switch",
                             {
                                 props: {
                                     trueValue: 1,
@@ -1034,23 +776,34 @@ export default {
                                 },
                                 nativeOn: {
                                     click: () => {
-                                        if(params.row.merchant_status === 1){
-                                            this.$Message.error('该任务已由客户关闭，无法进行操作')
-                                            params.row.status = !params.row.status
-                                            return false
+                                        if (params.row.merchant_status === 1) {
+                                            this.$Message.error(
+                                                "该任务已由客户关闭，无法进行操作"
+                                            );
+                                            params.row.status = !params.row
+                                                .status;
+                                            return false;
                                         }
-                                        axios.request({
-                                            url:'task/tasks/'+ params.row.id +'/change',
-                                            method:'post'
-                                        }).then(res=>{
-                                            this.$Message.success('状态修改成功')
-                                            this.getList()
-                                        })
+                                        axios
+                                            .request({
+                                                url:
+                                                    "task/tasks/" +
+                                                    params.row.id +
+                                                    "/change",
+                                                method: "post"
+                                            })
+                                            .then(res => {
+                                                this.$Message.success(
+                                                    "状态修改成功"
+                                                );
+                                                this.getList();
+                                            });
                                     }
                                 }
                             },
-                            0)
-                    },
+                            0
+                        );
+                    }
                 },
                 {
                     title: "操作",
@@ -1073,28 +826,41 @@ export default {
                                     nativeOn: {
                                         click: () => {
                                             this.showData.id = params.row.id;
-                                            this.showData.created_at = params.row.created_at;
-                                            this.showData.start_time = params.row.start_time;
-                                            this.showData.status = params.row.status;
-                                            this.showData.type = params.row.type;
-                                            
-                                            this.showData.total_price = params.row.total_price;
+                                            this.showData.created_at =
+                                                params.row.created_at;
+                                            this.showData.start_time =
+                                                params.row.start_time;
+                                            this.showData.status =
+                                                params.row.status;
+                                            this.showData.type =
+                                                params.row.type;
+
+                                            this.showData.total_price =
+                                                params.row.total_price;
                                             this.showData.num = params.row.num;
-                                            this.showData.record_verifys_count = params.row.record_verifys_count;
-                                            this.showData.verify_status = params.row.verify_status;
-                                            this.showData.records_count = params.row.records_count;
-                                            this.showData.title = params.row.title;
-                                            this.showData.wx_content = params.row.wx_content;
-                                            this.showData.share_content = params.row.share_content;
-                                            this.showData.images = params.row.images;
-                                            this.showData.share_thumb = params.row.share_thumb;
+                                            this.showData.record_verifys_count =
+                                                params.row.record_verifys_count;
+                                            this.showData.verify_status =
+                                                params.row.verify_status;
+                                            this.showData.records_count =
+                                                params.row.records_count;
+                                            this.showData.title =
+                                                params.row.title;
+                                            this.showData.wx_content =
+                                                params.row.wx_content;
+                                            this.showData.share_content =
+                                                params.row.share_content;
+                                            this.showData.images =
+                                                params.row.images;
+                                            this.showData.share_thumb =
+                                                params.row.share_thumb;
                                             this.showModal = true;
-                                            
                                         }
                                     }
                                 },
                                 "查看"
-                            ),h(
+                            ),
+                            h(
                                 "Button",
                                 {
                                     props: {
@@ -1138,62 +904,6 @@ export default {
                                 },
                                 "拒绝"
                             ),
-                            // h(
-                            //     "Button",
-                            //     {
-                            //         props: {
-                            //             type: "primary",
-                            //             size: "small"
-                            //         },
-                            //         attrs: {
-                            //             style:
-                            //                 "font-size:12px;margin-right:15px;"
-                            //         },
-                            //         nativeOn: {
-                            //             click: () => {
-                            //                 this.currentId = params.row.id;
-                            //                 console.log(params.row);
-
-                            //                 this.formInline.total_price =
-                            //                     params.row.total_price;
-                            //                 this.formInline.merchant_id =
-                            //                     params.row.merchant_id;
-                            //                 this.formInline.title =
-                            //                     params.row.title;
-                            //                 this.formInline.type =
-                            //                     params.row.type;
-                            //                 this.formInline.num =
-                            //                     params.row.num;
-                            //                 this.formInline.start_time =
-                            //                     params.row.start_time;
-                            //                 this.formInline.time_limit =
-                            //                     params.row.time_limit;
-                            //                 this.formInline.images =
-                            //                     params.row.images;
-                            //                 this.formInline.qrcode_url =
-                            //                     params.row.qrcode_url;
-                            //                 this.formInline.wx_content =
-                            //                     params.row.wx_content;
-                            //                 this.formInline.dy_request =
-                            //                     params.row.dy_request;
-                            //                 this.formInline.url =
-                            //                     params.row.url;
-                            //                 this.formInline.comment =
-                            //                     params.row.comment;
-                            //                 this.formInline.tt_request =
-                            //                     params.row.tt_request;
-                            //                 this.formInline.share_price =
-                            //                     params.row.share_price;
-                            //                 this.formInline.share_thumb =
-                            //                     params.row.share_thumb;
-                            //                 this.formInline.msg =
-                            //                     params.row.share_content;
-                            //                 this.cancelEdit(true);
-                            //             }
-                            //         }
-                            //     },
-                            //     "修改"
-                            // ),
                             h(
                                 "Button",
                                 {
@@ -1229,23 +939,22 @@ export default {
             currentPage: 1,
             per_page: 20,
             defailPage: 20,
-            pageSize: [5, 20, 50, 100, 200],
+            pageSize: [5, 10, 20, 50, 100, 200],
 
-            typeList:[]
-
+            typeList: []
         };
     },
     mounted() {
-        console.log('刷新');
-        
-        // this.getList();
+        console.log("刷新");
+
+        this.getList();
         this.getJson();
         this.getMerchatList();
-        this.getTypeList()
+        this.getTypeList();
     },
     methods: {
-        returnAdd(){
-            this.$router.push({path:'/newTask'})
+        returnAdd() {
+            this.$router.push({ path: "/newTask" });
         },
         getTypeList() {
             axios
@@ -1297,8 +1006,8 @@ export default {
             for (let i = 0; i < this.deletePicArr.length; i++) {
                 this.deletePicArr[i] = this.filterUrl(this.deletePicArr[i]);
             }
-            if(this.deletePicArr.length===0){
-                return
+            if (this.deletePicArr.length === 0) {
+                return;
             }
             axios
                 .request({
@@ -1500,7 +1209,7 @@ export default {
         handleSubmit(name) {
             this.$refs[name].validate(valid => {
                 console.log(valid);
-                
+
                 if (valid) {
                     for (let i = 0; i < this.formInline.images.length; i++) {
                         this.formInline.images[i] = this.filterUrl(
@@ -1514,7 +1223,7 @@ export default {
                             method: "post",
                             data: {
                                 //通用
-                                cate_id:this.formInline.cate_id,
+                                cate_id: this.formInline.cate_id,
                                 total_price: this.total_price,
                                 merchant_id: this.formInline.merchant_id,
                                 // merchant_id: this.meerchatList[this.formInline.merchant_id].id,
@@ -1606,9 +1315,6 @@ export default {
         cancelcancel(i) {
             this.cancelModal = i;
         },
-        cancelEdit(i) {
-            this.editModal = i;
-        },
         getList() {
             //获取列表
             axios
@@ -1637,6 +1343,7 @@ export default {
                     method: "get"
                 })
                 .then(res => {
+                    // console.log(res.data.data.data);
                     this.list = res.data.data.data;
                     this.total = res.data.data.total;
                     this.currentPage = res.data.data.current_page;
@@ -1672,7 +1379,7 @@ export default {
         },
         changePageGetList(size) {
             this.per_page = size;
-            this.currentPage = 1
+            this.currentPage = 1;
             this.getList();
         }
     }
