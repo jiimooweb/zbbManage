@@ -72,7 +72,7 @@
                 <Button @click="returnAdd()">添加</Button>
             </i-col>
         </row>
-        <Table stripe :columns="column" border :data="list"></Table>
+        <Table stripe :columns="column" border :data="list" v-show="showTable"></Table>
         <!-- <i-table stripe :columns="column" border :data="list1"></i-table> -->
         <Page style="margin-top:20px;" :total="total" show-total :page-size='defailPage' show-elevator show-sizer
             :page-size-opts='pageSize' @on-change="getchangeList" @on-page-size-change='changePageGetList' />
@@ -442,6 +442,7 @@ export default {
     components: { VueUeditorWrap },
     data() {
         return {
+            showTable:false,
             showData: {
                 id: "",
                 created_at: "",
@@ -563,7 +564,6 @@ export default {
                 {
                     title: "任务类型",
                     align: "center",
-                    // key: "type"
                     render(h, params) {
                         return h(
                             "p",
@@ -580,7 +580,6 @@ export default {
                 {
                     title: "已领/名额",
                     align: "center",
-                    // key:'records_count/num'
                     render: (h, params) => {
                         return h(
                             "p",
@@ -591,7 +590,6 @@ export default {
                 {
                     title: "审核状态",
                     align: "center",
-                    // key: "verify_status"
                     render: (h, params) => {
                         return h(
                             "p",
@@ -603,24 +601,23 @@ export default {
                         );
                     }
                 },
-                {
-                    title: "文案",
-                    align: "center",
-                    // key: "wx_content"
-                    render: (h, params) => {
-                        return h("pre", params.row.wx_content);
-                    }
-                },
-                {
-                    title: "任务开始时间",
-                    align: "center",
-                    key: "start_time"
-                },
-                {
-                    title: "创建日期",
-                    align: "center",
-                    key: "created_at"
-                },
+                // {
+                //     title: "文案",
+                //     align: "center",
+                //     render: (h, params) => {
+                //         return h("pre", params.row.wx_content);
+                //     }
+                // },
+                // {
+                //     title: "任务开始时间",
+                //     align: "center",
+                //     key: "start_time"
+                // },
+                // {
+                //     title: "创建日期",
+                //     align: "center",
+                //     key: "created_at"
+                // },
                 // {
                 //     title: "任务开关",
                 //     align: "center",
@@ -803,7 +800,7 @@ export default {
     mounted() {
         console.log("刷新");
 
-        this.getList();
+        // this.getList();
         this.getJson();
         this.getMerchatList();
         this.getTypeList();
@@ -1200,9 +1197,13 @@ export default {
                     method: "get"
                 })
                 .then(res => {
-                    // console.log(res.data.data.data);
                     this.list = res.data.data.data;
-                    // this.list1 = [{id:123}]
+                    // this.list = []
+                    // let i = 0
+                    // setInterval(()=>{
+                    //     this.list.push(res.data.data.data[i])
+                    //     i++
+                    // },1000)
                     this.total = res.data.data.total;
                     this.currentPage = res.data.data.current_page;
                     this.per_page = res.data.data.per_page;

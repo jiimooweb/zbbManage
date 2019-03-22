@@ -49,7 +49,7 @@ export default {
                     moudal: "首页",
                     permiss: [
                         {
-                            sign: "home",
+                            sign: 'home',
                             name: "欢迎界面",
                             value: true
                         }
@@ -136,7 +136,244 @@ export default {
                             value: true
                         }
                     ]
-                }
+                },{
+                    moudal: "客户管理",
+                    permiss: [
+                        {
+                            sign:'clientList',
+                            name: "客户管理",
+                            value: true
+                        },
+                        {
+                            sign:'newClient',
+                            name: "添加客户",
+                            value: true
+                        },
+                        {
+                            sign:'clientList-edit',
+                            name: "修改客户",
+                            value: true
+                        },
+                        {
+                            sign:'clientList-delete',
+                            name: "删除客户",
+                            value: true
+                        }
+                    ]
+                },
+                {
+                    moudal: "任务分类管理",
+                    permiss: [
+                        {
+                            sign:'taskTypeManage',
+                            name: "任务分类管理",
+                            value: true
+                        },{
+                            sign:'taskTypeManage-new',
+                            name: "添加任务分类",
+                            value: true
+                        },{
+                            sign:'taskTypeManage-edit',
+                            name: "编辑任务分类",
+                            value: true
+                        },{
+                            sign:'taskTypeManage-delete',
+                            name: "删除任务分类",
+                            value: true
+                        }
+                    ]
+                },{
+                    moudal: "任务管理",
+                    permiss: [
+                        {
+                            sign:'taskPList',
+                            name: "母任务管理",
+                            value: true
+                        },{
+                            sign:'taskPList-review',
+                            name: "审核母任务",
+                            value: true
+                        }, {
+                            sign:'taskCList',
+                            name: "子任务管理",
+                            value: true
+                        },{
+                            sign:'taskCList-review',
+                            name: "审核子任务",
+                            value: true
+                        },{
+                            sign:'newTask',
+                            name: "添加任务",
+                            value: true
+                        }
+                    ]
+                },{
+                    moudal: "师傅管理",
+                    permiss: [
+                        {
+                            sign:'masterList',
+                            name: "师傅管理",
+                            value: true
+                        },{
+                            sign:'newMaster',
+                            name: "添加师傅",
+                            value: true
+                        },{
+                            sign:'masterList-edit',
+                            name: "编辑师傅",
+                            value: true
+                        },{
+                            sign:'masterList-delete',
+                            name: "删除师傅",
+                            value: true
+                        },{
+                            sign:'masterList-disabled',
+                            name: "禁用权限",
+                            value: true
+                        },{
+                            sign:'masterList-blacklist',
+                            name: "拉黑权限",
+                            value: true
+                        }
+                    ]
+                },{
+                    moudal: "徒弟管理",
+                    permiss: [
+                        {
+                            sign:'apprenticeList',
+                            name: "徒弟管理",
+                            value: true
+                        },{
+                            sign:'apprenticeCheckList',
+                            name: "徒弟审核",
+                            value: true
+                        },,{
+                            sign:'newApprentice',
+                            name: "添加徒弟",
+                            value: true
+                        },{
+                            sign:'apprenticeList-edit',
+                            name: "编辑徒弟",
+                            value: true
+                        },{
+                            sign:'apprenticeList-delete',
+                            name: "删除徒弟",
+                            value: true
+                        },{
+                            sign:'apprenticeCheckList-review',
+                            name: "徒弟审核",
+                            value: true
+                        },{
+                            sign:'apprenticeList-disabled',
+                            name: "禁用权限",
+                            value: true
+                        },{
+                            sign:'apprenticeList-blacklist',
+                            name: "拉黑权限",
+                            value: true
+                        }
+                    ]
+                },{
+                    moudal: "财务管理",
+                    permiss: [
+                        {
+                            sign:'financeManage',
+                            name: "财务管理",
+                            value: true
+                        }
+                    ]
+                },{
+                    moudal: "-----银行名称管理",
+                    permiss:[
+                        {
+                            sign:'bankManage',
+                            name: "银行名称管理",
+                            value: true
+                        },{
+                            sign:'bankManage-new',
+                            name: "添加银行",
+                            value: true
+                        },{
+                            sign:'bankManage-edit',
+                            name: "修改银行",
+                            value: true
+                        },{
+                            sign:'bankManage-delete',
+                            name: "删除银行",
+                            value: true
+                        }
+                    ]
+                },{
+                    moudal: "-----绑定银行管理",
+                    permiss:[
+                        {
+                            sign:'bindingBank',
+                            name: "绑定银行管理",
+                            value: true
+                        },{
+                            sign:'bindingBank-edit',
+                            name: "修改操作",
+                            value: true
+                        }
+                    ]
+                },{
+                    moudal: "-----师傅提现管理",
+                    permiss:[
+                        {
+                            sign:'masterWithdraw',
+                            name: "师傅提现管理",
+                            value: true
+                        },{
+                            sign:'masterWithdraw-review',
+                            name: "审核",
+                            value: true
+                        }
+                    ]
+                },{
+                    moudal: "-----徒弟提现管理",
+                    permiss:[
+                        {
+                            sign:'apprenticeWithdraw',
+                            name: "徒弟提现管理",
+                            value: true
+                        },{
+                            sign:'apprenticeWithdraw-review',
+                            name: "审核",
+                            value: true
+                        }
+                    ]
+                },{
+                    moudal: "-----师傅资金记录",
+                    permiss:[
+                        {
+                            sign:'masterFunds',
+                            name: "师傅资金记录",
+                            value: true
+                        }
+                    ]
+                },{
+                    moudal: "-----徒弟资金记录",
+                    permiss:[
+                        {
+                            sign:'apprenticeFunds',
+                            name: "徒弟资金记录",
+                            value: true
+                        }
+                    ]
+                },{
+                    moudal: "-----充值审核",
+                    permiss:[
+                        {
+                            sign:'rechargeReview',
+                            name: "充值审核",
+                            value: true
+                        },{
+                            sign:'rechargeReview-review',
+                            name: "审核",
+                            value: true
+                        }
+                    ]
+                },
             ],
             permissList1: [
                 {
