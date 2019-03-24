@@ -124,7 +124,7 @@ export default {
             currentPage: 1,
             per_page: 20,
             defailPage: 20,
-            pageSize: [5, 20, 50, 100, 200]
+            pageSize: [5, 10, 20, 50]
         };
     },
     methods: {

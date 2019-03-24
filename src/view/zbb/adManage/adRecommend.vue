@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Table stripe :columns="column" border :data="list" @on-select='selectItem' @on-select-all='selectItem' @on-selection-change='selectItem'></Table>
+        <Table stripe :columns="column" border :data="list"></Table>
         <Page style="margin-top:20px;" :total="total" show-total :page-size='defailPage' show-elevator show-sizer
             :page-size-opts='pageSize' @on-change="getchangeList" @on-page-size-change='changePageGetList' />
         <Modal v-model="editModal" title='处理' @on-ok="inputItem()" @on-cancel="cancelEdit(false)">
@@ -105,7 +105,7 @@ import axios from "@/libs/api.request";
                 currentPage: 1,
                 per_page: 20,
                 defailPage: 20,
-                pageSize: [5, 20, 50, 100, 200]
+                pageSize: [5, 10, 20, 50]
             }
         },
         methods:{

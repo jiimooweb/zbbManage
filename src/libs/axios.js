@@ -1,18 +1,9 @@
 import axios from 'axios'
 import store from '@/store'
 import { setToken, getToken } from '@/libs/util'
-// import { Spin } from 'iview'
-// const addErrorLog = errorInfo => {
-//   const { statusText, status, request: { responseURL } } = errorInfo
-//   let info = {
-//     type: 'ajax',
-//     code: status,
-//     mes: statusText,
-//     url: responseURL
-//   }
-//   if (!responseURL.includes('save_error_logger')) store.dispatch('addErrorLog', info)
-// }
-
+import { Message } from 'iview'
+import Cookies from 'js-cookie'
+import { TOKEN_KEY } from '@/libs/util'
 class HttpRequest {
   constructor(baseUrl = baseURL) {
     this.baseUrl = baseUrl
@@ -55,9 +46,9 @@ class HttpRequest {
       if (error['request'].status === 401) {
         console.log(123);
         
-        // window.location.href = '/zbbManage'
-        // Cookies.remove(TOKEN_KEY)
         Message.error('登录过期，请重新登录')
+        Cookies.remove(TOKEN_KEY)
+        window.location.href = '/home'
       } else {
         this.destroy(url)
 

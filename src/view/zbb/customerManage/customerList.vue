@@ -1,9 +1,9 @@
 <template>
     <div>
         <Button type="primary" style='margin:10px 0;display:block;' @click="newData()">添加客服</Button>
-        <Table stripe :columns="column" border :data="list" @on-select='selectItem' @on-select-all='selectItem' @on-selection-change='selectItem'></Table>
-        <Page style="margin-top:20px;" :total="total" show-total :page-size='defailPage' show-elevator show-sizer
-            :page-size-opts='pageSize' @on-change="getchangeList" @on-page-size-change='changePageGetList' />
+        <Table stripe :columns="column" border :data="list"></Table>
+        <!-- <Page style="margin-top:20px;" :total="total" show-total :page-size='defailPage' show-elevator show-sizer
+            :page-size-opts='pageSize' @on-change="getchangeList" @on-page-size-change='changePageGetList' /> -->
         <Modal v-model="editModal" title="客服资料" :mask-closable="false" footer-hide>
             <i-form ref="formInline" class="formPage" :model="formInline" :rules="ruleInline" inline>
                 <FormItem prop="type" class="formItem">
@@ -96,6 +96,7 @@ import axios from "@/libs/api.request";
 export default {
     data() {
         return {
+            deleteName:'',
             editModal: false,
             cancelModal: false,
             formInline: {
@@ -106,6 +107,43 @@ export default {
                 wx: "",
                 type: "Merchant",
                 remark: ""
+            },
+            ruleInline: {
+                name: [
+                    {
+                        required: true,
+                        message: "请输入真实姓名",
+                        trigger: "blur"
+                    }
+                ],
+                // nickname: [
+                //     {
+                //         required: true,
+                //         message: "请输入昵称",
+                //         trigger: "blur"
+                //     }
+                // ],
+                wx: [
+                    {
+                        required: true,
+                        message: "请输入微信号",
+                        trigger: "blur"
+                    }
+                ],
+                // qq: [
+                //     {
+                //         required: true,
+                //         message: "请输入QQ",
+                //         trigger: "blur"
+                //     }
+                // ],
+                phone: [
+                    {
+                        required: true,
+                        message: "请输入手机号码",
+                        trigger: "blur"
+                    }
+                ]
             },
             column: [
                 {
@@ -233,7 +271,7 @@ export default {
             currentPage: 1,
             per_page: 20,
             defailPage: 20,
-            pageSize: [5, 20, 50, 100, 200]
+            pageSize: [5, 10, 20, 50]
         };
     },
     mounted() {

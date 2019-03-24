@@ -552,7 +552,10 @@ export default {
                     title: "性别",
                     align: "center",
                     width: "70",
-                    key: "sex"
+                    // key: "sex"
+                    render(h,params) {
+                        return h('p',params.row.sex===1?'男':(params.row.sex===0?'女':'未知'))                        
+                    },
                 },
                 {
                     title: "微信号",
@@ -772,7 +775,7 @@ export default {
             currentPage: 1,
             per_page: 20,
             defailPage: 20,
-            pageSize: [5, 20, 50, 100, 200],
+            pageSize: [5, 10, 20, 50],
             selectList: [],
             ids: [],
             passModal: false,
@@ -891,13 +894,13 @@ export default {
         returnExcel() {
             let token = ''
             axios.request({
-                url:'http://47.101.217.238/zbb/public/export-token',
+                url:'http://120.79.203.214/zbb/public/export-token',
                 method:'get'
             }).then(res=>{
                 token = res.data
                 //导出excel
             let url =
-                "http://47.101.217.238/zbb/public/backend/apprentices/export?" +
+                "http://120.79.203.214/zbb/public/backend/apprentices/export?" +
                 this.searchData.type1 +
                 "=" +
                 this.searchData.type1Text +
@@ -929,7 +932,7 @@ export default {
             
         },
         returnAdd() {
-            this.$router.push({ path: "/newMaster" });
+            this.$router.push({ path: "/newApprentice" });
         },
         selectItem(selection, row) {
             this.selectList = selection;

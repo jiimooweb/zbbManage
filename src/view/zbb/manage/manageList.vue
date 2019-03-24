@@ -89,6 +89,7 @@
 
 <script>
 import axios from "@/libs/api.request";
+import { returnPowerStrArr } from '@/libs/util'
 export default {
     data() {
         return {
@@ -147,9 +148,9 @@ export default {
                 {
                     title: "用户组",
                     // key: "powers"
-                    render(h,params) {
-                        return h('p',params.row.group.name)
-                    },
+                    render(h, params) {
+                        return h("p", params.row.group.name);
+                    }
                 },
                 {
                     title: "操作",
@@ -242,6 +243,17 @@ export default {
                     this.getGroup();
                     this.powerModal = false;
                     this.formInline.powers = "";
+                    axios
+                        .request({
+                            url: "admin",
+                            method: "get"
+                        })
+                        .then(res => {
+                            let strArr = returnPowerStrArr(res.data.data.group.has_powers)
+                            this.$store.commit("setAccess",strArr);
+                            this.$store.commit("setUserName",res.data.data.username);
+                            this.$store.commit("setUserId", res.data.data.id);
+                        });
                 });
         },
         getGroup() {

@@ -85,7 +85,7 @@
                         </i-col>
                         <i-col span='16'>
                             <FormItem prop="start_time">
-                                <DatePicker :value="searchData.start_time" @on-change='changeDate1' type="daterange"
+                                <DatePicker :value="searchData.start_time" @on-change='changeDate' type="daterange"
                                     placeholder="选择日期"></DatePicker>
                             </FormItem>
                         </i-col>
@@ -116,7 +116,7 @@ export default {
             currentPage: 1,
             per_page: 20,
             defailPage: 20,
-            pageSize: [5, 20, 50, 100, 200],
+            pageSize: [5, 10, 20, 50],
             searchData: {
                 type1: "apprentice_username",
                 type1Text: "",
@@ -179,6 +179,9 @@ export default {
         };
     },
     methods: {
+        changeDate(date){
+            this.searchData.start_time = date
+        },
         getList() {
             axios
                 .request({
@@ -235,12 +238,12 @@ export default {
         returnExcel() {
             let token = ''
             axios.request({
-                url:'http://47.101.217.238/zbb/public/export-token',
+                url:'http://120.79.203.214/zbb/public/export-token',
                 method:'get'
             }).then(res=>{
                 token = res.data
                 let url =
-                "http://47.101.217.238/zbb/public/backend/finance/apprentices/fund/export?" +
+                "http://120.79.203.214/zbb/public/backend/finance/apprentices/fund/export?" +
                 "apprentice_username=" +
                 (this.searchData.type1 === "apprentice_username"
                     ? this.searchData.type1Text

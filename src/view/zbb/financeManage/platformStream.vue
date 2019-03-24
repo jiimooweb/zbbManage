@@ -97,6 +97,7 @@ import axios from "@/libs/api.request";
 export default {
     data() {
         return {
+            count:0,
             searchData:{
                 type2:'time',
                 man_type:2,
@@ -172,7 +173,7 @@ export default {
             currentPage: 1,
             per_page: 20,
             defailPage: 20,
-            pageSize: [5, 20, 50, 100, 200],
+            pageSize: [5, 10, 20, 50],
             selectList: [],
             ids:[]
         };
@@ -181,12 +182,12 @@ export default {
         returnExcel(){
             let token = ''
             axios.request({
-                url:'http://47.101.217.238/zbb/public/export-token',
+                url:'http://120.79.203.214/zbb/public/export-token',
                 method:'get'
             }).then(res=>{
                 token = res.data
                 let url =
-                "http://47.101.217.238/zbb/public/backend/finance/recharges/export?" +
+                "http://120.79.203.214/zbb/public/backend/finance/recharges/export?" +
                 "type=" +
                 (this.searchData.type === -2 ? "" : this.searchData.type) +
                 "&status=" +
@@ -201,7 +202,7 @@ export default {
             window.open(url);
             })
             // let url =
-            //     "http://47.101.217.238/zbb/public/backend/finance/recharges/export?" +
+            //     "http://120.79.203.214/zbb/public/backend/finance/recharges/export?" +
             //     "type=" +
             //     (this.searchData.type === -2 ? "" : this.searchData.type) +
             //     "&status=" +

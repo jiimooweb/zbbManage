@@ -187,7 +187,7 @@ export default {
     }
     // 获取未读消息条数
     this.getUnreadMessageCount()
-    console.log(this.$store.state.user.userName);
+    // console.log(this.$store.state.user.userName);
     
   }
 }

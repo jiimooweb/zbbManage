@@ -56,7 +56,7 @@
                         </i-col>
                         <i-col span='18'>
                             <FormItem prop="start_time">
-                                <DatePicker :value="searchData.start_time" @on-change='changeDate1' type="daterange"
+                                <DatePicker :value="searchData.start_time" @on-change='changeDate' type="daterange"
                                     placeholder="选择日期"></DatePicker>
                             </FormItem>
                         </i-col>
@@ -106,7 +106,10 @@ export default {
                     title: "任务完成时间",
                     align: "center",
                     width: "200",
-                    key: "task_time"
+                    // key: "task_time"
+                    render(h,params) {
+                        return h('p',params.row.task_time?params.row.task_time:'无')
+                    },
                 },
                 // {
                 //     title: "数量",
@@ -181,7 +184,7 @@ export default {
                     // key: "success_url"
                     render: (h, params) => {
                         if (params.row.success_url === "") {
-                            return h("h", "无");
+                            return h("p", "无");
                         } else {
                             return h("img", {
                                 attrs: {
@@ -202,13 +205,18 @@ export default {
                     title: "确认时间",
                     width: "200",
                     align: "center",
-                    key: "confirm_time"
+                    render(h,params) {
+                        return h('p',params.row.confirm_time?params.row.confirm_time:'无')
+                    },
                 },
                 {
                     title: "确认人",
                     width: "150",
                     align: "center",
-                    key: "confirmor"
+                    // key: "confirmor"
+                    render(h,params) {
+                        return h('p',params.row.confirmor?params.row.confirmor:'无')
+                    },
                 },
                 {
                     title: "操作",
@@ -272,7 +280,7 @@ export default {
             currentPage: 1,
             per_page: 20,
             defailPage: 20,
-            pageSize: [5, 20, 50, 100, 200],
+            pageSize: [5, 10, 20, 50],
 
             deleteName: "",
             returnModal: false,
@@ -283,6 +291,9 @@ export default {
         this.getList();
     },
     methods: {
+        changeDate(date){
+            this.searchData.start_time = date
+        },
         hidePic() {
             this.showPic = false;
         },
@@ -348,7 +359,7 @@ export default {
                         "&create_time=" +
                         (this.searchData.start_time[0] === ""
                             ? ""
-                            : JSON.stringify(this.searchData.start_time)),
+                            : this.searchData.start_time[0]+','+this.searchData.start_time[1]),
                     method: "get"
                 })
                 .then(res => {

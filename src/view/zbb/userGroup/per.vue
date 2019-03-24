@@ -247,7 +247,7 @@ export default {
                             sign:'apprenticeCheckList',
                             name: "徒弟审核",
                             value: true
-                        },,{
+                        },{
                             sign:'newApprentice',
                             name: "添加徒弟",
                             value: true

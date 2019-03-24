@@ -3,7 +3,7 @@
 
         <Card class="card">
             <div class="logo"></div>
-            <i-form ref="formInline" class="loginPage" :model="formInline" :rules="ruleInline" inline>
+            <i-form ref="formInline" class="loginPage" :model="formInline" :rules="ruleInline" inline  @keydown.enter.native="handleSubmit('formInline')">
                 <FormItem prop="username" class="loginItem">
                     <row class="loginRow">
                         <i-col span='24'>
@@ -71,9 +71,6 @@ export default {
     },
     methods: {
         handleSubmit(name) {
-            // this.$router.push({path:'/'})
-            // return
-            
             this.$refs[name].validate(valid => {
                 if (valid) {
                     axios

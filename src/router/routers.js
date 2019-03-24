@@ -33,22 +33,25 @@ export default [{
     component: Main,
     meta: {
         //   hideInMenu: true,
-        notCache: true
+        notCache: true,
+        access:['home'],
     },
     children: [{
         path: '/',
         name: 'home',
         meta: {
             title: '首页',
-            icon: 'md-home'
+            icon: 'md-home',
+            access:['home'],
         },
         component: () => import('@/view/zbb/home/home')
     }]
 }, {
-    path: '/manage',
+    path: '/',
     name: '管理员管理',
     component: Main,
     meta: {
+        // access:['manageList','manageEdit'],
         title: '管理员管理',
         icon: 'ios-contact'
     },
@@ -56,6 +59,7 @@ export default [{
         path: '/manageList',
         name: '管理员列表',
         meta: {
+            // access:['manageList'],
             title: '管理员列表',
             icon: 'md-list'
         },
@@ -64,6 +68,7 @@ export default [{
         path: '/manageEdit',
         name: '管理员(新增or编辑)',
         meta: {
+            access:['manageEdit'],
             title: '管理员管理',
             icon: 'md-create'
         },
@@ -74,6 +79,7 @@ export default [{
     name: '用户组管理',
     component: Main,
     meta: {
+        // access:['groupList','newGroup','permissionManage'],
         title: '用户组管理',
         icon: 'ios-people'
     },
@@ -81,6 +87,7 @@ export default [{
         path: '/groupList',
         name: '用户组列表',
         meta: {
+            // access:['groupList'],
             title: '用户组列表',
             icon: 'md-list'
         },
@@ -89,6 +96,7 @@ export default [{
         path: '/newGroup',
         name: '添加用户组',
         meta: {
+            access:['newGroup'],
             title: '添加用户组',
             icon: 'md-add'
         },
@@ -98,27 +106,29 @@ export default [{
         path: '/permissionManage',
         name: '权限管理',
         meta: {
+            // access:['permissionManage'],
             hideInMenu: true,
             title: '权限管理',
             icon: 'md-add'
         },
         component: () => import('@/view/zbb/userGroup/permissionManage')
     },
-    {
-        path: '/per',
-        name: 'per',
-        meta: {
-            title: 'per',
-            icon: 'md-add'
-        },
-        component: () => import('@/view/zbb/userGroup/per')
-    }
+    // {
+    //     path: '/per',
+    //     name: 'per',
+    //     meta: {
+    //         title: 'per',
+    //         icon: 'md-add'
+    //     },
+    //     component: () => import('@/view/zbb/userGroup/per')
+    // }
 ]
 }, {
     path: '/customerManage',
     name: '客服管理',
     component: Main,
     meta: {
+        access:['customerList','newCustomer'],
         title: '客服管理',
         icon: 'md-headset'
     },
@@ -126,6 +136,7 @@ export default [{
         path: '/customerList',
         name: '客服列表',
         meta: {
+            access:['customerList'],
             title: '客服列表',
             icon: 'md-list'
         },
@@ -134,6 +145,7 @@ export default [{
         path: '/newCustomer',
         name: '添加客服',
         meta: {
+            access:['newCustomer'],
             title: '添加客服',
             icon: 'md-add'
         },
@@ -144,6 +156,7 @@ export default [{
     name: '客户管理',
     component: Main,
     meta: {
+        access:['clientList','newClient'],
         title: '客户管理',
         icon: 'ios-man'
     },
@@ -151,6 +164,7 @@ export default [{
         path: '/clientList',
         name: '客户列表',
         meta: {
+            access:['clientList'],
             title: '客户列表',
             icon: 'md-list'
         },
@@ -159,6 +173,7 @@ export default [{
         path: '/newClient',
         name: '添加客户',
         meta: {
+            access:['newClient'],
             title: '添加客户',
             icon: 'md-add'
         },
@@ -169,6 +184,7 @@ export default [{
     name: '任务管理',
     component: Main,
     meta: {
+        access:['taskTypeManage','taskPList','taskCList','newTask'],
         title: '任务管理',
         icon: 'ios-albums'
     },
@@ -176,6 +192,7 @@ export default [{
         path: '/taskTypeManage',
         name: '任务分类管理',
         meta: {
+            access:['taskTypeManage'],
             title: '任务分类管理',
             icon: 'md-list'
         },
@@ -184,6 +201,7 @@ export default [{
         path: '/taskPList',
         name: '母任务列表',
         meta: {
+            access:['taskPList'],
             title: '母任务列表',
             icon: 'md-list'
         },
@@ -192,6 +210,7 @@ export default [{
         path: '/taskCList',
         name: '子任务列表',
         meta: {
+            access:['taskCList'],
             title: '子任务列表',
             icon: 'md-list'
         },
@@ -200,16 +219,28 @@ export default [{
         path: '/newTask',
         name: '添加任务',
         meta: {
+            access:['newTask'],
             title: '添加任务',
             icon: 'md-add'
         },
         component: () => import('@/view/zbb/taskManage/newTask')
-    }]
+    }, 
+    // {
+    //     path: '/testTable',
+    //     name: '测试表格',
+    //     meta: {
+    //         title: '测试表格',
+    //         icon: 'md-add'
+    //     },
+    //     component: () => import('@/view/zbb/taskManage/testTable')
+    // }
+]
 }, {
     path: '/masterManage',
     name: '师傅管理',
     component: Main,
     meta: {
+        access:['masterList','newMaster'],
         title: '师傅管理',
         icon: 'ios-contacts'
     },
@@ -218,6 +249,7 @@ export default [{
             path: '/masterList',
             name: '师傅列表',
             meta: {
+                access:['masterList'],
                 title: '师傅列表',
                 icon: 'md-list'
             },
@@ -226,6 +258,7 @@ export default [{
             path: '/newMaster',
             name: '新增师傅',
             meta: {
+                access:['newMaster'],
                 title: '新增师傅',
                 icon: 'md-add'
             },
@@ -236,6 +269,7 @@ export default [{
     name: '徒弟管理',
     component: Main,
     meta: {
+        access:['apprenticeList','apprenticeCheckList','newApprentice'],
         title: '徒弟管理',
         icon: 'md-contacts'
     },
@@ -244,6 +278,7 @@ export default [{
             path: '/apprenticeList',
             name: '徒弟列表',
             meta: {
+                access:['apprenticeList'],
                 title: '徒弟列表',
                 icon: 'md-list'
             },
@@ -252,6 +287,7 @@ export default [{
             path: '/apprenticeCheckList',
             name: '徒弟审核列表',
             meta: {
+                access:['apprenticeCheckList'],
                 title: '徒弟审核列表',
                 icon: 'md-list'
             },
@@ -260,6 +296,7 @@ export default [{
             path: '/newApprentice',
             name: '新增徒弟',
             meta: {
+                access:['newApprentice'],
                 title: '新增徒弟',
                 icon: 'md-add'
             },
@@ -270,6 +307,7 @@ export default [{
     name: '财务管理',
     component: Main,
     meta: {
+        access:['bankManage','bindingBank','masterWithdraw','apprenticeWithdraw','masterFunds','apprenticeFunds','rechargeReview','platformStream','uesrMoneyEdit'],
         title: '财务管理',
         icon: 'logo-yen'
     },
@@ -278,6 +316,7 @@ export default [{
             path: '/bankManage',
             name: '银行名称管理',
             meta: {
+                access:['bankManage'],
                 title: '银行名称管理',
                 icon: 'md-list'
             },
@@ -286,6 +325,7 @@ export default [{
             path: '/bindingBank',
             name: '绑定银行管理',
             meta: {
+                access:['bindingBank'],
                 title: '绑定银行管理',
                 icon: 'md-list'
             },
@@ -304,6 +344,7 @@ export default [{
             path: '/masterWithdraw',
             name: '[师傅] 提现管理',
             meta: {
+                access:['masterWithdraw'],
                 title: '[师傅] 提现管理',
                 icon: 'md-list'
             },
@@ -312,6 +353,7 @@ export default [{
             path: '/apprenticeWithdraw',
             name: '[徒弟] 提现管理',
             meta: {
+                access:['apprenticeWithdraw'],
                 title: '[徒弟] 提现管理',
                 icon: 'md-list'
             },
@@ -320,6 +362,7 @@ export default [{
             path: '/masterFunds',
             name: '[师傅] 资金记录',
             meta: {
+                access:['masterFunds'],
                 title: '[师傅] 资金记录',
                 icon: 'md-funnel'
             },
@@ -328,6 +371,7 @@ export default [{
             path: '/apprenticeFunds',
             name: '[徒弟] 资金记录',
             meta: {
+                access:['apprenticeFunds'],
                 title: '[徒弟] 资金记录',
                 icon: 'md-funnel'
             },
@@ -336,6 +380,7 @@ export default [{
             path: '/rechargeReview',
             name: '充值审核',
             meta: {
+                access:['rechargeReview'],
                 title: '充值审核',
                 icon: 'ios-card'
             },
@@ -344,6 +389,7 @@ export default [{
             path: '/platformStream',
             name: '平台总流水',
             meta: {
+                access:['platformStream'],
                 title: '平台总流水',
                 icon: 'ios-infinite'
             },
@@ -352,6 +398,7 @@ export default [{
             path: '/uesrMoneyEdit',
             name: '用户金额修改',
             meta: {
+                access:['uesrMoneyEdit'],
                 title: '用户金额修改',
                 icon: 'ios-document'
             },
@@ -362,6 +409,7 @@ export default [{
     name: '广告管理',
     component: Main,
     meta: {
+        access:['adRecommend','adList','newAd'],
         title: '广告管理',
         icon: 'md-albums'
     },
@@ -370,6 +418,7 @@ export default [{
             path: '/adRecommend',
             name: '投放推荐管理',
             meta: {
+                access:['adRecommend'],
                 title: '投放推荐管理',
                 icon: 'md-list'
             },
@@ -378,6 +427,7 @@ export default [{
             path: '/adList',
             name: '广告列表',
             meta: {
+                access:['adList'],
                 title: '广告列表',
                 icon: 'md-list'
             },
@@ -386,6 +436,7 @@ export default [{
             path: '/newAd',
             name: '添加广告',
             meta: {
+                access:['newAd'],
                 title: '添加广告',
                 icon: 'md-add'
             },
@@ -396,6 +447,7 @@ export default [{
     name: '系统配置',
     component: Main,
     meta: {
+        access:['systemJson','collectionAccount'],
         title: '系统配置',
         icon: 'ios-build'
     },
@@ -404,6 +456,7 @@ export default [{
             path: '/systemJson',
             name: '系统配置',
             meta: {
+                access:['systemJson'],
                 title: '系统配置',
                 icon: 'ios-build'
             },
@@ -412,6 +465,7 @@ export default [{
             path: '/collectionAccount',
             name: '收款账户',
             meta: {
+                access:['collectionAccount'],
                 title: '收款账户',
                 icon: 'ios-card-outline'
             },
@@ -422,6 +476,7 @@ export default [{
     name: '黑户管理',
     component: Main,
     meta: {
+        access:['masterDisable','masterBlack','apprenticeDisable','apprenticeBlack'],
         title: '黑户管理',
         icon: 'ios-build'
     },
@@ -430,6 +485,7 @@ export default [{
             path: '/masterDisable',
             name: '师傅禁用列表',
             meta: {
+                access:['masterDisable'],
                 title: '师傅禁用列表',
                 icon: 'ios-man'
             },
@@ -438,6 +494,7 @@ export default [{
             path: '/masterBlack',
             name: '师傅拉黑列表',
             meta: {
+                access:['masterBlack'],
                 title: '师傅拉黑列表',
                 icon: 'ios-man'
             },
@@ -446,6 +503,7 @@ export default [{
             path: '/apprenticeDisable',
             name: '徒弟禁用列表',
             meta: {
+                access:['apprenticeDisable'],
                 title: '徒弟禁用列表',
                 icon: 'ios-man'
             },
@@ -454,6 +512,7 @@ export default [{
             path: '/apprenticeBlack',
             name: '徒弟拉黑列表',
             meta: {
+                access:['apprenticeBlack'],
                 title: '徒弟拉黑列表',
                 icon: 'ios-man'
             },
@@ -464,6 +523,7 @@ export default [{
     name: '登录管理',
     component: Main,
     meta: {
+        access:['loginList'],
         title: '登录管理',
         icon: 'ios-albums-outline'
     },
@@ -472,6 +532,7 @@ export default [{
             path: '/loginList',
             name: '登录记录',
             meta: {
+                access:['loginList'],
                 title: '登录记录',
                 icon: 'ios-list'
             },
@@ -482,6 +543,7 @@ export default [{
     name: '操作管理',
     component: Main,
     meta: {
+        access:['operatingList'],
         title: '操作管理',
         icon: 'ios-albums-outline'
     },
@@ -490,6 +552,7 @@ export default [{
             path: '/operatingList',
             name: '操作记录',
             meta: {
+                access:['operatingList'],
                 title: '操作记录',
                 icon: 'ios-list'
             },
@@ -536,5 +599,26 @@ export default [{
         },
         component: () => import('@/view/single-page/message/index.vue')
     }]
-}
+},
+{
+    path: '/articleManage',
+    name: '文章管理',
+    component: Main,
+    meta: {
+        // access:['loginList'],
+        title: '文章管理',
+        icon: 'ios-albums-outline'
+    },
+    children: [
+        {
+            path: '/articleList',
+            name: '文章列表',
+            meta: {
+                // access:['loginList'],
+                title: '文章列表',
+                icon: 'ios-list'
+            },
+            component: () => import('@/view/zbb/articleManage/articleList')
+        }]
+},
 ]

@@ -73,7 +73,6 @@
             </i-col>
         </row>
         <Table stripe :columns="column" border :data="list" v-show="showTable"></Table>
-        <!-- <i-table stripe :columns="column" border :data="list1"></i-table> -->
         <Page style="margin-top:20px;" :total="total" show-total :page-size='defailPage' show-elevator show-sizer
             :page-size-opts='pageSize' @on-change="getchangeList" @on-page-size-change='changePageGetList' />
         <Modal v-model="cancelModal" title='删除' @on-ok="deleteItem()" @on-cancel="cancelcancel(false)">
@@ -84,7 +83,7 @@
         </Modal>
         <Modal v-model="returnModal1" title='审核' @on-ok="returnItem(-1)" :mask-closable="false" @on-cancel="returncancel1(false)">
             <p style="text-align:center;font-size:16px;">是否拒绝任务----<span style="color:red;">{{deleteName}}</span>----的审核</p>
-            <i-input style="margin-top:20px;" type='textarea' rows='5' placeholder="输入拒绝原因" v-model="reason" class="formInput"></i-input>
+            <i-input style="margin-top:20px;" type='textarea' :rows='5' placeholder="输入拒绝原因" v-model="reason" class="formInput"></i-input>
         </Modal>
         <Modal v-model="showModal" width='800px' class="TASKLISTModal" title='任务详情' footer-hide>
             <i-form ref="formInline" class="formPage" inline>
@@ -360,7 +359,9 @@
 <script>
 import axios from "@/libs/api.request";
 import Cookies from "js-cookie";
-import VueUeditorWrap from "vue-ueditor-wrap";
+// import VueUeditorWrap from "vue-ueditor-wrap";
+// import bigdataTable from '../../components/vue-bigdata-table';
+// import indexRender from './index-render.js';
 export default {
     computed: {
         headers() {
@@ -439,10 +440,10 @@ export default {
             return this.total_price;
         }
     },
-    components: { VueUeditorWrap },
+    components: {},
     data() {
         return {
-            showTable:false,
+            showTable:true,
             showData: {
                 id: "",
                 created_at: "",
@@ -471,7 +472,7 @@ export default {
                 initialFrameWidth: "100%",
                 // 上传文件接口（这个地址是我为了方便各位体验文件上传功能搭建的临时接口，请勿在生产环境使用！！！）
                 // serverUrl: "http://35.201.165.105:8000/controller.php",
-                serverUrl: "http://47.101.217.238/zbb/public/get-edit",
+                serverUrl: "http://120.79.203.214/zbb/public/get-edit",
 
                 // UEditor 资源文件的存放路径，如果你使用的是 vue-cli 生成的项目，通常不需要设置该选项，vue-ueditor-wrap 会自动处理常见的情况，如果需要特殊配置，参考下方的常见问题2
                 UEDITOR_HOME_URL: "/UEditor/"
@@ -554,13 +555,13 @@ export default {
                     align: "center",
                     key: "title"
                 },
-                {
-                    title: "分类",
-                    align: "center",
-                    render(h, params) {
-                        return h("p", params.row.cate.name);
-                    }
-                },
+                // {
+                //     title: "分类",
+                //     align: "center",
+                //     render(h, params) {
+                //         return h("p", !params.row.cate?"无":params.row.cate.name);
+                //     }
+                // },
                 {
                     title: "任务类型",
                     align: "center",
@@ -605,181 +606,191 @@ export default {
                 //     title: "文案",
                 //     align: "center",
                 //     render: (h, params) => {
-                //         return h("pre", params.row.wx_content);
+                //         return h("pre",{
+                            
+                //         }, !params.row.wx_content?"":params.row.wx_content);
                 //     }
                 // },
-                // {
-                //     title: "任务开始时间",
-                //     align: "center",
-                //     key: "start_time"
-                // },
-                // {
-                //     title: "创建日期",
-                //     align: "center",
-                //     key: "created_at"
-                // },
-                // {
-                //     title: "任务开关",
-                //     align: "center",
-                //     render: (h, params) => {
-                //         return h(
-                //             "i-switch",
-                //             {
-                //                 props: {
-                //                     trueValue: 1,
-                //                     falseValue: 0,
-                //                     value: params.row.status
-                //                 },
-                //                 nativeOn: {
-                //                     click: () => {
-                //                         if (params.row.merchant_status === 1) {
-                //                             this.$Message.error(
-                //                                 "该任务已由客户关闭，无法进行操作"
-                //                             );
-                //                             params.row.status = !params.row
-                //                                 .status;
-                //                             return false;
-                //                         }
-                //                         axios
-                //                             .request({
-                //                                 url:
-                //                                     "task/tasks/" +
-                //                                     params.row.id +
-                //                                     "/change",
-                //                                 method: "post"
-                //                             })
-                //                             .then(res => {
-                //                                 this.$Message.success(
-                //                                     "状态修改成功"
-                //                                 );
-                //                                 this.getList();
-                //                             });
-                //                     }
-                //                 }
-                //             },
-                //             0
-                //         );
-                //     }
-                // },
-                // {
-                //     title: "操作",
-                //     align: "center",
-                //     width: "300",
-                //     render: (h, params) => {
-                //         return h("div", [
-                //             h(
-                //                 "Button",
-                //                 {
-                //                     props: {
-                //                         type: "primary",
-                //                         size: "small"
-                //                     },
-                //                     attrs: {
-                //                         style:
-                //                             "font-size:12px;margin-right:15px;"
-                //                     },
-                //                     nativeOn: {
-                //                         click: () => {
-                //                             this.showData.id = params.row.id;
-                //                             this.showData.created_at =
-                //                                 params.row.created_at;
-                //                             this.showData.start_time =
-                //                                 params.row.start_time;
-                //                             this.showData.status =
-                //                                 params.row.status;
-                //                             this.showData.type =
-                //                                 params.row.type;
+                {
+                    title: "任务开始时间",
+                    align: "center",
+                    // key: "start_time"
+                    render(h,params) {
+                        return h('p',!params.row.start_time?'无':params.row.start_time)
+                    },
+                },
+                {
+                    title: "创建日期",
+                    align: "center",
+                    // key: "created_at"
+                    render(h,params) {
+                        return h('p',!params.row.created_at?'无':params.row.created_at)
+                    },
+                },
+                {
+                    title: "任务开关",
+                    align: "center",
+                    render: (h, params) => {
+                        return h(
+                            "i-switch",
+                            {
+                                props: {
+                                    trueValue: 1,
+                                    falseValue: 0,
+                                    value: params.row.status
+                                },
+                                nativeOn: {
+                                    click: () => {
+                                        if (params.row.merchant_status === 1) {
+                                            this.$Message.error(
+                                                "该任务已由客户关闭，无法进行操作"
+                                            );
+                                            params.row.status = !params.row
+                                                .status;
+                                            return false;
+                                        }
+                                        axios
+                                            .request({
+                                                url:
+                                                    "task/tasks/" +
+                                                    params.row.id +
+                                                    "/change",
+                                                method: "post"
+                                            })
+                                            .then(res => {
+                                                this.$Message.success(
+                                                    "状态修改成功"
+                                                );
+                                                this.getList();
+                                            });
+                                    }
+                                }
+                            },
+                            0
+                        );
+                    }
+                },
+                {
+                    title: "操作",
+                    align: "center",
+                    width: "300",
+                    render: (h, params) => {
+                        return h("div", [
+                            h(
+                                "Button",
+                                {
+                                    props: {
+                                        type: "primary",
+                                        size: "small"
+                                    },
+                                    attrs: {
+                                        style:
+                                            "font-size:12px;margin-right:15px;"
+                                    },
+                                    nativeOn: {
+                                        click: () => {
+                                            this.showData.id = params.row.id;
+                                            this.showData.created_at =
+                                                params.row.created_at;
+                                            this.showData.start_time =
+                                                params.row.start_time;
+                                            this.showData.status =
+                                                params.row.status;
+                                            this.showData.type =
+                                                params.row.type;
 
-                //                             this.showData.total_price =
-                //                                 params.row.total_price;
-                //                             this.showData.num = params.row.num;
-                //                             this.showData.record_verifys_count =
-                //                                 params.row.record_verifys_count;
-                //                             this.showData.verify_status =
-                //                                 params.row.verify_status;
-                //                             this.showData.records_count =
-                //                                 params.row.records_count;
-                //                             this.showData.title =
-                //                                 params.row.title;
-                //                             this.showData.wx_content =
-                //                                 params.row.wx_content;
-                //                             this.showData.share_content =
-                //                                 params.row.share_content;
-                //                             this.showData.images =
-                //                                 params.row.images;
-                //                             this.showData.share_thumb =
-                //                                 params.row.share_thumb;
-                //                             this.showModal = true;
-                //                         }
-                //                     }
-                //                 },
-                //                 "查看"
-                //             ),
-                //             h(
-                //                 "Button",
-                //                 {
-                //                     props: {
-                //                         type: "success",
-                //                         size: "small"
-                //                     },
-                //                     attrs: {
-                //                         style:
-                //                             "font-size:12px;margin-right:15px;"
-                //                     },
-                //                     nativeOn: {
-                //                         click: () => {
-                //                             this.currentId = params.row.id;
-                //                             this.deleteName = params.row.title;
-                //                             this.returncancel(true);
-                //                         }
-                //                     }
-                //                 },
-                //                 "通过"
-                //             ),
-                //             h(
-                //                 "Button",
-                //                 {
-                //                     props: {
-                //                         type: "warning",
-                //                         size: "small"
-                //                     },
-                //                     attrs: {
-                //                         style:
-                //                             "font-size:12px;margin-right:15px;"
-                //                     },
-                //                     nativeOn: {
-                //                         click: () => {
-                //                             this.currentId = params.row.id;
-                //                             this.deleteName = params.row.title;
-                //                             this.returncancel1(true);
-                //                         }
-                //                     }
-                //                 },
-                //                 "拒绝"
-                //             ),
-                //             h(
-                //                 "Button",
-                //                 {
-                //                     props: {
-                //                         type: "error",
-                //                         size: "small"
-                //                     },
-                //                     attrs: {
-                //                         style: "font-size:12px"
-                //                     },
-                //                     nativeOn: {
-                //                         click: () => {
-                //                             this.currentId = params.row.id;
-                //                             this.deleteName = params.row.title;
-                //                             this.cancelcancel(true);
-                //                         }
-                //                     }
-                //                 },
-                //                 "删除"
-                //             )
-                //         ]);
-                //     }
-                // }
+                                            this.showData.total_price =
+                                                params.row.total_price;
+                                            this.showData.num = params.row.num;
+                                            this.showData.record_verifys_count =
+                                                params.row.record_verifys_count;
+                                            this.showData.verify_status =
+                                                params.row.verify_status;
+                                            this.showData.records_count =
+                                                params.row.records_count;
+                                            this.showData.title =
+                                                params.row.title;
+                                            this.showData.wx_content =
+                                                params.row.wx_content;
+                                            this.showData.share_content =
+                                                params.row.share_content;
+                                            this.showData.images =
+                                                params.row.images;
+                                            this.showData.share_thumb =
+                                                params.row.share_thumb;
+                                            this.showModal = true;
+                                        }
+                                    }
+                                },
+                                "查看"
+                            ),
+                            h(
+                                "Button",
+                                {
+                                    props: {
+                                        type: "success",
+                                        size: "small"
+                                    },
+                                    attrs: {
+                                        style:
+                                            "font-size:12px;margin-right:15px;",
+                                            disabled:params.row.verify_status!==0
+                                    },
+                                    nativeOn: {
+                                        click: () => {
+                                            this.currentId = params.row.id;
+                                            this.deleteName = params.row.title;
+                                            this.returncancel(true);
+                                        }
+                                    }
+                                },
+                                "通过"
+                            ),
+                            h(
+                                "Button",
+                                {
+                                    props: {
+                                        type: "warning",
+                                        size: "small"
+                                    },
+                                    attrs: {
+                                        style:
+                                            "font-size:12px;margin-right:15px;",
+                                            disabled:params.row.verify_status!==0
+                                    },
+                                    nativeOn: {
+                                        click: () => {
+                                            this.currentId = params.row.id;
+                                            this.deleteName = params.row.title;
+                                            this.returncancel1(true);
+                                        }
+                                    }
+                                },
+                                "拒绝"
+                            ),
+                            h(
+                                "Button",
+                                {
+                                    props: {
+                                        type: "error",
+                                        size: "small"
+                                    },
+                                    attrs: {
+                                        style: "font-size:12px"
+                                    },
+                                    nativeOn: {
+                                        click: () => {
+                                            this.currentId = params.row.id;
+                                            this.deleteName = params.row.title;
+                                            this.cancelcancel(true);
+                                        }
+                                    }
+                                },
+                                "删除"
+                            )
+                        ]);
+                    }
+                }
             ],
             list: [],
             deleteName: "",
@@ -790,17 +801,15 @@ export default {
             editModal: false,
             total: 1,
             currentPage: 1,
-            per_page: 5,
-            defailPage: 5,
-            pageSize: [5, 10, 20, 50, 100, 200],
+            per_page: 10,
+            defailPage: 10,
+            pageSize: [5, 10, 20, 50],
 
             typeList: []
         };
     },
     mounted() {
-        console.log("刷新");
-
-        // this.getList();
+        this.getList();
         this.getJson();
         this.getMerchatList();
         this.getTypeList();
@@ -864,7 +873,7 @@ export default {
             }
             axios
                 .request({
-                    url: "http://47.101.217.238/zbb/public/delete",
+                    url: "http://120.79.203.214/zbb/public/delete",
                     method: "post",
                     data: {
                         url: this.deletePicArr
@@ -952,7 +961,7 @@ export default {
             if (this.formInline.images.length > 0) {
                 axios
                     .request({
-                        url: "http://47.101.217.238/zbb/public/delete",
+                        url: "http://120.79.203.214/zbb/public/delete",
                         method: "post",
                         data: {
                             url: this.formInline.images[0]
@@ -979,7 +988,7 @@ export default {
             if (this.formInline.share_thumb !== "") {
                 axios
                     .request({
-                        url: "http://47.101.217.238/zbb/public/delete",
+                        url: "http://120.79.203.214/zbb/public/delete",
                         method: "post",
                         data: {
                             url: this.formInline.share_thumb
@@ -1071,7 +1080,7 @@ export default {
                     }
                     axios
                         .request({
-                            // url: "http://47.101.217.238/zbb/public/total",
+                            // url: "http://120.79.203.214/zbb/public/total",
                             url: "task/tasks",
                             method: "post",
                             data: {

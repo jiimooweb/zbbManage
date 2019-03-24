@@ -54,6 +54,7 @@ import CountTo from "_c/count-to";
 import { ChartPie, ChartBar } from "_c/charts";
 import Example from "./example.vue";
 import axios from "@/libs/api.request";
+import { returnPowerStrArr } from '@/libs/util'
 export default {
     //   name: 'home',
     components: {
@@ -160,7 +161,17 @@ export default {
     mounted() {
         //
         this.getData()
-        this.getUser()
+        axios
+                    .request({
+                        url: "admin",
+                        method: "get"
+                    })
+                    .then(res => {
+                        let strArr = returnPowerStrArr(res.data.data.group.has_powers)
+                        this.$store.commit("setAccess",strArr);
+                        this.$store.commit("setUserName",res.data.data.username);
+                        this.$store.commit("setUserId", res.data.data.id);
+                    });
     },
     methods: {
         returnIndex(index){
@@ -173,15 +184,6 @@ export default {
             }else if(index === 3){
                 this.$router.push({name:'apprenticeList'})
             }
-        },
-        getUser(){
-            axios.request({
-                url:'admin',
-                method:'get'
-            }).then(res=>{
-                this.$store.commit('setUserName',res.data.data.username)
-                this.$store.commit('setUserId',res.data.data.id)
-            })
         },
         getData() {
             axios.request({

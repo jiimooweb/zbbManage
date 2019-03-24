@@ -41,23 +41,29 @@ export default {
                 {
                     title: "微信号",
                     align: "center",
-                    key: "wx"
+                    render: (h, params) => {
+                        return h("p", params.row.wx===''?'无':params.row.wx);
+                    }
                 },
                 {
                     title: "抖音号",
                     align: "center",
-                    key: "dy"
+                    render: (h, params) => {
+                        return h("p", params.row.dy===''?'无':params.row.dy);
+                    }
                 },
                 {
                     title: "头条号",
                     align: "center",
-                    key: "tt"
+                    render: (h, params) => {
+                        return h("p", params.row.tt===''?'无':params.row.tt);
+                    }
                 },
                 {
                     title: "银行卡号",
                     align: "center",
                     render: (h, params) => {
-                        return h("p", params.row.bindBank.bank_number);
+                        return h("p", !params.row.bind_bank?'无':params.row.bind_bank.bank_number);
                     }
                 },
                 {
@@ -107,7 +113,7 @@ export default {
             per_page: 1,
             currentPage: 1,
             defailPage: 20,
-            pageSize: [5, 20, 50, 100, 200],
+            pageSize: [5, 10, 20, 50],
             selectList: []
         };
     },
@@ -115,12 +121,12 @@ export default {
         returnExcel() {
             let token = ''
             axios.request({
-                url:'http://47.101.217.238/zbb/public/export-token',
+                url:'http://120.79.203.214/zbb/public/export-token',
                 method:'get'
             }).then(res=>{
                 token = res.data
                 let url =
-                "http://47.101.217.238/zbb/public/backend/apprentices/blacklist/export"+"?token="+token;
+                "http://120.79.203.214/zbb/public/backend/apprentices/blacklist/export"+"?token="+token;
                 window.open(url);
             })
             

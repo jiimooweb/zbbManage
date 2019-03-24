@@ -42,7 +42,7 @@
                                 <Icon type="ios-loading" size=18 class="demo-spin-icon-load"></Icon>
                                 <div>上传中~~~</div>
                             </Spin>
-                            <Upload style="margin-bottom:10px;" action="http://47.101.217.238/zbb/public/upload"
+                            <Upload style="margin-bottom:10px;" action="http://120.79.203.214/zbb/public/upload"
                                 :on-success='successUpload' :before-upload='beforeUpload' :show-upload-list='false'
                                 :headers="headers">
                                 <Button icon="ios-cloud-upload-outline">上传图片</Button>
@@ -92,9 +92,18 @@
 
 <script>
 import axios from "@/libs/api.request";
+import Cookies from "js-cookie";
 export default {
+    computed: {
+        headers() {
+            return {
+                token: Cookies.get("token")
+            };
+        }
+    },
     data() {
         return {
+            spinShow:false,
             editModal:false,
             column: [
                 {
@@ -247,7 +256,7 @@ export default {
             currentPage: 1,
             per_page: 20,
             defailPage: 20,
-            pageSize: [5, 20, 50, 100, 200]
+            pageSize: [5, 10, 20, 50]
         };
     },
     methods:{
@@ -255,7 +264,7 @@ export default {
         successUpload(file) {
             if (this.formInline.image !== "") {
                 axios.request({
-                    url: "http://47.101.217.238/zbb/public/delete",
+                    url: "http://120.79.203.214/zbb/public/delete",
                     method: "post",
                     data: {
                         url: this.formInline.image

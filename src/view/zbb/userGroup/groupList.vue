@@ -72,7 +72,7 @@ export default {
                                             this.$store.commit('setPowerId',params.row.id)
                                             this.$store.commit('setPowerName',params.row.name)
                                             
-                                            this.$router.push({path:'permissionManage'})
+                                            this.$router.push({path:'/permissionManage'})
                                         }
                                     }
                                 },

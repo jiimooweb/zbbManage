@@ -143,18 +143,16 @@ export default {
                     title: "客户账户",
                     align: "center",
                     width: "100px",
-                    // key: "merchant.name"
                     render:(h,params)=> {
-                        return h('p',params.row.merchant.username)
+                        return h('p',!params.row.merchant?'':params.row.merchant.username)
                     },
                 },
                 {
                     title: "客户名字",
                     align: "center",
                     width: "100px",
-                    // key: "merchant.name"
                     render:(h,params)=> {
-                        return h('p',params.row.merchant.name)
+                        return h('p',!params.row.merchant?'':params.row.merchant.name)
                     },
                 },
                 {
@@ -344,7 +342,7 @@ export default {
             currentPage: 1,
             per_page: 20,
             defailPage: 20,
-            pageSize: [5, 20, 50, 100, 200]
+            pageSize: [5, 10, 20, 50]
         };
     },
     methods: {
@@ -442,12 +440,12 @@ export default {
         returnExcel() {
             let token = ''
             axios.request({
-                url:'http://47.101.217.238/zbb/public/export-token',
+                url:'http://120.79.203.214/zbb/public/export-token',
                 method:'get'
             }).then(res=>{
                 token = res.data
                 let url =
-                "http://47.101.217.238/zbb/public/backend/finance/recharges/export?" +
+                "http://120.79.203.214/zbb/public/backend/finance/recharges/export?" +
                 "type=" +
                 (this.searchData.type === -2 ? "" : this.searchData.type) +
                 "&status=" +

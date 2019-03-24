@@ -189,7 +189,7 @@
                             <span class="lable">身份证正面照片</span>
                         </i-col>
                         <i-col span='18'>
-                            <Upload style="margin-bottom:10px;" action="http://47.101.217.238/zbb/public/upload"
+                            <Upload style="margin-bottom:10px;" action="http://120.79.203.214/zbb/public/upload"
                                 :on-success='successUpload' :before-upload='beforeUpload' :show-upload-list='false'
                                 :headers="headers">
                                 <Button icon="md-add" class="btnUp">
@@ -537,7 +537,7 @@ export default {
             currentPage: 1,
             per_page: 20,
             defailPage: 20,
-            pageSize: [5, 20, 50, 100, 200],
+            pageSize: [5, 10, 20, 50],
             selectList: []
         };
     },
@@ -546,7 +546,7 @@ export default {
             if(this.formInline.id_card !== ''){
                 axios
                 .request({
-                    url: "http://47.101.217.238/zbb/public/delete",
+                    url: "http://120.79.203.214/zbb/public/delete",
                     method: "post",
                     data: {
                         url: this.formInline.id_card
@@ -566,11 +566,11 @@ export default {
         returnExcel(){
             let token = ''
             axios.request({
-                url:'http://47.101.217.238/zbb/public/export-token',
+                url:'http://120.79.203.214/zbb/public/export-token',
                 method:'get'
             }).then(res=>{
                 token = res.data
-                let url = 'http://47.101.217.238/zbb/public/backend/bank/bind/export?username='+ (this.searchData.type1 === "username" ? this.searchData.type1Text : "") +
+                let url = 'http://120.79.203.214/zbb/public/backend/bank/bind/export?username='+ (this.searchData.type1 === "username" ? this.searchData.type1Text : "") +
             "&man_name="+(this.searchData.type1 === "man_name"? this.searchData.type1Text: "") +
             "&man_id="+(this.searchData.type1 === "man_id"? this.searchData.type1Text: "") +
             "&check_id="+(this.searchData.type1 === "check_id" ? this.searchData.type1Text: "") +
@@ -615,9 +615,6 @@ export default {
                         this.$Message.error(err.response.data.msg[i][0]);
                     }
                 });
-        },
-        returnAdd() {
-            this.$router.push({ path: "/newMaster" });
         },
         selectItem(selection, row) {
             this.selectList = selection;

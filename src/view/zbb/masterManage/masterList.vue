@@ -132,7 +132,7 @@
         <Modal v-model="cancelModal" title='删除' @on-ok="cancelItem()" @on-cancel="cancelcancel(false)">
             <p style="text-align:center;font-size:16px;">是否删除师傅账号----<span style="color:red;">{{deleteName}}</span>----</p>
         </Modal>
-        <Modal v-model="editModal" class="MASTERLISTModal" title="修改" @on-ok="okEdit" @on-cancel="cancelEdit"
+        <Modal v-model="editModal" class="MASTERLISTModal" title="修改"
             :mask-closable="false" footer-hide>
             <i-form ref="formInline" class="formPage" :model="formInline" :rules="ruleInline" inline>
                 <FormItem prop="username" class="formItem">
@@ -717,7 +717,7 @@ export default {
             currentPage: 1,
             per_page: 20,
             defailPage: 20,
-            pageSize: [5, 20, 50, 100, 200],
+            pageSize: [5, 10, 20, 50],
             selectList: []
         };
     },
@@ -726,12 +726,12 @@ export default {
         returnExcel() {
             let token = ''
             axios.request({
-                url:'http://47.101.217.238/zbb/public/export-token',
+                url:'http://120.79.203.214/zbb/public/export-token',
                 method:'get'
             }).then(res=>{
                 token = res.data
                 let url =
-                "http://47.101.217.238/zbb/public/backend/masters/export?" +
+                "http://120.79.203.214/zbb/public/backend/masters/export?" +
                 "&" +
                 this.searchData.type1 +
                 "=" +

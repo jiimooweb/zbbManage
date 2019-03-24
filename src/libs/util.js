@@ -2,9 +2,31 @@ import Cookies from 'js-cookie'
 // cookie保存的天数
 import config from '@/config'
 import { forEach, hasOneOf, objEqual } from '@/libs/tools'
+import {permissList} from "@/config/permissJSON";
 const { title, cookieExpires, useI18n } = config
 
 export const TOKEN_KEY = 'token'
+
+// 返回权限数组
+export const returnPowerStrArr = (powNumArr) => {
+    let strArr = []
+    if(powNumArr){
+        powNumArr = JSON.parse(powNumArr)
+    }else{
+        powNumArr = []
+    }
+    for(let z=0;z<powNumArr.length;z++){
+        for (let i = 0; i < permissList.length; i++) {
+            for (let j = 0;j < permissList[i].permiss.length;j++) {
+                if (permissList[i].permiss[j].key === powNumArr[z]) {
+                    strArr.push(permissList[i].permiss[j].sign)
+                }
+            }
+        }
+    }
+    return strArr
+}
+
 
 export const setToken = (token) => {
   Cookies.set(TOKEN_KEY, token, { expires: cookieExpires || 1 })

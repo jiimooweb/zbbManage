@@ -21,6 +21,8 @@ export default {
     // pro: 'http://47.101.217.238/zbb/public/backend/'
     dev: 'http://120.79.203.214/zbb/public/backend/',
     pro: 'http://120.79.203.214/zbb/public/backend/'
+    // dev: 'https://www.iryi.cn/public/backend',
+    // pro: 'https://www.iryi.cn/public/backend'
   },
   /**
    * @description 默认打开的首页的路由name值，默认为home
