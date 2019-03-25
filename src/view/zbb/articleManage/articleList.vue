@@ -36,7 +36,7 @@
                         </i-col>
                         <i-col span='18'>
                             <VueUeditorWrap ref="ueditor" v-model="formInline.content" :destroy="false" @ready="ready"
-                                :config="myConfig" style="line-height:20px;z-index:100;position: relative;"></VueUeditorWrap>
+                                :config="myConfig" style="line-height:20px;z-index:100;position: relative;z-index:10000;"></VueUeditorWrap>
                         </i-col>
                     </row>
                 </FormItem>
@@ -65,6 +65,7 @@ export default {
             currentId: "",
             EditModal: false,
             myConfig: {
+                zIndex: 10000,
                 // 编辑器不自动被内容撑高
                 autoHeightEnabled: false,
                 // 初始容器高度
@@ -72,7 +73,7 @@ export default {
                 // 初始容器宽度
                 initialFrameWidth: "100%",
                 serverUrl: "http://120.79.203.214/zbb/public/get-edit",
-                UEDITOR_HOME_URL: "/UEditor/"
+                UEDITOR_HOME_URL: "/zbbManage/UEditor/"
             },
             formInline: {
                 title: "",

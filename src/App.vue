@@ -6,30 +6,43 @@
 
 <script>
 import axios from "@/libs/api.request";
-import { returnPowerStrArr } from '@/libs/util'
+import { returnPowerStrArr } from "@/libs/util";
+import { setToken, getToken } from "@/libs/util";
 export default {
     name: "App",
     data() {
         return {};
     },
-    mounted(){
-        this.resetUserData()
+    mounted() {
+        this.resetUserData();
+    },
+    watch: {
+        $route(to, from) {
+            this.resetUserData()
+        }
     },
     methods: {
         resetUserData() {
-            return
-            // if ((!this.$store.state.user.userName || this.$store.state.user.userName === '') && (this.$router.history.current.name !== 'login' || this.$router.history.current.name===null)) {
-            if (this.$router.history.current.name !== 'login' || this.$router.history.current.name===null) {
-                console.log('执行');
+            if (
+                this.$router.history.current.name !== "login" &&
+                this.$router.history.current.name !== null &&
+                getToken()
+            ) {
+                console.log("执行");
                 axios
                     .request({
                         url: "admin",
                         method: "get"
                     })
                     .then(res => {
-                        let strArr = returnPowerStrArr(res.data.data.group.has_powers)
-                        this.$store.commit("setAccess",strArr);
-                        this.$store.commit("setUserName",res.data.data.username);
+                        let strArr = returnPowerStrArr(
+                            res.data.data.group.has_powers
+                        );
+                        this.$store.commit("setAccess", strArr);
+                        this.$store.commit(
+                            "setUserName",
+                            res.data.data.username
+                        );
                         this.$store.commit("setUserId", res.data.data.id);
                     });
             }

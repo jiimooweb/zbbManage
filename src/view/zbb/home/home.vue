@@ -54,7 +54,8 @@ import CountTo from "_c/count-to";
 import { ChartPie, ChartBar } from "_c/charts";
 import Example from "./example.vue";
 import axios from "@/libs/api.request";
-import { returnPowerStrArr } from '@/libs/util'
+import { returnPowerStrArr } from '@/libs/util';
+import { setToken, getToken } from '@/libs/util'
 export default {
     //   name: 'home',
     components: {
@@ -161,7 +162,13 @@ export default {
     mounted() {
         //
         this.getData()
-        axios
+        // this.resetUserData()
+    },
+    methods: {
+        resetUserData() {
+            if ((this.$router.history.current.name !== 'login' && this.$router.history.current.name !== null) && getToken()) {
+                console.log('执行');
+                axios
                     .request({
                         url: "admin",
                         method: "get"
@@ -172,8 +179,8 @@ export default {
                         this.$store.commit("setUserName",res.data.data.username);
                         this.$store.commit("setUserId", res.data.data.id);
                     });
-    },
-    methods: {
+            }
+        },
         returnIndex(index){
             if(index === 0){
                 this.$router.push({name:'taskPList'})
