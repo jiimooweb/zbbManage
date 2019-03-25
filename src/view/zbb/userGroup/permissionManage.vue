@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="showData">
         <p style="margin:10px 0;font-size:16px;">当前管理用户组 : <span style="color:red;">{{this.$store.state.currentPowerName}}</span></p>
         <Table stripe border :columns="permissColumn" :data="permissList"></Table>
         <Button type="success" style="margin:10px auto;display:block;" @click="inputData()">提交</Button>
@@ -12,6 +12,7 @@ import {permissList} from "@/config/permissJSON";
 export default {
     data() {
         return {
+            showData:false,
             permissList,
             permissColumn: [
                 {
@@ -55,8 +56,6 @@ export default {
         };
     },
     mounted() {
-        console.log(this.permissList);
-        
         this.hasPowerIntoPower();
         this.getCurrent();
     },
@@ -102,16 +101,26 @@ export default {
                 })
                 .then(res => {
                     this.currentName = res.data.data.name;
-                    this.currentPermiss = JSON.parse(res.data.data.has_powers);
+                    if(res.data.data.has_powers === null){
+                        this.currentPermiss = []
+                    }else{
+                        this.currentPermiss = JSON.parse(res.data.data.has_powers);
+                    }
+                    for (let i = 0; i < this.permissList.length; i++) {
+                        for (let j = 0;j < this.permissList[i].permiss.length;j++) {
+                            this.permissList[i].permiss[j].value = false
+                        }
+                    }
                     for(let z=0;z<this.currentPermiss.length;z++){
                         for (let i = 0; i < this.permissList.length; i++) {
                             for (let j = 0;j < this.permissList[i].permiss.length;j++) {
                                 if (this.permissList[i].permiss[j].key === this.currentPermiss[z]) {
-                                    this.permissList[i].permiss[j].value = !this.permissList[i].permiss[j].value
+                                    this.permissList[i].permiss[j].value = true
                                 }
                             }
                         }
                     }
+                    this.showData = true
                 });
         }
     }

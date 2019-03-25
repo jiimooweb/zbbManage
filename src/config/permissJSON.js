@@ -70,12 +70,12 @@ const permissList = [{
         name: "删除用户组",
         value: false
     },
-    {
-        key: 10,
-        sign: "groupList-powers",
-        name: "分配权限",
-        value: false
-    }
+    // {
+    //     key: 10,
+    //     sign: "groupList-powers",
+    //     name: "分配权限",
+    //     value: false
+    // }
     ]
 },
 {
@@ -247,7 +247,7 @@ const permissList = [{
     {
         key: 35,
         sign: "apprenticeCheckList",
-        name: "徒弟审核",
+        name: "徒弟审核列表",
         value: false
     },
     {
@@ -290,12 +290,14 @@ const permissList = [{
 },
 {
     moudal: "财务管理",
-    permiss: [{
-        key: 42,
-        sign: "financeManage",
-        name: "财务管理",
-        value: false
-    }]
+    permiss: [
+        // {
+        //     key: 42,
+        //     sign: "financeManage",
+        //     name: "财务管理",
+        //     value: false
+        // }
+    ]
 },
 {
     moudal: "-----银行名称管理",

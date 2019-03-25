@@ -509,27 +509,27 @@ export default {
                               );
                     }
                 },
-                {
-                    title: "审核状态",
-                    align: "center",
-                    width: "100",
-                    // key:'status'
-                    render: (h, params) => {
-                        return h(
-                            "p",
-                            {
-                                attrs: {
-                                    style:
-                                        "color:#" +
-                                        (params.row.status === 0
-                                            ? "#999"
-                                            : "19be6b")
-                                }
-                            },
-                            params.row.status === 0 ? "待审核" : "已审核"
-                        );
-                    }
-                },
+                // {
+                //     title: "审核状态",
+                //     align: "center",
+                //     width: "100",
+                //     // key:'status'
+                //     render: (h, params) => {
+                //         return h(
+                //             "p",
+                //             {
+                //                 attrs: {
+                //                     style:
+                //                         "color:#" +
+                //                         (params.row.status === 0
+                //                             ? "#999"
+                //                             : "19be6b")
+                //                 }
+                //             },
+                //             params.row.status === 0 ? "待审核" : "已审核"
+                //         );
+                //     }
+                // },
                 {
                     title: "余额",
                     align: "center",

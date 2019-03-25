@@ -108,6 +108,7 @@ export default [{
         meta: {
             access:['permissionManage'],
             hideInMenu: true,
+            notCache: true,
             title: '权限管理',
             icon: 'md-add'
         },

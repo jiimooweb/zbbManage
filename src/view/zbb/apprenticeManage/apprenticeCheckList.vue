@@ -267,6 +267,9 @@
                 </FormItem>
             </i-form>
         </Modal>
+        <Modal v-model="showPicModal" title="大图" class="APPRENTICECHECKLISTModal" footer-hide>
+            <img :src="bigPic" style="width:100%;height:auto;">
+        </Modal>
     </div>
 </template>
 
@@ -275,6 +278,8 @@ import axios from "@/libs/api.request";
 export default {
     data() {
         return {
+            showPicModal:false,
+            bigPic:'',
             currentId: "",
             editModal: false,
             deleteName: "",
@@ -530,15 +535,25 @@ export default {
                         return h('div',[
                             h('img',{
                                 attrs:{
-                                    style:'margin-right:10px;',
                                     src:(params.row.type === "wx"? params.row.apprentice.wx_qr_img: params.row.type === "dy"? params.row.apprentice.dy_home_img: params.row.apprentice.tt_home_img)
+                                },
+                                on: {
+                                    click: () => {
+                                        this.showPicModal = true
+                                        this.bigPic = (params.row.type === "wx"? params.row.apprentice.wx_qr_img: params.row.type === "dy"? params.row.apprentice.dy_home_img: params.row.apprentice.tt_home_img)
+                                    }
                                 }
                             }),
                             h('img',{
                                 attrs:{
-                                    style:'margin-left:10px;',
                                     disabled: params.row.type === "wx"?true:false,
                                     src:(params.row.type === "wx"? params.row.apprentice.wx_friends_img:'')
+                                },
+                                on: {
+                                    click: () => {
+                                        this.showPicModal = true
+                                        this.bigPic = (params.row.type === "wx"? params.row.apprentice.wx_friends_img:'')
+                                    }
                                 }
                             })
                         ])

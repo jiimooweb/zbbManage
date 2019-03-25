@@ -1,6 +1,6 @@
 <template>
-    <!-- <div v-if="hasData"> -->
-    <div v-if="this.hasPower(this.$store.state.user.access,'home')">
+    <div v-if="hasData">
+    <!-- <div v-if="this.hasPower(this.$store.state.user.access,'home')"> -->
         <p class="countTitle">仪表版</p>
         <Row :gutter="20">
             <i-col v-for="(infor, i) in inforCardData" :xs="12" :md="12" :lg="6" :key="`infor-${i}`" style="height: 120px;padding-bottom: 10px;">

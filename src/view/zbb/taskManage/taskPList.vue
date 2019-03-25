@@ -1187,7 +1187,7 @@ export default {
                         this.per_page +
                         "&page=" +
                         this.currentPage +
-                        "&taskType=" +
+                        "&type=" +
                         (this.searchData.taskType === -1
                             ? ""
                             : this.searchData.taskType) +
