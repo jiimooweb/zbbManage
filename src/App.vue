@@ -28,7 +28,6 @@ export default {
                 this.$router.history.current.name !== null &&
                 getToken()
             ) {
-                console.log("执行");
                 axios
                     .request({
                         url: "admin",

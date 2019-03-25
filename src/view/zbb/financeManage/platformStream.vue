@@ -182,12 +182,12 @@ export default {
         returnExcel(){
             let token = ''
             axios.request({
-                url:'http://120.79.203.214/zbb/public/export-token',
+                url:'https://www.iryi.cn/export-token',
                 method:'get'
             }).then(res=>{
                 token = res.data
                 let url =
-                "http://120.79.203.214/zbb/public/backend/finance/recharges/export?" +
+                "https://www.iryi.cn/backend/finance/recharges/export?" +
                 "type=" +
                 (this.searchData.type === -2 ? "" : this.searchData.type) +
                 "&status=" +
@@ -202,7 +202,7 @@ export default {
             window.open(url);
             })
             // let url =
-            //     "http://120.79.203.214/zbb/public/backend/finance/recharges/export?" +
+            //     "https://www.iryi.cn/backend/finance/recharges/export?" +
             //     "type=" +
             //     (this.searchData.type === -2 ? "" : this.searchData.type) +
             //     "&status=" +

@@ -71,7 +71,7 @@
                 <FormItem prop="qrcode" class="formItem" v-if="formInline.way==='微信'">
                     <row class="formRow">
                         <i-col span='18' offset='6'>
-                            <Upload style="margin-bottom:10px;" action="http://120.79.203.214/zbb/public/upload"
+                            <Upload style="margin-bottom:10px;" action="https://www.iryi.cn/upload"
                                 :on-success='successUpload' :before-upload='beforeUpload' :show-upload-list='false'
                                 :headers="headers">
                                 <Button icon="md-add" class="btnUp">
@@ -293,7 +293,7 @@ export default {
             if (this.formInline.qrcode !== "") {
                 axios
                     .request({
-                        url: "http://120.79.203.214/zbb/public/delete",
+                        url: "https://www.iryi.cn/delete",
                         method: "post",
                         data: {
                             url: this.formInline.qrcode

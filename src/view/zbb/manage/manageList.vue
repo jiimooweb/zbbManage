@@ -15,16 +15,16 @@
                         </i-col>
                     </row>
                 </FormItem>
-                <!-- <FormItem prop="password" class="formItem">
+                <FormItem prop="password" class="formItem">
                         <row class="formRow">
                             <i-col span='6'>
                                 <span class="lable">密码</span>
                             </i-col>
                             <i-col span='18'>
-                                <i-input placeholder="请输入密码" class="formInput" v-model="formInline.password"></i-input>
+                                <i-input placeholder="请输入密码，留空则不修改" type='password' class="formInput" v-model="formInline.password"></i-input>
                             </i-col>
                         </row>
-                    </FormItem> -->
+                    </FormItem>
                 <FormItem prop="phone" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
@@ -98,7 +98,7 @@ export default {
             formInline: {
                 powers: "",
                 username: "",
-                // password:"",
+                password:"",
                 phone: "",
                 email: "",
                 state: 1
@@ -295,7 +295,7 @@ export default {
                             method: "put",
                             data: {
                                 username: this.formInline.username,
-                                // password: this.formInline.password,
+                                password: this.formInline.password,
                                 // powers: this.formInline.powers,
                                 phone: this.formInline.phone,
                                 email: this.formInline.email,
@@ -303,9 +303,9 @@ export default {
                             }
                         })
                         .then(res => {
+                            this.EditModal = false;
                             this.$Message.success("修改成功");
                             this.resetData("formInline");
-                            this.EditModal = false;
                             this.getList();
                             this.getGroup();
                         })

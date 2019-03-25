@@ -27,256 +27,305 @@ export default [{
     component: () => import('@/view/zbb/login/login')
 },
 {
-    path: '/zbbManage',
+    path: '/',
     name: '_home',
-    redirect: '/zbbManage/home',
+    redirect: '/home',
     component: Main,
     meta: {
         //   hideInMenu: true,
-        notCache: true
+        notCache: true,
+        access:['home'],
     },
     children: [{
-        path: '/zbbManage',
+        path: '/',
         name: 'home',
         meta: {
             title: '首页',
-            icon: 'md-home'
+            icon: 'md-home',
+            access:['home'],
         },
         component: () => import('@/view/zbb/home/home')
     }]
 }, {
-    path: '/zbbManage/manage',
+    path: '/',
     name: '管理员管理',
     component: Main,
     meta: {
+        access:['manageList','manageEdit'],
         title: '管理员管理',
         icon: 'ios-contact'
     },
     children: [{
-        path: '/zbbManage/manageList',
+        path: '/manageList',
         name: '管理员列表',
         meta: {
+            access:['manageList'],
             title: '管理员列表',
             icon: 'md-list'
         },
         component: () => import('@/view/zbb/manage/manageList')
     }, {
-        path: '/zbbManage/manageEdit',
+        path: '/manageEdit',
         name: '管理员(新增or编辑)',
         meta: {
+            access:['manageEdit'],
             title: '管理员管理',
             icon: 'md-create'
         },
         component: () => import('@/view/zbb/manage/newManage')
     }]
 }, {
-    path: '/zbbManage/userGroup',
+    path: '/userGroup',
     name: '用户组管理',
     component: Main,
     meta: {
+        access:['groupList','newGroup','permissionManage'],
         title: '用户组管理',
         icon: 'ios-people'
     },
     children: [{
-        path: '/zbbManage/groupList',
+        path: '/groupList',
         name: '用户组列表',
         meta: {
+            access:['groupList'],
             title: '用户组列表',
             icon: 'md-list'
         },
         component: () => import('@/view/zbb/userGroup/groupList')
     }, {
-        path: '/zbbManage/newGroup',
+        path: '/newGroup',
         name: '添加用户组',
         meta: {
+            access:['newGroup'],
             title: '添加用户组',
             icon: 'md-add'
         },
         component: () => import('@/view/zbb/userGroup/newGroup')
     }, 
     {
-        path: '/zbbManage/permissionManage',
+        path: '/permissionManage',
         name: '权限管理',
         meta: {
+            access:['permissionManage'],
             hideInMenu: true,
             title: '权限管理',
             icon: 'md-add'
         },
         component: () => import('@/view/zbb/userGroup/permissionManage')
-    }
+    },
+    // {
+    //     path: '/per',
+    //     name: 'per',
+    //     meta: {
+    //         title: 'per',
+    //         icon: 'md-add'
+    //     },
+    //     component: () => import('@/view/zbb/userGroup/per')
+    // }
 ]
 }, {
-    path: '/zbbManage/customerManage',
+    path: '/customerManage',
     name: '客服管理',
     component: Main,
     meta: {
+        access:['customerList','newCustomer'],
         title: '客服管理',
         icon: 'md-headset'
     },
     children: [{
-        path: '/zbbManage/customerList',
+        path: '/customerList',
         name: '客服列表',
         meta: {
+            access:['customerList'],
             title: '客服列表',
             icon: 'md-list'
         },
         component: () => import('@/view/zbb/customerManage/customerList')
     }, {
-        path: '/zbbManage/newCustomer',
+        path: '/newCustomer',
         name: '添加客服',
         meta: {
+            access:['newCustomer'],
             title: '添加客服',
             icon: 'md-add'
         },
         component: () => import('@/view/zbb/customerManage/newCustomer')
     }]
 }, {
-    path: '/zbbManage/clientManage',
+    path: '/clientManage',
     name: '客户管理',
     component: Main,
     meta: {
+        access:['clientList','newClient'],
         title: '客户管理',
         icon: 'ios-man'
     },
     children: [{
-        path: '/zbbManage/clientList',
+        path: '/clientList',
         name: '客户列表',
         meta: {
+            access:['clientList'],
             title: '客户列表',
             icon: 'md-list'
         },
         component: () => import('@/view/zbb/clientManage/clientList')
     }, {
-        path: '/zbbManage/newClient',
+        path: '/newClient',
         name: '添加客户',
         meta: {
+            access:['newClient'],
             title: '添加客户',
             icon: 'md-add'
         },
         component: () => import('@/view/zbb/clientManage/newClient')
     }]
 }, {
-    path: '/zbbManage/taskManage',
+    path: '/taskManage',
     name: '任务管理',
     component: Main,
     meta: {
+        access:['taskTypeManage','taskPList','taskCList','newTask'],
         title: '任务管理',
         icon: 'ios-albums'
     },
     children: [{
-        path: '/zbbManage/taskTypeManage',
+        path: '/taskTypeManage',
         name: '任务分类管理',
         meta: {
+            access:['taskTypeManage'],
             title: '任务分类管理',
             icon: 'md-list'
         },
         component: () => import('@/view/zbb/taskManage/taskTypeManage')
     },{
-        path: '/zbbManage/taskPList',
+        path: '/taskPList',
         name: '母任务列表',
         meta: {
+            access:['taskPList'],
             title: '母任务列表',
             icon: 'md-list'
         },
         component: () => import('@/view/zbb/taskManage/taskPList')
     }, {
-        path: '/zbbManage/taskCList',
+        path: '/taskCList',
         name: '子任务列表',
         meta: {
+            access:['taskCList'],
             title: '子任务列表',
             icon: 'md-list'
         },
         component: () => import('@/view/zbb/taskManage/taskCList')
     }, {
-        path: '/zbbManage/newTask',
+        path: '/newTask',
         name: '添加任务',
         meta: {
+            access:['newTask'],
             title: '添加任务',
             icon: 'md-add'
         },
         component: () => import('@/view/zbb/taskManage/newTask')
-    }]
+    }, 
+    // {
+    //     path: '/testTable',
+    //     name: '测试表格',
+    //     meta: {
+    //         title: '测试表格',
+    //         icon: 'md-add'
+    //     },
+    //     component: () => import('@/view/zbb/taskManage/testTable')
+    // }
+]
 }, {
-    path: '/zbbManage/masterManage',
+    path: '/masterManage',
     name: '师傅管理',
     component: Main,
     meta: {
+        access:['masterList','newMaster'],
         title: '师傅管理',
         icon: 'ios-contacts'
     },
     children: [
         {
-            path: '/zbbManage/masterList',
+            path: '/masterList',
             name: '师傅列表',
             meta: {
+                access:['masterList'],
                 title: '师傅列表',
                 icon: 'md-list'
             },
             component: () => import('@/view/zbb/masterManage/masterList')
         }, {
-            path: '/zbbManage/newMaster',
+            path: '/newMaster',
             name: '新增师傅',
             meta: {
+                access:['newMaster'],
                 title: '新增师傅',
                 icon: 'md-add'
             },
             component: () => import('@/view/zbb/masterManage/newMaster')
         }]
 }, {
-    path: '/zbbManage/apprenticeManage',
+    path: '/apprenticeManage',
     name: '徒弟管理',
     component: Main,
     meta: {
+        access:['apprenticeList','apprenticeCheckList','newApprentice'],
         title: '徒弟管理',
         icon: 'md-contacts'
     },
     children: [
         {
-            path: '/zbbManage/apprenticeList',
+            path: '/apprenticeList',
             name: '徒弟列表',
             meta: {
+                access:['apprenticeList'],
                 title: '徒弟列表',
                 icon: 'md-list'
             },
             component: () => import('@/view/zbb/apprenticeManage/apprenticeList')
         }, {
-            path: '/zbbManage/apprenticeCheckList',
+            path: '/apprenticeCheckList',
             name: '徒弟审核列表',
             meta: {
+                access:['apprenticeCheckList'],
                 title: '徒弟审核列表',
                 icon: 'md-list'
             },
             component: () => import('@/view/zbb/apprenticeManage/apprenticeCheckList')
         }, {
-            path: '/zbbManage/newApprentice',
+            path: '/newApprentice',
             name: '新增徒弟',
             meta: {
+                access:['newApprentice'],
                 title: '新增徒弟',
                 icon: 'md-add'
             },
             component: () => import('@/view/zbb/apprenticeManage/newApprentice')
         }]
 }, {
-    path: '/zbbManage/financeManage',
+    path: '/financeManage',
     name: '财务管理',
     component: Main,
     meta: {
+        access:['bankManage','bindingBank','masterWithdraw','apprenticeWithdraw','masterFunds','apprenticeFunds','rechargeReview','platformStream','uesrMoneyEdit'],
         title: '财务管理',
         icon: 'logo-yen'
     },
     children: [
         {
-            path: '/zbbManage/bankManage',
+            path: '/bankManage',
             name: '银行名称管理',
             meta: {
+                access:['bankManage'],
                 title: '银行名称管理',
                 icon: 'md-list'
             },
             component: () => import('@/view/zbb/financeManage/bankManage')
         }, {
-            path: '/zbbManage/bindingBank',
+            path: '/bindingBank',
             name: '绑定银行管理',
             meta: {
+                access:['bindingBank'],
                 title: '绑定银行管理',
                 icon: 'md-list'
             },
@@ -292,195 +341,218 @@ export default [{
         //     component: () => import('@/view/zbb/financeManage/bindingCheckBank')
         // }, 
         {
-            path: '/zbbManage/masterWithdraw',
+            path: '/masterWithdraw',
             name: '[师傅] 提现管理',
             meta: {
+                access:['masterWithdraw'],
                 title: '[师傅] 提现管理',
                 icon: 'md-list'
             },
             component: () => import('@/view/zbb/financeManage/masterWithdraw')
         }, {
-            path: '/zbbManage/apprenticeWithdraw',
+            path: '/apprenticeWithdraw',
             name: '[徒弟] 提现管理',
             meta: {
+                access:['apprenticeWithdraw'],
                 title: '[徒弟] 提现管理',
                 icon: 'md-list'
             },
             component: () => import('@/view/zbb/financeManage/apprenticeWithdraw')
         }, {
-            path: '/zbbManage/masterFunds',
+            path: '/masterFunds',
             name: '[师傅] 资金记录',
             meta: {
+                access:['masterFunds'],
                 title: '[师傅] 资金记录',
                 icon: 'md-funnel'
             },
             component: () => import('@/view/zbb/financeManage/masterFunds')
         }, {
-            path: '/zbbManage/apprenticeFunds',
+            path: '/apprenticeFunds',
             name: '[徒弟] 资金记录',
             meta: {
+                access:['apprenticeFunds'],
                 title: '[徒弟] 资金记录',
                 icon: 'md-funnel'
             },
             component: () => import('@/view/zbb/financeManage/apprenticeFunds')
         }, {
-            path: '/zbbManage/rechargeReview',
+            path: '/rechargeReview',
             name: '充值审核',
             meta: {
+                access:['rechargeReview'],
                 title: '充值审核',
                 icon: 'ios-card'
             },
             component: () => import('@/view/zbb/financeManage/rechargeReview')
         }, {
-            path: '/zbbManage/platformStream',
+            path: '/platformStream',
             name: '平台总流水',
             meta: {
+                access:['platformStream'],
                 title: '平台总流水',
                 icon: 'ios-infinite'
             },
             component: () => import('@/view/zbb/financeManage/platformStream')
         }, {
-            path: '/zbbManage/uesrMoneyEdit',
+            path: '/uesrMoneyEdit',
             name: '用户金额修改',
             meta: {
+                access:['uesrMoneyEdit'],
                 title: '用户金额修改',
                 icon: 'ios-document'
             },
             component: () => import('@/view/zbb/financeManage/uesrMoneyEdit')
         }]
 }, {
-    path: '/zbbManage/adManage',
+    path: '/adManage',
     name: '广告管理',
     component: Main,
     meta: {
+        access:['adRecommend','adList','newAd'],
         title: '广告管理',
         icon: 'md-albums'
     },
     children: [
         {
-            path: '/zbbManage/adRecommend',
+            path: '/adRecommend',
             name: '投放推荐管理',
             meta: {
+                access:['adRecommend'],
                 title: '投放推荐管理',
                 icon: 'md-list'
             },
             component: () => import('@/view/zbb/adManage/adRecommend')
         },{
-            path: '/zbbManage/adList',
+            path: '/adList',
             name: '广告列表',
             meta: {
+                access:['adList'],
                 title: '广告列表',
                 icon: 'md-list'
             },
             component: () => import('@/view/zbb/adManage/adList')
         }, {
-            path: '/zbbManage/newAd',
+            path: '/newAd',
             name: '添加广告',
             meta: {
+                access:['newAd'],
                 title: '添加广告',
                 icon: 'md-add'
             },
             component: () => import('@/view/zbb/adManage/newAd')
         }]
 }, {
-    path: '/zbbManage/system',
+    path: '/system',
     name: '系统配置',
     component: Main,
     meta: {
+        access:['systemJson','collectionAccount'],
         title: '系统配置',
         icon: 'ios-build'
     },
     children: [
         {
-            path: '/zbbManage/systemJson',
+            path: '/systemJson',
             name: '系统配置',
             meta: {
+                access:['systemJson'],
                 title: '系统配置',
                 icon: 'ios-build'
             },
             component: () => import('@/view/zbb/systemJson/systemJson')
         }, {
-            path: '/zbbManage/collectionAccount',
+            path: '/collectionAccount',
             name: '收款账户',
             meta: {
+                access:['collectionAccount'],
                 title: '收款账户',
                 icon: 'ios-card-outline'
             },
             component: () => import('@/view/zbb/systemJson/collectionAccount')
         }]
 }, {
-    path: '/zbbManage/black',
+    path: '/black',
     name: '黑户管理',
     component: Main,
     meta: {
+        access:['masterDisable','masterBlack','apprenticeDisable','apprenticeBlack'],
         title: '黑户管理',
         icon: 'ios-build'
     },
     children: [
         {
-            path: '/zbbManage/masterDisable',
+            path: '/masterDisable',
             name: '师傅禁用列表',
             meta: {
+                access:['masterDisable'],
                 title: '师傅禁用列表',
                 icon: 'ios-man'
             },
             component: () => import('@/view/zbb/blackManage/masterDisable')
         }, {
-            path: '/zbbManage/masterBlack',
+            path: '/masterBlack',
             name: '师傅拉黑列表',
             meta: {
+                access:['masterBlack'],
                 title: '师傅拉黑列表',
                 icon: 'ios-man'
             },
             component: () => import('@/view/zbb/blackManage/masterBlack')
         }, {
-            path: '/zbbManage/apprenticeDisable',
+            path: '/apprenticeDisable',
             name: '徒弟禁用列表',
             meta: {
+                access:['apprenticeDisable'],
                 title: '徒弟禁用列表',
                 icon: 'ios-man'
             },
             component: () => import('@/view/zbb/blackManage/apprenticeDisable')
         }, {
-            path: '/zbbManage/apprenticeBlack',
+            path: '/apprenticeBlack',
             name: '徒弟拉黑列表',
             meta: {
+                access:['apprenticeBlack'],
                 title: '徒弟拉黑列表',
                 icon: 'ios-man'
             },
             component: () => import('@/view/zbb/blackManage/apprenticeBlack')
         }]
 }, {
-    path: '/zbbManage/loginManage',
+    path: '/loginManage',
     name: '登录管理',
     component: Main,
     meta: {
+        access:['loginList'],
         title: '登录管理',
         icon: 'ios-albums-outline'
     },
     children: [
         {
-            path: '/zbbManage/loginList',
+            path: '/loginList',
             name: '登录记录',
             meta: {
+                access:['loginList'],
                 title: '登录记录',
                 icon: 'ios-list'
             },
             component: () => import('@/view/zbb/loginManage/loginList')
         }]
 }, {
-    path: '/zbbManage/operatingManage',
+    path: '/operatingManage',
     name: '操作管理',
     component: Main,
     meta: {
+        access:['operatingList'],
         title: '操作管理',
         icon: 'ios-albums-outline'
     },
     children: [
         {
-            path: '/zbbManage/operatingList',
+            path: '/operatingList',
             name: '操作记录',
             meta: {
+                access:['operatingList'],
                 title: '操作记录',
                 icon: 'ios-list'
             },
@@ -488,7 +560,7 @@ export default [{
         }]
 },
 {
-    path: '/zbbManage/401',
+    path: '/401',
     name: 'error_401',
     meta: {
         hideInMenu: true
@@ -496,7 +568,7 @@ export default [{
     component: () => import('@/view/error-page/401.vue')
 },
 {
-    path: '/zbbManage/500',
+    path: '/500',
     name: 'error_500',
     meta: {
         hideInMenu: true
@@ -529,24 +601,45 @@ export default [{
     }]
 },
 {
-    path: '/zbbManage/articleManage',
+    path: '/articleManage',
     name: '文章管理',
     component: Main,
     meta: {
-        // access:['loginList'],
+        access:['articleList'],
         title: '文章管理',
         icon: 'ios-albums-outline'
     },
     children: [
         {
-            path: '/zbbManage/articleList',
+            path: '/articleList',
             name: '文章列表',
             meta: {
-                // access:['loginList'],
+                access:['articleList'],
                 title: '文章列表',
                 icon: 'ios-list'
             },
             component: () => import('@/view/zbb/articleManage/articleList')
         }]
 },
+// {
+//     path: '/noticesManage',
+//     name: '消息管理',
+//     component: Main,
+//     meta: {
+//         access:['noticesList'],
+//         title: '消息管理',
+//         icon: 'ios-albums-outline'
+//     },
+//     children: [
+//         {
+//             path: '/noticesList',
+//             name: '消息列表',
+//             meta: {
+//                 access:['noticesList'],
+//                 title: '消息列表',
+//                 icon: 'ios-list'
+//             },
+//             component: () => import('@/view/zbb/noticesManage/noticesList')
+//         }]
+// },
 ]

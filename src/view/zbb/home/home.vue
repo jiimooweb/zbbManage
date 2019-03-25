@@ -1,5 +1,6 @@
 <template>
-    <div v-if="hasData">
+    <!-- <div v-if="hasData"> -->
+    <div v-if="this.hasPower(this.$store.state.user.access,'home')">
         <p class="countTitle">仪表版</p>
         <Row :gutter="20">
             <i-col v-for="(infor, i) in inforCardData" :xs="12" :md="12" :lg="6" :key="`infor-${i}`" style="height: 120px;padding-bottom: 10px;">
@@ -27,7 +28,7 @@
                 </Card>
             </i-col>
         </Row>
-        <p class="countTitle">近期收入</p>
+        <!-- <p class="countTitle">近期收入</p> -->
         <Row :gutter="20" style="margin-top: 10px;">
             <!-- <i-col :md="24" :lg="8" style="margin-bottom: 20px;">
                 <Card shadow>
@@ -54,7 +55,6 @@ import CountTo from "_c/count-to";
 import { ChartPie, ChartBar } from "_c/charts";
 import Example from "./example.vue";
 import axios from "@/libs/api.request";
-import { returnPowerStrArr } from '@/libs/util';
 import { setToken, getToken } from '@/libs/util'
 export default {
     //   name: 'home',
@@ -162,25 +162,10 @@ export default {
     mounted() {
         //
         this.getData()
-        // this.resetUserData()
+        console.log(this.hasPower('home'));
+        
     },
     methods: {
-        resetUserData() {
-            if ((this.$router.history.current.name !== 'login' && this.$router.history.current.name !== null) && getToken()) {
-                console.log('执行');
-                axios
-                    .request({
-                        url: "admin",
-                        method: "get"
-                    })
-                    .then(res => {
-                        let strArr = returnPowerStrArr(res.data.data.group.has_powers)
-                        this.$store.commit("setAccess",strArr);
-                        this.$store.commit("setUserName",res.data.data.username);
-                        this.$store.commit("setUserId", res.data.data.id);
-                    });
-            }
-        },
         returnIndex(index){
             if(index === 0){
                 this.$router.push({name:'taskPList'})

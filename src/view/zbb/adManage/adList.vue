@@ -42,7 +42,7 @@
                                 <Icon type="ios-loading" size=18 class="demo-spin-icon-load"></Icon>
                                 <div>上传中~~~</div>
                             </Spin>
-                            <Upload style="margin-bottom:10px;" action="http://120.79.203.214/zbb/public/upload"
+                            <Upload style="margin-bottom:10px;" action="https://www.iryi.cn/upload"
                                 :on-success='successUpload' :before-upload='beforeUpload' :show-upload-list='false'
                                 :headers="headers">
                                 <Button icon="ios-cloud-upload-outline">上传图片</Button>
@@ -264,7 +264,7 @@ export default {
         successUpload(file) {
             if (this.formInline.image !== "") {
                 axios.request({
-                    url: "http://120.79.203.214/zbb/public/delete",
+                    url: "https://www.iryi.cn/delete",
                     method: "post",
                     data: {
                         url: this.formInline.image

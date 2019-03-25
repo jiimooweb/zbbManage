@@ -472,10 +472,10 @@ export default {
                 initialFrameWidth: "100%",
                 // 上传文件接口（这个地址是我为了方便各位体验文件上传功能搭建的临时接口，请勿在生产环境使用！！！）
                 // serverUrl: "http://35.201.165.105:8000/controller.php",
-                serverUrl: "http://120.79.203.214/zbb/public/get-edit",
+                serverUrl: "https://www.iryi.cn/get-edit",
 
                 // UEditor 资源文件的存放路径，如果你使用的是 vue-cli 生成的项目，通常不需要设置该选项，vue-ueditor-wrap 会自动处理常见的情况，如果需要特殊配置，参考下方的常见问题2
-                UEDITOR_HOME_URL: "/zbbManage/UEditor/"
+                UEDITOR_HOME_URL: "/UEditor/"
             },
 
             spinShow: false,
@@ -873,7 +873,7 @@ export default {
             }
             axios
                 .request({
-                    url: "http://120.79.203.214/zbb/public/delete",
+                    url: "https://www.iryi.cn/delete",
                     method: "post",
                     data: {
                         url: this.deletePicArr
@@ -961,7 +961,7 @@ export default {
             if (this.formInline.images.length > 0) {
                 axios
                     .request({
-                        url: "http://120.79.203.214/zbb/public/delete",
+                        url: "https://www.iryi.cn/delete",
                         method: "post",
                         data: {
                             url: this.formInline.images[0]
@@ -988,7 +988,7 @@ export default {
             if (this.formInline.share_thumb !== "") {
                 axios
                     .request({
-                        url: "http://120.79.203.214/zbb/public/delete",
+                        url: "https://www.iryi.cn/delete",
                         method: "post",
                         data: {
                             url: this.formInline.share_thumb
@@ -1080,7 +1080,7 @@ export default {
                     }
                     axios
                         .request({
-                            // url: "http://120.79.203.214/zbb/public/total",
+                            // url: "https://www.iryi.cn/total",
                             url: "task/tasks",
                             method: "post",
                             data: {

@@ -105,7 +105,7 @@
                                 <Icon type="ios-loading" size=18 class="demo-spin-icon-load"></Icon>
                                 <div>上传中~~~</div>
                             </Spin>
-                            <Upload style="margin-bottom:10px;" action="http://120.79.203.214/zbb/public/qrcode-reader"
+                            <Upload style="margin-bottom:10px;" action="https://www.iryi.cn/qrcode-reader"
                                 :on-success='successUpload3' :before-upload='beforeUpload3' :show-upload-list='false'
                                 :headers="headers">
                                 <Button icon="md-add" class="btnUp">
@@ -128,7 +128,7 @@
                                 <Icon type="ios-loading" size=18 class="demo-spin-icon-load"></Icon>
                                 <div>上传中~~~</div>
                             </Spin>
-                            <Upload style="margin-bottom:10px;" action="http://120.79.203.214/zbb/public/upload"
+                            <Upload style="margin-bottom:10px;" action="https://www.iryi.cn/upload"
                                 :on-success='successUpload' :before-upload='beforeUpload' :show-upload-list='false'
                                 :headers="headers" multiple>
                                 <Button icon="ios-cloud-upload-outline">上传图片(最多9张)</Button>
@@ -186,7 +186,7 @@
                                 <Icon type="ios-loading" size=18 class="demo-spin-icon-load"></Icon>
                                 <div>上传中~~~</div>
                             </Spin>
-                            <Upload style="margin-bottom:10px;" action="http://120.79.203.214/zbb/public/upload"
+                            <Upload style="margin-bottom:10px;" action="https://www.iryi.cn/upload"
                                 :on-success='successUpload1' :before-upload='beforeUpload1' :show-upload-list='false'
                                 :headers="headers">
                                 <Button icon="md-add" class="btnUp">
@@ -221,7 +221,7 @@
                                 <Icon type="ios-loading" size=18 class="demo-spin-icon-load"></Icon>
                                 <div>上传中~~~</div>
                             </Spin>
-                            <Upload style="margin-bottom:10px;" action="http://120.79.203.214/zbb/public/upload"
+                            <Upload style="margin-bottom:10px;" action="https://www.iryi.cn/upload"
                                 :on-success='successUpload2' :before-upload='beforeUpload2' :show-upload-list='false'
                                 :headers="headers">
                                 <Button icon="md-add" class="btnUp">
@@ -388,13 +388,13 @@ export default {
                 // 初始容器宽度
                 initialFrameWidth: "100%",
                 // 上传文件接口（这个地址是我为了方便各位体验文件上传功能搭建的临时接口，请勿在生产环境使用！！！）
-                // serverUrl: "http://120.79.203.214/zbb/public/controller.php",
-                serverUrl: "http://120.79.203.214/zbb/public/get-edit",
-                // serverUrl: "http://120.79.203.214/zbb/public/ueditor/server",
+                // serverUrl: "https://www.iryi.cn/controller.php",
+                serverUrl: "https://www.iryi.cn/get-edit",
+                // serverUrl: "https://www.iryi.cn/ueditor/server",
 
                 // UEditor 资源文件的存放路径，如果你使用的是 vue-cli 生成的项目，通常不需要设置该选项，vue-ueditor-wrap 会自动处理常见的情况，如果需要特殊配置，参考下方的常见问题2
                 // UEDITOR_HOME_URL: "http://120.79.203.214/zbb/"
-                UEDITOR_HOME_URL: "/zbbManage/UEditor/"
+                UEDITOR_HOME_URL: "/UEditor/"
             },
 
             spinShow: false,
@@ -653,7 +653,7 @@ export default {
             }
             axios
                 .request({
-                    url: "http://120.79.203.214/zbb/public/delete",
+                    url: "https://www.iryi.cn/delete",
                     method: "post",
                     data: {
                         url: this.deletePicArr
@@ -755,7 +755,7 @@ export default {
             if (this.formInline.images.length > 0) {
                 axios
                     .request({
-                        url: "http://120.79.203.214/zbb/public/delete",
+                        url: "https://www.iryi.cn/delete",
                         method: "post",
                         data: {
                             url: this.formInline.images[0]
@@ -782,7 +782,7 @@ export default {
             if (this.formInline.share_thumb !== "") {
                 axios
                     .request({
-                        url: "http://120.79.203.214/zbb/public/delete",
+                        url: "https://www.iryi.cn/delete",
                         method: "post",
                         data: {
                             url: this.formInline.share_thumb
@@ -873,7 +873,7 @@ export default {
                     }
                     axios
                         .request({
-                            // url: "http://120.79.203.214/zbb/public/total",
+                            // url: "https://www.iryi.cn/total",
                             url: "task/tasks",
                             method: "post",
                             data: {

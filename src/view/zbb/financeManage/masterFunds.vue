@@ -239,12 +239,12 @@ export default {
         returnExcel() {
             let token = ''
             axios.request({
-                url:'http://120.79.203.214/zbb/public/export-token',
+                url:'https://www.iryi.cn/export-token',
                 method:'get'
             }).then(res=>{
                 token = res.data
                 let url =
-                "http://120.79.203.214/zbb/public/backend/finance/masters/fund/export?" +
+                "https://www.iryi.cn/backend/finance/masters/fund/export?" +
                 "master_username=" +
                 (this.searchData.type1 === "master_username"
                     ? this.searchData.type1Text

@@ -24,6 +24,13 @@ Vue.use(iView, {
 })
 Vue.use(TreeTable)
 Vue.use(VOrgTree)
+
+/**
+ * @description 判断并返回是否有操作权限
+ */
+Vue.prototype.hasPower = (access,sign)=>{
+  return (access.indexOf(sign) !== -1)
+}
 /**
  * @description 注册admin内置插件
  */

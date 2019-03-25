@@ -146,7 +146,7 @@ export default {
         returnExcel(){
             let token = ''
             axios.request({
-                url:'http://120.79.203.214/zbb/public/export-token',
+                url:'https://www.iryi.cn/export-token',
                 method:'get'
             }).then(res=>{
                 token = res.data

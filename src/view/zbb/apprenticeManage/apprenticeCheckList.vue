@@ -474,7 +474,8 @@ export default {
                 {
                     title: "审核类型",
                     align: "center",
-                    width: "200",
+                    width: "100",
+                    fixed: "left",
                     // key: "wx"
                     render: (h, params) => {
                         return h(
@@ -520,6 +521,28 @@ export default {
                                 : params.row.account
                         );
                     }
+                },
+                {
+                    title: "审核图片",
+                    align: "center",
+                    width: "300",
+                    render:(h,params)=> {
+                        return h('div',[
+                            h('img',{
+                                attrs:{
+                                    style:'margin-right:10px;',
+                                    src:(params.row.type === "wx"? params.row.apprentice.wx_qr_img: params.row.type === "dy"? params.row.apprentice.dy_home_img: params.row.apprentice.tt_home_img)
+                                }
+                            }),
+                            h('img',{
+                                attrs:{
+                                    style:'margin-left:10px;',
+                                    disabled: params.row.type === "wx"?true:false,
+                                    src:(params.row.type === "wx"? params.row.apprentice.wx_friends_img:'')
+                                }
+                            })
+                        ])
+                    },
                 },
                 {
                     title: "创建日期",
@@ -711,7 +734,7 @@ export default {
             //导出excel
             let token = ''
             axios.request({
-                url:'http://120.79.203.214/zbb/public/export-token',
+                url:'https://www.iryi.cn/export-token',
                 method:'get'
             }).then(res=>{
                 token = res.data

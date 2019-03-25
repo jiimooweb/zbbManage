@@ -72,8 +72,8 @@ export default {
                 initialFrameHeight: 240,
                 // 初始容器宽度
                 initialFrameWidth: "100%",
-                serverUrl: "http://120.79.203.214/zbb/public/get-edit",
-                UEDITOR_HOME_URL: "/zbbManage/UEditor/"
+                serverUrl: "https://www.iryi.cn/get-edit",
+                UEDITOR_HOME_URL: "/UEditor/"
             },
             formInline: {
                 title: "",
