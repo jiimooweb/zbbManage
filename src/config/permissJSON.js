@@ -20,7 +20,7 @@ const permissList = [{
     },
     {
         key: 2,
-        sign: "manageEdit",
+        sign: "newManage",
         name: "添加管理员",
         value: false
     },

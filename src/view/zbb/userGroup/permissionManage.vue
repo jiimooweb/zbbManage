@@ -96,7 +96,7 @@ export default {
         getCurrent() {
             axios
                 .request({
-                    url: "power/groups/" + this.$store.state.currentPowerId,
+                    url: "power/groups/" + this.$store.state.currentPowerId + "/show",
                     method: "get"
                 })
                 .then(res => {

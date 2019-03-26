@@ -89,7 +89,7 @@
 
 <script>
 import axios from "@/libs/api.request";
-import { returnPowerStrArr } from '@/libs/util'
+import { returnPowerStrArr,isShowColumn } from '@/libs/util'
 export default {
     data() {
         return {
@@ -165,7 +165,7 @@ export default {
                                     },
                                     attrs: {
                                         style:
-                                            "font-size:12px;margin-right:15px;"
+                                            ("font-size:12px;margin-right:15px;display:"+(this.hasPower(this.$store.state.user.access,'manageList-edit')?"inline-block;":"none;")),
                                     },
                                     nativeOn: {
                                         click: () => {
@@ -197,7 +197,7 @@ export default {
                                     },
                                     attrs: {
                                         style:
-                                            "font-size:12px;margin-right:15px;"
+                                            ("font-size:12px;margin-right:15px;display:"+(this.hasPower(this.$store.state.user.access,'manageList-power')?"inline-block;":"none;")),
                                     },
                                     nativeOn: {
                                         click: () => {
@@ -209,6 +209,28 @@ export default {
                                     }
                                 },
                                 "权限"
+                            ),
+                            h(
+                                "Button",
+                                {
+                                    props: {
+                                        type: "error",
+                                        size: "small"
+                                    },
+                                    attrs: {
+                                        style:
+                                            ("font-size:12px;margin-right:15px;display:"+(this.hasPower(this.$store.state.user.access,'manageList-power')?"inline-block;":"none;")),
+                                    },
+                                    nativeOn: {
+                                        click: () => {
+                                            this.powerModal = true;
+                                            this.currentId = params.row.id;
+                                            this.formInline.powers =
+                                                params.row.powers;
+                                        }
+                                    }
+                                },
+                                "删除"
                             )
                         ]);
                     }
@@ -221,6 +243,7 @@ export default {
     mounted() {
         this.getList();
         this.getGroup();
+        isShowColumn(this.$store.state.user.access,['manageList-edit','manageList-power'],this.manageColumn)
     },
     methods: {
         inputPower() {

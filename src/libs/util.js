@@ -8,8 +8,29 @@ const { title, cookieExpires, useI18n } = config
 
 export const TOKEN_KEY = 'token'
 
-export const returnHasPower = (access,sign) => {
+export const returnHasPower = (access, sign) => {
     return (access.indexOf(sign) !== -1)
+}
+
+/**
+ * @description 判断当前表格是否需要隐藏操作列
+ * @param access 当前权限列表
+ * @param powerArr 需要判断的操作权限数组
+ * @param column 需要处理的表格列对象
+ * @returns 返回处理后的表格列对象
+ */
+export const isShowColumn = (access,powerArr, column) => {
+    let hasOne = false
+    for (let i = 0; i < powerArr.length; i++) {
+        if (returnHasPower(access, powerArr[i])) {
+            hasOne = true
+        }
+    }
+    if (!hasOne) {
+        return column.splice(-1,1)
+    } else {
+        return column
+    }
 }
 
 // 返回权限数组
