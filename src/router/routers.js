@@ -51,7 +51,7 @@ export default [{
     name: '管理员管理',
     component: Main,
     meta: {
-        access:['manageList','manageEdit'],
+        access:['manageList','newManage'],
         title: '管理员管理',
         icon: 'ios-contact'
     },
@@ -65,10 +65,10 @@ export default [{
         },
         component: () => import('@/view/zbb/manage/manageList')
     }, {
-        path: '/manageEdit',
-        name: '管理员(新增or编辑)',
+        path: '/newManage',
+        name: '新增管理员',
         meta: {
-            access:['manageEdit'],
+            access:['newManage'],
             title: '管理员管理',
             icon: 'md-create'
         },

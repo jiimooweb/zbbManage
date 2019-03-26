@@ -16,15 +16,15 @@
                     </row>
                 </FormItem>
                 <FormItem prop="password" class="formItem">
-                        <row class="formRow">
-                            <i-col span='6'>
-                                <span class="lable">密码</span>
-                            </i-col>
-                            <i-col span='18'>
-                                <i-input placeholder="请输入密码，留空则不修改" type='password' class="formInput" v-model="formInline.password"></i-input>
-                            </i-col>
-                        </row>
-                    </FormItem>
+                    <row class="formRow">
+                        <i-col span='6'>
+                            <span class="lable">密码</span>
+                        </i-col>
+                        <i-col span='18'>
+                            <i-input placeholder="请输入密码，留空则不修改" type='password' class="formInput" v-model="formInline.password"></i-input>
+                        </i-col>
+                    </row>
+                </FormItem>
                 <FormItem prop="phone" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
@@ -52,8 +52,8 @@
                         </i-col>
                         <i-col span='18'>
                             <RadioGroup v-model="formInline.state">
-                                <Radio :label="1">允许登录</Radio>
-                                <Radio :label="0">禁止登录</Radio>
+                                <Radio :label="0">允许登录</Radio>
+                                <Radio :label="1">禁止登录</Radio>
                             </RadioGroup>
                         </i-col>
                     </row>
@@ -84,21 +84,26 @@
                 </FormItem>
             </i-form>
         </Modal>
+        <Modal v-model="cancelModal" title='删除' @on-ok="deleteItem()" @on-cancel="cancelcancel(false)">
+            <p style="text-align:center;font-size:16px;">是否删除账号----<span style="color:red;">{{deleteName}}</span>----</p>
+        </Modal>
     </div>
 </template>
 
 <script>
 import axios from "@/libs/api.request";
-import { returnPowerStrArr,isShowColumn } from '@/libs/util'
+import { returnPowerStrArr, isShowColumn } from "@/libs/util";
 export default {
     data() {
         return {
+            cancelModal: false,
             EditModal: false,
             powerModal: false,
+            deleteName: "",
             formInline: {
                 powers: "",
                 username: "",
-                password:"",
+                password: "",
                 phone: "",
                 email: "",
                 state: 1
@@ -149,7 +154,10 @@ export default {
                     title: "用户组",
                     // key: "powers"
                     render(h, params) {
-                        return h("p", params.row.group.name);
+                        return h(
+                            "p",
+                            params.row.group ? params.row.group.name : "无"
+                        );
                     }
                 },
                 {
@@ -165,7 +173,13 @@ export default {
                                     },
                                     attrs: {
                                         style:
-                                            ("font-size:12px;margin-right:15px;display:"+(this.hasPower(this.$store.state.user.access,'manageList-edit')?"inline-block;":"none;")),
+                                            "font-size:12px;margin-right:15px;display:" +
+                                            (this.hasPower(
+                                                this.$store.state.user.access,
+                                                "manageList-edit"
+                                            )
+                                                ? "inline-block;"
+                                                : "none;")
                                     },
                                     nativeOn: {
                                         click: () => {
@@ -197,7 +211,13 @@ export default {
                                     },
                                     attrs: {
                                         style:
-                                            ("font-size:12px;margin-right:15px;display:"+(this.hasPower(this.$store.state.user.access,'manageList-power')?"inline-block;":"none;")),
+                                            "font-size:12px;margin-right:15px;display:" +
+                                            (this.hasPower(
+                                                this.$store.state.user.access,
+                                                "manageList-power"
+                                            )
+                                                ? "inline-block;"
+                                                : "none;")
                                     },
                                     nativeOn: {
                                         click: () => {
@@ -219,14 +239,19 @@ export default {
                                     },
                                     attrs: {
                                         style:
-                                            ("font-size:12px;margin-right:15px;display:"+(this.hasPower(this.$store.state.user.access,'manageList-power')?"inline-block;":"none;")),
+                                            "font-size:12px;margin-right:15px;display:" +
+                                            (this.hasPower(
+                                                this.$store.state.user.access,
+                                                "manageList-delete"
+                                            )
+                                                ? "inline-block;"
+                                                : "none;")
                                     },
                                     nativeOn: {
                                         click: () => {
-                                            this.powerModal = true;
                                             this.currentId = params.row.id;
-                                            this.formInline.powers =
-                                                params.row.powers;
+                                            this.deleteName = params.row.name;
+                                            this.cancelcancel(true);
                                         }
                                     }
                                 },
@@ -240,12 +265,36 @@ export default {
             groupsList: []
         };
     },
+    computed: {
+        getAccess() {
+            return this.$store.state.user.access;
+        }
+    },
+    watch: {
+        getAccess: function(a, b) {
+            isShowColumn(a,["manageList-edit", "manageList-power", "manageList-delete"],);
+        }
+    },
     mounted() {
         this.getList();
         this.getGroup();
-        isShowColumn(this.$store.state.user.access,['manageList-edit','manageList-power'],this.manageColumn)
     },
     methods: {
+        cancelcancel(i) {
+            this.cancelModal = i;
+        },
+        deleteItem() {
+            axios
+                .request({
+                    url: "admin/admins/" + this.currentId,
+                    method: "delete"
+                })
+                .then(res => {
+                    this.$Message.success("删除成功");
+                    this.cancelcancel(false);
+                    this.getList();
+                });
+        },
         inputPower() {
             if (!this.formInline.powers) {
                 this.$Message.error("请选择权限组");
@@ -272,9 +321,14 @@ export default {
                             method: "get"
                         })
                         .then(res => {
-                            let strArr = returnPowerStrArr(res.data.data.group.has_powers)
-                            this.$store.commit("setAccess",strArr);
-                            this.$store.commit("setUserName",res.data.data.username);
+                            let strArr = returnPowerStrArr(
+                                res.data.data.group.has_powers
+                            );
+                            this.$store.commit("setAccess", strArr);
+                            this.$store.commit(
+                                "setUserName",
+                                res.data.data.username
+                            );
                             this.$store.commit("setUserId", res.data.data.id);
                         });
                 });

@@ -104,42 +104,42 @@ export default {
                     title: "平台充值总额",
                     icon: "logo-yen",
                     count: 0,
-                    color: "#ed3f14"
+                    color: "#3189AD"
                 },{
                     title: "已返佣金",
                     icon: "logo-yen",
                     count: 0,
-                    color: "#ed3f14"
+                    color: "#1EBFB7"
                 },{
                     title: "用户账户总额",
                     icon: "logo-yen",
                     count: 0,
-                    color: "#ed3f14"
+                    color: "#3189AD"
                 },{
                     title: "整站任务数",
-                    icon: "logo-yen",
+                    icon: "md-folder",
                     count: 0,
-                    color: "#ed3f14"
+                    color: "#1EBFB7"
                 },{
                     title: "完成任务人/次",
-                    icon: "logo-yen",
+                    icon: "md-body",
                     count: 0,
-                    color: "#ed3f14"
+                    color: "#3189AD"
                 },{
                     title: "昨日完成任务数",
-                    icon: "logo-yen",
+                    icon: "ios-albums",
                     count: 0,
-                    color: "#ed3f14"
+                    color: "#1EBFB7"
                 },{
                     title: "7日完成任务数",
-                    icon: "logo-yen",
+                    icon: "ios-albums",
                     count: 0,
-                    color: "#ed3f14"
+                    color: "#3189AD"
                 },{
                     title: "30日完成任务数",
-                    icon: "logo-yen",
+                    icon: "ios-albums",
                     count: 0,
-                    color: "#ed3f14"
+                    color: "#1EBFB7"
                 },
             ],
             hasData:false,
