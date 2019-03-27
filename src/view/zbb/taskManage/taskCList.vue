@@ -97,10 +97,64 @@ export default {
             },
             column: [
                 {
-                    title: "任务ID",
+                    title: "母任务ID",
                     align: "center",
                     width: "100",
                     key: "task_id"
+                },{
+                    title: "母任务状态",
+                    align: "center",
+                    width: "100",
+                    render(h, params) {
+                        return h(
+                            "p",{
+                                style:'color:#'+(params.row.task.type === 0
+                                ? "ed4014":'19be6b')
+                            },
+                            params.row.task.type === 0
+                                ? "关闭":'开启'
+                        );
+                    }
+                },{
+                    title: "子任务ID",
+                    align: "center",
+                    width: "100",
+                    key: "id"
+                },{
+                    title: "任务类型",
+                    align: "center",
+                    width: "100",
+                    render(h, params) {
+                        return h(
+                            "p",
+                            params.row.task.type === 0
+                                ? "朋友圈"
+                                : params.row.task.type === 1
+                                ? "抖音"
+                                : params.row.task.type === 2
+                                ? "头条"
+                                : "分享"
+                        );
+                    }
+                },{
+                    title: "数量",
+                    align: "center",
+                    width: "70",
+                    key: "num"
+                },
+                {
+                    title: "子任务创建时间",
+                    align: "center",
+                    width: "200",
+                    key: "created_at"
+                },{
+                    title: "作品链接",
+                    align: "center",
+                    width: "200",
+                    // key: "task_time"
+                    render(h,params) {
+                        return h('p',(params.row.task.type===1 || params.row.task.type===2)?params.row.url:'无')
+                    },
                 },
                 {
                     title: "任务完成时间",
@@ -122,6 +176,13 @@ export default {
                     width: "100",
                     align: "center",
                     key: "apprentice_id"
+                },{
+                    title: "徒弟名称",
+                    width: "100",
+                    align: "center",
+                    render:(h,params)=> {
+                        return h('p',params.row.apprentice?params.row.apprentice.name:'无')
+                    },
                 },
                 {
                     title: "任务状态",
@@ -280,7 +341,7 @@ export default {
             currentPage: 1,
             per_page: 20,
             defailPage: 20,
-            pageSize: [5, 10, 20, 50],
+            pageSize: [5, 10, 20, 50, 200, 500],
 
             deleteName: "",
             returnModal: false,
@@ -346,7 +407,7 @@ export default {
                         this.per_page +
                         "&page=" +
                         this.currentPage +
-                        "&taskType=" +
+                        "&type=" +
                         (this.searchData.taskType === -1
                             ? ""
                             : this.searchData.taskType) +

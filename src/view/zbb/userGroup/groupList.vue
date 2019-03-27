@@ -21,6 +21,7 @@
 
 <script>
 import axios from "@/libs/api.request";
+import { isShowColumn } from "@/libs/util";
 export default {
     data() {
         return {
@@ -44,7 +45,14 @@ export default {
                                         size: "small"
                                     },
                                     attrs: {
-                                        style: "font-size:12px"
+                                        style:
+                                            "font-size:12px;margin-right:15px;display:" +
+                                            (this.hasPower(
+                                                this.$store.state.user.access,
+                                                "groupList-edit"
+                                            )
+                                                ? "inline-block;"
+                                                : "none;")
                                     },
                                     nativeOn: {
                                         click: () => {
@@ -65,7 +73,13 @@ export default {
                                     },
                                     attrs: {
                                         style:
-                                            "font-size:12px;margin-left:15px;"
+                                            "font-size:12px;margin-right:15px;display:" +
+                                            (this.hasPower(
+                                                this.$store.state.user.access,
+                                                "groupList-edit"
+                                            )
+                                                ? "inline-block;"
+                                                : "none;")
                                     },
                                     nativeOn: {
                                         click: () => {
@@ -84,6 +98,16 @@ export default {
             ],
             groupsList: []
         };
+    },
+    computed: {
+        getAccess() {
+            return this.$store.state.user.access;
+        }
+    },
+    watch: {
+        getAccess: function(a, b) {
+            // isShowColumn(a,["groupList-edit"],this.groupsColumn);
+        }
     },
     mounted() {
         this.getGroupsList();

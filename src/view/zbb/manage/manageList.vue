@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="MANAGELIST">
         <Table stripe :columns="manageColumn" border :data="manageList"></Table>
         <Modal v-model="EditModal" title='编辑' footer-hide>
             <!-- <Card style="width:400px"> -->
@@ -272,7 +272,7 @@ export default {
     },
     watch: {
         getAccess: function(a, b) {
-            isShowColumn(a,["manageList-edit", "manageList-power", "manageList-delete"],);
+            // isShowColumn(a,["manageList-edit", "manageList-power", "manageList-delete"],manageColumn);
         }
     },
     mounted() {
@@ -406,23 +406,24 @@ export default {
 </script>
 
 <style lang='less'>
-.formPage {
-    .formItem {
-        display: block;
-        margin: 25px auto;
-        .ivu-form-item-error-tip {
-            padding-left: 141.5px;
-        }
-        .formRow {
+.MANAGELIST {
+    min-width: 1100px;
+    .formPage {
+        .formItem {
             display: block;
-            height: 33px;
-            .lable {
-                display: block;
-                line-height: 33px;
+            margin: 25px auto;
+            .ivu-form-item-error-tip {
+                padding-left: 141.5px;
             }
-            .formInput {
-                // margin-left: 20px;
-                // width: 300px;
+            .formRow {
+                display: block;
+                .lable {
+                    display: block;
+                }
+                .formInput {
+                    // margin-left: 20px;
+                    // width: 300px;
+                }
             }
         }
     }

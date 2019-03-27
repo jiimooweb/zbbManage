@@ -1,5 +1,6 @@
 /**
  * 权限配置
+ * @description 最大数 84
  *  */
 const permissList = [{
     moudal: "首页",
@@ -168,6 +169,11 @@ const permissList = [{
         key: 23,
         sign: "taskPList",
         name: "母任务管理",
+        value: false
+    },{
+        key: 85,
+        sign: "taskPList-open",
+        name: "母任务开关",
         value: false
     },
     {

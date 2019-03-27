@@ -419,7 +419,7 @@ export default {
             currentPage: 1,
             per_page: 20,
             defailPage: 20,
-            pageSize: [5, 10, 20, 50],
+            pageSize: [5, 10, 20, 50, 200, 500],
             selectList: []
         };
     },

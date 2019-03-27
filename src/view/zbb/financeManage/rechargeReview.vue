@@ -102,6 +102,9 @@
             <p v-if="status===2" style="text-align:center;font-size:16px;">是否批量确认已充值?</p>
             <p v-if="status===-1" style="text-align:center;font-size:16px;">是否批量拒绝充值申请?</p>
         </Modal>
+        <Modal v-model="showPicModal" title="大图" class="RECHARGEREVIEWModal" footer-hide>
+            <img :src="bigPic" style="width:100%;height:auto;">
+        </Modal>
     </div>
 </template>
 
@@ -110,6 +113,8 @@ import axios from "@/libs/api.request";
 export default {
     data() {
         return {
+            showPicModal:false,
+            bigPic:'',
             editModal: false,
             allModal: false,
             status: 0,
@@ -244,6 +249,12 @@ export default {
                             attrs: {
                                 style: "width:100px;height:100px",
                                 src: params.row.image
+                            },
+                            on: {
+                                click: () => {
+                                    this.showPicModal = true
+                                    this.bigPic = params.row.image
+                                }
                             }
                         });
                     }
@@ -342,7 +353,7 @@ export default {
             currentPage: 1,
             per_page: 20,
             defailPage: 20,
-            pageSize: [5, 10, 20, 50]
+            pageSize: [5, 10, 20, 50, 200, 500],
         };
     },
     methods: {

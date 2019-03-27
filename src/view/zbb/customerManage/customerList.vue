@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="CUSTOMERLIST">
         <Button type="primary" style='margin:10px 0;display:block;' @click="newData()">添加客服</Button>
         <Table stripe :columns="column" border :data="list"></Table>
         <!-- <Page style="margin-top:20px;" :total="total" show-total :page-size='defailPage' show-elevator show-sizer
@@ -271,7 +271,7 @@ export default {
             currentPage: 1,
             per_page: 20,
             defailPage: 20,
-            pageSize: [5, 10, 20, 50]
+            pageSize: [5, 10, 20, 50, 200, 500],
         };
     },
     mounted() {
@@ -358,7 +358,11 @@ export default {
 </script>
 
 <style lang='less'>
-.formItem {
-    width: 100%;
+.CUSTOMERLIST{
+    min-width: 1100px;
+    .formItem {
+        width: 100%;
+    }
 }
+
 </style>

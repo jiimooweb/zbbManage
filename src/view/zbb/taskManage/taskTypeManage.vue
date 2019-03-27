@@ -124,7 +124,7 @@ export default {
             currentPage: 1,
             per_page: 20,
             defailPage: 20,
-            pageSize: [5, 10, 20, 50]
+            pageSize: [5, 10, 20, 50, 200, 500],
         };
     },
     methods: {
@@ -226,15 +226,10 @@ export default {
             .ivu-form-item-error-tip {
                 padding-left: 141.5px;
             }
-            // .formRow.textarea{
-            //     height: 94px;
-            // }
             .formRow {
                 display: block;
-                // height: 33px;
                 .lable {
                     display: block;
-                    // line-height: 33px;
                 }
                 .formInput {
                     // margin-left: 20px;

@@ -189,10 +189,9 @@ export default {
         }
         .formRow {
             display: block;
-            height: 33px;
+            
             .lable {
                 display: block;
-                line-height: 33px;
             }
             .formInput {
                 // margin-left: 20px;

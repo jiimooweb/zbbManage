@@ -116,7 +116,7 @@ export default {
             currentPage: 1,
             per_page: 20,
             defailPage: 20,
-            pageSize: [5, 10, 20, 50],
+            pageSize: [5, 10, 20, 50, 200, 500],
             searchData: {
                 type1: "master_username",
                 type1Text: "",
@@ -166,13 +166,13 @@ export default {
                     title: "变动人ID",
                     // key:'apprentice_id'
                     render: (h, params) => {
-                        return h("p", params.row.master.id);
+                        return h("p", params.row.master?params.row.master.id:'');
                     }
                 },
                 {
                     title: "变动人账号",
                     render: (h, params) => {
-                        return h("p", params.row.master.username);
+                        return h("p", params.row.master?params.row.master.username:'');
                     }
                 }
             ],
@@ -302,10 +302,9 @@ export default {
             // }
             .formRow {
                 display: block;
-                // height: 33px;
+                // 
                 .lable {
                     display: block;
-                    // line-height: 33px;
                 }
                 .formInput {
                     // margin-left: 20px;

@@ -803,7 +803,7 @@ export default {
             currentPage: 1,
             per_page: 10,
             defailPage: 10,
-            pageSize: [5, 10, 20, 50],
+            pageSize: [5, 10, 20, 50, 200, 500],
 
             typeList: []
         };
@@ -811,7 +811,7 @@ export default {
     mounted() {
         this.getList();
         this.getJson();
-        this.getMerchatList();
+        // this.getMerchatList();
         this.getTypeList();
     },
     methods: {
@@ -1273,15 +1273,10 @@ export default {
             .ivu-form-item-error-tip {
                 padding-left: 141.5px;
             }
-            // .formRow.textarea{
-            //     height: 94px;
-            // }
             .formRow {
                 display: block;
-                // height: 33px;
                 .lable {
                     display: block;
-                    // line-height: 33px;
                 }
                 .formInput {
                     // margin-left: 20px;
@@ -1330,12 +1325,11 @@ export default {
                 p {
                     text-align: center;
                 }
-                // height: 33px;
+                // 
                 .lable {
                     display: block;
                     padding-right: 10px;
                     text-align: center;
-                    // line-height: 33px;
                 }
                 .formInput {
                     // margin-left: 20px;

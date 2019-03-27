@@ -775,7 +775,7 @@ export default {
             currentPage: 1,
             per_page: 20,
             defailPage: 20,
-            pageSize: [5, 10, 20, 50],
+            pageSize: [5, 10, 20, 50, 200, 500],
             selectList: [],
             ids: [],
             passModal: false,
@@ -953,7 +953,7 @@ export default {
         getOneMaster() {
             axios
                 .request({
-                    url: "apprentices/" + this.currentId,
+                    url: "apprentices/" + this.currentId + "/show",
                     method: "get"
                 })
                 .then(res => {
@@ -1217,10 +1217,9 @@ export default {
             // }
             .formRow {
                 display: block;
-                // height: 33px;
+                // 
                 .lable {
                     display: block;
-                    // line-height: 33px;
                 }
                 .formInput {
                     // margin-left: 20px;

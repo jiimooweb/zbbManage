@@ -24,7 +24,7 @@
                         </i-col>
                         <i-col span='18'>
                             <Select v-model="formInline.merchant_id" @on-change='getSelectData'>
-                                <Option :value='item.id' v-for="(item, index) in meerchatList" :key="index">{{item.name}}</Option>
+                                <Option :value='item.id' v-for="(item, index) in meerchatList" :key="index">{{item.username}}</Option>
                             </Select>
                         </i-col>
                     </row>
@@ -105,7 +105,7 @@
                                 <Icon type="ios-loading" size=18 class="demo-spin-icon-load"></Icon>
                                 <div>上传中~~~</div>
                             </Spin>
-                            <Upload style="margin-bottom:10px;" action="https://www.iryi.cn/qrcode-reader"
+                            <Upload style="margin-bottom:10px;" :on-error='errorUpload' action="https://www.iryi.cn/qrcode-reader"
                                 :on-success='successUpload3' :before-upload='beforeUpload3' :show-upload-list='false'
                                 :headers="headers">
                                 <Button icon="md-add" class="btnUp">
@@ -803,6 +803,16 @@ export default {
             this.spinShow = true;
         },
         //3
+        errorUpload(err){
+            var keyArr = Object.keys(err);
+            var val = err[keyArr[0]];
+            if(val === 400){
+                this.$Message.error('上传的图片内容不是二维码')
+            }else{
+                this.$Message.error('上传出差，请稍后重试')
+            }
+            this.spinShow2 = false
+        },
         successUpload3(file) {
             // console.log(file);
             this.spinShow = false;
@@ -813,7 +823,7 @@ export default {
             this.formInline.qrcode_url = file;
         },
         beforeUpload3(file) {
-            this.spinShow = true;
+            this.spinShow2 = true;
         },
 
         getMerchatList() {
@@ -984,10 +994,9 @@ export default {
         // }
         .formRow {
             display: block;
-            // height: 33px;
+            // 
             .lable {
                 display: block;
-                // line-height: 33px;
             }
             .formInput {
                 // margin-left: 20px;
