@@ -141,7 +141,7 @@
         <Modal v-model="onefailModal" title='批量拒绝' @on-ok="fail()" @on-cancel="canceloneFail(false)">
             <p style="text-align:center;font-size:16px;">是否拒绝---<span style="color:red;">{{currentName}}</span>---的绑定请求</p>
         </Modal> -->
-        <Modal v-model="editModal" title='资料详情' footer-hide width='600px'>
+        <Modal v-model="editModal" title='资料详情' class="BINDINGBANKModal" footer-hide width='600px'>
             <i-form ref="formInline" class="formPage" :model="formInline" :rules="ruleInline" inline>
                 <FormItem prop="bank_id" class="formItem">
                     <row class="formRow">
@@ -206,6 +206,9 @@
                 </FormItem>
             </i-form>
         </Modal>
+        <Modal v-model="showPicModal" title="大图" class="BINDINGBANKModal" footer-hide>
+            <img :src="bigPic" style="width:100%;height:auto;">
+        </Modal>
     </div>
 </template>
 
@@ -223,6 +226,8 @@ export default {
     },
     data() {
         return {
+            showPicModal:false,
+            bigPic:'',
             formInline:{
                 bank_id:'',
                 bank_man:'',
@@ -490,6 +495,12 @@ export default {
                                     style:
                                         "width:70px;height:70px;display:block;margin:0 auto;",
                                     src: params.row.id_card
+                                },
+                                on: {
+                                    click: () => {
+                                        this.showPicModal = true
+                                        this.bigPic = params.row.id_card
+                                    }
                                 }
                             });
                         } else {
@@ -1076,6 +1087,28 @@ export default {
         }
         .ivu-form-item-label{
             text-align: center;
+        }
+    }
+}
+.BINDINGBANKModal{
+    .formPage {
+        .formItem {
+            width: 100%;
+            display: block;
+            margin: 25px auto;
+            .ivu-form-item-error-tip {
+                padding-left: 141.5px;
+            }
+            .formRow {
+                display: block;
+                .lable {
+                    display: block;
+                }
+                .formInput {
+                    // margin-left: 20px;
+                    // width: 300px;
+                }
+            }
         }
     }
 }

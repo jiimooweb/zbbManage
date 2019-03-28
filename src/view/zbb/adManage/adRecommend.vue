@@ -53,12 +53,12 @@ import axios from "@/libs/api.request";
                         },
                     },{
                         title:'备注',
-                        width:"300",
+                        width:"550",
                         align:'center',
                         key:'remark'
                     },{
                         title:'状态',
-                        // width:"100",
+                        width:"100",
                         align:'center',
                         render:(h,params)=> {
                             return h('p',{

@@ -45,10 +45,11 @@
                         <i-col span='4'>
                             <span class="lable">悬赏金额:</span>
                         </i-col>
-                        <i-col span='18'>
-                            <!-- <InputNumber :min="0" :active-change='false' :value="formInline.share_price" style="width: 200px"
-                                :precision='2' placeholder='输入金额'></InputNumber> -->
+                        <i-col span='10'>
                             <i-input placeholder="输入金额" class="formInput" v-model.number="formInline.share_price" type="number" @mousewheel.native.prevent></i-input>
+                        </i-col>
+                        <i-col span='8'>
+                            <p>（注:100点击，如10元，即是每100点击即扣10元）</p>
                         </i-col>
                     </row>
                 </FormItem>
@@ -57,10 +58,14 @@
                         <i-col span='4'>
                             <span class="lable">领取名额:</span>
                         </i-col>
-                        <i-col span='18'>
+                        <i-col span='10'>
                             <i-input placeholder="输入名额" class="formInput" v-model.number="formInline.num" type="number" @mousewheel.native.prevent></i-input>
-                            <!-- <InputNumber :min="1" :value="formInline.num" style="width: 200px" :precision='0'
-                                placeholder='输入名额'></InputNumber> -->
+                        </i-col>
+                        <i-col span='8' v-show="formInline.type===3">
+                            <p>（注:每1个名额有100点击，即1名额 = 悬赏金额）</p>
+                        </i-col>
+                        <i-col span='8' v-show="formInline.type!==3">
+                            <p>（注:10名额起步）</p>
                         </i-col>
                     </row>
                 </FormItem>
@@ -490,10 +495,13 @@ export default {
                 ],
                 num: [
                     {
-                        validator(rule, value, callback, source, options) {
+                        validator:(rule, value, callback, source, options)=> {
                             var errors = [];
                             if (!value && value !== 0) {
                                 callback("请输入名额");
+                            }
+                            if (value<10 && this.formInline.type !== 3) {
+                                callback("名额10名起步");
                             }
                             callback(errors);
                         }
@@ -645,28 +653,28 @@ export default {
         },
         //清空资料时删除图片
         deletePic() {
-            for (let i = 0; i < this.deletePicArr.length; i++) {
-                this.deletePicArr[i] = this.filterUrl(this.deletePicArr[i]);
-            }
-            if (this.deletePicArr.length === 0) {
-                return;
-            }
-            axios
+            // for (let i = 0; i < this.deletePicArr.length; i++) {
+            //     this.deletePicArr[i] = this.filterUrl(this.deletePicArr[i]);
+            // }
+            // if (this.deletePicArr.length === 0) {
+            //     return;
+            // }
+            for(let i=0;i<this.deletePicArr.length;i++){
+                axios
                 .request({
                     url: "https://www.iryi.cn/delete",
                     method: "post",
                     data: {
-                        url: this.deletePicArr
+                        url: this.deletePicArr[i]
                     }
-                })
-                .then(res => {
-                    this.deletePicArr = [];
                 })
                 .catch(err => {
                     for (let i in err.response.data.msg) {
                         this.$Message.error(err.response.data.msg[i][0]);
                     }
                 });
+            }
+            this.deletePicArr = []
         },
         qrcode() {
             this.$nextTick(() => {
@@ -939,7 +947,7 @@ export default {
         },
         //图片路径拼接/去除
         filterUrl(url) {
-            url = url.substring(url.indexOf("public/") + 7);
+            // url = url.substring(url.indexOf("public/") + 7);
             return url;
         },
         resetData(name) {

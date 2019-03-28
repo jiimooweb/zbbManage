@@ -136,12 +136,13 @@ export default {
                                 : "分享"
                         );
                     }
-                },{
-                    title: "数量",
-                    align: "center",
-                    width: "70",
-                    key: "num"
                 },
+                // {
+                //     title: "数量",
+                //     align: "center",
+                //     width: "70",
+                //     key: "num"
+                // },
                 {
                     title: "子任务创建时间",
                     align: "center",
@@ -153,7 +154,7 @@ export default {
                     width: "200",
                     // key: "task_time"
                     render(h,params) {
-                        return h('p',(params.row.task.type===1 || params.row.task.type===2)?params.row.url:'无')
+                        return h('p',params.row.task?params.row.task.title:'无')
                     },
                 },
                 {

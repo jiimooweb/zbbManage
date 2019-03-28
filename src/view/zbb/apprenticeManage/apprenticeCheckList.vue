@@ -414,7 +414,7 @@ export default {
                     width: "100",
                     // key: "id"
                     render(h, params) {
-                        return h("p", params.row.apprentice.id);
+                        return h("p", params.row.apprentice?params.row.apprentice.id:'无');
                     }
                 },
                 {
@@ -423,7 +423,7 @@ export default {
                     width: "200",
                     // key: "username"
                     render(h, params) {
-                        return h("p", params.row.apprentice.username);
+                        return h("p", params.row.apprentice?params.row.apprentice.username:'无');
                     }
                 },
                 {
@@ -464,7 +464,7 @@ export default {
                     width: "100",
                     // key: "name"
                     render(h, params) {
-                        return h("p", params.row.apprentice.name);
+                        return h("p", params.row.apprentice?params.row.apprentice.name:'无');
                     }
                 },
                 {
@@ -473,7 +473,7 @@ export default {
                     width: "150",
                     // key: "phone"
                     render(h, params) {
-                        return h("p", params.row.apprentice.phone);
+                        return h("p", params.row.apprentice?params.row.apprentice.phone:'无');
                     }
                 },
                 {
@@ -535,24 +535,24 @@ export default {
                         return h('div',[
                             h('img',{
                                 attrs:{
-                                    src:(params.row.type === "wx"? params.row.apprentice.wx_qr_img: params.row.type === "dy"? params.row.apprentice.dy_home_img: params.row.apprentice.tt_home_img)
+                                    src:(params.row.type === "wx"? (params.row.apprentice?params.row.apprentice.wx_qr_img:'无'): params.row.type === "dy"? (params.row.apprentice?params.row.apprentice.dy_home_img:'无'): (params.row.apprentice?params.row.apprentice.tt_home_img:'无'))
                                 },
                                 on: {
                                     click: () => {
                                         this.showPicModal = true
-                                        this.bigPic = (params.row.type === "wx"? params.row.apprentice.wx_qr_img: params.row.type === "dy"? params.row.apprentice.dy_home_img: params.row.apprentice.tt_home_img)
+                                        this.bigPic = (params.row.type === "wx"? (params.row.apprentice?params.row.apprentice.wx_qr_img:'无'): params.row.type === "dy"? (params.row.apprentice?params.row.apprentice.dy_home_img:'无'): (params.row.apprentice?params.row.apprentice.tt_home_img:'无'))
                                     }
                                 }
                             }),
                             h('img',{
                                 attrs:{
                                     disabled: params.row.type === "wx"?true:false,
-                                    src:(params.row.type === "wx"? params.row.apprentice.wx_friends_img:'')
+                                    src:(params.row.type === "wx"? (params.row.apprentice?params.row.apprentice.wx_friends_img:''):'')
                                 },
                                 on: {
                                     click: () => {
                                         this.showPicModal = true
-                                        this.bigPic = (params.row.type === "wx"? params.row.apprentice.wx_friends_img:'')
+                                        this.bigPic = (params.row.type === "wx"? (params.row.apprentice?params.row.apprentice.wx_friends_img:''):'')
                                     }
                                 }
                             })

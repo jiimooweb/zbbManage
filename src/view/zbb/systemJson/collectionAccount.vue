@@ -21,9 +21,9 @@
                         </i-col>
                         <i-col span='18'>
                             <Select v-model="formInline.way">
-                                <Option value="银行">银行</Option>
-                                <Option value="微信">微信</Option>
-                                <Option value="支付宝">支付宝</Option>
+                                <Option value="Bank">银行</Option>
+                                <Option value="Wechat">微信</Option>
+                                <Option value="Alipay">支付宝</Option>
                             </Select>
                         </i-col>
                     </row>
@@ -121,7 +121,10 @@ export default {
                 {
                     title: "收款商",
                     align: "center",
-                    key: "way"
+                    // key: "way"
+                    render(h,params) {
+                        return h('p',params.row.way==='Bank'?'银行':(params.row.way==='Wechat'?'微信':'支付宝'))
+                    },
                 },
                 {
                     title: "收款商名称",
