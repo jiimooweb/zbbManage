@@ -625,7 +625,7 @@ export default {
                     align: "center",
                     width: "100",
                     render: (h, params) => {
-                        return h("p", params.row.master.id);
+                        return h("p", params.row.master?params.row.master.id:'');
                     }
                 },
                 {
@@ -633,7 +633,7 @@ export default {
                     align: "center",
                     width: "100",
                     render: (h, params) => {
-                        return h("p", params.row.master.name);
+                        return h("p", params.row.master?params.row.master.name:'');
                     }
                 },
                 {
@@ -744,27 +744,27 @@ export default {
                                 },
                                 "修改"
                             ),
-                            h(
-                                "Button",
-                                {
-                                    props: {
-                                        type: "error",
-                                        size: "small"
-                                    },
-                                    attrs: {
-                                        style: "font-size:12px"
-                                    },
-                                    nativeOn: {
-                                        click: () => {
-                                            this.cancelcancel(true);
-                                            this.currentId = params.row.id;
-                                            this.deleteName =
-                                                params.row.username;
-                                        }
-                                    }
-                                },
-                                "删除"
-                            )
+                            // h(
+                            //     "Button",
+                            //     {
+                            //         props: {
+                            //             type: "error",
+                            //             size: "small"
+                            //         },
+                            //         attrs: {
+                            //             style: "font-size:12px"
+                            //         },
+                            //         nativeOn: {
+                            //             click: () => {
+                            //                 this.cancelcancel(true);
+                            //                 this.currentId = params.row.id;
+                            //                 this.deleteName =
+                            //                     params.row.username;
+                            //             }
+                            //         }
+                            //     },
+                            //     "删除"
+                            // )
                         ]);
                     }
                 }

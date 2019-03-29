@@ -455,10 +455,10 @@ export default [{
     children: [
         {
             path: '/systemJson',
-            name: '系统配置',
+            name: '系统配置表',
             meta: {
                 access:['systemJson'],
-                title: '系统配置',
+                title: '系统配置表',
                 icon: 'ios-build'
             },
             component: () => import('@/view/zbb/systemJson/systemJson')

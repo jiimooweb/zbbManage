@@ -727,6 +727,7 @@ export default {
             this.deletePic();
             this.resetData1(type);
             this.resetData("formInline");
+            this.disabledGroup = []
         },
         changeCheck(arr) {
             if (this.formInline.type === 1) {
@@ -823,7 +824,7 @@ export default {
         },
         successUpload3(file) {
             // console.log(file);
-            this.spinShow = false;
+            this.spinShow2 = false;
             if (file.msg) {
                 this.$Message.error(file.msg);
                 return;

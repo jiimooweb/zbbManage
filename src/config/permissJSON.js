@@ -1,6 +1,6 @@
 /**
  * 权限配置
- * @description 最大数 84
+ * @description 最大数 86
  *  */
 const permissList = [{
     moudal: "首页",
@@ -497,6 +497,11 @@ const permissList = [{
         key: 68,
         sign: "collectionAccount",
         name: "收款账号管理",
+        value: false
+    },{
+        key: 86,
+        sign: "collectionAccount-new",
+        name: "收款账号新增",
         value: false
     },
     {

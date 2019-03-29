@@ -206,14 +206,13 @@ export default {
                     data:{
                         username:(this.searchData.type1==='username'?this.searchData.type1Text:''),
                         user_id:(this.searchData.type1==='user_id'?this.searchData.type1Text:''),
-                        user_type:this.searchData.user_type===2?'':this.searchData.user_type,
-                        remark:this.searchData.remark,
-                        time:this.searchData.type2Text[0]===''?'':this.searchData.type2Text
+                        type:(this.searchData.type===2?'':this.searchData.type),
+                        remark:(this.searchData.remark),
+                        time:(this.searchData.type2Text[0]===''?'':this.searchData.type2Text)
                     }
                 })
                 .then(res => {
                     this.list = res.data.data.data;
-                    // console.log(res);
                     this.total = res.data.data.total;
                     this.currentPage = res.data.data.current_page;
                     this.per_page = res.data.data.per_page;
@@ -227,61 +226,12 @@ export default {
         },
         getchangeList(index){
             this.currentPage = index
-            axios
-                .request({
-                    url: "operate-records/search?page="+this.currentPage+"&pagesize="+this.per_page,
-                    method: "post",
-                    data:{
-                        username:(this.searchData.type1==='username'?this.searchData.type1Text:''),
-                        user_id:(this.searchData.type1==='user_id'?this.searchData.type1Text:''),
-                        user_type:this.searchData.user_type===2?'':this.searchData.user_type,
-                        remark:this.searchData.remark,
-                        time:this.searchData.type2Text[0]===''?'':this.searchData.type2Text
-                    }
-                })
-                .then(res => {
-                    this.list = res.data.data.data;
-                    // console.log(res);
-                    this.total = res.data.data.total;
-                    this.currentPage = res.data.data.current_page;
-                    this.per_page = res.data.data.per_page;
-                }).catch(err => {
-                    for (let i in err.response.data.msg) {
-                        this.$Message.error(
-                            err.response.data.msg[i][0]
-                        );
-                    }
-                });
+            this.searchList()
         },
         changePageGetList(size){
-            console.log(size);
-            
+            this.per_page = size
             this.currentPage = 1
-            axios
-                .request({
-                    url: "operate-records/search?page="+this.currentPage+"&pagesize="+size,
-                    method: "post",
-                    data:{
-                        username:(this.searchData.type1==='username'?this.searchData.type1Text:''),
-                        user_id:(this.searchData.type1==='user_id'?this.searchData.type1Text:''),
-                        user_type:this.searchData.user_type===2?'':this.searchData.user_type,
-                        remark:this.searchData.remark,
-                        time:this.searchData.type2Text[0]===''?'':this.searchData.type2Text
-                    }
-                })
-                .then(res => {
-                    this.list = res.data.data.data;
-                    // console.log(res);
-                    this.total = res.data.data.total;
-                    this.currentPage = res.data.data.current_page;
-                    this.per_page = res.data.data.per_page;
-                }).catch(err => {
-                    for (let i in err.response.data.msg) {
-                        this.$Message.error(
-                            err.response.data.msg[i][0]
-                        );
-                    }
-                });
+            this.searchList()
         },
     },
     mounted() {

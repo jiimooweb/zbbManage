@@ -686,27 +686,27 @@ export default {
                                 },
                                 "修改"
                             ),
-                            h(
-                                "Button",
-                                {
-                                    props: {
-                                        type: "error",
-                                        size: "small"
-                                    },
-                                    attrs: {
-                                        style: "font-size:12px"
-                                    },
-                                    nativeOn: {
-                                        click: () => {
-                                            this.cancelcancel(true);
-                                            this.currentId = params.row.id;
-                                            this.deleteName =
-                                                params.row.username;
-                                        }
-                                    }
-                                },
-                                "删除"
-                            )
+                            // h(
+                            //     "Button",
+                            //     {
+                            //         props: {
+                            //             type: "error",
+                            //             size: "small"
+                            //         },
+                            //         attrs: {
+                            //             style: "font-size:12px"
+                            //         },
+                            //         nativeOn: {
+                            //             click: () => {
+                            //                 this.cancelcancel(true);
+                            //                 this.currentId = params.row.id;
+                            //                 this.deleteName =
+                            //                     params.row.username;
+                            //             }
+                            //         }
+                            //     },
+                            //     "删除"
+                            // )
                         ]);
                     }
                 }

@@ -180,7 +180,6 @@ export default {
                     method: "get"
                 })
                 .then(res => {
-                    console.log(res);
                     this.list = res.data.data;
                 })
                 .catch(err => {

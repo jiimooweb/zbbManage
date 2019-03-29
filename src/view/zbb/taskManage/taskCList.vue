@@ -149,7 +149,7 @@ export default {
                     width: "200",
                     key: "created_at"
                 },{
-                    title: "作品链接",
+                    title: "任务标题",
                     align: "center",
                     width: "200",
                     // key: "task_time"

@@ -413,6 +413,8 @@ export default {
                 {
                     title: "备注",
                     // key: "remark"
+                    align: "center",
+                    width:'200',
                     render: (h, params) => {
                         return h(
                             "p",
@@ -484,26 +486,26 @@ export default {
                                 },
                                 "修改"
                             ),
-                            h(
-                                "Button",
-                                {
-                                    props: {
-                                        type: "error",
-                                        size: "small"
-                                    },
-                                    attrs: {
-                                        style: "font-size:12px"
-                                    },
-                                    nativeOn: {
-                                        click: () => {
-                                            this.currentId = params.row.id;
-                                            this.deleteName = params.row.name;
-                                            this.cancelcancel(true);
-                                        }
-                                    }
-                                },
-                                "删除"
-                            )
+                            // h(
+                            //     "Button",
+                            //     {
+                            //         props: {
+                            //             type: "error",
+                            //             size: "small"
+                            //         },
+                            //         attrs: {
+                            //             style: "font-size:12px"
+                            //         },
+                            //         nativeOn: {
+                            //             click: () => {
+                            //                 this.currentId = params.row.id;
+                            //                 this.deleteName = params.row.name;
+                            //                 this.cancelcancel(true);
+                            //             }
+                            //         }
+                            //     },
+                            //     "删除"
+                            // )
                         ]);
                     }
                 }

@@ -58,7 +58,7 @@
                         </i-col>
                     </row>
                 </FormItem>
-                <FormItem prop="subbranch" class="formItem">
+                <FormItem prop="subbranch" class="formItem" v-if="formInline.way==='Bank'">
                     <row class="formRow">
                         <i-col span='6'>
                             <span class="lable">支行</span>
@@ -68,7 +68,7 @@
                         </i-col>
                     </row>
                 </FormItem>
-                <FormItem prop="qrcode" class="formItem" v-if="formInline.way==='微信'">
+                <FormItem prop="qrcode" class="formItem" v-if="formInline.way==='Wechat'">
                     <row class="formRow">
                         <i-col span='18' offset='6'>
                             <Upload style="margin-bottom:10px;" action="https://www.iryi.cn/upload"
@@ -148,7 +148,7 @@ export default {
                     // key: "qrcode"
                     render:(h,params)=> {
                         if(params.row.qrcode === null){
-                            return h('h','无')
+                            return h('p','无')
                         }else{
                             return h('img',{
                                 attrs:{
@@ -225,7 +225,7 @@ export default {
             ],
             formInline: {
                 flag: "",
-                way: "银行",
+                way: "Bank",
                 title: "",
                 name: "",
                 card: "",
@@ -261,7 +261,7 @@ export default {
                     // trigger: "blur"
                     validator:(rule, value, callback, source, options)=> {
                             var errors = [];
-                            if (!value && value !== 0 && this.formInline.way==='银行') {
+                            if (!value && value !== 0 && this.formInline.way==='Bank') {
                                 callback("请输入支行");
                             }
                             callback(errors);
@@ -270,7 +270,7 @@ export default {
                 qrcode:{
                     validator:(rule, value, callback, source, options)=> {
                             var errors = [];
-                            if (!value && value !== 0 && this.formInline.way==='微信') {
+                            if (!value && value !== 0 && this.formInline.way==='Wechat') {
                                 callback("请上传二维码");
                             }
                             callback(errors);
@@ -351,6 +351,21 @@ export default {
                             }
                         })
                         .then(res => {
+                            if (this.formInline.qrcode !== "" && this.formInline.way !== 'Wechat') {
+                                axios
+                                    .request({
+                                        url: "https://www.iryi.cn/delete",
+                                        method: "post",
+                                        data: {
+                                            url: this.formInline.qrcode
+                                        }
+                                    })
+                                    .catch(err => {
+                                        for (let i in err.response.data.msg) {
+                                            this.$Message.error(err.response.data.msg[i][0]);
+                                        }
+                                    });
+                            }
                             this.$Message.success("提交成功");
                             this.resetData("formInline");
                             this.showEdit(false);

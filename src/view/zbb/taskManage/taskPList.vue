@@ -594,6 +594,15 @@ export default {
                     render: (h, params) => {
                         return h(
                             "p",
+                            {
+                                attrs:{
+                                    style:'color:#'+(params.row.verify_status === -1
+                                ? "ed4014"
+                                : params.row.verify_status === 0
+                                ? "ff9900"
+                                : "19be6b")
+                                }
+                            },
                             params.row.verify_status === -1
                                 ? "未通过"
                                 : params.row.verify_status === 0
@@ -768,26 +777,26 @@ export default {
                                 },
                                 "拒绝"
                             ),
-                            h(
-                                "Button",
-                                {
-                                    props: {
-                                        type: "error",
-                                        size: "small"
-                                    },
-                                    attrs: {
-                                        style: "font-size:12px"
-                                    },
-                                    nativeOn: {
-                                        click: () => {
-                                            this.currentId = params.row.id;
-                                            this.deleteName = params.row.title;
-                                            this.cancelcancel(true);
-                                        }
-                                    }
-                                },
-                                "删除"
-                            )
+                            // h(
+                            //     "Button",
+                            //     {
+                            //         props: {
+                            //             type: "error",
+                            //             size: "small"
+                            //         },
+                            //         attrs: {
+                            //             style: "font-size:12px"
+                            //         },
+                            //         nativeOn: {
+                            //             click: () => {
+                            //                 this.currentId = params.row.id;
+                            //                 this.deleteName = params.row.title;
+                            //                 this.cancelcancel(true);
+                            //             }
+                            //         }
+                            //     },
+                            //     "删除"
+                            // )
                         ]);
                     }
                 }
