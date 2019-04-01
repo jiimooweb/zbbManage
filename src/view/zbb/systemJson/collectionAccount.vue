@@ -313,6 +313,7 @@ export default {
         beforeUpload(file) {},
         newData() {
             this.isNew = true;
+            this.resetData("formInline");
             this.showEdit(true);
         },
         showEdit(i) {

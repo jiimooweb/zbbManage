@@ -1,6 +1,6 @@
 /**
  * 权限配置
- * @description 最大数 86
+ * @description 最大数 91
  *  */
 const permissList = [{
     moudal: "首页",
@@ -131,6 +131,12 @@ const permissList = [{
         key: 18,
         sign: "clientList-delete",
         name: "删除客户",
+        value: false
+    },
+    {
+        key: 87,
+        sign: "clientList-disable",
+        name: "禁用客户",
         value: false
     }
     ]
@@ -526,48 +532,59 @@ const permissList = [{
         name: "师傅禁用列表",
         value: false
     },
-    {
-        key: 72,
-        sign: "masterDisable-delete",
-        name: "师傅禁用删除",
-        value: false
-    },
+    // {
+    //     key: 72,
+    //     sign: "masterDisable-delete",
+    //     name: "师傅禁用删除",
+    //     value: false
+    // },
     {
         key: 73,
         sign: "masterBlack",
         name: "师傅拉黑列表",
         value: false
     },
-    {
-        key: 74,
-        sign: "masterBlack-delete",
-        name: "师傅拉黑删除",
-        value: false
-    },
+    // {
+    //     key: 74,
+    //     sign: "masterBlack-delete",
+    //     name: "师傅拉黑删除",
+    //     value: false
+    // },
     {
         key: 75,
         sign: "apprenticeDisable",
         name: "徒弟禁用列表",
         value: false
-    },
-    {
-        key: 76,
-        sign: "apprenticeDisable-delete",
-        name: "徒弟禁用删除",
+    },{
+        key: 88,
+        sign: "clientDisable",
+        name: "客户禁用列表",
         value: false
     },
+    // {
+    //     key: 76,
+    //     sign: "apprenticeDisable-delete",
+    //     name: "徒弟禁用删除",
+    //     value: false
+    // },
     {
         key: 77,
         sign: "apprenticeBlack",
         name: "徒弟拉黑列表",
         value: false
     },
-    {
-        key: 78,
-        sign: "apprenticeBlack-delete",
-        name: "徒弟拉黑删除",
-        value: false
-    }
+    // {
+    //     key: 78,
+    //     sign: "apprenticeBlack-delete",
+    //     name: "徒弟拉黑删除",
+    //     value: false
+    // },
+    // {
+    //     key: 89,
+    //     sign: "clientDisable-delete",
+    //     name: "客户禁用删除",
+    //     value: false
+    // }
     ]
 },
 {
@@ -612,29 +629,29 @@ const permissList = [{
         value: false
     }]
 },
-// {
-//     moudal: "消息通知",
-//     permiss: [{
-//         key: 85,
-//         sign: "noticesList",
-//         name: "消息通知",
-//         value: false
-//     },{
-//         key: 86,
-//         sign: "noticesList-new",
-//         name: "发送消息",
-//         value: false
-//     },{
-//         key: 87,
-//         sign: "noticesList-edit",
-//         name: "编辑消息",
-//         value: false
-//     },{
-//         key: 88,
-//         sign: "noticesList-delete",
-//         name: "删除消息",
-//         value: false
-//     }]
-// }
+{
+    moudal: "公告管理",
+    permiss: [{
+        key: 89,
+        sign: "noticesList",
+        name: "公告管理",
+        value: false
+    },{
+        key: 90,
+        sign: "noticesList-new",
+        name: "发送公告",
+        value: false
+    },{
+        key: 91,
+        sign: "noticesList-edit",
+        name: "公告修改",
+        value: false
+    },{
+        key: 92,
+        sign: "noticesList-delete",
+        name: "公告删除",
+        value: false
+    }]
+}
 ]
 export { permissList }

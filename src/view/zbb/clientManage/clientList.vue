@@ -304,6 +304,57 @@ export default {
                     key: "username"
                 },
                 {
+                    title: "禁用",
+                    align: "center",
+                    width: "100",
+                    // key:'disable'
+                    render: (h, params) => {
+                        return 1 > 2
+                            ? h("p", params.row.disable === 0 ? "否" : "是")
+                            : h(
+                                  "i-switch",
+                                  {
+                                      props: {
+                                          trueValue: 1,
+                                          falseValue: 0,
+                                          value: params.row.disable
+                                      },
+                                      on: {
+                                          "on-change": val => {
+                                              axios
+                                                  .request({
+                                                      url:
+                                                          "merchants/disable/" +
+                                                          params.row.id,
+                                                          
+                                                      method: "post",
+                                                      data:{
+                                                          disable:val
+                                                      }
+                                                  })
+                                                  .then(res => {
+                                                      this.$Message.success(
+                                                          "修改成功"
+                                                      );
+                                                      this.getList();
+                                                  })
+                                                  .catch(err => {
+                                                      for (let i in err.response
+                                                          .data.msg) {
+                                                          this.$Message.error(
+                                                              err.response.data
+                                                                  .msg[i][0]
+                                                          );
+                                                      }
+                                                  });
+                                          }
+                                      }
+                                  },
+                                  0
+                              );
+                    }
+                },
+                {
                     title: "微信号",
                     width: "200",
                     align: "center",
@@ -323,18 +374,21 @@ export default {
                 },
                 {
                     title: "推荐人类型",
-                    width: "100",
+                    width: "200",
                     align: "center",
                     // key: "recommend_type"
                     render:(h,params)=> {
-                        return h('p',params.row.recommend_type==='Master'?'师傅':'徒弟')
+                        return h('p',params.row.recommend_type==='Master'?'师傅':(params.row.recommend_type==='Apprentice'?'徒弟':'无'))
                     },
                 },
                 {
                     title: "推荐人ID",
                     width: "100",
                     align: "center",
-                    key: "recommend_id"
+                    // key: "recommend_id"
+                    render:(h,params)=> {
+                        return h('p',!params.row.recommend_id?'无':params.row.recommend_id)
+                    },
                 },
                 // {
                 //     title: "对接人",
@@ -586,7 +640,9 @@ export default {
                     console.log(123);
 
                     this.list = res.data.data.data;
-                    console.log(this.list);
+                    this.total = res.data.data.total;
+                    this.currentPage = res.data.data.current_page;
+                    this.per_page = res.data.data.per_page;
                 })
                 .catch(err => {
                     for (let i in err.response.data.msg) {

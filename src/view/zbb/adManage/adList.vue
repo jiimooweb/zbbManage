@@ -307,8 +307,9 @@ export default {
                 })
                 .then(res => {
                     this.list = res.data.data.data;
-                    console.log(this.list);
-                    
+                    this.total = res.data.data.total;
+                    this.currentPage = res.data.data.current_page;
+                    this.per_page = res.data.data.per_page;
                 }).catch(err=>{
                     for (let i in err.response.data.msg) {
                         this.$Message.error(

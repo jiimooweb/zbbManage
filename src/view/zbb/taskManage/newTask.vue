@@ -80,13 +80,13 @@
                         </i-col>
                     </row>
                 </FormItem>
-                <FormItem prop="time_limit" class="formItem">
+                <FormItem prop="time_limit" class="formItem"  v-show="formInline.type!==3">
                     <row class="formRow">
                         <i-col span='4'>
                             <span class="lable">时间限制（分钟）:</span>
                         </i-col>
                         <i-col span='18'>
-                            <i-input placeholder="输入时间限制" class="formInput" v-model.number="formInline.time_limit" type="number" @mousewheel.native.prevent></i-input>
+                            <i-input placeholder="输入时间限制" class="formInput"  step="1" v-model.number="formInline.time_limit" type="number" @mousewheel.native.prevent></i-input>
                         </i-col>
                     </row>
                 </FormItem>
@@ -301,7 +301,6 @@
 import axios from "@/libs/api.request";
 import Cookies from "js-cookie";
 import VueUeditorWrap from "vue-ueditor-wrap";
-import QRCode from "qrcodejs2";
 export default {
     computed: {
         headers() {
@@ -380,7 +379,7 @@ export default {
             return this.total_price;
         }
     },
-    components: { VueUeditorWrap, QRCode },
+    components: { VueUeditorWrap },
     data() {
         return {
             meerchatList: [],
@@ -393,9 +392,9 @@ export default {
                 // 初始容器宽度
                 initialFrameWidth: "100%",
                 // 上传文件接口（这个地址是我为了方便各位体验文件上传功能搭建的临时接口，请勿在生产环境使用！！！）
-                // serverUrl: "https://www.iryi.cn/controller.php",
                 serverUrl: "https://www.iryi.cn/get-edit",
-                // serverUrl: "https://www.iryi.cn/ueditor/server",
+                // serverUrl: "http://120.79.203.214/zbb/public/get-edit",
+                // serverUrl: 'http://35.201.165.105:8000/controller.php',
 
                 // UEditor 资源文件的存放路径，如果你使用的是 vue-cli 生成的项目，通常不需要设置该选项，vue-ueditor-wrap 会自动处理常见的情况，如果需要特殊配置，参考下方的常见问题2
                 // UEDITOR_HOME_URL: "http://120.79.203.214/zbb/"
@@ -516,9 +515,9 @@ export default {
                 ],
                 time_limit: [
                     {
-                        validator(rule, value, callback, source, options) {
+                        validator:(rule, value, callback, source, options)=> {
                             var errors = [];
-                            if (!value && value !== 0) {
+                            if (!value && value !== 0 && this.formInline.type !== 3) {
                                 callback("请输入时间限制");
                             }
                             callback(errors);
@@ -583,7 +582,12 @@ export default {
                 "TT_MERCHANT_SUBSCRIBE", //头条赚 关注
                 "TT_MERCHANT_LIKE", //头条赚 点赞
                 "TT_MERCHANT_SHARE", //头条赚 转发
-                "TT_MERCHANT_COMMENT" //头条赚 评论
+                "TT_MERCHANT_COMMENT", //头条赚 评论
+
+                "WECHAT_TASK_LIMIT",//发圈时间限制
+                "DY_TASK_LIMIT",//抖音时间限制
+                "TT_TASK_LIMIT",//头条时间限制
+
             ],
             SHARE_MERCHANT_COST: "", //分享赚
             WECHAT_MERCHANT_COST: "", //发圈赚
@@ -598,6 +602,10 @@ export default {
             TT_MERCHANT_SHARE: "", //头条赚 转发
             TT_MERCHANT_COMMENT: "", //头条赚 评论
 
+
+            WECHAT_TASK_LIMIT:'',//发圈时间限制
+            DY_TASK_LIMIT:'',//抖音时间限制
+            TT_TASK_LIMIT:'',//头条时间限制
             deletePicArr: [], //暂存需要删除的图片路径
 
             newType: "",
@@ -606,7 +614,6 @@ export default {
         };
     },
     mounted() {
-        // this.qrcode()
         this.getJson();
         this.getMerchatList();
         this.getTypeList();
@@ -676,15 +683,6 @@ export default {
             }
             this.deletePicArr = []
         },
-        qrcode() {
-            this.$nextTick(() => {
-                let qrcode = new QRCode("qrcode", {
-                    width: 232, // 设置宽度
-                    height: 232, // 设置高度
-                    text: "https://zhlsqj.com/#/destroyTicket?id="
-                });
-            });
-        },
         ready(editorInstance) {
             this.editorInstance = editorInstance;
             console.log(`实例${editorInstance.key}已经初始化:`, editorInstance);
@@ -728,6 +726,15 @@ export default {
             this.resetData1(type);
             this.resetData("formInline");
             this.disabledGroup = []
+            if(type===0){
+                this.formInline.time_limit = this.WECHAT_TASK_LIMIT
+            }else if(type===1){
+                this.formInline.time_limit = this.DY_TASK_LIMIT
+            }else if(type===2){
+                this.formInline.time_limit = this.TT_TASK_LIMIT
+            }else{
+                this.formInline.time_limit = ''
+            }
         },
         changeCheck(arr) {
             if (this.formInline.type === 1) {
@@ -873,7 +880,7 @@ export default {
                             }
                         }
                     }
-                    // console.log(this.sysJson);
+                    this.formInline.time_limit = this.WECHAT_TASK_LIMIT
                 })
                 .catch(err => {
                     for (let i in err.response.data.msg) {

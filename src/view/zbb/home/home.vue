@@ -209,7 +209,7 @@ export default {
 
 <style lang="less">
 .count-style {
-    font-size: 50px;
+    font-size: 30px;
 }
 .count-p{
     font-size: 20px;

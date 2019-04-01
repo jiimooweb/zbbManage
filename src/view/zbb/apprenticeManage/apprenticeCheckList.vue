@@ -749,7 +749,7 @@ export default {
             //导出excel
             let token = ''
             axios.request({
-                url:'https://www.iryi.cn/export-token',
+                url:'https://www.iryi.cn/',
                 method:'get'
             }).then(res=>{
                 token = res.data

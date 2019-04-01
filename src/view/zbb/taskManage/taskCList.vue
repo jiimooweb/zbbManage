@@ -201,14 +201,18 @@ export default {
                                             ? "ff9900"
                                             : params.row.status === 1
                                             ? "19be6b"
-                                            : "ed4014")
+                                            : params.row.status === -1
+                                            ? "ed4014"
+                                            : "999")
                                 }
                             },
                             params.row.status === 0
                                 ? "执行中"
                                 : params.row.status === 1
                                 ? "已完成"
-                                : "已取消"
+                                : params.row.status === -1
+                                ? "已取消"
+                                : "已过期"
                         );
                     }
                 },
@@ -425,8 +429,10 @@ export default {
                     method: "get"
                 })
                 .then(res => {
-                    console.log(res);
                     this.list = res.data.data.data;
+                    this.total = res.data.data.total;
+                    this.currentPage = res.data.data.current_page;
+                    this.per_page = res.data.data.per_page;
                 })
                 .catch(err => {
                     for (let i in err.response.data.msg) {

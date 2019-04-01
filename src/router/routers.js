@@ -477,7 +477,7 @@ export default [{
     name: '黑户管理',
     component: Main,
     meta: {
-        access:['masterDisable','masterBlack','apprenticeDisable','apprenticeBlack'],
+        access:['masterDisable','masterBlack','apprenticeDisable','apprenticeBlack','clientDisable'],
         title: '黑户管理',
         icon: 'ios-build'
     },
@@ -518,6 +518,15 @@ export default [{
                 icon: 'ios-man'
             },
             component: () => import('@/view/zbb/blackManage/apprenticeBlack')
+        },{
+            path: '/clientDisable',
+            name: '客户禁用列表',
+            meta: {
+                access:['clientDisable'],
+                title: '客户禁用列表',
+                icon: 'ios-man'
+            },
+            component: () => import('@/view/zbb/blackManage/clientDisable')
         }]
 }, {
     path: '/loginManage',
@@ -622,25 +631,25 @@ export default [{
             component: () => import('@/view/zbb/articleManage/articleList')
         }]
 },
-// {
-//     path: '/noticesManage',
-//     name: '消息管理',
-//     component: Main,
-//     meta: {
-//         access:['noticesList'],
-//         title: '消息管理',
-//         icon: 'ios-albums-outline'
-//     },
-//     children: [
-//         {
-//             path: '/noticesList',
-//             name: '消息列表',
-//             meta: {
-//                 access:['noticesList'],
-//                 title: '消息列表',
-//                 icon: 'ios-list'
-//             },
-//             component: () => import('@/view/zbb/noticesManage/noticesList')
-//         }]
-// },
+{
+    path: '/noticesManage',
+    name: '公告管理',
+    component: Main,
+    meta: {
+        access:['noticesList'],
+        title: '公告管理',
+        icon: 'ios-albums-outline'
+    },
+    children: [
+        {
+            path: '/noticesList',
+            name: '公告列表',
+            meta: {
+                access:['noticesList'],
+                title: '公告列表',
+                icon: 'ios-list'
+            },
+            component: () => import('@/view/zbb/noticesManage/noticesList')
+        }]
+},
 ]

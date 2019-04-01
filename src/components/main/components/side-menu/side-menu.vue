@@ -1,6 +1,21 @@
 <template>
   <div class="side-menu-wrapper">
     <slot></slot>
+    <div style='height:50px;display:block;margin:0 auto 20px;'>
+        <div @click='returnPath("/")' style='cursor:pointer;width:calc(100% / 4 - 10px);float:left;height:50px;overflow:hidden;background:#19be6b;margin-right:5px;margin-left:13px;line-height:50px;text-align:center;'>
+            <Icon type='md-home' color='#fff' size="40"/>
+        </div>
+        <div @click='returnPath("/newTask")' style='cursor:pointer;width:calc(100% / 4 - 10px);float:left;height:50px;overflow:hidden;background:#5cadff;margin-right:5px;line-height:50px;text-align:center;'>
+            <Icon type='md-create' color='#fff' size="40" />
+        </div>
+        <div @click='returnPath("/clientList")' style='cursor:pointer;width:calc(100% / 4 - 10px);float:left;height:50px;overflow:hidden;background:#ff9900;margin-right:5px;line-height:50px;text-align:center;'>
+            <Icon type='md-people' color='#fff' size="40" />
+        </div>
+        <div @click='returnPath("/noticesList")' style='cursor:pointer;width:calc(100% / 4 - 10px);float:left;height:50px;overflow:hidden;background:#ed4014;line-height:53px;text-align:center;'>
+            <Icon type='ios-notifications' color='#fff' size="40" />
+        </div>
+    </div>
+
     <Menu ref="menu" v-show="!collapsed" :active-name="activeName" :open-names="openedNames" :accordion="accordion" :theme="theme" width="auto" @on-select="handleSelect">
       <template v-for="item in menuList">
         <template v-if="item.children && item.children.length === 1">
@@ -74,6 +89,12 @@ export default {
     }
   },
   methods: {
+    /**
+     * @description 跳转到对应路由
+     */
+    returnPath(url){
+        this.$router.push({path:url})
+    },  
     handleSelect (name) {
       this.$emit('on-select', name)
     },

@@ -129,8 +129,10 @@ import axios from "@/libs/api.request";
                     url:'recommends?page='+this.currentPage+'&pagesize='+this.per_page,
                     method:'get'
                 }).then(res=>{
-                    console.log(res);
                     this.list =  res.data.data.data
+                    this.total = res.data.data.total;
+                    this.currentPage = res.data.data.current_page;
+                    this.per_page = res.data.data.per_page;
                 })
             },
             changePageGetList(size){
