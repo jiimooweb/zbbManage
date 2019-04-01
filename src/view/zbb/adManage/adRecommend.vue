@@ -11,6 +11,7 @@
 
 <script>
 import axios from "@/libs/api.request";
+import { returnHasPower, isShowColumn } from "@/libs/util";
     export default {
         data(){
             return{
@@ -53,7 +54,7 @@ import axios from "@/libs/api.request";
                         },
                     },{
                         title:'备注',
-                        width:"550",
+                        width:"650",
                         align:'center',
                         key:'remark'
                     },{
@@ -82,7 +83,13 @@ import axios from "@/libs/api.request";
                                     },
                                     attrs: {
                                         style:
-                                            "font-size:12px;"
+                                            "font-size:12px;margin-right:15px;display:" +
+                                            (this.hasPower(
+                                                this.$store.state.user.access,
+                                                "adRecommend-review"
+                                            )
+                                                ? "inline-block;"
+                                                : "none;")
                                     },
                                     nativeOn: {
                                         click: () => {
@@ -106,6 +113,16 @@ import axios from "@/libs/api.request";
                 per_page: 20,
                 defailPage: 20,
                 pageSize: [5, 10, 20, 50, 200, 500],
+            }
+        },
+        computed: {
+            getAccess() {
+                return this.$store.state.user.access;
+            }
+        },
+        watch: {
+            getAccess: function(a, b) {
+                isShowColumn(a, ["adRecommend-review"], this.column);
             }
         },
         methods:{

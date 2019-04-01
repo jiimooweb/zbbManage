@@ -228,12 +228,12 @@ const permissList = [{
         name: "编辑师傅",
         value: false
     },
-    {
-        key: 31,
-        sign: "masterList-delete",
-        name: "删除师傅",
-        value: false
-    },
+    // {
+    //     key: 31,
+    //     sign: "masterList-delete",
+    //     name: "删除师傅",
+    //     value: false
+    // },
     {
         key: 32,
         sign: "masterList-disabled",
@@ -274,12 +274,12 @@ const permissList = [{
         name: "编辑徒弟",
         value: false
     },
-    {
-        key: 38,
-        sign: "apprenticeList-delete",
-        name: "删除徒弟",
-        value: false
-    },
+    // {
+    //     key: 38,
+    //     sign: "apprenticeList-delete",
+    //     name: "删除徒弟",
+    //     value: false
+    // },
     {
         key: 39,
         sign: "apprenticeCheckList-review",

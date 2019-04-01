@@ -113,7 +113,7 @@
         </i-form>
         <row style="margin-bottom:10px;">
             <i-col span='2'>
-                <Button @click="returnAdd()">添加</Button>
+                <Button @click="returnAdd()" :style='"display:" + (this.hasPower(this.$store.state.user.access,"newMaster")? "inline-block;": "none;")'>添加</Button>
             </i-col>
             <!-- <i-col span='2'>
                 <Button type='success' @click="returnAdd()">批量通过</Button>
@@ -270,6 +270,7 @@
 
 <script>
 import axios from "@/libs/api.request";
+import { returnHasPower, isShowColumn } from "@/libs/util";
 export default {
     data() {
         return {
@@ -410,8 +411,8 @@ export default {
                     width: "100",
                     // key:'blacklist'
                     render: (h, params) => {
-                        return 1 > 2
-                            ? h("p", params.row.blacklist === 0 ? "否" : "是")
+                        return (!returnHasPower(this.$store.state.user.access,"masterList-blacklist")
+                            ? h("p",{attrs:{style:'color:#'+(params.row.blacklist === 0 ? "ed4014" : "19be6b")}}, params.row.blacklist === 0 ? "否" : "是")
                             : h(
                                   "i-switch",
                                   {
@@ -450,7 +451,7 @@ export default {
                                       }
                                   },
                                   0
-                              );
+                              ));
                     }
                 },
                 {
@@ -459,8 +460,8 @@ export default {
                     width: "100",
                     // key:'disable'
                     render: (h, params) => {
-                        return 1 > 2
-                            ? h("p", params.row.disable === 0 ? "否" : "是")
+                        return (!returnHasPower(this.$store.state.user.access,"masterList-disabled")
+                            ? h("p",{attrs:{style:'color:#'+(params.row.disable === 0 ? "ed4014" : "19be6b")}}, params.row.disable === 0 ? "否" : "是")
                             : h(
                                   "i-switch",
                                   {
@@ -499,7 +500,7 @@ export default {
                                       }
                                   },
                                   0
-                              );
+                              ));
                     }
                 },
                 // {
@@ -675,7 +676,13 @@ export default {
                                     },
                                     attrs: {
                                         style:
-                                            "font-size:12px;margin-right:15px;"
+                                            "font-size:12px;margin-right:15px;display:" +
+                                            (this.hasPower(
+                                                this.$store.state.user.access,
+                                                "masterList-edit"
+                                            )
+                                                ? "inline-block;"
+                                                : "none;")
                                     },
                                     nativeOn: {
                                         click: () => {
@@ -720,6 +727,16 @@ export default {
             pageSize: [5, 10, 20, 50, 200, 500],
             selectList: []
         };
+    },
+    computed: {
+        getAccess() {
+            return this.$store.state.user.access;
+        }
+    },
+    watch: {
+        getAccess: function(a, b) {
+            isShowColumn(a, ["masterList-edit"], this.masterColumn);
+        }
     },
     methods: {
         //导出

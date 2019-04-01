@@ -69,7 +69,7 @@
         </i-form>
         <row style="margin-bottom:10px;">
             <i-col span='2'>
-                <Button @click="returnAdd()">添加</Button>
+                <Button @click="returnAdd()" :style='"display:" + (this.hasPower(this.$store.state.user.access,"newTask")? "inline-block;": "none;")'>添加</Button>
             </i-col>
         </row>
         <Table stripe :columns="column" border :data="list" v-show="showTable"></Table>
@@ -362,6 +362,7 @@ import Cookies from "js-cookie";
 // import VueUeditorWrap from "vue-ueditor-wrap";
 // import bigdataTable from '../../components/vue-bigdata-table';
 // import indexRender from './index-render.js';
+import { returnHasPower, isShowColumn } from "@/libs/util";
 export default {
     computed: {
         headers() {
@@ -640,7 +641,9 @@ export default {
                     title: "任务开关",
                     align: "center",
                     render: (h, params) => {
-                        return h(
+                        return (!returnHasPower(this.$store.state.user.access,"taskPList-open")
+                            ? h("p",{attrs:{style:'color:#'+(params.row.status === 0 ? "ed4014" : "19be6b")}}, params.row.status === 0 ? "关" : "开")
+                            : h(
                             "i-switch",
                             {
                                 props: {
@@ -676,7 +679,7 @@ export default {
                                 }
                             },
                             0
-                        );
+                        ));
                     }
                 },
                 {
@@ -742,7 +745,13 @@ export default {
                                     },
                                     attrs: {
                                         style:
-                                            "font-size:12px;margin-right:15px;",
+                                            "font-size:12px;margin-right:15px;display:" +
+                                            (this.hasPower(
+                                                this.$store.state.user.access,
+                                                "taskPList-review"
+                                            )
+                                                ? "inline-block;"
+                                                : "none;"),
                                             disabled:params.row.verify_status!==0
                                     },
                                     nativeOn: {
@@ -764,7 +773,13 @@ export default {
                                     },
                                     attrs: {
                                         style:
-                                            "font-size:12px;margin-right:15px;",
+                                            "font-size:12px;margin-right:15px;display:" +
+                                            (this.hasPower(
+                                                this.$store.state.user.access,
+                                                "taskPList-review"
+                                            )
+                                                ? "inline-block;"
+                                                : "none;"),
                                             disabled:params.row.verify_status!==0
                                     },
                                     nativeOn: {

@@ -108,7 +108,7 @@
             </row>
         </i-form>
         <row style="margin-bottom:10px;">
-            <i-col span='10'>
+            <i-col span='10' :style='"display:" + (this.hasPower(this.$store.state.user.access,"apprenticeCheckList-review")? "inline-block;": "none;")'>
                 <!-- <Button @click="returnAdd()" style="display:block;float:left;">添加</Button> -->
                 <Button type='success' @click="cancelpass(true)" style="display:block;float:left;">批量通过</Button>
                 <Button type='error' @click="cancelFail(true)" style="display:block;float:left;margin-left:10px;">批量拒绝</Button>
@@ -581,7 +581,13 @@ export default {
                                     },
                                     attrs: {
                                         style:
-                                            "font-size:12px;margin-right:15px;"
+                                            "font-size:12px;margin-right:15px;display:" +
+                                            (this.hasPower(
+                                                this.$store.state.user.access,
+                                                "apprenticeCheckList-review"
+                                            )
+                                                ? "inline-block;"
+                                                : "none;")
                                     },
                                     nativeOn: {
                                         click: () => {
@@ -604,7 +610,13 @@ export default {
                                     },
                                     attrs: {
                                         style:
-                                            "font-size:12px;margin-right:15px;"
+                                            "font-size:12px;margin-right:15px;display:" +
+                                            (this.hasPower(
+                                                this.$store.state.user.access,
+                                                "apprenticeCheckList-review"
+                                            )
+                                                ? "inline-block;"
+                                                : "none;")
                                     },
                                     nativeOn: {
                                         click: () => {
@@ -636,6 +648,16 @@ export default {
             isPass: false,
             currentName: ""
         };
+    },
+    computed: {
+        getAccess() {
+            return this.$store.state.user.access;
+        }
+    },
+    watch: {
+        getAccess: function(a, b) {
+            isShowColumn(a, ["apprenticeCheckList-review"], this.masterColumn);
+        }
     },
     methods: {
         cancelone(i) {

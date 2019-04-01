@@ -84,6 +84,7 @@
 
 <script>
 import axios from "@/libs/api.request";
+import { isShowColumn } from "@/libs/util";
 export default {
     data() {
         return {
@@ -300,7 +301,13 @@ export default {
                                     },
                                     attrs: {
                                         style:
-                                            "font-size:12px;margin-right:15px;"
+                                            "font-size:12px;margin-right:15px;display:" +
+                                            (this.hasPower(
+                                                this.$store.state.user.access,
+                                                "taskCList-review"
+                                            )
+                                                ? "inline-block;"
+                                                : "none;")
                                     },
                                     nativeOn: {
                                         click: () => {
@@ -323,7 +330,13 @@ export default {
                                     },
                                     attrs: {
                                         style:
-                                            "font-size:12px;margin-right:15px;"
+                                            "font-size:12px;margin-right:15px;display:" +
+                                            (this.hasPower(
+                                                this.$store.state.user.access,
+                                                "taskCList-review"
+                                            )
+                                                ? "inline-block;"
+                                                : "none;")
                                     },
                                     nativeOn: {
                                         click: () => {
@@ -352,6 +365,16 @@ export default {
             returnModal: false,
             returnModal1: false
         };
+    },
+    computed: {
+        getAccess() {
+            return this.$store.state.user.access;
+        }
+    },
+    watch: {
+        getAccess: function(a, b) {
+            isShowColumn(a, ["taskCList-review"], this.column);
+        }
     },
     mounted() {
         this.getList();

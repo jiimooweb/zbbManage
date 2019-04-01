@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Button type="primary" style='margin:10px 0;display:block;' @click="newDate()">添加银行</Button>
+        <Button type="primary" :style='"margin:10px 0;display:" + (this.hasPower(this.$store.state.user.access,"bankManage-new")? "inline-block;": "none;")' @click="newDate()">添加银行</Button>
         <Table :columns="bankColumn" border :data="bankList"></Table>
         <Page style="margin-top:20px;" :total="total" show-total :page-size='defailPage' show-elevator show-sizer
             :page-size-opts='pageSize' @on-change="changeGetList" @on-page-size-change='changePageGetList' />
@@ -60,6 +60,7 @@
 
 <script>
 import axios from "@/libs/api.request";
+import { returnHasPower, isShowColumn } from "@/libs/util";
 export default {
     data() {
         return {
@@ -158,7 +159,14 @@ export default {
                                         size: "small"
                                     },
                                     attrs: {
-                                        style: "font-size:12px;"
+                                        style:
+                                            "font-size:12px;margin-right:15px;display:" +
+                                            (this.hasPower(
+                                                this.$store.state.user.access,
+                                                "bankManage-edit"
+                                            )
+                                                ? "inline-block;"
+                                                : "none;")
                                     },
                                     nativeOn: {
                                         click: () => {
@@ -187,7 +195,13 @@ export default {
                                     },
                                     attrs: {
                                         style:
-                                            "font-size:12px;margin-left:10px;"
+                                            "font-size:12px;margin-right:15px;display:" +
+                                            (this.hasPower(
+                                                this.$store.state.user.access,
+                                                "bankManage-delete"
+                                            )
+                                                ? "inline-block;"
+                                                : "none;")
                                     },
                                     nativeOn: {
                                         click: () => {
@@ -206,6 +220,16 @@ export default {
             bankList: [],
             isNew: false
         };
+    },
+    computed: {
+        getAccess() {
+            return this.$store.state.user.access;
+        }
+    },
+    watch: {
+        getAccess: function(a, b) {
+            isShowColumn(a, ["bankManage-edit","bankManage-delete"], this.bankColumn);
+        }
     },
     methods: {
         deletecancel(i) {

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Button type="primary" style='margin:10px 0;display:block;' @click="newData()">添加</Button>
+        <Button type="primary" :style='"margin:10px 0;display:" + (this.hasPower(this.$store.state.user.access,"collectionAccount-new")? "inline-block;": "none;")' @click="newData()">添加</Button>
         <Table stripe :columns="column" border :data="list"></Table>
         <Modal v-model="editModal" title="收款资料" :mask-closable="false" footer-hide>
             <i-form ref="formInline" class="formPage" :model="formInline" :rules="ruleInline" inline>
@@ -105,6 +105,7 @@
 
 <script>
 import axios from "@/libs/api.request";
+import { returnHasPower, isShowColumn } from "@/libs/util";
 export default {
     data() {
         return {
@@ -180,7 +181,14 @@ export default {
                                         size: "small"
                                     },
                                     attrs: {
-                                        style: "font-size:12px"
+                                        style:
+                                            "font-size:12px;margin-right:15px;display:" +
+                                            (this.hasPower(
+                                                this.$store.state.user.access,
+                                                "collectionAccount-edit"
+                                            )
+                                                ? "inline-block;"
+                                                : "none;")
                                     },
                                     nativeOn: {
                                         click: () => {
@@ -207,7 +215,14 @@ export default {
                                         size: "small"
                                     },
                                     attrs: {
-                                        style: "font-size:12px;margin-left:10px;"
+                                        style:
+                                            "font-size:12px;margin-right:15px;display:" +
+                                            (this.hasPower(
+                                                this.$store.state.user.access,
+                                                "collectionAccount-delete"
+                                            )
+                                                ? "inline-block;"
+                                                : "none;")
                                     },
                                     nativeOn: {
                                         click: () => {
@@ -278,6 +293,16 @@ export default {
                 }
             }
         };
+    },
+    computed: {
+        getAccess() {
+            return this.$store.state.user.access;
+        }
+    },
+    watch: {
+        getAccess: function(a, b) {
+            isShowColumn(a, ["collectionAccount-edit","collectionAccount-delete"], this.column);
+        }
     },
     methods: {
         cancelcancel(i){

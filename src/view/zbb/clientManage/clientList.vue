@@ -1,6 +1,6 @@
 <template>
     <div class="CLIENTLIST">
-        <Button type="primary" style='margin:10px 0;display:block;' @click="newData()">添加客户</Button>
+        <Button type="primary" :style='"margin:10px 0;display:" + (this.hasPower(this.$store.state.user.access,"newClient")? "inline-block;": "none;")' @click="newData()">添加客户</Button>
         <Table stripe :columns="column" border :data="list"></Table>
         <Page style="margin-top:20px;" :total="total" show-total :page-size='defailPage' show-elevator show-sizer
             :page-size-opts='pageSize' @on-change="getchangeList" @on-page-size-change='changePageGetList' />
@@ -212,6 +212,7 @@
 
 <script>
 import axios from "@/libs/api.request";
+import { returnHasPower, isShowColumn } from "@/libs/util";
 export default {
     data() {
         return {
@@ -243,8 +244,8 @@ export default {
                 custom_service: "",
 
                 remark: "",
-                recommend_type:'Master',
-                recommend_id:''
+                recommend_type: "Master",
+                recommend_id: ""
             },
             ruleInline: {
                 username: [
@@ -299,7 +300,7 @@ export default {
                 {
                     title: "客户账户",
                     width: "100",
-                    fixed:'left',
+                    fixed: "left",
                     align: "center",
                     key: "username"
                 },
@@ -307,9 +308,8 @@ export default {
                     title: "禁用",
                     align: "center",
                     width: "100",
-                    // key:'disable'
                     render: (h, params) => {
-                        return 1 > 2
+                        return (!returnHasPower(this.$store.state.user.access,"clientList-disable")
                             ? h("p", params.row.disable === 0 ? "否" : "是")
                             : h(
                                   "i-switch",
@@ -326,10 +326,10 @@ export default {
                                                       url:
                                                           "merchants/disable/" +
                                                           params.row.id,
-                                                          
+
                                                       method: "post",
-                                                      data:{
-                                                          disable:val
+                                                      data: {
+                                                          disable: val
                                                       }
                                                   })
                                                   .then(res => {
@@ -351,7 +351,7 @@ export default {
                                       }
                                   },
                                   0
-                              );
+                              ));
                     }
                 },
                 {
@@ -377,18 +377,30 @@ export default {
                     width: "200",
                     align: "center",
                     // key: "recommend_type"
-                    render:(h,params)=> {
-                        return h('p',params.row.recommend_type==='Master'?'师傅':(params.row.recommend_type==='Apprentice'?'徒弟':'无'))
-                    },
+                    render: (h, params) => {
+                        return h(
+                            "p",
+                            params.row.recommend_type === "Master"
+                                ? "师傅"
+                                : params.row.recommend_type === "Apprentice"
+                                ? "徒弟"
+                                : "无"
+                        );
+                    }
                 },
                 {
                     title: "推荐人ID",
                     width: "100",
                     align: "center",
                     // key: "recommend_id"
-                    render:(h,params)=> {
-                        return h('p',!params.row.recommend_id?'无':params.row.recommend_id)
-                    },
+                    render: (h, params) => {
+                        return h(
+                            "p",
+                            !params.row.recommend_id
+                                ? "无"
+                                : params.row.recommend_id
+                        );
+                    }
                 },
                 // {
                 //     title: "对接人",
@@ -468,7 +480,7 @@ export default {
                     title: "备注",
                     // key: "remark"
                     align: "center",
-                    width:'200',
+                    width: "200",
                     render: (h, params) => {
                         return h(
                             "p",
@@ -497,7 +509,13 @@ export default {
                                     },
                                     attrs: {
                                         style:
-                                            "font-size:12px;margin-right:15px;"
+                                            "font-size:12px;margin-right:15px;display:" +
+                                            (this.hasPower(
+                                                this.$store.state.user.access,
+                                                "clientList-edit"
+                                            )
+                                                ? "inline-block;"
+                                                : "none;")
                                     },
                                     nativeOn: {
                                         click: () => {
@@ -539,7 +557,7 @@ export default {
                                     }
                                 },
                                 "修改"
-                            ),
+                            )
                             // h(
                             //     "Button",
                             //     {
@@ -596,8 +614,18 @@ export default {
             currentPage: 1,
             per_page: 20,
             defailPage: 20,
-            pageSize: [5, 10, 20, 50, 200, 500],
+            pageSize: [5, 10, 20, 50, 200, 500]
         };
+    },
+    computed: {
+        getAccess() {
+            return this.$store.state.user.access;
+        }
+    },
+    watch: {
+        getAccess: function(a, b) {
+            isShowColumn(a, ["clientList-edit"], this.column);
+        }
     },
     mounted() {
         this.getList();
@@ -637,8 +665,6 @@ export default {
                     method: "get"
                 })
                 .then(res => {
-                    console.log(123);
-
                     this.list = res.data.data.data;
                     this.total = res.data.data.total;
                     this.currentPage = res.data.data.current_page;
@@ -664,10 +690,7 @@ export default {
             axios
                 .request({
                     url:
-                        "system/configs?page=" +
-                        this.currentPage +
-                        "&pagesize=" +
-                        this.defailPage,
+                        "system/configs",
                     method: "get"
                 })
                 .then(res => {
@@ -756,8 +779,8 @@ export default {
                                 custom_service: this.formInline.custom_service,
 
                                 remark: this.formInline.remark,
-                                recommend_type:this.formInline.recommend_type,
-                                recommend_id:this.formInline.recommend_id,
+                                recommend_type: this.formInline.recommend_type,
+                                recommend_id: this.formInline.recommend_id
                             }
                         })
                         .then(res => {

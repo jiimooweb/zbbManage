@@ -113,7 +113,7 @@
                 </i-col>
             </row>
         </i-form>
-        <row style="margin-bottom:10px;">
+        <row :style='"width:100%;margin-bottom:10px;display:" + (this.hasPower(this.$store.state.user.access,"apprenticeWithdraw-review")? "inline-block;": "none;")'>
             <i-col span='10'>
                 <Button type='success' @click="cancelAll(true,2)" style="display:block;float:left;margin-left:10px;">批量确认打款</Button>
                 <Button type='warning' @click="cancelAll(true,1)" style="display:block;float:left;margin-left:10px;">批量安排打款</Button>
@@ -142,6 +142,7 @@
 
 <script>
 import axios from "@/libs/api.request";
+import { returnHasPower, isShowColumn } from "@/libs/util";
 export default {
     data() {
         return {
@@ -352,7 +353,13 @@ export default {
                                     },
                                     attrs: {
                                         style:
-                                            "font-size:12px;margin-right:15px;"
+                                            "font-size:12px;margin-right:15px;display:" +
+                                            (this.hasPower(
+                                                this.$store.state.user.access,
+                                                "apprenticeWithdraw-review"
+                                            )
+                                                ? "inline-block;"
+                                                : "none;")
                                     },
                                     nativeOn: {
                                         click: () => {
@@ -376,7 +383,13 @@ export default {
                                     },
                                     attrs: {
                                         style:
-                                            "font-size:12px;margin-right:15px;"
+                                            "font-size:12px;margin-right:15px;display:" +
+                                            (this.hasPower(
+                                                this.$store.state.user.access,
+                                                "apprenticeWithdraw-review"
+                                            )
+                                                ? "inline-block;"
+                                                : "none;")
                                     },
                                     nativeOn: {
                                         click: () => {
@@ -427,6 +440,16 @@ export default {
             defailPage: 20,
             pageSize: [5, 10, 20, 50, 200, 500],
         };
+    },
+    computed: {
+        getAccess() {
+            return this.$store.state.user.access;
+        }
+    },
+    watch: {
+        getAccess: function(a, b) {
+            isShowColumn(a, ["apprenticeWithdraw-review"], this.column);
+        }
     },
     methods: {
         returnExcel(){

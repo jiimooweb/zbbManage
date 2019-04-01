@@ -114,7 +114,7 @@
         </i-form>
         <row style="margin-bottom:10px;">
             <i-col span='10'>
-                <Button @click="returnAdd()" style="display:block;float:left;">添加</Button>
+                <Button @click="returnAdd()" :style='"float:left;display:" + (this.hasPower(this.$store.state.user.access,"newApprentice")? "inline-block;": "none;")'>添加</Button>
                 <!-- <Button type='success' @click="cancelpass(true)" style="display:block;float:left;margin-left:10px;">批量通过</Button>
                 <Button type='error' @click="cancelFail(true)" style="display:block;float:left;margin-left:10px;">批量拒绝</Button> -->
             </i-col>
@@ -277,6 +277,7 @@
 
 <script>
 import axios from "@/libs/api.request";
+import { returnHasPower, isShowColumn } from "@/libs/util";
 export default {
     data() {
         return {
@@ -417,8 +418,8 @@ export default {
                     width: "100",
                     // key:'blacklist'
                     render: (h, params) => {
-                        return 1 > 2
-                            ? h("p", params.row.blacklist === 0 ? "否" : "是")
+                        return (!returnHasPower(this.$store.state.user.access,"apprenticeList-blacklist")
+                            ? h("p",{attrs:{style:'color:#'+(params.row.blacklist === 0 ? "ed4014" : "19be6b")}}, params.row.blacklist === 0 ? "否" : "是")
                             : h(
                                   "i-switch",
                                   {
@@ -457,7 +458,7 @@ export default {
                                       }
                                   },
                                   0
-                              );
+                              ));
                     }
                 },
                 {
@@ -466,8 +467,8 @@ export default {
                     width: "100",
                     // key:'disable'
                     render: (h, params) => {
-                        return 1 > 2
-                            ? h("p", params.row.disable === 0 ? "否" : "是")
+                        return (!returnHasPower(this.$store.state.user.access,"apprenticeList-disabled")
+                            ? h("p",{attrs:{style:'color:#'+(params.row.disable === 0 ? "ed4014" : "19be6b")}}, params.row.disable === 0 ? "否" : "是")
                             : h(
                                   "i-switch",
                                   {
@@ -506,7 +507,7 @@ export default {
                                       }
                                   },
                                   0
-                              );
+                              ));
                     }
                 },
                 // {
@@ -733,7 +734,13 @@ export default {
                                     },
                                     attrs: {
                                         style:
-                                            "font-size:12px;margin-right:15px;"
+                                            "font-size:12px;margin-right:15px;display:" +
+                                            (this.hasPower(
+                                                this.$store.state.user.access,
+                                                "apprenticeList-edit"
+                                            )
+                                                ? "inline-block;"
+                                                : "none;")
                                     },
                                     nativeOn: {
                                         click: () => {
@@ -784,6 +791,16 @@ export default {
             isPass: false,
             currentName: ""
         };
+    },
+    computed: {
+        getAccess() {
+            return this.$store.state.user.access;
+        }
+    },
+    watch: {
+        getAccess: function(a, b) {
+            isShowColumn(a, ["apprenticeList-edit"], this.masterColumn);
+        }
     },
     methods: {
         cancelone(i) {

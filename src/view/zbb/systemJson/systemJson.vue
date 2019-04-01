@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Button type="primary" style='margin:10px 0;display:block;' @click="newData()">新增</Button>
+        <Button type="primary" :style='"margin:10px 0;display:" + (this.hasPower(this.$store.state.user.access,"systemJson-new")? "inline-block;": "none;")' @click="newData()">新增</Button>
         <Table stripe :columns="column" border :data="list"></Table>
         <Modal v-model="EditModal" title='配置' :mask-closable="false" footer-hide>
             <i-form ref="formInline" class="formPage" :model="formInline" :rules="ruleInline" inline>
@@ -65,6 +65,7 @@
 
 <script>
 import axios from "@/libs/api.request";
+import { returnHasPower, isShowColumn } from "@/libs/util";
 export default {
     data() {
         return {
@@ -107,7 +108,14 @@ export default {
                                     size: "small"
                                 },
                                 attrs: {
-                                    style: "font-size:12px"
+                                    style:
+                                            "font-size:12px;margin-right:15px;display:" +
+                                            (this.hasPower(
+                                                this.$store.state.user.access,
+                                                "systemJson-edit"
+                                            )
+                                                ? "inline-block;"
+                                                : "none;")
                                 },
                                 nativeOn: {
                                     click: () => {
@@ -171,6 +179,16 @@ export default {
             isNew: false,
             currentId: ""
         };
+    },
+    computed: {
+        getAccess() {
+            return this.$store.state.user.access;
+        }
+    },
+    watch: {
+        getAccess: function(a, b) {
+            isShowColumn(a, ["systemJson-edit"], this.column);
+        }
     },
     methods: {
         getList() {

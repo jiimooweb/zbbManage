@@ -8,6 +8,11 @@ const { title, cookieExpires, useI18n } = config
 
 export const TOKEN_KEY = 'token'
 
+/**
+ * @description 返回权限数组是否存在查询权限
+ * @param {权限数组} access 
+ * @param {查询的权限名} sign 
+ */
 export const returnHasPower = (access, sign) => {
     return (access.indexOf(sign) !== -1)
 }

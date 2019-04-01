@@ -2,7 +2,7 @@
     <div class="TASKTYPEMANAGE">
         <row style="margin-bottom:10px;">
             <i-col span='2'>
-                <Button @click="returnAdd()">添加</Button>
+                <Button @click="returnAdd()" :style='"display:" + (this.hasPower(this.$store.state.user.access,"taskTypeManage-new")? "inline-block;": "none;")'>添加</Button>
             </i-col>
         </row>
         <Table stripe :columns="column" border :data="list"></Table>
@@ -34,6 +34,7 @@
 
 <script>
 import axios from "@/libs/api.request";
+import { returnHasPower, isShowColumn } from "@/libs/util";
 export default {
     data() {
         return {
@@ -69,7 +70,13 @@ export default {
                                     },
                                     attrs: {
                                         style:
-                                            "font-size:12px;margin-right:15px;"
+                                            "font-size:12px;margin-right:15px;display:" +
+                                            (this.hasPower(
+                                                this.$store.state.user.access,
+                                                "taskTypeManage-edit"
+                                            )
+                                                ? "inline-block;"
+                                                : "none;")
                                     },
                                     nativeOn: {
                                         click: () => {
@@ -90,7 +97,14 @@ export default {
                                         size: "small"
                                     },
                                     attrs: {
-                                        style: "font-size:12px"
+                                        style:
+                                            "font-size:12px;margin-right:15px;display:" +
+                                            (this.hasPower(
+                                                this.$store.state.user.access,
+                                                "taskTypeManage-delete"
+                                            )
+                                                ? "inline-block;"
+                                                : "none;")
                                     },
                                     nativeOn: {
                                         click: () => {
@@ -126,6 +140,16 @@ export default {
             defailPage: 20,
             pageSize: [5, 10, 20, 50, 200, 500],
         };
+    },
+    computed: {
+        getAccess() {
+            return this.$store.state.user.access;
+        }
+    },
+    watch: {
+        getAccess: function(a, b) {
+            isShowColumn(a, ["taskTypeManage-edit","taskTypeManage-delete"], this.column);
+        }
     },
     methods: {
         cancelcancel(i){

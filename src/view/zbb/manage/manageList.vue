@@ -93,6 +93,7 @@
 <script>
 import axios from "@/libs/api.request";
 import { returnPowerStrArr, isShowColumn } from "@/libs/util";
+// import { isShowColumn } from "@/libs/util";
 export default {
     data() {
         return {
@@ -272,7 +273,7 @@ export default {
     },
     watch: {
         getAccess: function(a, b) {
-            // isShowColumn(a,["manageList-edit", "manageList-power", "manageList-delete"],manageColumn);
+            isShowColumn(a,["manageList-edit", "manageList-power", "manageList-delete"],this.manageColumn);
         }
     },
     mounted() {

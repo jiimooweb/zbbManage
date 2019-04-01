@@ -93,6 +93,7 @@
 <script>
 import axios from "@/libs/api.request";
 import Cookies from "js-cookie";
+import { returnHasPower, isShowColumn } from "@/libs/util";
 export default {
     computed: {
         headers() {
@@ -157,7 +158,13 @@ export default {
                                     },
                                     attrs: {
                                         style:
-                                            "font-size:12px;margin-right:15px;"
+                                            "font-size:12px;margin-right:15px;display:" +
+                                            (this.hasPower(
+                                                this.$store.state.user.access,
+                                                "adList-edit"
+                                            )
+                                                ? "inline-block;"
+                                                : "none;")
                                     },
                                     nativeOn: {
                                         click: () => {
@@ -184,7 +191,13 @@ export default {
                                     },
                                     attrs: {
                                         style:
-                                            "font-size:12px;"
+                                            "font-size:12px;margin-right:15px;display:" +
+                                            (this.hasPower(
+                                                this.$store.state.user.access,
+                                                "adList-delete"
+                                            )
+                                                ? "inline-block;"
+                                                : "none;")
                                     },
                                     nativeOn: {
                                         click: () => {
@@ -258,6 +271,16 @@ export default {
             defailPage: 20,
             pageSize: [5, 10, 20, 50, 200, 500],
         };
+    },
+    computed: {
+        getAccess() {
+            return this.$store.state.user.access;
+        }
+    },
+    watch: {
+        getAccess: function(a, b) {
+            isShowColumn(a, ["adList-edit","adList-delete"], this.column);
+        }
     },
     methods:{
         //upload
