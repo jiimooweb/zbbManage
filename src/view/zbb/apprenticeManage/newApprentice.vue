@@ -71,7 +71,7 @@
                             <span class="lable">抖音号:</span>
                         </i-col>
                         <i-col span='18'>
-                            <i-input placeholder="输入微信号" class="formInput" v-model="formInline.dy"></i-input>
+                            <i-input placeholder="输入抖音号" class="formInput" v-model="formInline.dy"></i-input>
                         </i-col>
                     </row>
                 </FormItem>
@@ -81,7 +81,7 @@
                             <span class="lable">头条号:</span>
                         </i-col>
                         <i-col span='18'>
-                            <i-input placeholder="输入微信号" class="formInput" v-model="formInline.tt"></i-input>
+                            <i-input placeholder="输入头条号" class="formInput" v-model="formInline.tt"></i-input>
                         </i-col>
                     </row>
                 </FormItem>
