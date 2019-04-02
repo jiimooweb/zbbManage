@@ -105,6 +105,7 @@
 
 <script>
 import axios from "@/libs/api.request";
+import Cookies from "js-cookie";
 import { returnHasPower, isShowColumn } from "@/libs/util";
 export default {
     data() {
@@ -295,6 +296,11 @@ export default {
         };
     },
     computed: {
+        headers() {
+            return {
+                token: Cookies.get("token")
+            };
+        },
         getAccess() {
             return this.$store.state.user.access;
         }

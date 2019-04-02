@@ -536,6 +536,7 @@ export default {
                         return h('div',[
                             h('img',{
                                 attrs:{
+                                    style:'width:50px;',
                                     src:(params.row.type === "wx"? (params.row.apprentice?params.row.apprentice.wx_qr_img:'无'): params.row.type === "dy"? (params.row.apprentice?params.row.apprentice.dy_home_img:'无'): (params.row.apprentice?params.row.apprentice.tt_home_img:'无'))
                                 },
                                 on: {
@@ -547,6 +548,7 @@ export default {
                             }),
                             h('img',{
                                 attrs:{
+                                    style:'width:50px;',
                                     disabled: params.row.type === "wx"?true:false,
                                     src:(params.row.type === "wx"? (params.row.apprentice?params.row.apprentice.wx_friends_img:''):'')
                                 },

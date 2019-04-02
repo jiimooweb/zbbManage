@@ -31,7 +31,7 @@
                             <span class="lable">密码</span>
                         </i-col>
                         <i-col span='18'>
-                            <i-input placeholder="请输入密码" class="formInput" v-model="formInline.password"></i-input>
+                            <i-input placeholder="请输入密码" type='password' class="formInput" v-model="formInline.password"></i-input>
                         </i-col>
                     </row>
                 </FormItem>
@@ -62,8 +62,8 @@
                         </i-col>
                         <i-col span='18'>
                             <RadioGroup v-model="formInline.state">
-                                <Radio :label="1">允许登录</Radio>
-                                <Radio :label="0">禁止登录</Radio>
+                                <Radio :label="0">允许登录</Radio>
+                                <Radio :label="1">禁止登录</Radio>
                             </RadioGroup>
                         </i-col>
                     </row>
@@ -171,7 +171,7 @@ export default {
                             data: {
                                 username: this.formInline.username,
                                 password: this.formInline.password,
-                                powers: this.formInline.powers,
+                                powers: this.formInline.page,
                                 // wx: this.formInline.wx,
                                 phone: this.formInline.phone,
                                 email: this.formInline.email,

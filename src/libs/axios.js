@@ -44,8 +44,6 @@ class HttpRequest {
       return { data, status }
     }, error => {
       if (error['request'].status === 401) {
-        console.log(123);
-        
         Message.error('登录过期，请重新登录')
         Cookies.remove(TOKEN_KEY)
         window.location.href = '/home'

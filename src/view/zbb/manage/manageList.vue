@@ -1,7 +1,7 @@
 <template>
     <div class="MANAGELIST">
         <Table stripe :columns="manageColumn" border :data="manageList"></Table>
-        <Modal v-model="EditModal" title='编辑' footer-hide>
+        <Modal v-model="EditModal" class='MANAGELISTModal' title='编辑' footer-hide>
             <!-- <Card style="width:400px"> -->
             <i-form ref="formInline" class="formPage" :model="formInline" :rules="ruleInline" inline>
 
@@ -251,7 +251,7 @@ export default {
                                     nativeOn: {
                                         click: () => {
                                             this.currentId = params.row.id;
-                                            this.deleteName = params.row.name;
+                                            this.deleteName = params.row.username;
                                             this.cancelcancel(true);
                                         }
                                     }
@@ -409,6 +409,9 @@ export default {
 <style lang='less'>
 .MANAGELIST {
     min-width: 1100px;
+    
+}
+.MANAGELISTModal{
     .formPage {
         .formItem {
             display: block;

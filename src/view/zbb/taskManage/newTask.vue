@@ -110,7 +110,7 @@
                                 <Icon type="ios-loading" size=18 class="demo-spin-icon-load"></Icon>
                                 <div>上传中~~~</div>
                             </Spin>
-                            <Upload style="margin-bottom:10px;" :on-error='errorUpload' action="https://www.iryi.cn/qrcode-reader"
+                            <Upload ref="up3" style="margin-bottom:10px;" :on-error='errorUpload' action="https://www.iryi.cn/qrcode-reader"
                                 :on-success='successUpload3' :before-upload='beforeUpload3' :show-upload-list='false'
                                 :headers="headers">
                                 <Button icon="md-add" class="btnUp">
@@ -419,6 +419,7 @@ export default {
                 ], //图片信息
                 //朋友圈
                 qrcode_url: "", //二维码
+                qrcode_Text:'',
                 wx_content: "", //微信文案
 
                 //抖音
@@ -610,7 +611,9 @@ export default {
 
             newType: "",
             TypeModal: false,
-            typeList: []
+            typeList: [],
+
+            su3File:'',//临时图片对象
         };
     },
     mounted() {
@@ -840,6 +843,17 @@ export default {
         },
         beforeUpload3(file) {
             this.spinShow2 = true;
+            console.log(file);
+            this.su3File = File
+            axios.request({
+                url:'https://www.iryi.cn/upload',
+                method:'post',
+                data:{
+                    file:this.su3File
+                }
+            }).then(res=>{
+                console.log(res);
+            })
         },
 
         getMerchatList() {
@@ -850,8 +864,6 @@ export default {
                     method: "get"
                 })
                 .then(res => {
-                    // console.log(res);
-
                     this.meerchatList = res.data.data;
                 })
                 .catch(err => {
