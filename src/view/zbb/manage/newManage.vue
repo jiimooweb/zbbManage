@@ -2,7 +2,7 @@
     <div>
         <Card style="width:600px">
             <i-form ref="formInline" class="formPage" :model="formInline" :rules="ruleInline" inline>
-                <FormItem prop="powers" class="formItem">
+                <!-- <FormItem prop="powers" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
                             <span class="lable">用户组</span>
@@ -14,7 +14,7 @@
                             </Select>
                         </i-col>
                     </row>
-                </FormItem>
+                </FormItem> -->
                 <FormItem prop="username" class="formItem">
                     <row class="formRow">
                         <i-col span='6'>
@@ -171,7 +171,7 @@ export default {
                             data: {
                                 username: this.formInline.username,
                                 password: this.formInline.password,
-                                powers: this.formInline.page,
+                                // powers: this.formInline.page,
                                 // wx: this.formInline.wx,
                                 phone: this.formInline.phone,
                                 email: this.formInline.email,

@@ -338,6 +338,18 @@
                         <FormItem class="formItem">
                             <row class="formRow">
                                 <i-col span='5'>
+                                    <span class="lable">二维码图片:</span>
+                                </i-col>
+                                <i-col span='19' v-if="showData.type === 0">
+                                    <img class="img1" :src='showData.qrcode' style="width:100px;height:100px;margin:0 auto; display:block;">
+                                </i-col>
+                            </row>
+                        </FormItem>
+                    </i-col>
+                    <i-col class="listItem">
+                        <FormItem class="formItem">
+                            <row class="formRow">
+                                <i-col span='5'>
                                     <span class="lable">图片:</span>
                                 </i-col>
                                 <i-col span='19' v-if="showData.type === 0 ||showData.type === 1||showData.type === 2">
@@ -452,7 +464,8 @@ export default {
                 status: "",
                 type: 0,
                 total_price: "",
-                num: ""
+                num: "",
+                qrcode:''
             },
             showModal: false,
             reason: "",
@@ -548,11 +561,13 @@ export default {
             column: [
                 {
                     title: "主任务号",
+                    width:'100',
                     align: "center",
                     key: "id"
                 },
                 {
                     title: "标题",
+                    width:'300',
                     align: "center",
                     key: "title"
                 },
@@ -564,8 +579,31 @@ export default {
                 //     }
                 // },
                 {
+                    title:'客户ID',
+                    width:'100',
+                    align: "center",
+                    render(h, params) {
+                        return h("p", !params.row.merchant?"无":params.row.merchant.id);
+                    }
+                },{
+                    title:'客户账户',
+                    width:'100',
+                    align: "center",
+                    render(h, params) {
+                        return h("p", !params.row.merchant?"无":params.row.merchant.username);
+                    }
+                },{
+                    title:'客户电话',
+                    width:'150',
+                    align: "center",
+                    render(h, params) {
+                        return h("p", !params.row.merchant?"无":params.row.merchant.tel);
+                    }
+                },
+                {
                     title: "任务类型",
                     align: "center",
+                    width:'100',
                     render(h, params) {
                         return h(
                             "p",
@@ -582,6 +620,7 @@ export default {
                 {
                     title: "已领/名额",
                     align: "center",
+                    width:'100',
                     render: (h, params) => {
                         return h(
                             "p",
@@ -592,6 +631,7 @@ export default {
                 {
                     title: "审核状态",
                     align: "center",
+                    width:'100',
                     render: (h, params) => {
                         return h(
                             "p",
@@ -624,6 +664,7 @@ export default {
                 {
                     title: "任务开始时间",
                     align: "center",
+                    width:'150',
                     // key: "start_time"
                     render(h,params) {
                         return h('p',!params.row.start_time?'无':params.row.start_time)
@@ -631,6 +672,7 @@ export default {
                 },
                 {
                     title: "创建日期",
+                    width:'150',
                     align: "center",
                     // key: "created_at"
                     render(h,params) {
@@ -639,6 +681,7 @@ export default {
                 },
                 {
                     title: "任务开关",
+                    width:'100',
                     align: "center",
                     render: (h, params) => {
                         return (!returnHasPower(this.$store.state.user.access,"taskPList-open")
@@ -730,6 +773,7 @@ export default {
                                                 params.row.images;
                                             this.showData.share_thumb =
                                                 params.row.share_thumb;
+                                            this.showData.qrcode = params.row.qrcode
                                             this.showModal = true;
                                         }
                                     }

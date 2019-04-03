@@ -117,8 +117,8 @@
                                     上传图片
                                 </Button>
                             </Upload>
-                            <!-- <img :src="formInline.qrcode_url" width="150px" style="float:left;margin-right:10px;margin-bottom:10px;"> -->
-                            <p>{{formInline.qrcode_url}}</p>
+                            <img :src="formInline.qrcode_url" width="150px" style="float:left;margin-right:10px;margin-bottom:10px;">
+                            <!-- <p>{{formInline.qrcode_url}}</p> -->
                         </i-col>
                     </row>
                 </FormItem>
@@ -419,7 +419,7 @@ export default {
                 ], //图片信息
                 //朋友圈
                 qrcode_url: "", //二维码
-                qrcode_Text:'',
+                qrcode_text:'',//二维码文本
                 wx_content: "", //微信文案
 
                 //抖音
@@ -669,6 +669,7 @@ export default {
             // if (this.deletePicArr.length === 0) {
             //     return;
             // }
+            
             for(let i=0;i<this.deletePicArr.length;i++){
                 axios
                 .request({
@@ -685,6 +686,21 @@ export default {
                 });
             }
             this.deletePicArr = []
+            if(this.formInline.qrcode_url !== ''){
+                 axios
+                .request({
+                    url: "https://www.iryi.cn/delete",
+                    method: "post",
+                    data: {
+                        url: this.formInline.qrcode_url
+                    }
+                })
+                .catch(err => {
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(err.response.data.msg[i][0]);
+                    }
+                });
+            }
         },
         ready(editorInstance) {
             this.editorInstance = editorInstance;
@@ -839,21 +855,11 @@ export default {
                 this.$Message.error(file.msg);
                 return;
             }
-            this.formInline.qrcode_url = file;
+            this.formInline.qrcode_url = file.data.url;
+            this.formInline.qrcode_text = file.data.text;
         },
         beforeUpload3(file) {
             this.spinShow2 = true;
-            console.log(file);
-            this.su3File = File
-            axios.request({
-                url:'https://www.iryi.cn/upload',
-                method:'post',
-                data:{
-                    file:this.su3File
-                }
-            }).then(res=>{
-                console.log(res);
-            })
         },
 
         getMerchatList() {
@@ -927,7 +933,8 @@ export default {
                                 time_limit: this.formInline.time_limit,
                                 images: this.formInline.images, //图片信息
                                 //朋友圈
-                                qrcode_url: this.formInline.qrcode_url, //二维码
+                                qrcode_url: this.formInline.qrcode_text, //二维码
+                                qrcode: this.formInline.qrcode_url, //二维码内容
                                 wx_content: this.formInline.wx_content, //微信文案
 
                                 //抖音
