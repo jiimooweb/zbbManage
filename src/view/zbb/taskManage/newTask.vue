@@ -465,6 +465,9 @@ export default {
                             if (!value && value !== 0 && this.formInline.type === 3) {
                                 callback("请输入金额");
                             }
+                            if(value<parseInt(this.SHARE_ALLOW_COMMISSION)){
+                                callback("金额不能小于"+this.SHARE_ALLOW_COMMISSION);
+                            }
                             callback(errors);
                         }
                     }
@@ -589,6 +592,8 @@ export default {
                 "DY_TASK_LIMIT",//抖音时间限制
                 "TT_TASK_LIMIT",//头条时间限制
 
+                "SHARE_ALLOW_COMMISSION",//分享赚最低金额
+
             ],
             SHARE_MERCHANT_COST: "", //分享赚
             WECHAT_MERCHANT_COST: "", //发圈赚
@@ -607,6 +612,7 @@ export default {
             WECHAT_TASK_LIMIT:'',//发圈时间限制
             DY_TASK_LIMIT:'',//抖音时间限制
             TT_TASK_LIMIT:'',//头条时间限制
+            SHARE_ALLOW_COMMISSION:'',//分享赚最低金额
             deletePicArr: [], //暂存需要删除的图片路径
 
             newType: "",
@@ -753,6 +759,7 @@ export default {
                 this.formInline.time_limit = this.TT_TASK_LIMIT
             }else{
                 this.formInline.time_limit = ''
+                this.formInline.share_price = this.SHARE_ALLOW_COMMISSION
             }
         },
         changeCheck(arr) {
@@ -780,7 +787,7 @@ export default {
                     (this.formInline.qrcode_url === "" ? 0 : 1) >=
                 9
             ) {
-                this.$Message.error("上传数量不能大于9张");
+                this.$Message.error("上传数量不能大于8张");
                 return false;
             }
             this.spinShow = true;

@@ -539,7 +539,10 @@ export default {
                     title: "性别",
                     align: "center",
                     width: "70",
-                    key: "sex"
+                    // key: "sex"
+                    render(h,params) {
+                        return h('p',params.row.sex?(params.row.sex===1?'男':'女'):'未填')
+                    },
                 },
                 {
                     title: "微信号",

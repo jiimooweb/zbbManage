@@ -555,7 +555,7 @@ export default {
                     width: "70",
                     // key: "sex"
                     render(h,params) {
-                        return h('p',params.row.sex===1?'男':(params.row.sex===0?'女':'未知'))                        
+                        return h('p',params.row.sex===1?'男':(params.row.sex===0?'女':'未填'))                        
                     },
                 },
                 {
