@@ -76,9 +76,12 @@
         <Modal v-model="returnModal1" title='审核' @on-ok="returnItem(-1)" :mask-closable="false" @on-cancel="returncancel1(false)">
             <p style="text-align:center;font-size:16px;">是否拒绝----<span style="color:red;">{{deleteName}}</span>----的审核</p>
         </Modal>
-        <div v-if='showPic' @click="hidePic" style="background:rgba(0,0,0,0.8);">
+        <!-- <div v-if='showPic' @click="hidePic" style="background:rgba(0,0,0,0.8);">
             <img :src="bigPic" style="width:50%;margin:0 auto;display:block;">
-        </div>
+        </div> -->
+        <Modal v-model="showPic" title="大图" class="TASKCLISTModal" footer-hide>
+            <img :src="bigPic" style="width:100%;height:auto;">
+        </Modal>
     </div>
 </template>
 
@@ -88,6 +91,7 @@ import { isShowColumn } from "@/libs/util";
 export default {
     data() {
         return {
+            showPicModal:false,
             showPic: false,
             bigPic: "",
             searchData: {
@@ -258,7 +262,7 @@ export default {
                                     style: "width:70px;height:70px;",
                                     src: params.row.success_url
                                 },
-                                nativeOn: {
+                                on: {
                                     click: () => {
                                         this.showPic = true;
                                         this.bigPic = params.row.success_url;

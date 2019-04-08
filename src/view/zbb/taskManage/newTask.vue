@@ -43,7 +43,7 @@
                 <FormItem prop="share_price" class="formItem" v-show="formInline.type===3">
                     <row class="formRow">
                         <i-col span='4'>
-                            <span class="lable">悬赏金额:</span>
+                            <span class="lable">单任务赏金:</span>
                         </i-col>
                         <i-col span='10'>
                             <i-input placeholder="输入金额" class="formInput" v-model.number="formInline.share_price" type="number" @mousewheel.native.prevent></i-input>
@@ -56,13 +56,13 @@
                 <FormItem prop="num" class="formItem">
                     <row class="formRow">
                         <i-col span='4'>
-                            <span class="lable">领取名额:</span>
+                            <span class="lable">任务数量:</span>
                         </i-col>
                         <i-col span='10'>
-                            <i-input placeholder="输入名额" class="formInput" v-model.number="formInline.num" type="number" @mousewheel.native.prevent></i-input>
+                            <i-input placeholder="输入任务数量" class="formInput" v-model.number="formInline.num" type="number" @mousewheel.native.prevent></i-input>
                         </i-col>
                         <i-col span='8' v-show="formInline.type===3">
-                            <p>（注:每1个名额有100点击，即1名额 = 悬赏金额）</p>
+                            <p>（注:每1个名额有100点击，即1名额 = 单任务赏金）</p>
                         </i-col>
                         <i-col span='8' v-show="formInline.type!==3">
                             <p>（注:10名额起步）</p>
@@ -138,8 +138,14 @@
                                 :headers="headers" multiple>
                                 <Button icon="ios-cloud-upload-outline">上传图片(最多9张)</Button>
                             </Upload>
-                            <img v-for="(item,index) in formInline.images" :key="index" :src="formInline.images[index]"
+                            <div class='imgPage' v-for="(item,index) in formInline.images" :key="index">
+                                <span @click="deleteItemImg(index)" style="width:20px;height:20px;position:absolute;background:rgba(0,0,0,0.3);text-align:center;line-height:20px;cursor:pointer;">
+                                    <Icon type="md-close" size='20px' color='#fff'/>
+                                </span>
+                                <img :src="formInline.images[index]"
                                 width="150px" style="float:left;margin-right:10px;margin-bottom:10px;">
+                            </div>
+                            
                         </i-col>
                     </row>
                 </FormItem>
@@ -283,7 +289,7 @@
                 <FormItem style="margin:20px 0px 20px 400px">
                     <Button type="primary" @click="handleSubmit('formInline')">新增</Button>
                     <!-- <Button type="primary" @click="clicka()">新增</Button> -->
-                    <Button style="margin-left:10px;" @click="resetData('formInline')">重置</Button>
+                    <Button style="margin-left:10px;" @click="clearData()">重置</Button>
                 </FormItem>
             </i-form>
         </Card>
@@ -293,6 +299,9 @@
                     <p style="font-size:25px;text-align:center;">是否添加分类---<span style="color:red"> {{newType}} </span>---</p>
                 </i-col>
             </row>
+        </Modal>
+        <Modal v-model="deleteModal" title='删除' @on-ok="deleteInput()" @on-cancel="returncancel(false)">
+            <p style="text-align:center;font-size:16px;">是否删除该图片?</p>
         </Modal>
     </div>
 </template>
@@ -382,6 +391,7 @@ export default {
     components: { VueUeditorWrap },
     data() {
         return {
+            deleteModal:false,
             meerchatList: [],
 
             myConfig: {
@@ -620,6 +630,8 @@ export default {
             typeList: [],
 
             su3File:'',//临时图片对象
+
+            deleteItemIndex:''
         };
     },
     mounted() {
@@ -628,6 +640,31 @@ export default {
         this.getTypeList();
     },
     methods: {
+        deleteInput(){
+            axios
+                .request({
+                    url: "https://www.iryi.cn/delete",
+                    method: "post",
+                    data: {
+                        url: this.deletePicArr[this.deleteItemIndex]
+                    }
+                }).then(res=>{
+                    this.deletePicArr.splice(this.deleteItemIndex,1)
+                    this.formInline.images.splice(this.deleteItemIndex,1)
+                })
+                .catch(err => {
+                    for (let i in err.response.data.msg) {
+                        this.$Message.error(err.response.data.msg[i][0]);
+                    }
+                });
+        },
+        returncancel(i){
+            this.deleteModal = i
+        },
+        deleteItemImg(index){
+            this.deleteItemIndex = index
+            this.returncancel(true)
+        },
         inputNewType() {
             axios
                 .request({
@@ -744,6 +781,12 @@ export default {
                     this.TT_MERCHANT_COMMENT = this.meerchatList[i].tt_comment; //头条赚 评论
                 }
             }
+        },
+        clearData(){
+            this.deletePic();
+            this.resetData("formInline");
+            this.disabledGroup = []
+            this.formInline.images = []
         },
         changeType(type) {
             //一下是删除操作

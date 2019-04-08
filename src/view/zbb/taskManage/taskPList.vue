@@ -1204,7 +1204,6 @@ export default {
         },
         //图片路径拼接/去除
         filterUrl(url) {
-            url = url.substring(url.indexOf("public/") + 7);
             return url;
         },
         resetData(name) {
