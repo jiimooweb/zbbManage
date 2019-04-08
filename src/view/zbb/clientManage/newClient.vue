@@ -18,7 +18,7 @@
                             <span>密码:</span>
                         </i-col>
                         <i-col span='18'>
-                            <i-input placeholder="输入密码" v-model="formInline.password" class="formInput"></i-input>
+                            <i-input placeholder="输入密码" type='password' v-model="formInline.password" class="formInput"></i-input>
                         </i-col>
                     </row>
                 </FormItem>
@@ -149,6 +149,7 @@
                         </i-col>
                         <i-col span='18'>
                             <Select v-model="formInline.recommend_type">
+                                <Option :value="2">无</Option>
                                 <Option value="Master">师傅</Option>
                                 <Option value="Apprentice">徒弟</Option>
                             </Select>
@@ -234,7 +235,7 @@ export default {
 
                 remark: "",
 
-                recommend_type:'Master',
+                recommend_type:2,
                 recommend_id:''
 
                 
@@ -273,6 +274,17 @@ export default {
                         required: true,
                         message: "请输入手机号码",
                         trigger: "blur"
+                    }
+                ],
+                recommend_id:[
+                    {
+                        validator:(rule, value, callback, source, options)=> {
+                            var errors = [];
+                            if (!value && this.formInline.recommend_type!==2) {
+                                callback("请输入推荐人ID");
+                            }
+                            callback(errors);
+                        }
                     }
                 ]
             },
@@ -399,7 +411,7 @@ export default {
                                 custom_service: this.formInline.custom_service,
 
                                 remark: this.formInline.remark,
-                                recommend_type:this.formInline.recommend_type,
+                                recommend_type:this.formInline.recommend_type===2?'':this.formInline.recommend_type,
                                 recommend_id:this.formInline.recommend_id,
                             }
                         })

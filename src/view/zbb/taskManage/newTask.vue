@@ -80,7 +80,7 @@
                         </i-col>
                     </row>
                 </FormItem>
-                <FormItem prop="time_limit" class="formItem"  v-show="formInline.type!==3">
+                <!-- <FormItem prop="time_limit" class="formItem"  v-show="formInline.type!==3">
                     <row class="formRow">
                         <i-col span='4'>
                             <span class="lable">时间限制（分钟）:</span>
@@ -89,7 +89,7 @@
                             <i-input placeholder="输入时间限制" class="formInput"  step="1" v-model.number="formInline.time_limit" type="number" @mousewheel.native.prevent></i-input>
                         </i-col>
                     </row>
-                </FormItem>
+                </FormItem> -->
                 <FormItem prop="wx_content" class="formItem textarea" v-show="formInline.type===0">
                     <row class="formRow">
                         <i-col span='4'>
@@ -465,7 +465,7 @@ export default {
                             if (!value && value !== 0 && this.formInline.type === 3) {
                                 callback("请输入金额");
                             }
-                            if(value<parseInt(this.SHARE_ALLOW_COMMISSION)){
+                            if(value<parseInt(this.SHARE_ALLOW_COMMISSION) && this.formInline.type === 3){
                                 callback("金额不能小于"+this.SHARE_ALLOW_COMMISSION);
                             }
                             callback(errors);

@@ -18,7 +18,7 @@ import { returnHasPower, isShowColumn } from "@/libs/util";
                 editModal:false,
                 column:[
                     {
-                        title:'推荐ID',
+                        title:'推荐列表ID',
                         width:"100",
                         align:'center',
                         key:'id'
@@ -27,8 +27,13 @@ import { returnHasPower, isShowColumn } from "@/libs/util";
                         width:"100",
                         align:'center',
                         render:(h,params)=> {
-                            return h('p',params.row.type==='Master'?'师傅':'徒弟')
+                            return h('p',params.row.man_type==='Master'?'师傅':'徒弟')
                         },
+                    },{
+                        title:'推荐人ID',
+                        width:"100",
+                        align:'center',
+                        key:'man_id'
                     },{
                         title:'姓名',
                         width:"100",
@@ -64,7 +69,7 @@ import { returnHasPower, isShowColumn } from "@/libs/util";
                         render:(h,params)=> {
                             return h('p',{
                                 attrs:{
-                                    style:'color:#'+params.row.status===0?'ff9900':'19be6b'
+                                    style:'color:#'+(params.row.status===0?'ff9900':'19be6b')
                                 }
                             },params.row.status===0?'待处理':'已处理')
                         },

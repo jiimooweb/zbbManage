@@ -537,12 +537,12 @@ export default {
                             h('img',{
                                 attrs:{
                                     style:'width:50px;',
-                                    src:(params.row.type === "wx"? (params.row.apprentice?params.row.apprentice.wx_qr_img:'无'): params.row.type === "dy"? (params.row.apprentice?params.row.apprentice.dy_home_img:'无'): (params.row.apprentice?params.row.apprentice.tt_home_img:'无'))
+                                    src:(params.row.type === "wx"? params.row.wx_qr_img: (params.row.type === "dy"? params.row.dy_home_img: params.row.tt_home_img))
                                 },
                                 on: {
                                     click: () => {
                                         this.showPicModal = true
-                                        this.bigPic = (params.row.type === "wx"? (params.row.apprentice?params.row.apprentice.wx_qr_img:'无'): params.row.type === "dy"? (params.row.apprentice?params.row.apprentice.dy_home_img:'无'): (params.row.apprentice?params.row.apprentice.tt_home_img:'无'))
+                                        this.bigPic = (params.row.type === "wx"? params.row.wx_qr_img: (params.row.type === "dy"? params.row.dy_home_img: params.row.tt_home_img))
                                     }
                                 }
                             }),
@@ -550,12 +550,12 @@ export default {
                                 attrs:{
                                     style:'width:50px;',
                                     disabled: params.row.type === "wx"?true:false,
-                                    src:(params.row.type === "wx"? (params.row.apprentice?params.row.apprentice.wx_friends_img:''):'')
+                                    src:(params.row.type === "wx"? params.row.wx_friends_img:'')
                                 },
                                 on: {
                                     click: () => {
                                         this.showPicModal = true
-                                        this.bigPic = (params.row.type === "wx"? (params.row.apprentice?params.row.apprentice.wx_friends_img:''):'')
+                                        this.bigPic = (params.row.type === "wx"? params.row.wx_friends_img:'')
                                     }
                                 }
                             })
@@ -871,6 +871,10 @@ export default {
                     this.currentPage = res.data.data.current_page;
                     this.per_page = res.data.data.per_page;
                     // this.$Message.success("搜索成功");
+                    for(let i=0;i<this.masterList.length;i++){
+                        console.log(this.masterList[i].apprentice.wx_qr_img);
+                        
+                    }
                 })
                 .catch(err => {
                     for (let i in err.response.data.msg) {
@@ -915,6 +919,7 @@ export default {
                             this.resetData("formInline");
                             this.showEdit(false);
                             this.getMasterList();
+                            
                         })
                         .catch(err => {
                             for (let i in err.response.data.msg) {

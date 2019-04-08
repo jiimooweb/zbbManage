@@ -349,7 +349,7 @@ export default {
                                     props: {
                                         type: "success",
                                         size: "small",
-                                        disabled: params.row.status !== 1
+                                        disabled: params.row.status === 2 || params.row.status === -1
                                     },
                                     attrs: {
                                         style:
@@ -379,7 +379,7 @@ export default {
                                     props: {
                                         type: "warning",
                                         size: "small",
-                                        disabled: params.row.status !== 0
+                                        disabled: params.row.status === 2 || params.row.status === -1 || params.row.status === 1
                                     },
                                     attrs: {
                                         style:
@@ -401,7 +401,7 @@ export default {
                                         }
                                     }
                                 },
-                                "安排打款"
+                                "处理中"
                             ),
                             h(
                                 "Button",
@@ -409,7 +409,7 @@ export default {
                                     props: {
                                         type: "error",
                                         size: "small",
-                                        disabled: params.row.status !== 0
+                                        disabled: params.row.status === 2 || params.row.status === -1
                                     },
                                     attrs: {
                                         style: "font-size:12px"
