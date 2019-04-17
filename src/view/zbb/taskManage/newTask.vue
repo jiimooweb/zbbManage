@@ -136,7 +136,7 @@
                             <Upload style="margin-bottom:10px;" action="https://www.iryi.cn/upload"
                                 :on-success='successUpload' :before-upload='beforeUpload' :show-upload-list='false'
                                 :headers="headers" multiple>
-                                <Button icon="ios-cloud-upload-outline">上传图片(最多9张)</Button>
+                                <Button icon="ios-cloud-upload-outline">上传图片(最多8张)</Button>
                             </Upload>
                             <div class='imgPage' v-for="(item,index) in formInline.images" :key="index">
                                 <span @click="deleteItemImg(index)" style="width:20px;height:20px;position:absolute;background:rgba(0,0,0,0.3);text-align:center;line-height:20px;cursor:pointer;">
@@ -826,9 +826,8 @@ export default {
         },
         beforeUpload(file) {
             if (
-                this.formInline.images.length +
-                    (this.formInline.qrcode_url === "" ? 0 : 1) >=
-                9
+                this.formInline.images.length >=
+                8
             ) {
                 this.$Message.error("上传数量不能大于8张");
                 return false;

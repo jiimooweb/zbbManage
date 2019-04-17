@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <router-view />
+        <router-view class="rou"/>
     </div>
 </template>
 
@@ -11,9 +11,13 @@ import { setToken, getToken } from "@/libs/util";
 export default {
     name: "App",
     data() {
-        return {};
+        return {
+            height:''
+        };
     },
     mounted() {
+        console.log(document.body.clientHeight);
+        this.height = document.body.clientHeight
         this.resetUserData();
     },
     watch: {
@@ -64,5 +68,8 @@ body {
 }
 #app {
     .size;
+}
+.rou>.ivu-layout .ivu-table-body{
+    max-height: 60vh;
 }
 </style>
