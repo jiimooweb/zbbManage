@@ -285,6 +285,17 @@
                         </i-col>
                     </row>
                 </FormItem>
+                <FormItem prop="qrcode_url" class="formItem" v-show="formInline.type===0">
+                    <row class="formRow">
+                        <i-col span='4'>
+                            <span class="lable">设置投放地区</span>
+                        </i-col>
+                        <i-col span='18'>
+                            <city ref="city" @listenToparent='getSelectArr'></city>
+                            已选 {{selectArr.length}} 个投放地区
+                        </i-col>
+                    </row>
+                </FormItem>
                 <div id="qrcode" ref="qrcode"></div>
                 <FormItem style="margin:20px 0px 20px 400px">
                     <Button type="primary" @click="handleSubmit('formInline')">新增</Button>
@@ -310,6 +321,7 @@
 import axios from "@/libs/api.request";
 import Cookies from "js-cookie";
 import VueUeditorWrap from "vue-ueditor-wrap";
+import city from "../../components/citySelect/citySelect.vue"
 export default {
     computed: {
         headers() {
@@ -388,9 +400,11 @@ export default {
             return this.total_price;
         }
     },
-    components: { VueUeditorWrap },
+    components: { VueUeditorWrap,city },
     data() {
         return {
+            //选择的地区
+            selectArr:[],
             deleteModal:false,
             meerchatList: [],
 
@@ -640,6 +654,9 @@ export default {
         this.getTypeList();
     },
     methods: {
+        getSelectArr(data){
+            this.selectArr = data;
+        },
         deleteInput(){
             axios
                 .request({
@@ -893,7 +910,7 @@ export default {
             if(val === 400){
                 this.$Message.error('上传的图片内容不是二维码')
             }else{
-                this.$Message.error('上传出差，请稍后重试')
+                this.$Message.error('上传出错，请稍后重试')
             }
             this.spinShow2 = false
         },
@@ -970,6 +987,7 @@ export default {
                             url: "task/tasks",
                             method: "post",
                             data: {
+                                area:this.selectArr,
                                 //通用
                                 cate_id: this.formInline.cate_id,
                                 total_price: this.total_price,
