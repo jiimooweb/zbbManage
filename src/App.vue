@@ -17,7 +17,9 @@ export default {
     },
     mounted() {
         console.log(document.body.clientHeight);
-        this.height = document.body.clientHeight
+        this.height = document.body.clientHeight * 0.65
+        localStorage.setItem('WINHEIGHT',this.height)
+        this.$store.commit('setWinHeight',localStorage.getItem('WINHEIGHT'))
         this.resetUserData();
     },
     watch: {
@@ -69,7 +71,16 @@ body {
 #app {
     .size;
 }
-.rou>.ivu-layout .ivu-table-body{
-    max-height: 60vh;
+// .rou>.ivu-layout .ivu-table{
+//     overflow: inherit;
+//     width: calc(~"100% - 17px");
+// }
+// .rou>.ivu-layout .ivu-table-body{
+//     overflow-y: scroll;
+//     max-height: 60vh;
+//     width: calc(~"100% + 17px");
+// }
+.rou>.ivu-layout .ivu-table-fixed-body{
+    height: inherit !important;
 }
 </style>

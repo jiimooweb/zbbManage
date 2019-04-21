@@ -122,7 +122,7 @@
                 <Button type="error" @click="returnExcel()">导出</Button>
             </i-col>
         </row>
-        <Table stripe :columns="masterColumn" border :data="masterList" @on-select='selectItem' @on-select-all='selectItem'
+        <Table :max-height='this.$store.state.app.winHeight' stripe :columns="masterColumn" border :data="masterList" @on-select='selectItem' @on-select-all='selectItem'
             @on-selection-change='selectItem'></Table>
 
         <Page style="margin-top:20px;" :total="total" show-total :page-size='defailPage' show-elevator show-sizer
@@ -620,6 +620,35 @@ export default {
                             params.row.tt === "" ? "无" : params.row.tt
                         );
                     }
+                },
+                {
+                    title: "银行名称",
+                    align: "center",
+                    width: "200",
+                    render(h,params) {
+                        return h('p',params.row.bind_bank.length>0?(params.row.bind_bank[0].bank_deposit?params.row.bind_bank[0].bank_deposit:'未填'):'未填')
+                    },
+                },{
+                    title: "银行卡持有人",
+                    align: "center",
+                    width: "200",
+                    render(h,params) {
+                        return h('p',params.row.bind_bank.length>0?(params.row.bind_bank[0].bank_man?params.row.bind_bank[0].bank_man:'未填'):'未填')
+                    },
+                },{
+                    title: "银行卡号",
+                    align: "center",
+                    width: "200",
+                    render(h,params) {
+                        return h('p',params.row.bind_bank.length>0?(params.row.bind_bank[0].bank_number?params.row.bind_bank[0].bank_number:'未填'):'未填')
+                    },
+                },{
+                    title: "支付宝账户",
+                    align: "center",
+                    width: "200",
+                    render(h,params) {
+                        return h('p',params.row.bind_bank.length>0?(params.row.bind_bank[0].alipay?params.row.bind_bank[0].alipay:'未填'):'未填')
+                    },
                 },
                 {
                     title: "师傅ID",

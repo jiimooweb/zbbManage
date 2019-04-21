@@ -123,7 +123,7 @@
                 <Button type="error" @click="returnExcel()">导出</Button>
             </i-col>
         </row>
-        <Table stripe :columns="column" border :data="list" @on-select='selectItem' @on-select-all='selectItem' @on-selection-change='selectItem'></Table>
+        <Table :max-height='this.$store.state.app.winHeight' stripe :columns="column" border :data="list" @on-select='selectItem' @on-select-all='selectItem' @on-selection-change='selectItem'></Table>
         <Page style="margin-top:20px;" :total="total" show-total :page-size='defailPage' show-elevator show-sizer
             :page-size-opts='pageSize' @on-change="getchangeList" @on-page-size-change='changePageGetList' />
         <Modal v-model="editModal" title='审核' @on-ok="inputItem()" @on-cancel="cancelEdit(false)">
@@ -212,7 +212,9 @@ export default {
                     title: "支付宝账号",
                     align: "center",
                     width: "200",
-                    key: "alipay"
+                    render(h,params) {
+                        return h('p',params.row.alipay?params.row.alipay:'无')
+                    },
                 },
                 {
                     title: "绑定银行ID",
@@ -222,7 +224,7 @@ export default {
                     render: (h, params) => {
                         return h(
                             "p",
-                            params.row.bank === null ? "" : params.row.bank.id
+                            params.row.bank === null ? "无" : params.row.bank.id
                         );
                     }
                 },
@@ -234,7 +236,7 @@ export default {
                     render: (h, params) => {
                         return h(
                             "p",
-                            params.row.bank === null ? "" : params.row.bank.name
+                            params.row.bank === null ? "无" : params.row.bank.name
                         );
                     }
                 },
@@ -242,13 +244,25 @@ export default {
                     title: "持卡人姓名",
                     align: "center",
                     width: "100",
-                    key: "bank_man"
+                    // key: "bank_man"
+                    render: (h, params) => {
+                        return h(
+                            "p",
+                            params.row.bank === null ? "无" : params.row.bank_man
+                        );
+                    }
                 },
                 {
                     title: "卡号",
                     align: "center",
                     width: "250",
-                    key: "bank_number"
+                    // key: "bank_number"
+                    render: (h, params) => {
+                        return h(
+                            "p",
+                            params.row.bank === null ? "无" : params.row.bank_number
+                        );
+                    }
                 },
                 {
                     title: "提现金额",

@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <div class="COLLECTIONACCOUNT">
         <Button type="primary" :style='"margin:10px 0;display:" + (this.hasPower(this.$store.state.user.access,"collectionAccount-new")? "inline-block;": "none;")' @click="newData()">添加</Button>
-        <Table stripe :columns="column" border :data="list"></Table>
+        <Table :max-height='this.$store.state.app.winHeight' class="COLLECTIONACCOUNTLIST" stripe :columns="column" border :data="list"></Table>
         <Modal v-model="editModal" title="收款资料" :mask-closable="false" footer-hide>
             <i-form ref="formInline" class="formPage" :model="formInline" :rules="ruleInline" inline>
                 <FormItem prop="flag" class="formItem">
@@ -426,6 +426,9 @@ export default {
 </script>
 
 <style lang='less'>
+.COLLECTIONACCOUNT .COLLECTIONACCOUNTLIST .ivu-table-body{
+    // max-height: inherit !important;
+}
 .formPage {
     .formItem {
         display: block;

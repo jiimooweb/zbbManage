@@ -285,7 +285,7 @@
                         </i-col>
                     </row>
                 </FormItem>
-                <FormItem prop="qrcode_url" class="formItem" v-show="formInline.type===0">
+                <FormItem prop="qrcode_url" class="formItem">
                     <row class="formRow">
                         <i-col span='4'>
                             <span class="lable">设置投放地区</span>

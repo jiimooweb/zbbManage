@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <Table style="width:500px" :columns="groupsColumn" :data="groupsList"></Table>
+    <div class="GROUP">
+        <Table :max-height='this.$store.state.app.winHeight' class="GROUPLIST" style="width:500px" :columns="groupsColumn" :data="groupsList"></Table>
         <Modal v-model="editModal" title="修改" @on-ok="okInput()" @on-cancel="cancelInput()">
             <Row>
                 <i-col style="display:block;margin:0 auto;">
@@ -168,4 +168,7 @@ export default {
 </script>
 
 <style lang='less'>
+.GROUP .GROUPLIST .ivu-table-body{
+    // max-height: inherit !important;
+}
 </style>

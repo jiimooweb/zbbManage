@@ -5,7 +5,7 @@
                 <Button @click="returnAdd()" :style='"display:" + (this.hasPower(this.$store.state.user.access,"taskTypeManage-new")? "inline-block;": "none;")'>添加</Button>
             </i-col>
         </row>
-        <Table stripe :columns="column" border :data="list"></Table>
+        <Table :max-height='this.$store.state.app.winHeight' stripe :columns="column" border :data="list" class="TASKTYPELIST"></Table>
         <!-- <Page style="margin-top:20px;" :total="total" show-total :page-size='defailPage' show-elevator show-sizer
             :page-size-opts='pageSize' @on-change="getchangeList" @on-page-size-change='changePageGetList' /> -->
         <Modal v-model="editModal" width='400px' title="任务类型" :mask-closable="false" footer-hide>
@@ -232,6 +232,9 @@ export default {
 </script>
 
 <style lang='less'>
+.TASKTYPEMANAGE .TASKTYPELIST .ivu-table-body{
+    // max-height: inherit !important;
+}
 .TASKTYPEMANAGE {
     min-width: 1100px;
     .search {

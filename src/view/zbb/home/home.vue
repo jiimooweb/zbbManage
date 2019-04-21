@@ -4,25 +4,27 @@
         <p class="countTitle">仪表版</p>
         <Row :gutter="20">
             <i-col v-for="(infor, i) in inforCardData" :xs="12" :md="12" :lg="6" :key="`infor-${i}`" style="height: 120px;padding-bottom: 10px;">
-                <infor-card :color="infor.color" :icon="infor.icon" :icon-size="30" shadow @click="returnIndex(i)">
-                    <count-to :end="infor.count" count-class="count-style" />
-                    <p class="count-p">{{ infor.title }}</p>
-                </infor-card>
+                <div @click="returnIndex(i)" style="height:120px;">
+                    <infor-card :color="infor.color" :icon="infor.icon" :icon-size="30" shadow>
+                        <count-to :end="infor.count" count-class="count-style" />
+                        <p class="count-p">{{ infor.title }}</p>
+                    </infor-card>
+                </div>
             </i-col>
         </Row>
         <p class="countTitle">统计数据</p>
         <Row :gutter="20">
-            <i-col :md="12" :lg="15">
+            <i-col :md="14" :lg="18">
                 <row>
                     <i-col v-for="(infor, i) in moneyData" offset='1' :xs="24" :md="24" :lg="7" :key="`infor-${i}`" style="height: 120px;padding-bottom: 10px;">
                         <infor-card :color="infor.color" :icon="infor.icon" :icon-size="30" shadow @click="returnIndex(i)">
-                            <count-to :end="infor.count" count-class="count-style" />
+                            <count-to :end="infor.count" :decimals='2' count-class="count-style" />
                             <p class="count-p">{{ infor.title }}</p>
                         </infor-card>
                     </i-col>
                 </row>
             </i-col>
-            <i-col :md="12" :lg="9" style="margin-bottom: 20px;">
+            <i-col :md="10" :lg="6" style="margin-bottom: 20px;">
                 <Card shadow>
                     <chart-pie :value="pieData" style="height: 400px;" text="用户类型占比" />
                 </Card>
@@ -140,6 +142,31 @@ export default {
                     icon: "ios-albums",
                     count: 0,
                     color: "#1EBFB7"
+                },{
+                    title: "昨日收入",
+                    icon: "logo-yen",
+                    count: 0,
+                    color: "#3189AD"
+                },{
+                    title: "7日收入",
+                    icon: "logo-yen",
+                    count: 0,
+                    color: "#1EBFB7"
+                },{
+                    title: "7日平均收入",
+                    icon: "logo-yen",
+                    count: 0,
+                    color: "#3189AD"
+                },{
+                    title: "30日收入",
+                    icon: "logo-yen",
+                    count: 0,
+                    color: "#1EBFB7"
+                },{
+                    title: "30日平均收入",
+                    icon: "logo-yen",
+                    count: 0,
+                    color: "#3189AD"
                 },
             ],
             hasData:false,
@@ -167,14 +194,16 @@ export default {
     },
     methods: {
         returnIndex(index){
+            console.log(index);
+            
             if(index === 0){
-                this.$router.push({name:'taskPList'})
+                this.$router.push({path:'/taskPList'})
             }else if(index === 1){
-                this.$router.push({name:'masterWithdraw'})
+                this.$router.push({path:'/masterWithdraw'})
             }else if(index === 2){
-                this.$router.push({name:'apprenticeWithdraw'})
+                this.$router.push({path:'/apprenticeWithdraw'})
             }else if(index === 3){
-                this.$router.push({name:'apprenticeList'})
+                this.$router.push({path:'/apprenticeCheckList'})
             }
         },
         getData() {
@@ -188,13 +217,19 @@ export default {
                 this.inforCardData[3].count = res.data.apprenticeCount //徒弟申请待审核
 
                 this.moneyData[0].count = res.data.rechargeMoney //平台充值总额
-                this.moneyData[1].count = res.data.rechargeMoney //已返佣金
-                this.moneyData[2].count = res.data.rechargeMoney //平台充值总额
+                this.moneyData[1].count = res.data.withdrawSum //已返佣金
+                this.moneyData[2].count = res.data.allMoney //平台充值总额
                 this.moneyData[3].count = res.data.tasks //整站任务数
                 this.moneyData[4].count = res.data.completeCount //完成任务人/次
                 this.moneyData[5].count = res.data.completeYesterDayCount //完成任务人/次
                 this.moneyData[6].count = res.data.completeLastWeekCount //完成任务人/次
                 this.moneyData[7].count = res.data.completeLastMonthCount //完成任务人/次
+                this.moneyData[8].count = res.data.sumDay //单日收入
+                this.moneyData[9].count = res.data.sumSeven //7日收入
+                this.moneyData[10].count = res.data.sumSeven/7 //7日平均收入
+                this.moneyData[11].count = res.data.sumThirty //30日收入
+                this.moneyData[12].count = res.data.sumThirty/30 //30日平均收入
+
 
                 this.$set(this.pieData[0],'value',res.data.merchantsCount)
                 this.$set(this.pieData[1],'value',res.data.maters)

@@ -1,7 +1,7 @@
 <template>
-    <div v-if="showData">
+    <div v-if="showData" class="PERMISSION">
         <p style="margin:10px 0;font-size:16px;">当前管理用户组 : <span style="color:red;">{{this.$store.state.currentPowerName}}</span></p>
-        <Table stripe border :columns="permissColumn" :data="permissList"></Table>
+        <Table :max-height='this.$store.state.app.winHeight' class="PERMISSIONLIST" stripe border :columns="permissColumn" :data="permissList"></Table>
         <Button type="success" style="margin:10px auto;display:block;" @click="inputData()">提交</Button>
     </div>
 </template>
@@ -62,8 +62,16 @@ export default {
     methods: {
         //是否有进入权限
         hasPowerIntoPower() {
+            if (this.$store.state.currentPowerId !== "") {
+                localStorage.setItem('PERMISSIONDATA',this.$store.state.currentPowerId)
+                return
+            }
             if (this.$store.state.currentPowerId === "") {
-                this.$router.push({ path: "/home" });
+                if(localStorage.getItem('PERMISSIONDATA') === ''){
+                    this.$router.push({ path: "/home" });
+                }else{
+                    this.$store.commit('setPowerId',localStorage.getItem('PERMISSIONDATA'))
+                }
             }
         },
         //存储后台使用值
@@ -88,6 +96,7 @@ export default {
                 })
                 .then(res => {
                     //提交成功
+                    localStorage.setItem('PERMISSIONDATA','')
                     this.$Message.success("提交成功");
                     this.$router.push({path:'/groupList'})
                     this.$store.commit('setPowerId','')
@@ -127,5 +136,8 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang='less'>
+.PERMISSION .PERMISSIONLIST .ivu-table-body{
+    // max-height: inherit !important;
+}
 </style>

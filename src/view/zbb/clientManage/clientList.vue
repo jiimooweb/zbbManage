@@ -1,7 +1,7 @@
 <template>
     <div class="CLIENTLIST">
         <Button type="primary" :style='"margin:10px 0;display:" + (this.hasPower(this.$store.state.user.access,"newClient")? "inline-block;": "none;")' @click="newData()">添加客户</Button>
-        <Table stripe :columns="column" border :data="list"></Table>
+        <Table :max-height='this.$store.state.app.winHeight' stripe :columns="column" border :data="list"></Table>
         <Page style="margin-top:20px;" :total="total" show-total :page-size='defailPage' show-elevator show-sizer
             :page-size-opts='pageSize' @on-change="getchangeList" @on-page-size-change='changePageGetList' />
         <Modal v-model="editModal" title="客户资料" :mask-closable="false" footer-hide>
@@ -299,10 +299,14 @@ export default {
                 },
                 {
                     title: "客户账户",
-                    width: "100",
+                    width: "150",
                     fixed: "left",
-                    align: "center",
-                    key: "username"
+                    // key: "username"
+                    render: (h, params) => {
+                        return h(
+                            "p",params.row.username
+                        );
+                    }
                 },
                 {
                     title: "禁用",

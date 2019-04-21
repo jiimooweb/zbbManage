@@ -5,7 +5,7 @@
                 <Button @click="newData()" :style='"display:" + (this.hasPower(this.$store.state.user.access,"articleList-new")? "inline-block;": "none;")'>添加</Button>
             </i-col>
         </row>
-        <Table stripe :columns="column" border :data="list"></Table>
+        <Table :max-height='this.$store.state.app.winHeight' stripe :columns="column" border :data="list"></Table>
         <Modal v-model="EditModal" title='文章信息' width='800' class="ARTICLELISTModal" footer-hide :mask-closable="false">
             <!-- <Card style="width:400px"> -->
             <i-form ref="formInline" class="formPage" :model="formInline" :rules="ruleInline" inline>

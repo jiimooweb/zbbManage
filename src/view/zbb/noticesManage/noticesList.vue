@@ -1,7 +1,7 @@
 <template>
     <div class='NOTICESLIST'>
         <Button type="primary" :style='"margin:10px 0;display:" + (this.hasPower(this.$store.state.user.access,"noticesList-new")? "inline-block;": "none;")' @click="newData()">添加</Button>
-        <Table stripe :columns="column" border :data="list"></Table>
+        <Table :max-height='this.$store.state.app.winHeight' stripe :columns="column" border :data="list"></Table>
         <Page style="margin-top:20px;" :total="total" show-total :page-size='defailPage' show-elevator show-sizer
             :page-size-opts='pageSize' @on-change="getchangeList" @on-page-size-change='changePageGetList' />
         <Modal v-model="editModal" width='800px' class="NOTICESLISTModal" title="公告参数" :mask-closable="false" footer-hide>

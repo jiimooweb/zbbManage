@@ -122,7 +122,7 @@
                 <Button type='error' @click="cancelFail(true)" style="display:block;float:left;margin-left:10px;">批量拒绝</Button>
             </i-col> -->
         </row>
-        <Table stripe :columns="column" border :data="list" @on-select='selectItem'></Table>
+        <Table :max-height='this.$store.state.app.winHeight' stripe :columns="column" border :data="list" @on-select='selectItem'></Table>
 
         <Page style="margin-top:20px;" :total="total" show-total :page-size='defailPage' show-elevator show-sizer
             :page-size-opts='pageSize' @on-change="getList" @on-page-size-change='changePageGetList' />

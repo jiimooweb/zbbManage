@@ -1,7 +1,7 @@
 <template>
     <div class="CUSTOMERLIST">
         <Button type="primary" :style='"margin:10px 0;display:" + (this.hasPower(this.$store.state.user.access,"newCustomer")? "inline-block;": "none;")' @click="newData()">添加客服</Button>
-        <Table stripe :columns="column" border :data="list"></Table>
+        <Table :max-height='this.$store.state.app.winHeight' stripe :columns="column" border :data="list" class="CUSTOMERTABLE"></Table>
         <!-- <Page style="margin-top:20px;" :total="total" show-total :page-size='defailPage' show-elevator show-sizer
             :page-size-opts='pageSize' @on-change="getchangeList" @on-page-size-change='changePageGetList' /> -->
         <Modal v-model="editModal" title="客服资料" :mask-closable="false" footer-hide>
@@ -385,6 +385,9 @@ export default {
 </script>
 
 <style lang='less'>
+.CUSTOMERLIST .CUSTOMERTABLE .ivu-table-body{
+    // max-height: inherit !important;
+}
 .CUSTOMERLIST{
     min-width: 1100px;
     .formItem {

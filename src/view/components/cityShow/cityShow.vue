@@ -1,16 +1,14 @@
 <template>
     <div>
-        <Button icon="md-add" class="btnUp" @click="closeCitySelect(true)">
-            选择地区
-        </Button>
-        <Modal class="citySelectPage" width='850px' v-model="show" title='选择投放城市' @on-ok="returnCity()" @on-cancel="closeCitySelect(false)"
-            :mask-closable='false'>
+        <Modal class="citySelectPage" width='850px' v-model="show" title='投放城市' footer-hide :mask-closable='false'>
             <div @click="closeAllSelect()">
+            <!-- <div @click="closeAllSelect()">
                 <div class="btnPage">
                 <Button @click="setItemSelect(true)">全选</Button>
                 <Button style="margin-left:10px;" @click="setItemSelect(false)">取消全选</Button>
-            </div>
-            <div class="searchPage">
+                </div>
+            </div> -->
+            <!-- <div class="searchPage">
                 <Select ref="select" v-model="searchData" placeholder='查找' style="width:300px" :clearable="true" filterable @on-change='cantEvent'>
                     <OptionGroup v-for="(sitem,index) in cityAll" :label="sitem.name" :key="sitem.name">
                         <Option v-for="(item,index1) in sitem.cities" :value="item.name" :key="item.name">
@@ -18,11 +16,11 @@
                         </Option>
                     </OptionGroup>
                 </Select>
-            </div>
+            </div> -->
             <div class="cityPage">
                 <div class="cityItem" v-for="(item,index) in cityAll" :key='index'>
                     <div class="citySName">
-                        <Checkbox v-model="item.select" @on-change='selectCityS(item,index)'>{{item.name}}<span v-if="item.cities.length>1">({{item.cities.length}})</span></Checkbox>
+                        <Checkbox v-model="item.select" class="showCheck" disabled @on-change='selectCityS(item,index)'>{{item.name}}<span v-if="item.cities.length>1">({{item.cities.length}})</span></Checkbox>
                         <Icon type="md-arrow-dropdown" :color='!item.cityShow?"#aaa":"#2d8cf0"' size='23' @click.stop="showCities(index)"
                             v-if="item.cities.length>1" />
                         <div class="citiesList" v-if="item.cityShow" @click.stop="">
@@ -30,14 +28,14 @@
                             <div class="cityCPage">
                                 <div class="cityCItem" v-for="(item,index1) in item.cities" :key='index1'>
                                     <div class="cityCName">
-                                        <Checkbox v-model="item.select" @on-change='selectCity(item,index)'>{{item.name}}</Checkbox>
+                                        <Checkbox v-model="item.select" class="showCheck" disabled @on-change='selectCity(item,index)'>{{item.name}}</Checkbox>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+                </div>
             </div>
         </Modal>
     </div>
@@ -59,11 +57,11 @@ export default {
     methods: {
         //隐藏所有下级选框
         closeAllSelect(index = -1){
-            if(index !== -1){
-                return
-            }
             for (let i = 0; i < this.cityAll.length; i++) {
                 this.cityAll[i].cityShow = false
+            }
+            if(index !== -1){
+                this.$set(this.cityAll[index],"cityShow",!this.cityAll[index].cityShow);
             }
         },
         //阻止冒泡
@@ -110,17 +108,31 @@ export default {
                 }
             }
         },
-        initData() {
+        initData(cityList) {
+            if(!cityList || cityList == null){
+                cityList = []
+            }
             for (let i in cityArr.provinces) {
-                cityArr.provinces[i].select = true;
+                cityArr.provinces[i].select = false;
                 cityArr.provinces[i].cityShow = false;
                 for (let j in cityArr.provinces[i].cities) {
-                    cityArr.provinces[i].cities[j].select = true;
+                    cityArr.provinces[i].cities[j].select = false;
                     this.selectArr.push(cityArr.provinces[i].cities[j].name);
                     this.cityFilter.push(cityArr.provinces[i].cities[j]);
                 }
             }
             this.cityAll = cityArr.provinces;
+            for(let i=0;i<cityList.length;i++){
+                for(let j=0;j<this.cityAll.length;j++){
+                    for(let z=0;z<this.cityAll[j].cities.length;z++){
+                        if(cityList[i] === this.cityAll[j].cities[z].name){
+                            this.cityAll[j].cities[z].select = true
+                            this.cityAll[j].select = true
+                        }
+                    }
+                }
+            }
+            this.show = true
         },
         //设置所有选项
         setItemSelect(state) {
@@ -139,17 +151,16 @@ export default {
         showCities(index) {
             this.closeAllSelect(index)
             let currentArr = this.cityAll[index];
-            this.$set(
-                this.cityAll[index],
-                "cityShow",
-                !this.cityAll[index].cityShow
-            );
+            // this.$set(
+            //     this.cityAll[index],
+            //     "cityShow",
+            //     !this.cityAll[index].cityShow
+            // );
             
         }
     },
     mounted() {
-        this.initData();
-        this.returnCity();
+        
     }
 };
 </script>
@@ -213,5 +224,13 @@ export default {
         line-height: 40px;
         margin: 0px 0px -1px -1px;
     }
+}
+.showCheck .ivu-checkbox-inner{
+    background: #fff !important;
+    border-color: #2d8cf0 !important;
+}
+.showCheck .ivu-checkbox-inner::after{
+    background: #fff !important;
+    border-color: #2d8cf0 !important;
 }
 </style>

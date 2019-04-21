@@ -101,7 +101,7 @@
                 <Button type="error" style="float:right;margin-bottom:10px;" @click="returnExcel()">导出</Button>
             </i-col>
         </row>
-        <Table stripe :columns="column" border :data="list"></Table>
+        <Table :max-height='this.$store.state.app.winHeight' stripe :columns="column" border :data="list"></Table>
         <Page style="margin-top:20px;" :total="total" show-total :page-size='defailPage' show-elevator show-sizer
             :page-size-opts='pageSize' @on-change="getchangeList" @on-page-size-change='changePageGetList' />
     </div>

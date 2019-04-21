@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Table stripe border :columns="permissColumn" :data="permissList"></Table>
+        <Table :max-height='this.$store.state.app.winHeight' stripe border :columns="permissColumn" :data="permissList"></Table>
     </div>
 </template>
 

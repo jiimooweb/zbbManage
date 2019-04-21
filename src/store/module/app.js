@@ -32,7 +32,8 @@ export default {
     homeRoute: {},
     local: localRead('local'),
     errorList: [],
-    hasReadErrorPage: false
+    hasReadErrorPage: false,
+    winHeight:'600'
   },
   getters: {
     menuList: (state, getters, rootState) => getMenuByRouter(routers, rootState.user.access),
@@ -85,7 +86,10 @@ export default {
     },
     setHasReadErrorLoggerStatus (state, status = true) {
       state.hasReadErrorPage = status
-    }
+    },
+    setWinHeight(state, winHeight) {
+        state.winHeight = winHeight
+    },
   },
   actions: {
     addErrorLog ({ commit, rootState }, info) {

@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <div class="SYSTEMJSON">
         <Button type="primary" :style='"margin:10px 0;display:" + (this.hasPower(this.$store.state.user.access,"systemJson-new")? "inline-block;": "none;")' @click="newData()">新增</Button>
-        <Table stripe :columns="column" border :data="list"></Table>
+        <Table :max-height='this.$store.state.app.winHeight' class="SystemList" stripe :columns="column" border :data="list"></Table>
         <Modal v-model="EditModal" title='配置' :mask-closable="false" footer-hide>
             <i-form ref="formInline" class="formPage" :model="formInline" :rules="ruleInline" inline>
                 <FormItem prop="flag" class="formItem">
@@ -302,6 +302,9 @@ export default {
 </script>
 
 <style lang='less'>
+// .SYSTEMJSON .SystemList .ivu-table-body{
+//     // max-height: inherit !important;
+// }
 .formPage {
     .formItem {
         display: block;

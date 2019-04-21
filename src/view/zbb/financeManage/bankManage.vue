@@ -1,7 +1,7 @@
 <template>
     <div>
         <Button type="primary" :style='"margin:10px 0;display:" + (this.hasPower(this.$store.state.user.access,"bankManage-new")? "inline-block;": "none;")' @click="newDate()">添加银行</Button>
-        <Table :columns="bankColumn" border :data="bankList"></Table>
+        <Table :max-height='this.$store.state.app.winHeight' :columns="bankColumn" border :data="bankList"></Table>
         <Page style="margin-top:20px;" :total="total" show-total :page-size='defailPage' show-elevator show-sizer
             :page-size-opts='pageSize' @on-change="changeGetList" @on-page-size-change='changePageGetList' />
         <Modal v-model="deleteModal" title='删除' @on-ok="deleteItem()" @on-cancel="deletecancel(false)">

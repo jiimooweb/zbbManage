@@ -72,7 +72,7 @@
                 <Button @click="returnAdd()" :style='"display:" + (this.hasPower(this.$store.state.user.access,"newTask")? "inline-block;": "none;")'>添加</Button>
             </i-col>
         </row>
-        <Table stripe :columns="column" border :data="list" v-show="showTable"></Table>
+        <Table :max-height='this.$store.state.app.winHeight' stripe :columns="column" border :data="list" v-show="showTable"></Table>
         <Page style="margin-top:20px;" :total="total" show-total :page-size='defailPage' show-elevator show-sizer
             :page-size-opts='pageSize' @on-change="getchangeList" @on-page-size-change='changePageGetList' />
         <Modal v-model="cancelModal" title='删除' @on-ok="deleteItem()" @on-cancel="cancelcancel(false)">
@@ -365,16 +365,19 @@
                 </row>
             </i-form>
         </Modal>
+        <city ref="citys"></city>
     </div>
 </template>
 
 <script>
 import axios from "@/libs/api.request";
 import Cookies from "js-cookie";
+import cityArr from "../../../assets/city.js";
 // import VueUeditorWrap from "vue-ueditor-wrap";
 // import bigdataTable from '../../components/vue-bigdata-table';
 // import indexRender from './index-render.js';
 import { returnHasPower, isShowColumn } from "@/libs/util";
+import city from "../../components/cityShow/cityShow.vue"
 export default {
     computed: {
         headers() {
@@ -453,12 +456,14 @@ export default {
             return this.total_price;
         }
     },
-    components: {},
+    components: {city},
     data() {
         return {
+            cityList:[],
             showTable:true,
             showData: {
                 id: "",
+                area:[],
                 created_at: "",
                 start_time: "",
                 status: "",
@@ -629,6 +634,39 @@ export default {
                     }
                 },
                 {
+                    title: "待审核数量",
+                    align: "center",
+                    width:'100',
+                    render: (h, params) => {
+                        return h(
+                            "p",
+                            params.row.record_wait_verifys_count
+                        );
+                    }
+                },
+                {
+                    title: "已完成数量",
+                    align: "center",
+                    width:'100',
+                    render: (h, params) => {
+                        return h(
+                            "p",
+                            params.row.record_finishs_count
+                        );
+                    }
+                },
+                {
+                    title: "已返款数量",
+                    align: "center",
+                    width:'100',
+                    render: (h, params) => {
+                        return h(
+                            "p",
+                            params.row.record_verifys_count
+                        );
+                    }
+                },
+                {
                     title: "审核状态",
                     align: "center",
                     width:'100',
@@ -744,7 +782,27 @@ export default {
                                     },
                                     nativeOn: {
                                         click: () => {
+                                            this.cityList = params.row.area;
+                                            this.$refs.citys.initData(this.cityList)
+                                        }
+                                    }
+                                },
+                                "查看投放"
+                            ),h(
+                                "Button",
+                                {
+                                    props: {
+                                        type: "primary",
+                                        size: "small"
+                                    },
+                                    attrs: {
+                                        style:
+                                            "font-size:12px;margin-right:15px;"
+                                    },
+                                    nativeOn: {
+                                        click: () => {
                                             this.showData.id = params.row.id;
+                                            this.showData.area = params.row.area;
                                             this.showData.created_at =
                                                 params.row.created_at;
                                             this.showData.start_time =
@@ -883,6 +941,7 @@ export default {
         this.getTypeList();
     },
     methods: {
+        //整理选择城市
         returnAdd() {
             this.$router.push({ path: "/newTask" });
         },
