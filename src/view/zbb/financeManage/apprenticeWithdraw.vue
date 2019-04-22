@@ -182,7 +182,11 @@ export default {
                     // key:"type"
                     render: (h, params) => {
                         return h(
-                            "p",
+                            "p",{
+                                attrs:{
+                                    style:'color:'+(params.row.type === 0 ? "#439057" : "#00a3ee")
+                                }
+                            },
                             params.row.type === 0 ? "银行卡" : "支付宝"
                         );
                     }
@@ -213,7 +217,11 @@ export default {
                     align: "center",
                     width: "200",
                     render(h,params) {
-                        return h('p',params.row.alipay?params.row.alipay:'无')
+                        return h('p',{
+                            attrs:{
+                                    style:'color:'+(params.row.type === 0 ? "#439057" : "#00a3ee")
+                                }
+                        },params.row.type!==0?params.row.alipay:'')
                     },
                 },
                 {
@@ -223,8 +231,12 @@ export default {
                     // key:"bank_id"
                     render: (h, params) => {
                         return h(
-                            "p",
-                            params.row.bank === null ? "无" : params.row.bank.id
+                            "p",{
+                            attrs:{
+                                    style:'color:'+(params.row.type === 0 ? "#439057" : "#00a3ee")
+                                }
+                        },
+                            params.row.bank === null||params.row.type!==0 ? "" : params.row.bank.id
                         );
                     }
                 },
@@ -235,8 +247,12 @@ export default {
                     // key:"name"
                     render: (h, params) => {
                         return h(
-                            "p",
-                            params.row.bank === null ? "无" : params.row.bank.name
+                            "p",{
+                            attrs:{
+                                    style:'color:'+(params.row.type === 0 ? "#439057" : "#00a3ee")
+                                }
+                        },
+                            params.row.bank === null||params.row.type!==0 ? "" : params.row.bank.name
                         );
                     }
                 },
@@ -247,8 +263,12 @@ export default {
                     // key: "bank_man"
                     render: (h, params) => {
                         return h(
-                            "p",
-                            params.row.bank === null ? "无" : params.row.bank_man
+                            "p",{
+                            attrs:{
+                                    style:'color:'+(params.row.type === 0 ? "#439057" : "#00a3ee")
+                                }
+                        },
+                            params.row.bank === null||params.row.type!==0 ? "" : params.row.bank_man
                         );
                     }
                 },
@@ -259,8 +279,12 @@ export default {
                     // key: "bank_number"
                     render: (h, params) => {
                         return h(
-                            "p",
-                            params.row.bank === null ? "无" : params.row.bank_number
+                            "p",{
+                            attrs:{
+                                    style:'color:'+(params.row.type === 0 ? "#439057" : "#00a3ee")
+                                }
+                        },
+                            params.row.bank === null||params.row.type!==0 ? "" : params.row.bank_number
                         );
                     }
                 },

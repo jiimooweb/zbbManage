@@ -730,6 +730,7 @@ export default {
                                 props: {
                                     trueValue: 1,
                                     falseValue: 0,
+                                    disabled: params.row.merchant_status === 1?true:false,
                                     value: params.row.status
                                 },
                                 nativeOn: {
@@ -738,9 +739,7 @@ export default {
                                             this.$Message.error(
                                                 "该任务已由客户关闭，无法进行操作"
                                             );
-                                            params.row.status = !params.row
-                                                .status;
-                                            return false;
+                                            return
                                         }
                                         axios
                                             .request({
